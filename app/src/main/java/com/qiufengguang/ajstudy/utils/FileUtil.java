@@ -1,0 +1,184 @@
+package com.qiufengguang.ajstudy.utils;
+
+import android.content.Context;
+import android.os.Build;
+import android.os.Environment;
+import android.text.TextUtils;
+import android.util.Log;
+
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * 文件操作工具类（内存安全/线程安全说明：所有方法均为同步方法，推荐在子线程中使用）
+ */
+public class FileUtil {
+    private static final String TAG = "FileUtil";
+
+    // 默认字符集
+    private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+    // 缓冲区大小（8KB）
+    private static final int BUFFER_SIZE = 8192;
+
+    //--------------------------------- 读取Assets文件 ---------------------------------//
+
+    /**
+     * 读取assets文件为String（默认UTF-8）
+     */
+    public static String readAssetsToString(Context context, String fileName) {
+        return readAssetsToString(context, fileName, DEFAULT_CHARSET);
+    }
+
+    /**
+     * 读取assets文件为String（指定字符集）
+     */
+    public static String readAssetsToString(Context context, String fileName, Charset charset) {
+        if (context == null || TextUtils.isEmpty(fileName)) return null;
+
+        try (InputStream is = context.getAssets().open(fileName)) {
+            return streamToString(is, charset);
+        } catch (IOException e) {
+            Log.e(TAG, "readAssetsToString error. " + e.getMessage());
+        }
+        return null;
+    }
+
+    //--------------------------------- 内部存储操作 ---------------------------------//
+
+    /**
+     * 读取内部存储文件为String（默认UTF-8）
+     */
+    public static String readInternalFileToString(Context context, String fileName) {
+        return readFileToString(new File(context.getFilesDir(), fileName), DEFAULT_CHARSET);
+    }
+
+    /**
+     * 获取内部存储File对象
+     */
+    public static File getInternalFile(Context context, String fileName) {
+        File file = new File(context.getFilesDir(), fileName);
+        return validateFile(file) ? file : null;
+    }
+
+    //--------------------------------- 外部存储操作 ---------------------------------//
+
+    /**
+     * 读取外部私有存储文件为String（默认UTF-8）
+     */
+    public static String readExternalFileToString(Context context, String fileName) {
+        File file = getExternalFile(context, fileName);
+        return file != null ? readFileToString(file, DEFAULT_CHARSET) : null;
+    }
+
+    /**
+     * 获取外部私有存储File对象
+     */
+    public static File getExternalFile(Context context, String fileName) {
+        if (!isExternalStorageAvailable()) {
+            return null;
+        }
+        File file = new File(context.getExternalFilesDir(null), fileName);
+        return validateFile(file) ? file : null;
+    }
+
+    //--------------------------------- 通用文件操作 ---------------------------------//
+
+    /**
+     * 读取文件为String（默认UTF-8）
+     */
+    public static String readFileToString(File file) {
+        return readFileToString(file, DEFAULT_CHARSET);
+    }
+
+    /**
+     * 读取文件为String（指定字符集）
+     */
+    public static String readFileToString(File file, Charset charset) {
+        if (!validateFile(file)) return null;
+
+        try (FileInputStream fis = new FileInputStream(file)) {
+            return streamToString(fis, charset);
+        } catch (IOException e) {
+            Log.e(TAG, "readFileToString error. " + e.getMessage());
+        }
+        return null;
+    }
+
+    //--------------------------------- 核心工具方法 ---------------------------------//
+
+    /**
+     * 输入流转String（自动关闭流）
+     */
+    private static String streamToString(InputStream is, Charset charset) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[BUFFER_SIZE];
+        int length;
+        while ((length = is.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return result.toString(charset);
+        } else {
+            String charsetName = charset.name();
+            return result.toString(charsetName);
+        }
+    }
+
+    /**
+     * 校验文件有效性
+     */
+    private static boolean validateFile(File file) {
+        return file != null && file.exists() && file.isFile();
+    }
+
+    /**
+     * 检查外部存储可用性
+     */
+    private static boolean isExternalStorageAvailable() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+    //------------------------------ 可选：写入方法增强 ------------------------------//
+
+    /**
+     * 可选：写入字符串到内部存储（默认UTF-8）
+     */
+    public static boolean writeStringToInternal(Context context, String fileName, String content) {
+        return writeStringToFile(new File(context.getFilesDir(), fileName), content, DEFAULT_CHARSET);
+    }
+
+    /**
+     * 通用文件写入方法
+     */
+    public static boolean writeStringToFile(File file, String content, Charset charset) {
+        if (file == null || content == null) {
+            return false;
+        }
+
+        try {
+            if (file.getParentFile() == null || (!file.getParentFile().exists()
+                && !file.getParentFile().mkdirs())) {
+                return false;
+            }
+
+            try (OutputStream os = new FileOutputStream(file);
+                 BufferedWriter writer = new BufferedWriter(
+                     new OutputStreamWriter(os, charset))) {
+                writer.write(content);
+                return true;
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "writeStringToFile error. " + e.getMessage());
+        }
+        return false;
+    }
+}

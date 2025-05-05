@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        // 阿里云主镜像（覆盖所有仓库）
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+
+        // 华为云备用镜像
+        maven { url 'https://repo.huaweicloud.com/repository/maven' }
+        mavenLocal()
+    }
+}
+dependencyResolutionManagement {
+    // 如果任何子模块（如 app/build.gradle）中声明了 repositories，则构建直接失败。
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://repo.huaweicloud.com/repository/maven' }
+        mavenLocal()
+    }
+}
+
+rootProject.name = "AJStudy"
+include ':app'
