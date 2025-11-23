@@ -4,14 +4,16 @@ plugins {
 
 android {
     namespace 'com.qiufengguang.ajstudy'
-    compileSdk 35
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         applicationId "com.qiufengguang.ajstudy"
         minSdk 29
-        targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        targetSdk 36
+        versionCode 10000001
+        versionName '1.0.0.1'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
