@@ -5,6 +5,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dashboard_item_icon_size">80dp</dimen>
     <dimen name="dashboard_item_img_radius">16dp</dimen>
-    <dimen name="list_item_bg_radius">16dp</dimen>
+    <dimen name="list_item_bg_radius">24dp</dimen>
 
 </resources>
