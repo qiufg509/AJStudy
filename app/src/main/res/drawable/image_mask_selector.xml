@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ajstudy_mask_img_press_color" />
+        </shape>
+    </item>
+    <item android:state_hovered="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ajstudy_mask_img_press_color" />
+        </shape>
+    </item>
+    <item>
+        <color android:color="@color/ajstudy_translucent" />
+    </item>
+</selector>

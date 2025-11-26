@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- 信任系统预置的CA证书 -->
+            <certificates src="system" />
+            <!-- 注意：从Android 9（API级别28）开始，默认不信任用户证书，除非明确设置 -->
+            <!-- 如果需要信任用户安装的证书，可以添加下面的标签，但要注意安全风险 -->
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

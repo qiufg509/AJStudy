@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * 文件操作工具类（内存安全/线程安全说明：所有方法均为同步方法，推荐在子线程中使用）
@@ -42,14 +43,16 @@ public class FileUtil {
      * 读取assets文件为String（指定字符集）
      */
     public static String readAssetsToString(Context context, String fileName, Charset charset) {
-        if (context == null || TextUtils.isEmpty(fileName)) return null;
+        if (Objects.isNull(context) || TextUtils.isEmpty(fileName)) {
+            return "";
+        }
 
         try (InputStream is = context.getAssets().open(fileName)) {
             return streamToString(is, charset);
         } catch (IOException e) {
             Log.e(TAG, "readAssetsToString error. " + e.getMessage());
         }
-        return null;
+        return "";
     }
 
     //--------------------------------- 内部存储操作 ---------------------------------//
@@ -76,7 +79,7 @@ public class FileUtil {
      */
     public static String readExternalFileToString(Context context, String fileName) {
         File file = getExternalFile(context, fileName);
-        return file != null ? readFileToString(file, DEFAULT_CHARSET) : null;
+        return Objects.nonNull(file) ? readFileToString(file, DEFAULT_CHARSET) : "";
     }
 
     /**
@@ -103,14 +106,16 @@ public class FileUtil {
      * 读取文件为String（指定字符集）
      */
     public static String readFileToString(File file, Charset charset) {
-        if (!validateFile(file)) return null;
+        if (!validateFile(file)) {
+            return "";
+        }
 
         try (FileInputStream fis = new FileInputStream(file)) {
             return streamToString(fis, charset);
         } catch (IOException e) {
             Log.e(TAG, "readFileToString error. " + e.getMessage());
         }
-        return null;
+        return "";
     }
 
     //--------------------------------- 核心工具方法 ---------------------------------//
@@ -160,7 +165,7 @@ public class FileUtil {
      * 通用文件写入方法
      */
     public static boolean writeStringToFile(File file, String content, Charset charset) {
-        if (file == null || content == null) {
+        if (Objects.isNull(file) || TextUtils.isEmpty(content)) {
             return false;
         }
 
