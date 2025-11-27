@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ajstudy_transparent">#00000000</color>
     <color name="ajstudy_translucent">#00ffffff</color>
     <color name="ajstudy_list_item_bg_pressed">#330a59f7</color>
     <color name="ajstudy_mask_img_press_color">#1a000000</color>
@@ -11,6 +12,7 @@
     <color name="ajstudy_default_color_secondary_variant">#018786</color>
     <color name="ajstudy_default_color_on_secondary">#000000</color>
     <color name="ajstudy_bottom_nav_bg_blur">#f2ffffff</color>
+    <color name="ajstudy_appbar_title">#e5000000</color>
 
     <color name="abc_decor_view_status_guard">#ff000000</color>
     <color name="abc_decor_view_status_guard_light">#ffffffff</color>

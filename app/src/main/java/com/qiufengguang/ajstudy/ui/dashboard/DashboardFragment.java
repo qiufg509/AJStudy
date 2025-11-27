@@ -1,13 +1,7 @@
 package com.qiufengguang.ajstudy.ui.dashboard;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,40 +11,52 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.Constant;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
+import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends BaseFragment {
     private static final String TAG = "DashboardFragment";
 
     private FragmentDashboardBinding binding;
 
-    private DashboardViewModel dashboardVm;
+    private DashboardViewModel viewModel;
 
     private DashboardAdapter adapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
-        if (isAdded() && getActivity() != null) {
-            SavedStateViewModelFactory factory = new SavedStateViewModelFactory(
-                getActivity().getApplication(), this);
-            // 看起来是"新建"，但实际上获取的是同一个实例
-            dashboardVm = new ViewModelProvider(this, factory).get(DashboardViewModel.class);
-        }
-
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    @Override
+    protected void setPageBackground() {
+        baseBinding.backgroundImage.setBackgroundResource(R.mipmap.dashboard_page_bg);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (dashboardVm == null) {
-            // 初始化ViewModel，使用SavedStateViewModelFactory
-            SavedStateViewModelFactory factory = new SavedStateViewModelFactory(
-                requireActivity().getApplication(), this);
-            dashboardVm = new ViewModelProvider(this, factory).get(DashboardViewModel.class);
-        }
-        RecyclerView recyclerView = binding.getRoot();
+    protected boolean isDarkBackgroundImage() {
+        return false;
+    }
+
+    @Override
+    protected void setupContent() {
+        baseBinding.toolbar.setTitle("仪表盘");
+        binding = FragmentDashboardBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            baseBinding.contentContainer,
+            true
+        );
+        SavedStateViewModelFactory factory = new SavedStateViewModelFactory(
+            requireActivity().getApplication(), this);
+        // 看起来是"新建"，但实际上获取的是同一个实例
+        viewModel = new ViewModelProvider(this, factory)
+            .get(DashboardViewModel.class);
+
+        adjustColumn();
+
+        // 绑定数据
+        viewModel.getLiveData().observe(getViewLifecycleOwner(), list -> {
+            adapter.setData(list);
+        });
+    }
+
+    private void adjustColumn() {
         int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
+        RecyclerView recyclerView = binding.getRoot();
         switch (columnCount) {
             case Constant.Grid.column_8:
                 recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -62,14 +68,8 @@ public class DashboardFragment extends Fragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 break;
         }
-        adapter = new DashboardAdapter(dashboardVm.getLiveData().getValue());
+        adapter = new DashboardAdapter(viewModel.getLiveData().getValue());
         recyclerView.setAdapter(adapter);
-
-        // 绑定数据
-        dashboardVm.getLiveData().observe(getViewLifecycleOwner(), list -> {
-            adapter.setData(list);
-        });
-
     }
 
     @Override

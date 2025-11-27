@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.AJStudy" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.AJStudy" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/ajstudy_default_color_primary</item>
         <item name="colorPrimaryVariant">@color/ajstudy_default_color_primary_variant</item>
@@ -9,8 +10,20 @@
         <item name="colorSecondary">@color/ajstudy_default_color_secondary</item>
         <item name="colorSecondaryVariant">@color/ajstudy_default_color_secondary_variant</item>
         <item name="colorOnSecondary">@color/ajstudy_default_color_on_secondary</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <!-- 关键：状态栏透明 -->
+        <item name="android:statusBarColor">@color/ajstudy_transparent</item>
+        <item name="android:navigationBarColor">@color/ajstudy_transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- 确保内容延伸到状态栏 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

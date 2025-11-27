@@ -1,32 +1,42 @@
 package com.qiufengguang.ajstudy.ui.notifications;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.databinding.FragmentNotificationsBinding;
+import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
-public class NotificationsFragment extends Fragment {
-
+public class NotificationsFragment extends BaseFragment {
     private FragmentNotificationsBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+    @Override
+    protected void setPageBackground() {
+        baseBinding.backgroundImage.setVisibility(View.GONE);
+    }
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    @Override
+    protected boolean isDarkBackgroundImage() {
+        return false;
+    }
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+    @Override
+    protected void setupContent() {
+        baseBinding.toolbar.setTitle("我的");
+        // 使用单独的布局文件注入内容
+        binding = FragmentNotificationsBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            baseBinding.contentContainer,
+            true
+        );
+
+        NotificationsViewModel viewModel =
+            new ViewModelProvider(this).get(NotificationsViewModel.class);
+        viewModel.getText().observe(getViewLifecycleOwner(), title -> {
+            baseBinding.toolbar.setTitle(title);
+            binding.textNotifications.setText("这是内容");
+        });
     }
 
     @Override

@@ -1,32 +1,43 @@
 package com.qiufengguang.ajstudy.ui.home;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.appbar.MaterialToolbar;
+import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentHomeBinding;
+import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     private FragmentHomeBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+    @Override
+    protected void setPageBackground() {
+        baseBinding.backgroundImage.setImageResource(R.mipmap.home_page_bg);
+    }
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    @Override
+    protected boolean isDarkBackgroundImage() {
+        return true;
+    }
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+    @Override
+    protected void setupContent() {
+        baseBinding.toolbar.setTitle("首页");
+        // 使用单独的布局文件注入内容
+        binding = FragmentHomeBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            baseBinding.contentContainer,
+            true
+        );
+        HomeViewModel viewModel =
+            new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel.getLiveData().observe(getViewLifecycleOwner(),
+            title -> baseBinding.toolbar.setTitle(title));
     }
 
     @Override
