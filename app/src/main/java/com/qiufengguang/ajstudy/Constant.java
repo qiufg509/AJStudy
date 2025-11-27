@@ -25,6 +25,6 @@ public interface Constant {
     /**
      * 本地列表数据文件
      */
-    String LIST_CONTENT_FILE = "dashbord_list_data.json";
+    String LIST_CONTENT_FILE = "dashboard_list_data.json";
 
 }

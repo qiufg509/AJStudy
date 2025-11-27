@@ -10,8 +10,8 @@ lifecycleLivedataKtx = "2.8.3"
 lifecycleViewmodelKtx = "2.8.3"
 navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
-gson = "2.11.0"
-glide = "4.16.0"
+gson = "2.13.0"
+glide = "5.0.5"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }

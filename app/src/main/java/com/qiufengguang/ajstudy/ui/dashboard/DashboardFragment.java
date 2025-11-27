@@ -49,9 +49,7 @@ public class DashboardFragment extends BaseFragment {
         adjustColumn();
 
         // 绑定数据
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), list -> {
-            adapter.setData(list);
-        });
+        viewModel.getLiveData().observe(getViewLifecycleOwner(), list -> adapter.setData(list));
     }
 
     private void adjustColumn() {

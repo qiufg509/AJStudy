@@ -1,8 +1,9 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="design_bottom_navigation_height">56dp</dimen>
+    <dimen name="ajstudy_bottom_navigation_height">56dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_inner_gap">8dp</dimen>
+    <dimen name="activity_vertical_margin">8dp</dimen>
     <dimen name="dashboard_item_icon_size">80dp</dimen>
     <dimen name="dashboard_item_img_radius">16dp</dimen>
     <dimen name="list_item_bg_radius">24dp</dimen>

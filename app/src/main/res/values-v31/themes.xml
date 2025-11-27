@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Base.Theme.MyApp" parent="Theme.Material3.DayNight">
+    <style name="Theme.AJStudy" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/ajstudy_default_color_primary</item>
         <item name="colorPrimaryVariant">@color/ajstudy_default_color_primary_variant</item>

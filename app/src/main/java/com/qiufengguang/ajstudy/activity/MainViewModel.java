@@ -7,17 +7,17 @@ import androidx.lifecycle.ViewModel;
 import com.qiufengguang.ajstudy.R;
 
 public class MainViewModel extends ViewModel {
-    private final MutableLiveData<Integer> currentNavigationItem = new MutableLiveData<>();
+    private final MutableLiveData<Integer> liveData = new MutableLiveData<>();
 
     public MainViewModel() {
-        currentNavigationItem.setValue(R.id.navigation_home);
+        liveData.setValue(R.id.navigation_home);
     }
 
-    public LiveData<Integer> getCurrentNavigationItem() {
-        return currentNavigationItem;
+    public LiveData<Integer> getLiveData() {
+        return liveData;
     }
 
-    public void setCurrentNavigationItem(int itemId) {
-        currentNavigationItem.setValue(itemId);
+    public void setLiveData(int itemId) {
+        liveData.setValue(itemId);
     }
 }

@@ -1,12 +1,9 @@
 package com.qiufengguang.ajstudy.ui.home;
 
 import android.view.LayoutInflater;
-import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentHomeBinding;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;

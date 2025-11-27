@@ -15,15 +15,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="@dimen/dashboard_item_icon_size"
         android:layout_height="@dimen/dashboard_item_icon_size"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:duplicateParentState="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +51,8 @@
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/activity_horizontal_inner_gap"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:ellipsize="end"
         android:lines="1"
         android:textAlignment="textStart"
@@ -65,9 +65,9 @@
         android:id="@+id/tv_subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/activity_horizontal_inner_gap"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAlignment="textStart"
@@ -80,8 +80,8 @@
         android:id="@+id/tv_brief"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/activity_horizontal_inner_gap"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:ellipsize="end"
         android:lines="1"
         android:textAlignment="textStart"
@@ -94,5 +94,8 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

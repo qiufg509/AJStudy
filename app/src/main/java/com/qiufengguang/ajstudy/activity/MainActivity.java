@@ -1,17 +1,16 @@
-package com.qiufengguang.ajstudy;
+package com.qiufengguang.ajstudy.activity;
 
-import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.qiufengguang.ajstudy.activity.MainViewModel;
+import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ActivityMainBinding;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
@@ -20,10 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private MainViewModel viewModel;
-
-    private NavController navController;
-
-    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment == null) {
             return;
         }
-        navController = navHostFragment.getNavController();
+        NavController navController = navHostFragment.getNavController();
 
         // 设置导航图
         NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.main_navigation);
@@ -67,24 +62,17 @@ public class MainActivity extends AppCompatActivity {
             if (binding.navView.getSelectedItemId() != itemId) {
                 binding.navView.setSelectedItemId(itemId);
             }
-            viewModel.setCurrentNavigationItem(itemId);
+            viewModel.setLiveData(itemId);
         });
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        if (navController == null || appBarConfiguration == null) {
-            return super.onSupportNavigateUp();
-        }
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-            || super.onSupportNavigateUp();
     }
 
     private void setupEdgeToEdge() {
         // 设置导航栏颜色
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            getWindow().setNavigationBarContrastEnforced(false);
+        Window window = getWindow();
+        if (window == null) {
+            return;
         }
+        window.setNavigationBarContrastEnforced(false);
     }
 
     @Override
