@@ -14,7 +14,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void setPageBackground() {
-        baseBinding.backgroundImage.setImageResource(R.mipmap.home_page_bg);
+        baseBinding.backgroundImage.setImageResource(R.drawable.home_page_bg);
     }
 
     @Override

@@ -14,8 +14,6 @@ import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
 public class DashboardFragment extends BaseFragment {
-    private static final String TAG = "DashboardFragment";
-
     private FragmentDashboardBinding binding;
 
     private DashboardViewModel viewModel;
@@ -24,7 +22,7 @@ public class DashboardFragment extends BaseFragment {
 
     @Override
     protected void setPageBackground() {
-        baseBinding.backgroundImage.setBackgroundResource(R.mipmap.dashboard_page_bg);
+        baseBinding.backgroundImage.setBackgroundResource(R.drawable.dashboard_page_bg);
     }
 
     @Override
