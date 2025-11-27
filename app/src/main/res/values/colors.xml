@@ -10,6 +10,7 @@
     <color name="ajstudy_default_color_secondary">#03dac6</color>
     <color name="ajstudy_default_color_secondary_variant">#018786</color>
     <color name="ajstudy_default_color_on_secondary">#000000</color>
+    <color name="ajstudy_bottom_nav_bg_blur">#f2ffffff</color>
 
     <color name="abc_decor_view_status_guard">#ff000000</color>
     <color name="abc_decor_view_status_guard_light">#ffffffff</color>
