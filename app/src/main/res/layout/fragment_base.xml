@@ -21,7 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        android:elevation="0dp"
         android:fitsSystemWindows="true"
+        android:stateListAnimator="@null"
+        app:elevation="0dp"
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -29,6 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:elevation="0dp"
             app:titleTextColor="@color/ajstudy_appbar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
