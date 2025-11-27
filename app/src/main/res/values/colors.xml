@@ -13,6 +13,7 @@
     <color name="ajstudy_default_color_on_secondary">#000000</color>
     <color name="ajstudy_bottom_nav_bg_blur">#f2ffffff</color>
     <color name="ajstudy_appbar_title">#e5000000</color>
+    <color name="ajstudy_splash_page_bg">#ffffff</color>
 
     <color name="abc_decor_view_status_guard">#ff000000</color>
     <color name="abc_decor_view_status_guard_light">#ffffffff</color>

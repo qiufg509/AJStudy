@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 完全恢复主题
+        setTheme(R.style.Theme_AJStudy);
         super.onCreate(savedInstanceState);
         StatusBarUtil.makeStatusBarTransparent(this);
 

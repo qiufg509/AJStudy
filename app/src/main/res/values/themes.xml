@@ -26,4 +26,16 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Theme.App.Splash" parent="Theme.Material3.DayNight">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_splash_page_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
