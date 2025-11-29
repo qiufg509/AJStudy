@@ -1,6 +1,9 @@
 package com.qiufengguang.ajstudy.activity;
 
+import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +14,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.activity.login.LoginActivity;
+import com.qiufengguang.ajstudy.data.LoginAction;
 import com.qiufengguang.ajstudy.databinding.ActivityMainBinding;
+import com.qiufengguang.ajstudy.global.GlobalApp;
+import com.qiufengguang.ajstudy.global.GlobalViewModel;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private MainViewModel viewModel;
+
+    private GlobalViewModel globalVm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+        Application application = getApplication();
+        if (application instanceof GlobalApp) {
+            globalVm = ((GlobalApp) application).getGlobalViewModel();
+            globalVm.getLoginLiveData().observe(this, loginAction -> {
+                if (!loginAction.isLoggedIn()) {
+                    return;
+                }
+                if (!TextUtils.equals(loginAction.getOriginalPage(), MainActivity.class.getName())) {
+                    return;
+                }
+                int destinationId = loginAction.getDestinationId();
+                binding.navView.setSelectedItemId(destinationId);
+                viewModel.setLiveData(destinationId);
+            });
+        }
 
         setupEdgeToEdge();
         setupNavigation();
@@ -57,14 +81,21 @@ public class MainActivity extends AppCompatActivity {
         // 仅设置底部导航与导航控制器的绑定
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        // 添加目的地改变监听器来更新选中状态
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            int itemId = destination.getId();
-            // 防止重复设置导致闪烁
-            if (binding.navView.getSelectedItemId() != itemId) {
-                binding.navView.setSelectedItemId(itemId);
+        binding.navView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_notifications) {
+                if (globalVm == null || !globalVm.isLoggedIn()) {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra(LoginAction.ORIGINAL_PAGE, MainActivity.class.getName());
+                    intent.putExtra(LoginAction.DESTINATION_ID, itemId);
+                    startActivity(intent);
+                    // 跳转登录页面
+                    return false;
+                }
             }
+            navController.navigate(itemId);
             viewModel.setLiveData(itemId);
+            return true;
         });
     }
 

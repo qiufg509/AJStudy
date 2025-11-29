@@ -4,14 +4,20 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
+
+import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.network.LoginRepository;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 public class GlobalApp extends Application implements ViewModelStoreOwner {
     private final ViewModelStore viewModelStore = new ViewModelStore();
+
+    private ViewModelProvider viewModelProvider;
 
     private static WeakReference<Context> contextReference;
 
@@ -25,6 +31,8 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
     public void onCreate() {
         super.onCreate();
         contextReference = new WeakReference<>(this.getApplicationContext());
+        // 初始化全局配置
+        initializeApp();
     }
 
     public static Context getContext() {
@@ -35,6 +43,28 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
     public void onTerminate() {
         viewModelStore.clear();
         contextReference.clear();
+        viewModelProvider = null;
         super.onTerminate();
+    }
+
+    /**
+     * 获取全局 ViewModel
+     *
+     * @return GlobalViewModel
+     */
+    public GlobalViewModel getGlobalViewModel() {
+        if (viewModelProvider == null) {
+            viewModelProvider = new ViewModelProvider(this);
+        }
+        return viewModelProvider.get(GlobalViewModel.class);
+    }
+
+    private void initializeApp() {
+        // 从 SharedPreferences 或其他存储检查登录状态
+        LoginRepository userRepository = new LoginRepository();
+        User savedUser = userRepository.getSavedUser();
+
+        GlobalViewModel globalViewModel = getGlobalViewModel();
+        globalViewModel.setCurrentUser(savedUser);
     }
 }

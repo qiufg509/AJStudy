@@ -27,4 +27,13 @@ public interface Constant {
      */
     String LIST_CONTENT_FILE = "dashboard_list_data.json";
 
+    /**
+     * 启动登录页面action
+     */
+    String START_ACTIVITY_ACTION_LOGIN = "com.qiufengguang.ajstudy.action.LOGIN";
+
+    /**
+     * 启动页面uri
+     */
+    String START_ACTIVITY_URI = "ajstudy://com.qfguang";
 }

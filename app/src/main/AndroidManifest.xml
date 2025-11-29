@@ -28,7 +28,33 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <!--DeepLink跳转-->
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.qfguang"
+                    android:scheme="ajstudy" />
+            </intent-filter>
+            <intent-filter>
+                <!--隐式跳转-->
+                <action android:name="com.qiufengguang.ajstudy.action.LOGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.qfguang"
+                    android:scheme="ajstudy" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.login.LoginActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.App.Login"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
 
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->
         <meta-data

@@ -15,6 +15,31 @@
     <color name="ajstudy_appbar_title">#e5000000</color>
     <color name="ajstudy_splash_page_bg">#ffffff</color>
 
+    <!-- 基础颜色 -->
+    <color name="wechat_green">#07C160</color>
+    <color name="wechat_green_dark">#069C4C</color>
+
+    <!-- 文本颜色 -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_hint">#999999</color>
+    <color name="text_error">#FF0000</color>
+
+    <!-- 边框和背景颜色 -->
+    <color name="border_normal">#DDDDDD</color>
+    <color name="border_error">#FF0000</color>
+    <color name="background_gray">#F5F5F5</color>
+
+    <!-- TextInputLayout 专用颜色 -->
+    <color name="counter_text_color">#999999</color>
+    <color name="hint_text_color">#999999</color>
+    <color name="box_stroke_color">#DDDDDD</color>
+    <color name="box_stroke_error_color">#FF0000</color>
+
+    <!-- 状态颜色 -->
+    <color name="color_accent">#07C160</color>
+
+
     <color name="abc_decor_view_status_guard">#ff000000</color>
     <color name="abc_decor_view_status_guard_light">#ffffffff</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
