@@ -1,257 +1,300 @@
 [
   {
+    "id": 1,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/0d40e120a1ff40acb35421f37c120fa0.webp",
     "title": "健康助手",
     "subtitle": "智能健康管理",
     "brief": "专业的健康数据追踪和分析应用，帮助您监控身体状况和运动数据"
   },
   {
+    "id": 2,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/0d48e783df0342bd973e200eb57df224.webp",
     "title": "音乐世界",
     "subtitle": "海量音乐在线听",
     "brief": "拥有数百万首歌曲的音乐平台，个性化推荐您喜欢的音乐类型"
   },
   {
+    "id": 3,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/143847e24438405393ddf4a609c659a5.webp",
     "title": "视频播放器",
     "subtitle": "高清视频体验",
     "brief": "支持多种格式的高清视频播放器，提供流畅的观影体验"
   },
   {
+    "id": 4,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/2250b338b8a04339a65659ef53299fd2_1.webp",
     "title": "地图导航",
     "subtitle": "精准路线规划",
     "brief": "实时路况更新，智能路线规划，助您轻松到达目的地"
   },
   {
+    "id": 5,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/260e670099534bb68ca46c79e3382fe3.webp",
     "title": "社交聊天",
     "subtitle": "随时联系好友",
     "brief": "即时通讯应用，支持文字、语音、视频多种沟通方式"
   },
   {
+    "id": 6,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/2accb142b3d44cf09c26aeaf1ed7c4c6.webp",
     "title": "新闻资讯",
     "subtitle": "热点时事速递",
     "brief": "聚合各大媒体新闻源，第一时间了解国内外重要事件"
   },
   {
+    "id": 7,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/3b889df1cd0849ffac0f79dedec1254c.webp",
     "title": "天气预报",
     "subtitle": "精准气象服务",
     "brief": "提供未来15天天气预报，包含温度、湿度、空气质量等详细信息"
   },
   {
+    "id": 8,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/3b9072f421b14952bc683a62a361881d.webp",
     "title": "文件管理器",
     "subtitle": "高效文件管理",
     "brief": "手机文件整理专家，轻松管理文档、图片、视频等各类文件"
   },
   {
+    "id": 9,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/4018d8d467aa438ba5cd1a75625acf6b.webp",
     "title": "相机",
     "subtitle": "智能美颜拍照",
     "brief": "多功能相机应用，提供多种滤镜和美颜效果，记录美好瞬间"
   },
   {
+    "id": 10,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/40aba6af81b64b6598ce284d2c95e583.webp",
     "title": "图库",
     "subtitle": "照片智能管理",
     "brief": "相册管理工具，自动分类整理照片，支持云端备份"
   },
   {
+    "id": 11,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/5788ddd487e245b39c32469e8d4e85c2.webp",
     "title": "日历",
     "subtitle": "日程规划助手",
     "brief": "个人时间管理工具，帮助您合理安排日程和重要事项"
   },
   {
+    "id": 12,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/57d985ec4c434d2bac6f82316e56966e.webp",
     "title": "时钟",
     "subtitle": "闹钟与计时器",
     "brief": "多功能时钟应用，包含闹钟、秒表、倒计时等功能"
   },
   {
+    "id": 13,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6059a30ed9784326a4419a8e6f18a8d0_11.webp",
     "title": "计算器",
     "subtitle": "科学计算工具",
     "brief": "支持基础运算和科学计算的多功能计算器应用"
   },
   {
+    "id": 14,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6213d5f8d07f444a8c8ec00faf6c0f61.webp",
     "title": "备忘录",
     "subtitle": "随手记录灵感",
     "brief": "简洁易用的笔记应用，随时随地记录您的想法和待办事项"
   },
   {
+    "id": 15,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6ca7ed7c34224306b7c800034b8f9629.webp",
     "title": "电子邮件",
     "subtitle": "多账户邮件管理",
     "brief": "支持多个邮箱账户的统一管理，高效处理工作生活邮件"
   },
   {
+    "id": 16,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6d67a98f96464d4aaec70edb5f0cd04d.webp",
     "title": "浏览器",
     "subtitle": "快速安全上网",
     "brief": "轻量级网页浏览器，提供安全快速的网络浏览体验"
   },
   {
+    "id": 17,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/7784fc4cbb264fbe81abda4170e289cf_8.webp",
     "title": "应用商店",
     "subtitle": "海量应用下载",
     "brief": "官方应用市场，提供安全可靠的应用下载和更新服务"
   },
   {
+    "id": 18,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/791a54b41f7f41baa8c05e954f87a8f2.webp",
     "title": "游戏中心",
     "subtitle": "精品游戏推荐",
     "brief": "游戏爱好者聚集地，发现最新最热的手机游戏"
   },
   {
+    "id": 19,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/7961053e5fe747edb9426a3f80eda8db.webp",
     "title": "设置",
     "subtitle": "系统配置管理",
     "brief": "设备设置中心，管理系统各项功能和参数"
   },
   {
+    "id": 20,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/8936d855b61645238c38270bb2075555.webp",
     "title": "电话",
     "subtitle": "智能通讯",
     "brief": "手机拨号应用，支持智能拨号和联系人快速查找"
   },
   {
+    "id": 21,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/8964d2fe4fc447978d22cd410e563361.webp",
     "title": "联系人",
     "subtitle": "通讯录管理",
     "brief": "联系人管理工具，支持分组管理和快速搜索"
   },
   {
+    "id": 22,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/8fe92e765e2e45df832d08a35a70bc78.webp",
     "title": "短信",
     "subtitle": "即时消息",
     "brief": "短信收发应用，支持群发和垃圾短信过滤"
   },
   {
+    "id": 23,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/98d115dfcc2347cca1e60c3b61cdce76.webp",
     "title": "相机滤镜",
     "subtitle": "创意照片编辑",
     "brief": "提供多种艺术滤镜和编辑工具，让照片更加出色"
   },
   {
+    "id": 24,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a146b52173084cca9a4c72914903be92.webp",
     "title": "翻译工具",
     "subtitle": "多语言互译",
     "brief": "支持多种语言的实时翻译，打破语言沟通障碍"
   },
   {
+    "id": 25,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a1b83b8ccb174fc29d9e1b760d16c626.webp",
     "title": "股票市场",
     "subtitle": "实时行情分析",
     "brief": "股票行情追踪应用，提供专业的数据分析和投资建议"
   },
   {
+    "id": 26,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a2d39f3581f34ac189f6948f6f1d8ad7.webp",
     "title": "健身追踪",
     "subtitle": "运动数据记录",
     "brief": "运动健身助手，记录步数、卡路里消耗等健康数据"
   },
   {
+    "id": 27,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a9103b0e617c47a4afb5f40e092a597b.webp",
     "title": "音乐识别",
     "subtitle": "听歌识曲",
     "brief": "快速识别周围播放的音乐，一键获取歌曲信息"
   },
   {
+    "id": 28,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/ae8d3f43d41d47d8a4f12d4ec86941f1.webp",
     "title": "语音助手",
     "subtitle": "智能语音交互",
     "brief": "人工智能语音助手，通过语音指令完成各种操作"
   },
   {
+    "id": 29,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b0a860e6f1a04dac9c16ba6001f3583c.webp",
     "title": "智能家居",
     "subtitle": "家电远程控制",
     "brief": "智能家居控制中心，远程管理家中各类智能设备"
   },
   {
+    "id": 30,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b27bb5797eba4701b7450391498f60cf.webp",
     "title": "打车软件",
     "subtitle": "便捷出行服务",
     "brief": "在线打车平台，快速呼叫附近车辆，享受便捷出行"
   },
   {
+    "id": 31,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b2ebe0b8b2764d12a39691bcde666a45.webp",
     "title": "外卖订购",
     "subtitle": "美食快速送达",
     "brief": "在线外卖平台，丰富美食选择，快速配送到家"
   },
   {
+    "id": 32,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b2f159d593564e25a62ac9e5f46a0994_1.webp",
     "title": "旅行规划",
     "subtitle": "智能行程安排",
     "brief": "旅行助手应用，帮助规划行程、预订酒店和机票"
   },
   {
+    "id": 33,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b727a6e0df8c4ef5ae39ea7039d05be9_17.webp",
     "title": "笔记应用",
     "subtitle": "云端同步笔记",
     "brief": "支持多设备同步的笔记应用，随时随地记录和查看"
   },
   {
+    "id": 34,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b91765454fb44aaaa9c2ea45e6b74ed5.webp",
     "title": "PDF阅读器",
     "subtitle": "文档阅读工具",
     "brief": "专业的PDF文档阅读器，支持注释和书签功能"
   },
   {
+    "id": 35,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b977fdfbf1264387beb18d8426f3b7e9.webp",
     "title": "扫描仪",
     "subtitle": "文档扫描识别",
     "brief": "手机扫描仪应用，将纸质文档快速转换为电子版"
   },
   {
+    "id": 36,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b9a96a8f4bbc488695333465fe77da86.webp",
     "title": "二维码生成器",
     "subtitle": "二维码创建扫描",
     "brief": "生成和扫描二维码工具，方便信息分享和获取"
   },
   {
+    "id": 37,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/c8c9e9d12fd9440c92b9bec3f41af522_2.webp",
     "title": "无线传输",
     "subtitle": "文件快速共享",
     "brief": "跨设备文件传输工具，无需流量快速分享文件"
   },
   {
+    "id": 38,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/d527b5207e4c48d59aaf3f176a2391f3_1.webp",
     "title": "系统清理",
     "subtitle": "手机优化加速",
     "brief": "系统清理工具，释放存储空间，提升手机运行速度"
   },
   {
+    "id": 39,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/d9c214caa28c421aa4cb7392c7dfeba5.webp",
     "title": "电池管理",
     "subtitle": "电量优化助手",
     "brief": "电池状态监控和优化工具，延长电池使用寿命"
   },
   {
+    "id": 40,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/d9cac8963f444b31a576184be7e909dd.webp",
     "title": "安全中心",
     "subtitle": "手机安全防护",
     "brief": "全方位手机安全保护，防病毒、防骚扰、隐私保护"
   },
   {
+    "id": 41,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/ee9a349896524834b29d980feddc31d0.webp",
     "title": "儿童模式",
     "subtitle": "亲子内容管理",
     "brief": "儿童专用模式，提供适宜内容并限制使用时间"
   },
   {
+    "id": 42,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/fc88084336a541b39a85c00beaf14a83.webp",
     "title": "驾驶模式",
     "subtitle": "车载智能助手",
     "brief": "专为驾驶场景设计的模式，提供导航和语音控制功能"
   },
   {
+    "id": 43,
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/ffc115195b78417da686f4c30fcb63f6.webp",
     "title": "办公套件",
     "subtitle": "移动办公平台",

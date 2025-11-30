@@ -7,10 +7,19 @@ import androidx.annotation.NonNull;
 import java.util.Objects;
 
 public class DashboardBean {
+    private int id;
     private String icon;
     private String title;
     private String subtitle;
     private String brief;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = this.hashCode();
+    }
 
     public String getIcon() {
         return icon;

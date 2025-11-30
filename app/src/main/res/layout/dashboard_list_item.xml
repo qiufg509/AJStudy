@@ -15,16 +15,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
+    <com.qiufengguang.ajstudy.view.RoundedFrameLayout
         android:id="@+id/fl_container"
         android:layout_width="@dimen/dashboard_item_icon_size"
         android:layout_height="@dimen/dashboard_item_icon_size"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:duplicateParentState="true"
+        app:corner_radius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,7 +45,7 @@
             android:contentDescription="@null"
             android:duplicateParentState="true"
             android:src="@drawable/image_mask_selector" />
-    </FrameLayout>
+    </com.qiufengguang.ajstudy.view.RoundedFrameLayout>
 
     <TextView
         android:id="@+id/tv_title"
@@ -90,12 +90,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fl_container" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

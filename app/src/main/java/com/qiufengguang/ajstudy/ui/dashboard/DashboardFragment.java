@@ -2,15 +2,17 @@ package com.qiufengguang.ajstudy.ui.dashboard;
 
 import android.view.LayoutInflater;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.qiufengguang.ajstudy.global.Constant;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
 public class DashboardFragment extends BaseFragment {
@@ -55,17 +57,23 @@ public class DashboardFragment extends BaseFragment {
         RecyclerView recyclerView = binding.getRoot();
         switch (columnCount) {
             case Constant.Grid.column_8:
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
                 break;
             case Constant.Grid.column_12:
-                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+                recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
                 break;
             default:
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 break;
         }
         adapter = new DashboardAdapter(viewModel.getLiveData().getValue());
         recyclerView.setAdapter(adapter);
+        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+        divider.setDividerThickness(1);
+        int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider_horizontal);
+        divider.setDividerColor(color);
+        divider.setLastItemDecorated(false);
+        recyclerView.addItemDecoration(divider);
     }
 
     @Override

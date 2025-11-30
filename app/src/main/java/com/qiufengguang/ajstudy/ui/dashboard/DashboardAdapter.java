@@ -1,10 +1,8 @@
 package com.qiufengguang.ajstudy.ui.dashboard;
 
-import android.graphics.Outline;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,15 +10,16 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.DashboardBean;
 import com.qiufengguang.ajstudy.databinding.DashboardListItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder> {
-
     private List<DashboardBean> beans;
 
     public DashboardAdapter(List<DashboardBean> beans) {
@@ -28,11 +27,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     }
 
     public void setData(List<DashboardBean> list) {
-        if (this.beans == list) {
+        if (Objects.equals(this.beans, list)) {
             return;
         }
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
-            new ItemDiffCallback(this.beans, list));
+            new ItemDiffCallback(this.beans, list), true);
         this.beans = list;
         diffResult.dispatchUpdatesTo(this);
     }
@@ -51,30 +50,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     @Override
     public void onBindViewHolder(@NonNull DashboardViewHolder holder, int position) {
-        if (getItemCount() <= 0) {
-            return;
-        }
-        holder.binding.flContainer.setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                int radius = view.getResources().getDimensionPixelSize(
-                    R.dimen.dashboard_item_img_radius);
-                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
-            }
-        });
-        holder.binding.flContainer.setClipToOutline(true);
         int adapterPosition = holder.getAdapterPosition();
-        holder.binding.divider.setVisibility(adapterPosition == 0 ? View.GONE : View.VISIBLE);
         DashboardBean bean = this.beans.get(adapterPosition);
-        Glide.with(holder.binding.getRoot().getContext())
-            .load(bean.getIcon())
-            .placeholder(R.drawable.item_icon_placeholder)
-            .into(holder.binding.ivIcon);
-        holder.binding.tvTitle.setText(bean.getTitle());
-        holder.binding.tvSubtitle.setText(bean.getSubtitle());
-        holder.binding.tvBrief.setText(bean.getBrief());
-        holder.binding.getRoot().setOnClickListener(v ->
-            Toast.makeText(v.getContext(), bean.getTitle(), Toast.LENGTH_SHORT).show());
+        holder.bind(bean);
     }
 
 
@@ -85,15 +63,54 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             super(binding.getRoot());
             this.binding = binding;
         }
+
+        /**
+         * 绑定数据到View，避免重复设置相同属性
+         */
+        public void bind(DashboardBean bean) {
+            // 优化Glide加载，添加错误处理和进度指示
+            if (!TextUtils.isEmpty(bean.getIcon())) {
+                Glide.with(binding.getRoot().getContext())
+                    .load(bean.getIcon())
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .placeholder(R.drawable.item_icon_placeholder)
+                    .into(binding.ivIcon);
+            } else {
+                binding.ivIcon.setImageResource(R.drawable.item_icon_placeholder);
+            }
+
+            CharSequence title = binding.tvTitle.getText();
+            if (title == null || !title.equals(bean.getTitle())) {
+                binding.tvTitle.setText(bean.getTitle());
+            }
+
+            CharSequence subtitle = binding.tvSubtitle.getText();
+            if (subtitle == null || !subtitle.equals(bean.getSubtitle())) {
+                binding.tvSubtitle.setText(bean.getSubtitle());
+            }
+
+            CharSequence brief = binding.tvBrief.getText();
+            if (brief == null || !brief.equals(bean.getBrief())) {
+                binding.tvBrief.setText(bean.getBrief());
+            }
+
+            // 优化点击事件，使用单个监听器
+            binding.getRoot().setOnClickListener(v ->
+                Toast.makeText(v.getContext(), bean.getTitle(), Toast.LENGTH_SHORT).show());
+        }
     }
 
     public static class ItemDiffCallback extends DiffUtil.Callback {
-        private final List<DashboardBean> oldList;
-        private final List<DashboardBean> newList;
+        private List<DashboardBean> oldList;
+        private List<DashboardBean> newList;
 
         public ItemDiffCallback(List<DashboardBean> oldList, List<DashboardBean> newList) {
-            this.oldList = oldList;
-            this.newList = newList;
+            if (oldList != null) {
+                this.oldList = new ArrayList<>(oldList);
+            }
+            if (newList != null) {
+                this.newList = new ArrayList<>(newList);
+            }
         }
 
         @Override

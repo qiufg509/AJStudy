@@ -14,6 +14,7 @@
     <color name="ajstudy_bottom_nav_bg_blur">#f2ffffff</color>
     <color name="ajstudy_appbar_title">#e5000000</color>
     <color name="ajstudy_splash_page_bg">#ffffff</color>
+    <color name="ajstudy_color_divider_horizontal">#33000000</color>
 
     <!-- 基础颜色 -->
     <color name="wechat_green">#07C160</color>
