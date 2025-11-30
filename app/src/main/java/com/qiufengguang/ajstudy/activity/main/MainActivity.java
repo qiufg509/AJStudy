@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Window;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.NavGraph;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -64,8 +68,21 @@ public class MainActivity extends AppCompatActivity {
 
         setupEdgeToEdge();
         setupNavigation();
+        setupCustomBackNavigation();
     }
 
+    private void setupEdgeToEdge() {
+        // 设置导航栏颜色
+        Window window = getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setNavigationBarContrastEnforced(false);
+    }
+
+    /**
+     * 导航设置
+     */
     private void setupNavigation() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
             .findFragmentById(R.id.nav_host_fragment_activity_main);
@@ -99,13 +116,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupEdgeToEdge() {
-        // 设置导航栏颜色
-        Window window = getWindow();
-        if (window == null) {
-            return;
-        }
-        window.setNavigationBarContrastEnforced(false);
+    /**
+     * 返回处理
+     */
+    private void setupCustomBackNavigation() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                NavController navController = Navigation.findNavController(
+                    MainActivity.this, R.id.nav_host_fragment_activity_main);
+
+                NavDestination currentDestination = navController.getCurrentDestination();
+                if (currentDestination == null) {
+                    return;
+                }
+                if (currentDestination.getId() == R.id.navigation_home) {
+                    finish();
+                    return;
+                }
+                // 非首页：直接回到首页
+                NavOptions navOptions = new NavOptions.Builder()
+                    .setPopUpTo(R.id.navigation_home, false)
+                    .setLaunchSingleTop(true)
+                    .build();
+                navController.navigate(R.id.navigation_home, null, navOptions);
+            }
+        });
     }
 
     @Override

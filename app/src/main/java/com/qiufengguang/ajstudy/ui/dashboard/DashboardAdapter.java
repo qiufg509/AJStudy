@@ -68,7 +68,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         DashboardBean bean = this.beans.get(adapterPosition);
         Glide.with(holder.binding.getRoot().getContext())
             .load(bean.getIcon())
-            .error(R.drawable.item_icon_error)
+            .placeholder(R.drawable.item_icon_placeholder)
             .into(holder.binding.ivIcon);
         holder.binding.tvTitle.setText(bean.getTitle());
         holder.binding.tvSubtitle.setText(bean.getSubtitle());
