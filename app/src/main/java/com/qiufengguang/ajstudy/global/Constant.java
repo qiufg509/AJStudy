@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy;
+package com.qiufengguang.ajstudy.global;
 
 public interface Constant {
 
@@ -36,4 +36,9 @@ public interface Constant {
      * 启动页面uri
      */
     String START_ACTIVITY_URI = "ajstudy://com.qfguang";
+
+    /**
+     * token失效时长 1周
+     */
+    long TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000L;
 }

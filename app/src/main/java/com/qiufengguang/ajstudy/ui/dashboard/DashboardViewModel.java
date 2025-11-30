@@ -9,7 +9,7 @@ import androidx.lifecycle.SavedStateHandle;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qiufengguang.ajstudy.Constant;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.data.DashboardBean;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.ui.base.BaseViewModel;

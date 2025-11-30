@@ -5,7 +5,8 @@ public class LoginResult {
     public enum Status {
         SUCCESS,
         ERROR,
-        LOADING
+        LOADING,
+        INVALID
     }
 
     private Status status;

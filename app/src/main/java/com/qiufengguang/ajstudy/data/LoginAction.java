@@ -17,6 +17,13 @@ public class LoginAction {
 
     private @IdRes int destinationId;
 
+    public LoginAction() {
+    }
+
+    public LoginAction(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+
     public boolean isLoggedIn() {
         return isLoggedIn;
     }

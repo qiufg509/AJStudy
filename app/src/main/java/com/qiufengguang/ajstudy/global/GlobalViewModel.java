@@ -1,5 +1,4 @@
 package com.qiufengguang.ajstudy.global;
-// GlobalViewModel.java
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -38,6 +37,17 @@ public class GlobalViewModel extends ViewModel {
     }
 
     public void setLoginAction(LoginAction action) {
+        loginLiveData.setValue(action);
+    }
+
+    public void resetLoginAction() {
+        LoginAction action = loginLiveData.getValue();
+        if (action == null) {
+            return;
+        }
+        action.setOriginalPage("");
+        action.setDestinationAction("");
+        action.setDestinationId(-1);
         loginLiveData.setValue(action);
     }
 

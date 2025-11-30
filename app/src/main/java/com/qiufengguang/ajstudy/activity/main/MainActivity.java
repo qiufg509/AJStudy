@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.activity;
+package com.qiufengguang.ajstudy.activity.main;
 
 import android.app.Application;
 import android.content.Intent;
@@ -118,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (globalVm != null) {
+            globalVm.getLoginLiveData().removeObservers(this);
+            globalVm.resetLoginAction();
+        }
         binding = null;
     }
 }

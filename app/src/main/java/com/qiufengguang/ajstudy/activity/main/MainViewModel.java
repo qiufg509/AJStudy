@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.activity;
+package com.qiufengguang.ajstudy.activity.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

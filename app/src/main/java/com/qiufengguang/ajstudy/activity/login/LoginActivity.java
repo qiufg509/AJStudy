@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.data.LoginAction;
-import com.qiufengguang.ajstudy.data.LoginResult;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.databinding.ActivityLoginBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
@@ -22,6 +22,7 @@ import com.qiufengguang.ajstudy.global.GlobalViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
+
     private LoginViewModel loginViewModel;
 
     @Override
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         initView();
         initObservers();
-        loadSavedUser();
+        loginViewModel.loadSavedUser();
     }
 
     private void initView() {
@@ -70,8 +71,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initObservers() {
         loginViewModel.getLoginResult().observe(this, result -> {
-            if (result == null) return;
-
+            if (result == null) {
+                return;
+            }
             switch (result.getStatus()) {
                 case LOADING:
                     showLoading(true);
@@ -84,35 +86,38 @@ public class LoginActivity extends AppCompatActivity {
                     showLoading(false);
                     handleLoginError(result.getMessage());
                     break;
+                case INVALID:
+                    handleLoginInvalid(result.getUser());
+                    break;
             }
         });
     }
 
-    private void loadSavedUser() {
-        loginViewModel.loadSavedUser();
-        loginViewModel.getLoginResult().observe(this, result -> {
-            if (result != null && result.getStatus() == LoginResult.Status.SUCCESS && result.getUser() != null) {
-                User user = result.getUser();
-                binding.etPhone.setText(user.getPhone());
-                binding.etPassword.setText(user.getPassword());
-                binding.cbRememberPwd.setChecked(user.isRememberPwd());
-                validateInputs();
-            }
-        });
+    private void handleLoginInvalid(User user) {
+        if (user == null || !user.isRememberPwd()) {
+            return;
+        }
+        binding.etPhone.setText(user.getPhone());
+        binding.etPassword.setText(user.getPassword());
+        binding.cbRememberPwd.setChecked(true);
+        validateInputs();
     }
 
     private void attemptLogin() {
-        String phone = binding.etPhone.getText().toString().trim();
-        String password = binding.etPassword.getText().toString().trim();
+        Editable phoneText = binding.etPhone.getText();
+        String phone = TextUtils.isEmpty(phoneText) ? "" : phoneText.toString().trim();
+        Editable passwordText = binding.etPassword.getText();
+        String password = TextUtils.isEmpty(passwordText) ? "" : passwordText.toString().trim();
         boolean rememberPwd = binding.cbRememberPwd.isChecked();
 
         loginViewModel.login(phone, password, rememberPwd);
     }
 
     private void validateInputs() {
-        String phone = binding.etPhone.getText().toString().trim();
-        String password = binding.etPassword.getText().toString().trim();
-
+        Editable phoneText = binding.etPhone.getText();
+        String phone = TextUtils.isEmpty(phoneText) ? "" : phoneText.toString().trim();
+        Editable passwordText = binding.etPassword.getText();
+        String password = TextUtils.isEmpty(passwordText) ? "" : passwordText.toString().trim();
         boolean isValid = !phone.isEmpty() && !password.isEmpty();
         binding.btnLogin.setEnabled(isValid);
     }
@@ -128,9 +133,8 @@ public class LoginActivity extends AppCompatActivity {
         if (application instanceof GlobalApp) {
             GlobalViewModel globalViewModel = ((GlobalApp) application).getGlobalViewModel();
             globalViewModel.setCurrentUser(user);
-            LoginAction loginAction = new LoginAction();
             Intent intent = getIntent();
-            loginAction.setLoggedIn(user != null);
+            LoginAction loginAction = new LoginAction(true);
             loginAction.setOriginalPage(intent.getStringExtra(LoginAction.ORIGINAL_PAGE));
             loginAction.setDestinationAction(intent.getStringExtra(LoginAction.DESTINATION_ACTION));
             loginAction.setDestinationId(intent.getIntExtra(LoginAction.DESTINATION_ID, -1));
@@ -146,10 +150,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (loginViewModel != null) {
+            loginViewModel.release();
+        }
         binding = null;
     }
 
-    // 简化的TextWatcher
+    /**
+     * 简化的TextWatcher
+     */
     private abstract static class SimpleTextWatcher implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

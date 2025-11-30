@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.activity.login;
 
 // LoginViewModel.java
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -41,9 +42,8 @@ public class LoginViewModel extends ViewModel {
         loginRepository.login(phone, password, new LoginCallback() {
             @Override
             public void onSuccess(User user) {
-                if (rememberPwd) {
-                    loginRepository.saveUserInfo(user);
-                }
+                user.setRememberPwd(rememberPwd);
+                loginRepository.saveUserInfo(user);
                 loginResult.postValue(new LoginResult(LoginResult.Status.SUCCESS, "登录成功", user));
             }
 
@@ -64,8 +64,17 @@ public class LoginViewModel extends ViewModel {
 
     public void loadSavedUser() {
         User savedUser = loginRepository.getSavedUser();
-        if (savedUser != null) {
-            loginResult.setValue(new LoginResult(LoginResult.Status.SUCCESS, "", savedUser));
+        if (savedUser == null) {
+            return;
+        }
+        LoginResult.Status status = savedUser.isInvalid() ? LoginResult.Status.INVALID
+            : LoginResult.Status.SUCCESS;
+        loginResult.setValue(new LoginResult(status, "", savedUser));
+    }
+
+    public void release() {
+        if (loginRepository != null) {
+            loginRepository.release();
         }
     }
 }

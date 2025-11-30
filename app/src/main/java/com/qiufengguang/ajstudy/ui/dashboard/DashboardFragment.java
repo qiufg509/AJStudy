@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.qiufengguang.ajstudy.Constant;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;

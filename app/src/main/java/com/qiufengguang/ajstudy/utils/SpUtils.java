@@ -1,7 +1,5 @@
 package com.qiufengguang.ajstudy.utils;
 
-// SharedPreferencesManager.java
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -18,6 +16,9 @@ public class SpUtils {
 
     public SpUtils() {
         Context context = GlobalApp.getContext();
+        if (context == null) {
+            throw new RuntimeException("The global Context has been recycled.");
+        }
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
     }

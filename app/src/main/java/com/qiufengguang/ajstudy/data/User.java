@@ -1,21 +1,24 @@
 package com.qiufengguang.ajstudy.data;
 
+import com.qiufengguang.ajstudy.global.Constant;
+
 // User.java
 public class User {
     private String phone;
     private String password;
     private boolean rememberPwd;
 
+    private long timestamp;
+
     public User() {
     }
 
-    public User(String phone, String password, boolean rememberPwd) {
+    public User(String phone, String password) {
         this.phone = phone;
         this.password = password;
-        this.rememberPwd = rememberPwd;
+        this.timestamp = System.currentTimeMillis();
     }
 
-    // Getters and Setters
     public String getPhone() {
         return phone;
     }
@@ -38,5 +41,22 @@ public class User {
 
     public void setRememberPwd(boolean rememberPwd) {
         this.rememberPwd = rememberPwd;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public boolean isInvalid() {
+        boolean isInvalid = System.currentTimeMillis() > this.timestamp + Constant.TOKEN_EXPIRY_TIME;
+        if (isInvalid) {
+            // 重置-1，避免将系统时间改回去绕过登录
+            this.timestamp = -1;
+        }
+        return isInvalid;
     }
 }

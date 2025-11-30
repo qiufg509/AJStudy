@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.qiufengguang.ajstudy.data.LoginAction;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.network.LoginRepository;
 
@@ -63,8 +64,16 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
         // 从 SharedPreferences 或其他存储检查登录状态
         LoginRepository userRepository = new LoginRepository();
         User savedUser = userRepository.getSavedUser();
-
+        if (savedUser == null) {
+            return;
+        }
         GlobalViewModel globalViewModel = getGlobalViewModel();
+        LoginAction action = new LoginAction(true);
+        if (savedUser.isInvalid()) {
+            userRepository.saveUserInfo(savedUser);
+            action.setLoggedIn(false);
+        }
+        globalViewModel.setLoginAction(action);
         globalViewModel.setCurrentUser(savedUser);
     }
 }
