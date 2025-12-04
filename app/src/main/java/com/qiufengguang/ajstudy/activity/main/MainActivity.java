@@ -38,15 +38,10 @@ public class MainActivity extends AppCompatActivity {
         // 完全恢复主题
         setTheme(R.style.Theme_AJStudy);
         super.onCreate(savedInstanceState);
-        StatusBarUtil.makeStatusBarTransparent(this);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // 彻底隐藏系统 ActionBar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+        StatusBarUtil.makeStatusBarTransparent(this);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
@@ -142,13 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.navigation_home, null, navOptions);
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // 确保状态栏设置持续有效
-        StatusBarUtil.makeStatusBarTransparent(this);
     }
 
     @Override

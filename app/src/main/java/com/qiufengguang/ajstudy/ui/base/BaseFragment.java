@@ -29,8 +29,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        StatusBarUtil.setLightStatusBar(requireActivity(), isDarkBackgroundImage());
 
-        StatusBarUtil.ensureTransparentStatusBar(requireActivity(), isDarkBackgroundImage());
         setPageBackground();
         setupToolbar();
         setupContent();
@@ -57,13 +57,6 @@ public abstract class BaseFragment extends Fragment {
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(null);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // 每次Fragment可见时确保状态栏设置
-        StatusBarUtil.ensureTransparentStatusBar(requireActivity(), isDarkBackgroundImage());
     }
 
     protected abstract void setPageBackground();
