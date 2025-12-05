@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // 登录按钮点击
         binding.btnLogin.setOnClickListener(v -> attemptLogin());
+        binding.flBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         // 其他登录方式
         binding.tvOtherLogin.setOnClickListener(v -> {
