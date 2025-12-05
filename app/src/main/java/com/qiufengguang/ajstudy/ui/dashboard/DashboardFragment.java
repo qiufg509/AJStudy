@@ -15,6 +15,12 @@ import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
+/**
+ * 列表页
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 22:12
+ */
 public class DashboardFragment extends BaseFragment {
     private FragmentDashboardBinding binding;
 

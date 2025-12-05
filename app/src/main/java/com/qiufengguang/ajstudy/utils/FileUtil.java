@@ -21,6 +21,9 @@ import java.util.Objects;
 
 /**
  * 文件操作工具类（内存安全/线程安全说明：所有方法均为同步方法，推荐在子线程中使用）
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 22:12
  */
 public class FileUtil {
     private static final String TAG = "FileUtil";

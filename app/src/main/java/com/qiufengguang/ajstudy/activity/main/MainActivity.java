@@ -25,6 +25,12 @@ import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
+/**
+ * 主页面
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 22:12
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;

@@ -7,6 +7,12 @@ import com.google.gson.Gson;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 
+/**
+ * SharedPreferences工具类
+ *
+ * @author qiufengguang
+ * @since 2025/11/30 2:15
+ */
 public class SpUtils {
     private static final String PREF_NAME = "wechat_login";
     private static final String KEY_USER_INFO = "user_info";

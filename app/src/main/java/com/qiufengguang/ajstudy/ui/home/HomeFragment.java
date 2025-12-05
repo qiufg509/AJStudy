@@ -8,6 +8,12 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentHomeBinding;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
+/**
+ * 首页Fragment
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 22:12
+ */
 public class HomeFragment extends BaseFragment {
 
     private FragmentHomeBinding binding;

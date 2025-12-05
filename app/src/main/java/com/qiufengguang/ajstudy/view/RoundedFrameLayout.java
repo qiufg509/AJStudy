@@ -10,6 +10,12 @@ import android.widget.FrameLayout;
 
 import com.qiufengguang.ajstudy.R;
 
+/**
+ * 圆角FrameLayout
+ *
+ * @author qiufengguang
+ * @since 2025/12/1 0:22
+ */
 public class RoundedFrameLayout extends FrameLayout {
     private float cornerRadius;
 

@@ -1,5 +1,11 @@
 package com.qiufengguang.ajstudy.global;
 
+/**
+ * 全局静态常量
+ *
+ * @author qiufengguang
+ * @since 2025/11/26 22:19
+ */
 public interface Constant {
 
     /**

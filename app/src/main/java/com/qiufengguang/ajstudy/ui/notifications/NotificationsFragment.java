@@ -8,6 +8,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.qiufengguang.ajstudy.databinding.FragmentNotificationsBinding;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
+/**
+ * 我的页面Fragment
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 22:12
+ */
 public class NotificationsFragment extends BaseFragment {
     private FragmentNotificationsBinding binding;
 

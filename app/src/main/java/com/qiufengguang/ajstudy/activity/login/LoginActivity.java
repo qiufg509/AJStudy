@@ -19,7 +19,12 @@ import com.qiufengguang.ajstudy.databinding.ActivityLoginBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
 
-
+/**
+ * 登录页面
+ *
+ * @author qiufengguang
+ * @since 2025/11/30 2:15
+ */
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
 

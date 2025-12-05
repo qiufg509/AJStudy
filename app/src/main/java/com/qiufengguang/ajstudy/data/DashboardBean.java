@@ -6,6 +6,12 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
+/**
+ * 列表页数据bean
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 23:54
+ */
 public class DashboardBean {
     private int id;
     private String icon;

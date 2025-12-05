@@ -6,6 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.R;
 
+/**
+ * 主页面ViewModel
+ *
+ * @author qiufengguang
+ * @since 2025/11/27 17:42
+ */
 public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> liveData = new MutableLiveData<>();
 

@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 列表页适配器
+ *
+ * @author qiufengguang
+ * @since 2025/11/26 22:19
+ */
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder> {
     private List<DashboardBean> beans;
 

@@ -1,6 +1,11 @@
 package com.qiufengguang.ajstudy.data;
 
-// LoginResult.java
+/**
+ * 登录操作响应结果
+ *
+ * @author qiufengguang
+ * @since 2025/11/30 2:15
+ */
 public class LoginResult {
     public enum Status {
         SUCCESS,

@@ -2,6 +2,12 @@ package com.qiufengguang.ajstudy.data;
 
 import androidx.annotation.IdRes;
 
+/**
+ * 登录跳转动作
+ *
+ * @author qiufengguang
+ * @since 2025/11/30 2:15
+ */
 public class LoginAction {
     public static final String ORIGINAL_PAGE = "originalPage";
 

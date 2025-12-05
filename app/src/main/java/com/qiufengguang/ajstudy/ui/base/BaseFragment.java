@@ -16,6 +16,12 @@ import androidx.fragment.app.FragmentActivity;
 import com.qiufengguang.ajstudy.databinding.FragmentBaseBinding;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
+/**
+ * 基类Fragment
+ *
+ * @author qiufengguang
+ * @since 2025/11/27 17:42
+ */
 public abstract class BaseFragment extends Fragment {
 
     protected FragmentBaseBinding baseBinding;

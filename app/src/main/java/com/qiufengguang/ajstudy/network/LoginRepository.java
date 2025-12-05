@@ -6,6 +6,12 @@ import android.os.HandlerThread;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 
+/**
+ * 登录操作
+ *
+ * @author qiufengguang
+ * @since 2025/11/30 2:15
+ */
 public class LoginRepository {
     private final SpUtils spManager;
 

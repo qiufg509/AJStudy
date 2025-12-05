@@ -20,6 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 列表页ViewModel
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 22:12
+ */
 public class DashboardViewModel extends BaseViewModel {
     private static final String TAG = "DashboardViewModel";
 

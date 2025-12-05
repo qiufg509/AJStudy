@@ -2,7 +2,12 @@ package com.qiufengguang.ajstudy.data;
 
 import com.qiufengguang.ajstudy.global.Constant;
 
-// User.java
+/**
+ * 用户bean
+ *
+ * @author qiufengguang
+ * @since 2025/11/30 2:15
+ */
 public class User {
     private String phone;
     private String password;

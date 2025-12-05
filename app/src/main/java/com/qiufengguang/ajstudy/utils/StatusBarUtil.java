@@ -11,6 +11,14 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+/**
+ * 状态栏工具类
+ * 1.透明状态栏
+ * 2.状态栏深浅色
+ *
+ * @author qiufengguang
+ * @since 2025/11/27 17:42
+ */
 public class StatusBarUtil {
     private static final String TAG = "StatusBarUtil";
 

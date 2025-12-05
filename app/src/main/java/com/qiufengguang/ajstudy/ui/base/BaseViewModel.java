@@ -5,6 +5,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * 基类Fragment对应的ViewModel
+ *
+ * @author qiufengguang
+ * @since 2025/11/26 22:19
+ */
 public abstract class BaseViewModel extends ViewModel {
     private final SavedStateHandle savedStateHandle;
 

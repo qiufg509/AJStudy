@@ -15,6 +15,12 @@ import com.qiufengguang.ajstudy.network.LoginRepository;
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 
+/**
+ * 全局application
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 23:54
+ */
 public class GlobalApp extends Application implements ViewModelStoreOwner {
     private final ViewModelStore viewModelStore = new ViewModelStore();
 

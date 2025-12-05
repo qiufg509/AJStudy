@@ -7,6 +7,12 @@ import androidx.lifecycle.ViewModel;
 import com.qiufengguang.ajstudy.data.LoginAction;
 import com.qiufengguang.ajstudy.data.User;
 
+/**
+ * 全局ViewModel
+ *
+ * @author qiufengguang
+ * @since 2025/5/5 23:54
+ */
 public class GlobalViewModel extends ViewModel {
     /**
      * 用户信息
