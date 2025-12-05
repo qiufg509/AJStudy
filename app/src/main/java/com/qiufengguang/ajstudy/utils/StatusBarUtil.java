@@ -2,15 +2,14 @@ package com.qiufengguang.ajstudy.utils;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 public class StatusBarUtil {
     private static final String TAG = "StatusBarUtil";
@@ -26,78 +25,51 @@ public class StatusBarUtil {
         if (window == null) {
             return;
         }
+
         // 1. 清除半透明标志
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
         // 2. 允许绘制系统栏背景
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        // 3. 设置为完全透明
+        // 3. 设置状态栏为完全透明
         window.setStatusBarColor(Color.TRANSPARENT);
 
-        // Android 11+ 的边到边显示
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // 内容延伸到状态栏
-            window.setDecorFitsSystemWindows(false);
-            WindowInsetsController controller = getWindowInsetsController(activity);
-            if (controller != null) {
-                controller.hide(WindowInsets.Type.navigationBars());
-            }
-        } else {
-            View decorView = window.getDecorView();
-            decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            );
-        }
+        // 设置Window允许内容延伸到系统窗口区域
+        // Android 5.0+ (API 21+)：使用 setDecorFitsSystemWindows(false)
+        // Android 4.4 (API 19-20)：使用 SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | SYSTEM_UI_FLAG_LAYOUT_STABLE
+        WindowCompat.setDecorFitsSystemWindows(window, false);
+
+        // 隐藏导航栏（WindowInsetsControllerCompat内部做了兼容处理）
+        WindowInsetsControllerCompat controllerCompat = WindowCompat.getInsetsController(
+            window, window.getDecorView());
+        controllerCompat.hide(WindowInsetsCompat.Type.navigationBars());
     }
 
     /**
      * 设置状态栏文字icon深浅色
      *
      * @param activity Activity页面
-     * @param light    true浅色 false深色
+     * @param isLight  true浅色 false深色
      */
-    public static void setLightStatusBar(Activity activity, boolean light) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowInsetsController controller = getWindowInsetsController(activity);
-            if (controller != null) {
-                controller.setSystemBarsAppearance(
-                    light ? WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS : 0,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-                );
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Window window = getWindow(activity);
-            if (window == null) {
-                return;
-            }
-            View decorView = window.getDecorView();
-            int flags = decorView.getSystemUiVisibility();
-            if (light) {
-                flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            } else {
-                flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            }
-            decorView.setSystemUiVisibility(flags);
-        }
+    public static void setLightStatusBar(Activity activity, boolean isLight) {
+        setLightStatusBar(getWindow(activity), isLight);
     }
 
-    @Nullable
-    private static WindowInsetsController getWindowInsetsController(Activity activity) {
-        Window window = getWindow(activity);
+    /**
+     * 设置状态栏文字icon深浅色
+     *
+     * @param window  当前窗口Window
+     * @param isLight true浅色 false深色
+     */
+    public static void setLightStatusBar(Window window, boolean isLight) {
         if (window == null) {
-            Log.i(TAG, "The timing to obtain the window is incorrect.");
-            return null;
+            return;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            return window.getInsetsController();
-        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
-            return window.getDecorView().getWindowInsetsController();
-        } else {
-            Log.i(TAG, "Version does not support.");
-            return null;
-        }
+
+        // WindowInsetsControllerCompat内部做了兼容处理
+        WindowInsetsControllerCompat controllerCompat = WindowCompat.getInsetsController(
+            window, window.getDecorView());
+        controllerCompat.setAppearanceLightStatusBars(isLight);
+        // 透明导航栏：controllerCompat.setAppearanceLightNavigationBars(isLight);
     }
 
     @Nullable
