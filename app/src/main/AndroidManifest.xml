@@ -19,6 +19,7 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="31">
+
         <activity
             android:name=".activity.main.MainActivity"
             android:exported="true"
@@ -28,8 +29,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- DeepLink跳转 -->
             <intent-filter>
-                <!--DeepLink跳转-->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -40,9 +41,12 @@
                     android:scheme="ajstudy" />
             </intent-filter>
             <intent-filter>
-                <!--隐式跳转-->
+
+                <!-- 隐式跳转 -->
                 <action android:name="com.qiufengguang.ajstudy.action.LOGIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.qfguang"
                     android:scheme="ajstudy" />
@@ -51,10 +55,13 @@
         <activity
             android:name=".activity.login.LoginActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleTask"
             android:theme="@style/Theme.App.Login"
             android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".activity.detail.DetailActivity"
+            android:exported="false" />
 
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->
         <meta-data

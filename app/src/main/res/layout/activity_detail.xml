@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:collapsedTitleGravity="center"
+            app:collapsedTitleTextAppearance="@style/CollapsedAppBar"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="center"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@style/ExpandedAppBar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:title=""
+            app:titleEnabled="true">
+
+            <!-- 应用介绍区域 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="288dp"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.0">
+
+                <!-- 背景图片 -->
+                <ImageView
+                    android:id="@+id/iv_backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/title_bar_head"
+                    app:layout_constraintBottom_toBottomOf="@id/info_divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- 应用图标 -->
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="96dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_app_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="好看视频"
+                    android:textAlignment="viewStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/iv_icon"
+                    app:layout_constraintTop_toTopOf="@id/iv_icon" />
+
+                <TextView
+                    android:id="@+id/tv_tariff"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="15dp"
+                    android:maxLines="1"
+                    android:text="提供应用内购买项目"
+                    android:textAlignment="viewStart"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/iv_icon"
+                    app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
+
+                <TextView
+                    android:id="@+id/tv_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="人工复检 · 绿色应用"
+                    android:textAlignment="viewStart"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/iv_icon"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tariff" />
+
+                <!-- 屏障：创建基于ivAppIcon和tvABC底部的动态边界 -->
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/bottom_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="iv_icon,tv_label" />
+
+                <ImageView
+                    android:id="@+id/info_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/detail_head_info_divider"
+                    android:contentDescription="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bottom_barrier" />
+
+                <!-- 第一列 -->
+                <TextView
+                    android:id="@+id/tv_stars"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="3.9 ★"
+                    android:textColor="#FF8B00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/stars_download_divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/info_divider" />
+
+                <TextView
+                    android:id="@+id/tv_scored_by"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_horizontal"
+                    android:text="3371 人评分"
+                    android:textColor="#666666"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_stars"
+                    app:layout_constraintStart_toStartOf="@id/tv_stars"
+                    app:layout_constraintTop_toBottomOf="@id/tv_stars" />
+
+                <!-- 分隔符1：垂直居中于tvRating和tvRatingCount之间 -->
+                <View
+                    android:id="@+id/stars_download_divider"
+                    android:layout_width="0.5dp"
+                    android:layout_height="20dp"
+                    android:background="#E0E0E0"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_scored_by"
+                    app:layout_constraintEnd_toStartOf="@id/tv_downloads"
+                    app:layout_constraintStart_toEndOf="@id/tv_stars"
+                    app:layout_constraintTop_toTopOf="@id/tv_stars" />
+
+                <!-- 第二列 -->
+                <TextView
+                    android:id="@+id/tv_downloads"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="23亿"
+                    android:textColor="#333333"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/downloads_age_divider"
+                    app:layout_constraintStart_toEndOf="@id/stars_download_divider"
+                    app:layout_constraintTop_toTopOf="@id/tv_stars" />
+
+                <TextView
+                    android:id="@+id/tv_downloads_suffix"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_horizontal"
+                    android:text="次安装"
+                    android:textColor="#666666"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_downloads"
+                    app:layout_constraintStart_toStartOf="@id/tv_downloads"
+                    app:layout_constraintTop_toBottomOf="@id/tv_stars" />
+
+                <!-- 分隔符2：垂直居中于第二列 -->
+                <View
+                    android:id="@+id/downloads_age_divider"
+                    android:layout_width="0.5dp"
+                    android:layout_height="20dp"
+                    android:background="#E0E0E0"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_scored_by"
+                    app:layout_constraintEnd_toStartOf="@id/tv_min_age"
+                    app:layout_constraintStart_toEndOf="@id/tv_downloads"
+                    app:layout_constraintTop_toTopOf="@id/tv_stars" />
+
+                <!-- 第三列 -->
+                <TextView
+                    android:id="@+id/tv_min_age"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="3+"
+                    android:textColor="#333333"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/downloads_age_divider"
+                    app:layout_constraintTop_toTopOf="@id/tv_stars" />
+
+                <TextView
+                    android:id="@+id/tv_grade_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_horizontal"
+                    android:text="年龄"
+                    android:textColor="#666666"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_min_age"
+                    app:layout_constraintStart_toStartOf="@id/tv_min_age"
+                    app:layout_constraintTop_toBottomOf="@id/tv_stars" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Material Toolbar -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/chevron_left"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="APP Title11" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <!-- TabLayout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- 浮动按钮 -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/item_icon_placeholder"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|end" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

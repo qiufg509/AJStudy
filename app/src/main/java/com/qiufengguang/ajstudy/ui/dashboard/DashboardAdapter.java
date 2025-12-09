@@ -1,9 +1,10 @@
 package com.qiufengguang.ajstudy.ui.dashboard;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
 import com.qiufengguang.ajstudy.data.DashboardBean;
 import com.qiufengguang.ajstudy.databinding.DashboardListItemBinding;
 
@@ -101,12 +103,15 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             }
 
             // 优化点击事件，使用单个监听器
-            binding.getRoot().setOnClickListener(v ->
-                Toast.makeText(v.getContext(), bean.getTitle(), Toast.LENGTH_SHORT).show());
+            binding.getRoot().setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, DetailActivity.class);
+                context.startActivity(intent);
+            });
         }
     }
 
-    public static class ItemDiffCallback extends DiffUtil.Callback {
+    private static class ItemDiffCallback extends DiffUtil.Callback {
         private List<DashboardBean> oldList;
         private List<DashboardBean> newList;
 

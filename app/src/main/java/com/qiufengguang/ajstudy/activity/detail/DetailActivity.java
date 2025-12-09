@@ -1,0 +1,181 @@
+package com.qiufengguang.ajstudy.activity.detail;
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.databinding.ActivityDetailBinding;
+import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class DetailActivity extends AppCompatActivity {
+
+    private ActivityDetailBinding binding;
+
+    private DetailViewModel viewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        StatusBarUtil.makeStatusBarTransparent(this);
+
+        // 初始化ViewModel
+        viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+
+        setupToolbar();
+        setupViewPager();
+        setupListeners();
+        setupInitialData();
+        observeData();
+    }
+
+
+    private void setupToolbar() {
+        setSupportActionBar(binding.toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
+        // 使用ViewCompat.setOnApplyWindowInsetsListener来获取状态栏高度并设置Toolbar的paddingTop
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+            // 为Toolbar设置顶部边距，使其下移状态栏的高度
+            ViewGroup.LayoutParams toolbarParams = binding.toolbar.getLayoutParams();
+            if (!(toolbarParams instanceof ViewGroup.MarginLayoutParams)) {
+                return insets;
+            }
+            ViewGroup.MarginLayoutParams barParams = (ViewGroup.MarginLayoutParams) toolbarParams;
+            barParams.topMargin = statusBarHeight;
+            binding.toolbar.setLayoutParams(barParams);
+            ViewGroup.LayoutParams ivIconParams = binding.ivIcon.getLayoutParams();
+            if (!(ivIconParams instanceof ViewGroup.MarginLayoutParams)) {
+                return insets;
+            }
+            ViewGroup.MarginLayoutParams iconParams = (ViewGroup.MarginLayoutParams) ivIconParams;
+            iconParams.topMargin = statusBarHeight + barParams.height;
+            binding.ivIcon.setLayoutParams(iconParams);
+            return insets;
+        });
+    }
+
+    private void setupViewPager() {
+        // 创建Fragment列表
+        List<Fragment> fragments = Arrays.asList(
+            new IntroductionFragment(),
+            new ReviewFragment(),
+            new RecommendationFragment()
+        );
+
+        // 创建Tab标题
+        List<String> tabTitles = java.util.Arrays.asList(
+            "介绍",
+            "评论 79",
+            "推荐"
+        );
+
+        // 设置ViewPager2适配器
+        DetailFragmentAdapter adapter = new DetailFragmentAdapter(this, fragments);
+        binding.viewPager.setAdapter(adapter);
+        binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
+
+        // 关联TabLayout和ViewPager2
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager,
+            (tab, position) -> tab.setText(tabTitles.get(position))
+        ).attach();
+    }
+
+    private void setupListeners() {
+        binding.fab.setOnClickListener(view -> {
+            Toast.makeText(this, "FAB Clicked!", Toast.LENGTH_SHORT).show();
+        });
+
+        // ViewPager2 页面改变监听
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                // 页面切换时的操作
+                viewModel.setSelectedTab(position);
+            }
+        });
+    }
+
+    private void setupInitialData() {
+        // 加载示例数据
+        viewModel.loadRecommendationData();
+        viewModel.loadIntroductionData();
+    }
+
+    private void observeData() {
+        viewModel.getDetailHead().observe(this, detailHead -> {
+            if (detailHead == null) {
+                return;
+            }
+            Glide.with(binding.getRoot().getContext())
+                .load(detailHead.getIcoUri())
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .placeholder(R.drawable.item_icon_placeholder)
+                .into(binding.ivIcon);
+            binding.tvAppName.setText(detailHead.getName());
+            binding.tvTariff.setText(detailHead.getTariffDesc());
+            binding.tvLabel.setText(detailHead.getLabelNames());
+        });
+
+        viewModel.getAppData().observe(this, detailAppData -> {
+            if (detailAppData == null) {
+                return;
+            }
+            binding.tvStars.setText(detailAppData.getStars());
+            binding.tvScoredBy.setText(detailAppData.getScoredBy());
+            binding.tvDownloads.setText(detailAppData.getDownloads());
+            binding.tvMinAge.setText(detailAppData.getMinAge());
+            binding.tvGradeDesc.setText(detailAppData.getGradeInfo().getGradeDesc());
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.action_share) {
+            Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
+}

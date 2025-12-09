@@ -45,6 +45,7 @@ dependencies {
 
     // Glide 主库
     implementation libs.glide
+    implementation libs.activity
     // Glide 注解处理器（用于编译时生成代码）
     annotationProcessor libs.glide.compiler
 
