@@ -22,6 +22,17 @@ import androidx.core.view.WindowInsetsControllerCompat;
 public class StatusBarUtil {
     private static final String TAG = "StatusBarUtil";
 
+
+    /**
+     * 最近更新状态栏的时间
+     */
+    private static long lastStatusBarUpdateTime = 0;
+
+    /**
+     * 最小更新间隔50ms
+     */
+    private static final long STATUS_BAR_UPDATE_INTERVAL = 50;
+
     /**
      * 设置内容延伸到状态栏，状态栏背景透明
      * setContentView之后调用，否则window.getInsetsController()抛空指针异常
@@ -78,6 +89,37 @@ public class StatusBarUtil {
             window, window.getDecorView());
         controllerCompat.setAppearanceLightStatusBars(isLight);
         // 透明导航栏：controllerCompat.setAppearanceLightNavigationBars(isLight);
+    }
+
+    /**
+     * 节流更新状态栏
+     * 避免频繁触发更新导致闪烁、性能问题
+     *
+     * @param activity Activity页面
+     * @param color    状态栏背景色
+     */
+    public static void throttleUpdateStatusBarColor(Activity activity, int color) {
+        throttleUpdateStatusBarColor(getWindow(activity), color);
+    }
+
+    /**
+     * 节流更新状态栏
+     * 避免频繁触发更新导致闪烁、性能问题
+     *
+     * @param window 当前窗口Window
+     * @param color  状态栏背景色
+     */
+    public static void throttleUpdateStatusBarColor(Window window, int color) {
+        if (window == null) {
+            return;
+        }
+        long currentTime = System.currentTimeMillis();
+
+        // 检查是否达到最小更新间隔
+        if (currentTime - lastStatusBarUpdateTime >= STATUS_BAR_UPDATE_INTERVAL) {
+            window.setStatusBarColor(color);
+            lastStatusBarUpdateTime = currentTime;
+        }
     }
 
     @Nullable

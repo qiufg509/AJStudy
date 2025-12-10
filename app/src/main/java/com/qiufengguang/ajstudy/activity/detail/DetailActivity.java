@@ -1,12 +1,17 @@
 package com.qiufengguang.ajstudy.activity.detail;
 
+import android.animation.ArgbEvaluator;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
@@ -15,8 +20,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.data.DetailHead;
 import com.qiufengguang.ajstudy.databinding.ActivityDetailBinding;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
@@ -28,6 +35,8 @@ public class DetailActivity extends AppCompatActivity {
     private ActivityDetailBinding binding;
 
     private DetailViewModel viewModel;
+
+    private ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +61,8 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         // 使用ViewCompat.setOnApplyWindowInsetsListener来获取状态栏高度并设置Toolbar的paddingTop
@@ -75,6 +84,51 @@ public class DetailActivity extends AppCompatActivity {
             iconParams.topMargin = statusBarHeight + barParams.height;
             binding.ivIcon.setLayoutParams(iconParams);
             return insets;
+        });
+
+        setupAppBarScrollListener();
+    }
+
+    private void setupAppBarScrollListener() {
+        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int totalScrollRange = appBarLayout.getTotalScrollRange();
+
+                // 计算滚动比例 (0: 完全展开, 1: 完全收缩)
+                float scrollPercentage = 0f;
+                if (totalScrollRange != 0) {
+                    scrollPercentage = (float) Math.abs(verticalOffset) / totalScrollRange;
+                }
+
+                scrollPercentage = Math.max(0, Math.min(1, scrollPercentage));
+
+                // 1. Toolbar背景颜色渐变
+                // 从透明渐变到主色
+                int startColor = Color.TRANSPARENT;
+                int endColor = ContextCompat.getColor(DetailActivity.this, R.color.ajstudy_default_color_primary);
+                int currentColor = (int) argbEvaluator.evaluate(scrollPercentage, startColor, endColor);
+                StatusBarUtil.throttleUpdateStatusBarColor(getWindow(),currentColor);
+                binding.toolbar.setBackgroundColor(currentColor);
+
+                // 2. 控制标题显示/隐藏
+                if (scrollPercentage > 0.8f) {
+                    // 收缩超过50%时显示标题
+                    DetailHead detailHead = viewModel.getDetailHead().getValue();
+                    binding.collapsingToolbar.setTitle(detailHead != null ? detailHead.getName() : getString(R.string.app_name));
+                    // 设置收缩时的标题样式
+                    binding.collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+                } else {
+                    // 展开时隐藏标题
+                    binding.collapsingToolbar.setTitle("");
+                }
+
+                // 3. 可选：调整状态栏颜色
+//                updateStatusBarColor(scrollPercentage, endColor);
+                getWindow().setStatusBarColor(currentColor);
+                // 4. 可选：调试输出
+                Log.d("AppBarScroll", "百分比: " + scrollPercentage + ", 颜色: " + Integer.toHexString(currentColor));
+            }
         });
     }
 
