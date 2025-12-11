@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
 import com.qiufengguang.ajstudy.data.DashboardBean;
-import com.qiufengguang.ajstudy.databinding.DashboardListItemBinding;
+import com.qiufengguang.ajstudy.databinding.ItemDashboardListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     @NonNull
     @Override
     public DashboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new DashboardViewHolder(DashboardListItemBinding.inflate(
+        return new DashboardViewHolder(ItemDashboardListBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false));
     }
 
@@ -65,9 +65,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
 
     public static class DashboardViewHolder extends RecyclerView.ViewHolder {
-        DashboardListItemBinding binding;
+        private final ItemDashboardListBinding binding;
 
-        public DashboardViewHolder(@NonNull DashboardListItemBinding binding) {
+        public DashboardViewHolder(@NonNull ItemDashboardListBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

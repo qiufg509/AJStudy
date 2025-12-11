@@ -105,7 +105,7 @@ public class DetailViewModel extends ViewModel {
         public void run() {
             String pageStr = FileUtil.readAssetsToString(GlobalApp.getContext(),
                 Constant.DETAIL_PAGE_FILE);
-            JSONObject pageObject = null;
+            JSONObject pageObject;
             try {
                 pageObject = new JSONObject(pageStr);
             } catch (JSONException e) {

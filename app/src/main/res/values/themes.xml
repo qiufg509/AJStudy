@@ -11,11 +11,11 @@
     </style>
 
     <!--启动页主题-->
-    <style name="Theme.App.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Page.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
 
         <!-- 关键：状态栏白色 -->
-        <item name="android:statusBarColor">?android:attr/colorBackground</item>
+        <item name="android:statusBarColor">@color/ajstudy_splash_page_bg</item>
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
 
         <!-- 隐藏 ActionBar -->
@@ -23,9 +23,9 @@
         <item name="windowNoTitle">true</item>
     </style>
     <!--登录页主题-->
-    <style name="Theme.App.Login" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Page.Login" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 关键：状态栏白色 -->
-        <item name="android:statusBarColor">?android:attr/colorBackground</item>
+        <item name="android:statusBarColor">@color/ajstudy_login_page_bg</item>
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
 
         <!-- 隐藏 ActionBar -->
@@ -34,5 +34,8 @@
 
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
+    </style>
+    <style name="Theme.Page.Detail" parent="Theme.AJStudy">
+        <item name="android:overScrollMode">never</item>
     </style>
 </resources>
