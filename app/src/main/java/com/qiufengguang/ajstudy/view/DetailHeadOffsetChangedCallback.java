@@ -97,8 +97,8 @@ public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetCha
     private static final float THRESHOLD = 0.5f;
 
     public DetailHeadOffsetChangedCallback(DetailActivity activity, @NonNull Toolbar toolbar,
-        @NonNull ImageButton barBackView, @NonNull ImageButton barShareView,
-        @NonNull TextView barTitleView, int expectedScrollRange) {
+                                           @NonNull ImageButton barBackView, @NonNull ImageButton barShareView,
+                                           @NonNull TextView barTitleView, int expectedScrollRange) {
         this.activity = activity;
         this.toolbar = toolbar;
         this.barBackView = barBackView;
@@ -122,14 +122,14 @@ public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetCha
             expectedScrollRange = totalScrollRange;
         }
 
+        setToolbarBackgroundColor(verticalOffset);
+
         // 计算滚动比例 (0: 完全展开, 1: 完全收缩)
         float expScrollPercent = 0f;
         if (expectedScrollRange != 0) {
             expScrollPercent = (float) Math.abs(verticalOffset) / expectedScrollRange;
         }
         float fraction = Math.max(0f, Math.min(1f, expScrollPercent));
-
-        setToolbarBackgroundColor(fraction);
 
         setToolbarTitleColor(fraction);
 
@@ -149,10 +149,25 @@ public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetCha
 
     /**
      * Toolbar背景颜色渐变，从透明渐变到主色
+     * 期望滚动距离滚动一半之后才开始渐变
      *
-     * @param fraction 滚动比例
+     * @param verticalOffset 滚动距离
      */
-    private void setToolbarBackgroundColor(float fraction) {
+    private void setToolbarBackgroundColor(int verticalOffset) {
+        int absOffset = Math.abs(verticalOffset);
+        if (absOffset < expectedScrollRange / 2.0f) {
+            if (toolbar.getBackgroundTintList() == null
+                || toolbar.getBackgroundTintList().getDefaultColor() != Color.TRANSPARENT) {
+                toolbar.setBackgroundColor(Color.TRANSPARENT);
+            }
+            return;
+        }
+
+        float expScrollPercent = 0f;
+        if (expectedScrollRange != 0) {
+            expScrollPercent = Math.abs(absOffset - expectedScrollRange / 2.0f) / (expectedScrollRange / 2.0f);
+        }
+        float fraction = Math.max(0f, Math.min(1f, expScrollPercent));
         if (this.bgEndColor == 0) {
             this.bgEndColor = ContextCompat.getColor(toolbar.getContext(),
                 R.color.ajstudy_color_toolbar_bg);

@@ -153,7 +153,7 @@ public class DetailViewModel extends ViewModel {
 
         private void parseDetailAppData(@NonNull JSONObject dataListObj) {
             DetailAppData data = new DetailAppData();
-            long fullSize = dataListObj.optLong("setFullSize");
+            long fullSize = dataListObj.optLong("fullSize");
             String appSize = FileSizeFormatter.format(fullSize);
             data.setFullSize(appSize);
             data.setDownloads(dataListObj.optString("downloads"));
