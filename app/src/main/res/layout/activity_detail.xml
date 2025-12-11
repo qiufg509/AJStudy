@@ -8,19 +8,20 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:background="@color/ajstudy_transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+            android:id="@+id/collapsing_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/ajstudy_transparent"
             app:collapsedTitleGravity="start"
             app:contentScrim="@color/ajstudy_transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimVisibleHeightTrigger="164dp"
             app:statusBarScrim="@android:color/transparent"
             app:title=""
-            app:titleEnabled="true">
+            app:titleEnabled="false">
 
             <!-- 应用介绍区域 -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,8 +45,8 @@
                 <!-- 应用图标 -->
                 <ImageView
                     android:id="@+id/iv_icon"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/dashboard_item_icon_size"
+                    android:layout_height="@dimen/dashboard_item_icon_size"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="84dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +60,9 @@
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="好看视频"
                     android:textAlignment="viewStart"
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
+                    android:textColor="@color/ajstudy_color_text_primary"
+                    android:textSize="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/iv_icon"
@@ -79,10 +78,9 @@
                     android:ellipsize="end"
                     android:lineSpacingExtra="15dp"
                     android:maxLines="1"
-                    android:text="提供应用内购买项目"
                     android:textAlignment="viewStart"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14dp"
+                    android:textColor="@color/ajstudy_color_text_secondary"
+                    android:textSize="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/iv_icon"
@@ -97,10 +95,9 @@
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="人工复检 · 绿色应用"
                     android:textAlignment="viewStart"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12dp"
+                    android:textColor="@color/ajstudy_color_text_secondary"
+                    android:textSize="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/iv_icon"
@@ -117,8 +114,8 @@
                 <ImageView
                     android:id="@+id/info_divider"
                     android:layout_width="match_parent"
-                    android:layout_height="12dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_height="@dimen/detail_info_divider_size"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_m"
                     android:background="@drawable/detail_head_info_divider"
                     android:contentDescription="@null"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -131,10 +128,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="3.9 ★"
-                    android:textColor="#FF8B00"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/ajstudy_color_text_primary"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@id/stars_download_divider"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/info_divider" />
@@ -145,8 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:gravity="center_horizontal"
-                    android:text="3371 人评分"
-                    android:textColor="#666666"
+                    android:textColor="@color/ajstudy_color_text_secondary"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="@id/tv_stars"
                     app:layout_constraintStart_toStartOf="@id/tv_stars"
@@ -157,8 +151,9 @@
                     android:id="@+id/stars_download_divider"
                     android:layout_width="0.5dp"
                     android:layout_height="20dp"
-                    android:background="#E0E0E0"
+                    android:background="@color/ajstudy_color_divider"
                     android:contentDescription="@null"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/tv_scored_by"
                     app:layout_constraintEnd_toStartOf="@id/tv_downloads"
                     app:layout_constraintStart_toEndOf="@id/tv_stars"
@@ -170,10 +165,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="23亿"
-                    android:textColor="#333333"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/ajstudy_color_text_primary"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@id/downloads_age_divider"
                     app:layout_constraintStart_toEndOf="@id/stars_download_divider"
                     app:layout_constraintTop_toTopOf="@id/tv_stars" />
@@ -184,8 +177,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:gravity="center_horizontal"
-                    android:text="次安装"
-                    android:textColor="#666666"
+                    android:text="@string/detail_download_suffix"
+                    android:textColor="@color/ajstudy_color_text_secondary"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="@id/tv_downloads"
                     app:layout_constraintStart_toStartOf="@id/tv_downloads"
@@ -196,8 +189,9 @@
                     android:id="@+id/downloads_age_divider"
                     android:layout_width="0.5dp"
                     android:layout_height="20dp"
-                    android:background="#E0E0E0"
+                    android:background="@color/ajstudy_color_divider"
                     android:contentDescription="@null"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/tv_scored_by"
                     app:layout_constraintEnd_toStartOf="@id/tv_min_age"
                     app:layout_constraintStart_toEndOf="@id/tv_downloads"
@@ -209,10 +203,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="3+"
-                    android:textColor="#333333"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/ajstudy_color_text_primary"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/downloads_age_divider"
                     app:layout_constraintTop_toTopOf="@id/tv_stars" />
@@ -223,23 +215,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:gravity="center_horizontal"
-                    android:text="年龄"
-                    android:textColor="#666666"
+                    android:textColor="@color/ajstudy_color_text_secondary"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="@id/tv_min_age"
                     app:layout_constraintStart_toStartOf="@id/tv_min_age"
                     app:layout_constraintTop_toBottomOf="@id/tv_stars" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:background="@color/ajstudy_color_divider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Material Toolbar -->
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/chevron_left" />
+            <!-- 标题栏 -->
+            <include
+                android:id="@+id/title_bar"
+                layout="@layout/detail_page_title_bar" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -248,13 +244,14 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/ajstudy_transparent"
+            app:tabBackground="@color/ajstudy_transparent"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabIndicatorHeight="3dp"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@android:color/white" />
+            app:tabIndicatorColor="@color/ajstudy_subtab_indicator_color"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="auto"
+            app:tabSelectedTextColor="@color/ajstudy_subtab_text_on"
+            app:tabTextColor="@color/ajstudy_subtab_text_off" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

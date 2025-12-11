@@ -1,31 +1,23 @@
 package com.qiufengguang.ajstudy.activity.detail;
 
-import android.animation.ArgbEvaluator;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.ColorUtils;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.data.DetailHead;
 import com.qiufengguang.ajstudy.databinding.ActivityDetailBinding;
+import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.view.DetailHeadOffsetChangedCallback;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private DetailViewModel viewModel;
 
-    private ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    private DetailHeadOffsetChangedCallback offsetChangedCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +37,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         StatusBarUtil.makeStatusBarTransparent(this);
+        StatusBarUtil.setLightStatusBar(this, false);
 
         // 初始化ViewModel
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
@@ -58,78 +51,43 @@ public class DetailActivity extends AppCompatActivity {
 
 
     private void setupToolbar() {
-        setSupportActionBar(binding.toolbar);
-
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().hide();
         }
 
-        // 使用ViewCompat.setOnApplyWindowInsetsListener来获取状态栏高度并设置Toolbar的paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-            // 为Toolbar设置顶部边距，使其下移状态栏的高度
-            ViewGroup.LayoutParams toolbarParams = binding.toolbar.getLayoutParams();
-            if (!(toolbarParams instanceof ViewGroup.MarginLayoutParams)) {
-                return insets;
-            }
-            ViewGroup.MarginLayoutParams barParams = (ViewGroup.MarginLayoutParams) toolbarParams;
-            barParams.topMargin = statusBarHeight;
-            binding.toolbar.setLayoutParams(barParams);
-            ViewGroup.LayoutParams ivIconParams = binding.ivIcon.getLayoutParams();
-            if (!(ivIconParams instanceof ViewGroup.MarginLayoutParams)) {
-                return insets;
-            }
+        int statusBarHeight = DisplayMetricsHelper.getStatusBarHeight(this);
+        int actionBarHeight = DisplayMetricsHelper.getActionBarHeight(this);
+
+        Toolbar toolbar = binding.titleBar.toolbar;
+        toolbar.setPadding(
+            toolbar.getPaddingLeft(),
+            statusBarHeight,
+            toolbar.getPaddingRight(),
+            toolbar.getPaddingBottom()
+        );
+        // 设置Toolbar最小高度为ActionBar高度 + 状态栏高度
+        int totalHeight = actionBarHeight + statusBarHeight;
+        ViewGroup.LayoutParams toolbarParams = toolbar.getLayoutParams();
+        toolbarParams.height = totalHeight;
+        toolbar.setLayoutParams(toolbarParams);
+
+        ViewGroup.LayoutParams ivIconParams = binding.ivIcon.getLayoutParams();
+        if (ivIconParams instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams iconParams = (ViewGroup.MarginLayoutParams) ivIconParams;
-            iconParams.topMargin = statusBarHeight + barParams.height;
+            iconParams.topMargin = totalHeight;
             binding.ivIcon.setLayoutParams(iconParams);
-            return insets;
-        });
+        }
 
-        setupAppBarScrollListener();
-    }
-
-    private void setupAppBarScrollListener() {
-        binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int totalScrollRange = appBarLayout.getTotalScrollRange();
-
-                // 计算滚动比例 (0: 完全展开, 1: 完全收缩)
-                float scrollPercentage = 0f;
-                if (totalScrollRange != 0) {
-                    scrollPercentage = (float) Math.abs(verticalOffset) / totalScrollRange;
-                }
-
-                scrollPercentage = Math.max(0, Math.min(1, scrollPercentage));
-
-                // 1. Toolbar背景颜色渐变
-                // 从透明渐变到主色
-                int startColor = Color.TRANSPARENT;
-                int endColor = ContextCompat.getColor(DetailActivity.this, R.color.ajstudy_default_color_primary);
-                int currentColor = (int) argbEvaluator.evaluate(scrollPercentage, startColor, endColor);
-                StatusBarUtil.throttleUpdateStatusBarColor(getWindow(),currentColor);
-                binding.toolbar.setBackgroundColor(currentColor);
-
-                // 2. 控制标题显示/隐藏
-                if (scrollPercentage > 0.8f) {
-                    // 收缩超过50%时显示标题
-                    DetailHead detailHead = viewModel.getDetailHead().getValue();
-                    binding.collapsingToolbar.setTitle(detailHead != null ? detailHead.getName() : getString(R.string.app_name));
-                    // 设置收缩时的标题样式
-                    binding.collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-                } else {
-                    // 展开时隐藏标题
-                    binding.collapsingToolbar.setTitle("");
-                }
-
-                // 3. 可选：调整状态栏颜色
-//                updateStatusBarColor(scrollPercentage, endColor);
-                getWindow().setStatusBarColor(currentColor);
-                // 4. 可选：调试输出
-                Log.d("AppBarScroll", "百分比: " + scrollPercentage + ", 颜色: " + Integer.toHexString(currentColor));
-            }
-        });
+        int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.dashboard_item_icon_size)
+            + getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
+        offsetChangedCallback = new DetailHeadOffsetChangedCallback(this,
+            toolbar,
+            binding.titleBar.barBack,
+            binding.titleBar.barShare,
+            binding.titleBar.barTitle,
+            expectedScrollRange
+        );
+        binding.appBarLayout.addOnOffsetChangedListener(offsetChangedCallback);
     }
 
     private void setupViewPager() {
@@ -159,10 +117,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        binding.fab.setOnClickListener(view -> {
-            Toast.makeText(this, "FAB Clicked!", Toast.LENGTH_SHORT).show();
-        });
-
         // ViewPager2 页面改变监听
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -171,6 +125,17 @@ public class DetailActivity extends AppCompatActivity {
                 // 页面切换时的操作
                 viewModel.setSelectedTab(position);
             }
+        });
+        binding.titleBar.barBack.setOnClickListener(v ->
+            getOnBackPressedDispatcher().onBackPressed());
+
+        // 设置菜单按钮点击事件
+        binding.titleBar.barShare.setOnClickListener(v -> {
+
+        });
+
+        binding.fab.setOnClickListener(view -> {
+            Toast.makeText(this, "FAB Clicked!", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -193,6 +158,7 @@ public class DetailActivity extends AppCompatActivity {
             binding.tvAppName.setText(detailHead.getName());
             binding.tvTariff.setText(detailHead.getTariffDesc());
             binding.tvLabel.setText(detailHead.getLabelNames());
+            binding.titleBar.barTitle.setText(detailHead.getName());
         });
 
         viewModel.getAppData().observe(this, detailAppData -> {
@@ -208,28 +174,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        } else if (id == R.id.action_share) {
-            Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (offsetChangedCallback != null) {
+            offsetChangedCallback.release();
+            binding.appBarLayout.removeOnOffsetChangedListener(offsetChangedCallback);
+        }
         binding = null;
     }
 }

@@ -4,6 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="image_description">图片</string>
+    <string name="title_action_back_description">返回</string>
+    <string name="title_action_share_description">分享</string>
 
     <!--详情页-->
     <string name="introduction">介绍</string>
@@ -18,146 +20,6 @@
     <string name="comprehensive_rating">综合评分</string>
     <string name="user_reviews">用户评论</string>
     <string name="recommended_for_you">为你推荐</string>
-
-
-    <string name="recommended_for_you22">好的，我们来系统地、详细地介绍一下 Android 布局。这是构建 Android 应用用户界面的基石。
-
-### **一、什么是 Android 布局？**
-
-**核心定义**：布局（Layout）定义了 Android 应用中用户界面的**视觉结构**。它本质上是一种容器，用于存放和组织 **View**（按钮、文本框、图片等）和 **其他布局**。
-
-*   **核心文件**：布局通常以 XML 文件的形式存储在 `res/layout/` 目录下，方便将 UI 设计与逻辑代码（Java/Kotlin）分离。
-*   **核心类**：所有布局都继承自 `ViewGroup` 类，而 `ViewGroup` 本身又继承自 `View`。这意味着布局既可以作为容器包含其他视图，也可以拥有自己的属性（如背景、边距）。
-
-### **二、Android 布局的类型（从经典到现代）**
-
-Android 提供了多种布局类型，每种都有其特定的排列子视图的规则。
-
-#### **1. 传统/经典布局**
-
-这些是 Android 早期提供的布局，简单易用，但有时需要嵌套才能实现复杂效果，可能影响性能。
-
-*   **LinearLayout（线性布局）**
-    *   **规则**：将所有子视图按**水平（horizontal）** 或**垂直（vertical）** 方向，一个接一个地线性排列。
-    *   **关键属性**：
-        *   `android:orientation`： 决定方向 (`“horizontal”` 或 `“vertical”`)。
-        *   `android:layout_weight`： 赋予子视图“权重”，用于在剩余空间中按比例分配大小。**这是实现按比例分配宽高的核心属性**。
-    *   **优点**：简单直观，适合简单列表式或表单式排列。
-    *   **缺点**：要实现非线性的复杂布局，通常需要多层嵌套，导致视图层级变深。
-
-*   **RelativeLayout（相对布局）**
-    *   **规则**：允许子视图**相对于父容器**或**相对于其他兄弟视图**的位置进行定位。
-    *   **关键属性**：
-        *   相对于父容器：`android:layout_alignParentTop`, `android:layout_centerInParent` 等。
-        *   相对于兄弟视图：`android:layout_above`, `android:layout_toRightOf`, `android:layout_alignBottom` 等。
-    *   **优点**：非常灵活，可以减少嵌套，常用于中等复杂度的界面。
-    *   **缺点**：当视图关系复杂时，XML 可读性会变差；性能通常优于深层嵌套的 LinearLayout，但不如 ConstraintLayout。
-
-*   **FrameLayout（帧布局）**
-    *   **规则**：最简单的布局，所有子视图默认都堆叠在屏幕的**左上角**。后添加的视图会盖在先添加的视图之上。
-    *   **关键属性**：常用 `android:layout_gravity` 来调整子视图在容器内的对齐方式。
-    *   **典型用途**：作为**单一视图的容器**（如一个Fragment的容器），或用于**重叠显示**的场合（如应用启动页、覆盖层）。
-
-*   **TableLayout（表格布局）**
-    *   **规则**：将子视图排列成行和列，类似于 HTML 表格。通常与 `TableRow` 配合使用，每个 `TableRow` 代表一行。
-    *   **优点**：语义上符合表格数据展示。
-    *   **缺点**：灵活性差，不推荐用于通用布局，现代开发中很少使用。
-
-*   **GridLayout（网格布局 - API 14+）**
-    *   **规则**：将容器划分为单元格组成的网格，子视图可以指定占据多行多列。
-    *   **优点**：比 `TableLayout` 更灵活，可以轻松实现网格状或棋盘状的布局。
-    *   **缺点**：在复杂响应式布局方面不如 `ConstraintLayout` 强大。
-
-#### **2. 现代/高级布局**
-
-为了解决传统布局嵌套过深和性能问题，Google 推出了新的布局。
-
-*   **ConstraintLayout（约束布局） - 当前的主流和官方推荐**
-    *   **规则**：基于**约束**（Constraints）的布局。每个视图的位置和大小通过与其他视图、父容器或**引导线**（Guideline）之间的“约束关系”来定义。
-    *   **核心概念**：
-        *   **约束**：例如，将按钮 A 的左边**约束于**父容器的左边，将按钮 B 的顶部**约束于**按钮 A 的底部。
-        *   **Bias（偏倚）**：当视图在水平或垂直方向都有相对约束时，可以调整其位置在两端的百分比（如水平居中 bias=0.5）。
-        *   **Chain（链）**：将一组水平或垂直方向相互关联的视图组合起来，可以控制它们在链中的分布方式（如平均分布、权重分布）。
-        *   **Guideline/Barrier（引导线/屏障）**：虚拟的辅助线，用于帮助对齐或创建动态边界。
-    *   **优点**：
-        *   **扁平化层级**：几乎可以用单层布局实现绝大多数复杂界面，大幅提升性能。
-        *   **强大的设计工具**：Android Studio 的可视化编辑器对其支持极佳，可以直接拖拽和创建约束。
-        *   **高度灵活和响应式**：能轻松适配不同屏幕尺寸和方向。
-    *   **缺点**：学习曲线相对传统布局稍高，但掌握后效率倍增。
-
-*   **CoordinatorLayout（协调者布局）**
-    *   **规则**：一种功能强大的 `FrameLayout`，专门用于协调其直接子视图之间的交互行为。它是实现 **Material Design 复杂滚动效果**（如下拉刷新、上滑隐藏工具栏、悬浮按钮动画）的基石。
-    *   **关键机制**：通过 `Behavior` 类来定义子视图之间的交互逻辑。
-    *   **典型用途**：作为屏幕的“根布局”，与 `AppBarLayout`、`CollapsingToolbarLayout`、`FloatingActionButton`、`Snackbar` 等组件配合使用。
-
-*   **MotionLayout（运动布局）**
-    *   **简介**：`ConstraintLayout` 的子类，专门用于在 XML 中管理**复杂的动画和视图移动**。它填补了简单属性动画和复杂自定义动画之间的空白。
-    *   **核心文件**：使用 `MotionScene`（一个单独的 XML 文件）来描述动画的起始状态、结束状态、过渡过程和关键帧。
-    *   **用途**：实现带有复杂路径、关键帧动画的交互式 UI，如下拉刷新动画、视图切换动画等。
-
-### **三、公共布局属性**
-
-几乎所有布局和视图都支持以下核心属性（命名空间为 `android:layout_`）：
-
-*   **尺寸**：
-    *   `layout_width` / `layout_height`： `match_parent`（填满父容器）， `wrap_content`（包裹内容），或具体尺寸（如 `100dp`）。
-*   **边距**：
-    *   `layout_margin`： 四个方向的统一外边距。
-    *   `layout_marginStart`, `layout_marginTop` 等： 特定方向的外边距。
-*   **内边距**：
-    *   `padding`： 视图内部的边距，通过视图本身的属性 `android:padding` 设置。
-*   **对齐/位置**：
-    *   `layout_gravity`： 视图在**其父容器**内的对齐方式（如 `center`, `bottom`）。
-    *   `gravity`： 视图**自身内容**在其边界内的对齐方式（如文本在按钮内居中）。
-
-### **四、布局的加载与使用**
-
-1.  **在 Activity 中加载**：
-    ```kotlin
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) // R.layout.activity_main 对应 res/layout/activity_main.xml
-    }
-    ```
-2.  **在 Fragment 中加载**：
-    ```kotlin
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
-    ```
-3.  **在代码中动态添加视图**：
-    ```kotlin
-    val layout = findViewById LinearLayout(R.id.my_layout)
-    val newTextView = TextView(this).apply {
-        text = "动态添加的文本"
-    }
-    layout.addView(newTextView)
-    ```
-
-### **五、性能最佳实践**
-
-*   **减少嵌套，保持视图层级扁平化**：这是最重要的原则。深层嵌套的 `LinearLayout` 会显著增加测量和绘制时间。**优先使用 `ConstraintLayout`**。
-*   **使用 `include` 标签**：重用公共的布局片段，避免代码重复。
-*   **使用 `merge` 标签**：当 `include` 的布局根节点与其父容器类型相同时，使用 `merge` 可以消除一个无用的视图层级。
-*   **使用 `ViewStub`**：用于延迟加载那些在初始化时不可见的布局，减少初始化的视图数量。
-*   **避免在 `LinearLayout` 中使用 `weight` 时设置 `wrap_content`**：这会导致两次测量，影响性能。尽量使用固定尺寸或 `match_parent`。
-
-### **六、总结与选择建议**
-
-| 布局类型 | 核心思想 | 适用场景 | 推荐度 |
-| :--- | :--- | :--- | :--- |
-| **ConstraintLayout** | **约束关系**，扁平化 | **几乎任何复杂界面**，现代应用的默认选择 | ★★★★★ (首选) |
-| **LinearLayout** | **线性排列**，简单直接 | 简单的列表、表单项、等分布局 | ★★★☆☆ (基础场景) |
-| **RelativeLayout** | **相对定位** | 中等复杂度，需要减少嵌套的界面 | ★★☆☆☆ (逐渐被替代) |
-| **FrameLayout** | **堆叠** | 单个视图容器、Fragment容器、覆盖层 | ★★★★☆ (特定场景) |
-| **CoordinatorLayout** | **协调交互** | 实现 Material Design 高级滚动效果 | ★★★★☆ (特定交互) |
-
-**通用建议**：
-*   **新项目或重构旧项目时，毫不犹豫地将 `ConstraintLayout` 作为你的主力布局。**
-*   理解 `ConstraintLayout` 的**约束、链、引导线**是 Android UI 开发的必备技能。
-*   在保证功能的前提下，**时刻关注视图层级**，这是优化 UI 性能最有效的手段之一。
-
-通过熟练掌握这些布局，你将能够高效、灵活地构建出既美观又高性能的 Android 用户界面。</string>
-
+    <string name="detail_download_suffix">次安装</string>
 
 </resources>

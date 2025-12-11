@@ -2,11 +2,11 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <solid android:color="@color/ajstudy_splash_page_bg" />
+    <solid android:color="@color/ajstudy_color_toolbar_bg" />
     <corners
         android:bottomLeftRadius="0dp"
         android:bottomRightRadius="0dp"
-        android:topLeftRadius="12dp"
-        android:topRightRadius="12dp" />
+        android:topLeftRadius="@dimen/detail_info_divider_size"
+        android:topRightRadius="@dimen/detail_info_divider_size" />
 
 </shape>

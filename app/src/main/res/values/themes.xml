@@ -2,14 +2,12 @@
 <resources>
     <!-- 应用主题 -->
     <style name="Theme.AJStudy" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/ajstudy_default_color_primary</item>
-        <item name="colorPrimaryVariant">@color/ajstudy_default_color_primary_variant</item>
-        <item name="colorOnPrimary">@color/ajstudy_default_color_on_primary</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/ajstudy_default_color_secondary</item>
-        <item name="colorSecondaryVariant">@color/ajstudy_default_color_secondary_variant</item>
-        <item name="colorOnSecondary">@color/ajstudy_default_color_on_secondary</item>
+        <item name="colorPrimary">@color/ajstudy_color_primary</item>
+        <item name="colorSecondary">@color/ajstudy_color_secondary</item>
+
+        <!-- 设置自定义背景色 -->
+        <item name="colorSurface">@color/ajstudy_window_background</item>
+        <item name="android:windowBackground">@color/ajstudy_window_background</item>
     </style>
 
     <!--启动页主题-->

@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ajstudy_color_primary">#e5000000</color>
+    <color name="ajstudy_color_primary_dark">#DBFFFFFF</color>
+    <color name="ajstudy_color_primary_translucent">#FFFFFF</color>
+    <color name="ajstudy_color_secondary">#99000000</color>
+    <color name="ajstudy_window_background">#f1f3f5</color>
     <color name="ajstudy_transparent">#00000000</color>
     <color name="ajstudy_translucent">#00ffffff</color>
     <color name="ajstudy_list_item_bg_pressed">#330a59f7</color>
     <color name="ajstudy_mask_img_press_color">#1a000000</color>
     <color name="ajstudy_placeholder_img_color">#e4e6e8</color>
-    <color name="ajstudy_default_color_primary">#6200ee</color>
-    <color name="ajstudy_default_color_primary_variant">#3700b3</color>
-    <color name="ajstudy_default_color_on_primary">#ffffff</color>
-    <color name="ajstudy_default_color_secondary">#03dac6</color>
-    <color name="ajstudy_default_color_secondary_variant">#018786</color>
-    <color name="ajstudy_default_color_on_secondary">#000000</color>
+    <color name="ajstudy_color_progress">#666666</color>
     <color name="ajstudy_bottom_nav_bg_blur">#f2ffffff</color>
     <color name="ajstudy_appbar_title">#e5000000</color>
     <color name="ajstudy_splash_page_bg">#ffffff</color>
-    <color name="ajstudy_color_divider_horizontal">#33000000</color>
+    <color name="ajstudy_color_divider">#33000000</color>
+    <color name="ajstudy_color_toolbar_bg">#f1f3f5</color>
+    <color name="ajstudy_color_toolbar_icon">#e5000000</color>
+    <color name="ajstudy_color_toolbar_icon_dark">#dbffffff</color>
+    <color name="ajstudy_color_toolbar_text">#e5000000</color>
+    <color name="ajstudy_color_toolbar_text_dark">#dbffffff</color>
+    <color name="ajstudy_subtab_color_bg">#f1f3f5</color>
+    <color name="ajstudy_subtab_indicator_color">#0A59F7</color>
+    <color name="ajstudy_subtab_text_off">#99000000</color>
+    <color name="ajstudy_subtab_text_on">#0A59F7</color>
+    <color name="ajstudy_color_text_primary">#e5000000</color>
+    <color name="ajstudy_color_text_secondary">#99000000</color>
+
+
 
     <!-- 基础颜色 -->
     <color name="wechat_green">#07C160</color>

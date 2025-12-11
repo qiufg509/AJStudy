@@ -76,7 +76,7 @@ public class DashboardFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
         divider.setDividerThickness(1);
-        int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider_horizontal);
+        int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider);
         divider.setDividerColor(color);
         divider.setLastItemDecorated(false);
         recyclerView.addItemDecoration(divider);

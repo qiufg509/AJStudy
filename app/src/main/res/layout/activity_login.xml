@@ -157,7 +157,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/chevron_left" />
+            android:src="@drawable/ic_btn_chevron_left" />
 
     </FrameLayout>
 
