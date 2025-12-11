@@ -4,6 +4,9 @@ import java.util.Locale;
 
 /**
  * 文件大小格式化工具类
+ *
+ * @author qiufengguang
+ * @since 2025/12/11 23:06
  */
 public class FileSizeFormatter {
     private static final long KB = 1024L;

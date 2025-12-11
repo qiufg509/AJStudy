@@ -16,6 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.FragmentCommentBinding;
 
+/**
+ * 详情页-评论子页面
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class CommentFragment extends Fragment {
 
     private FragmentCommentBinding binding;

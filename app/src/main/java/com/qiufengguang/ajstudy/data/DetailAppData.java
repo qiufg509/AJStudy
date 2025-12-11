@@ -2,6 +2,12 @@ package com.qiufengguang.ajstudy.data;
 
 import java.util.Locale;
 
+/**
+ * 详情页应用数据bean
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class DetailAppData {
     public static final String LAYOUT_NAME = "appdetaildatacard";
 

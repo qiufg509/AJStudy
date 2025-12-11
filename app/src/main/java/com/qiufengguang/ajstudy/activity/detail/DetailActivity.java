@@ -26,6 +26,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 详情页
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class DetailActivity extends AppCompatActivity {
 
     private ActivityDetailBinding binding;
@@ -97,9 +103,9 @@ public class DetailActivity extends AppCompatActivity {
     private void setupViewPager() {
         // 创建Fragment列表
         List<Fragment> fragments = Arrays.asList(
-            new IntroductionFragment(),
-            new CommentFragment(),
-            new RecommendationFragment()
+            IntroductionFragment.newInstance(),
+            CommentFragment.newInstance(),
+            RecommendationFragment.newInstance()
         );
 
         // 创建Tab标题

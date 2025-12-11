@@ -2,6 +2,12 @@ package com.qiufengguang.ajstudy.data;
 
 import android.text.TextUtils;
 
+/**
+ * 详情页-评论子页面数据bean
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class DetailComment {
     public static final String LAYOUT_NAME = "pcscorecommentlistcard";
 

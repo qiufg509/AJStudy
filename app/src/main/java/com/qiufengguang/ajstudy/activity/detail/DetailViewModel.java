@@ -24,6 +24,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 详情页ViewModel
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class DetailViewModel extends ViewModel {
     private static final String TAG = "DetailViewModel";
 

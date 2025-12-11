@@ -13,6 +13,12 @@ import com.qiufengguang.ajstudy.databinding.ItemRecommendationBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 详情页-推荐子页面适配器
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder> {
 
     private List<DetailViewModel.Recommendation> recommendationList = new ArrayList<>();

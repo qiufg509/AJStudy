@@ -7,6 +7,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
+/**
+ * 详情页适配器
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class DetailFragmentAdapter extends FragmentStateAdapter {
 
     private final List<Fragment> fragments;

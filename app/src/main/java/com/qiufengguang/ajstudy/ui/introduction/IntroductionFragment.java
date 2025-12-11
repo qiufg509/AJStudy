@@ -15,6 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.FragmentIntroductionBinding;
 
+/**
+ * 详情页-介绍子页面
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class IntroductionFragment extends Fragment {
 
     private FragmentIntroductionBinding binding;

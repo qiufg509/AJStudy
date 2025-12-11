@@ -24,7 +24,7 @@ public class NotificationsFragment extends BaseFragment {
 
     @Override
     protected boolean isDarkBackgroundImage() {
-        return false;
+        return true;
     }
 
     @Override

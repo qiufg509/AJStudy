@@ -2,6 +2,12 @@ package com.qiufengguang.ajstudy.data;
 
 import java.util.List;
 
+/**
+ * 详情页头部数据
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class DetailHead {
     public static final String LAYOUT_NAME = "detailheadcard";
 

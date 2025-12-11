@@ -19,6 +19,12 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
+/**
+ * 详情页头部滑动监听回调
+ *
+ * @author qiufengguang
+ * @since 2025/12/11 18:44
+ */
 public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetChangedListener {
     private static final String TAG = "DetailHeadOffsetChangedCallback";
 

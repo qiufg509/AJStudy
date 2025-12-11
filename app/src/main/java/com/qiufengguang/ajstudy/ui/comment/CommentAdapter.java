@@ -13,6 +13,12 @@ import com.qiufengguang.ajstudy.databinding.ItemCommentBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 详情页-评论子页面适配器
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     private List<DetailComment> detailComments = new ArrayList<>();

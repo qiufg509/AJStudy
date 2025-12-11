@@ -16,6 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
 
+/**
+ * 详情页-推荐子页面
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class RecommendationFragment extends Fragment {
 
     private FragmentRecommendationBinding binding;

@@ -13,6 +13,12 @@ import com.qiufengguang.ajstudy.databinding.ItemIntroductionBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 详情页-介绍子页面适配器
+ *
+ * @author qiufengguang
+ * @since 2025/12/10 0:18
+ */
 public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionAdapter.IntroductionViewHolder> {
 
     private List<DetailViewModel.Introduction> introductionList = new ArrayList<>();
