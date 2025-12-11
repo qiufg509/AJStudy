@@ -15,12 +15,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ActivityDetailBinding;
+import com.qiufengguang.ajstudy.ui.comment.CommentFragment;
+import com.qiufengguang.ajstudy.ui.introduction.IntroductionFragment;
+import com.qiufengguang.ajstudy.ui.recommendation.RecommendationFragment;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.view.DetailHeadOffsetChangedCallback;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -94,7 +98,7 @@ public class DetailActivity extends AppCompatActivity {
         // 创建Fragment列表
         List<Fragment> fragments = Arrays.asList(
             new IntroductionFragment(),
-            new ReviewFragment(),
+            new CommentFragment(),
             new RecommendationFragment()
         );
 
@@ -134,13 +138,27 @@ public class DetailActivity extends AppCompatActivity {
 
         });
 
-        binding.fab.setOnClickListener(view -> {
-            Toast.makeText(this, "FAB Clicked!", Toast.LENGTH_SHORT).show();
+        binding.btnInstall.setOnClickListener(view -> {
+            binding.btnInstall.setText("正在安装...");
+            binding.btnInstall.setEnabled(false);
+
+            view.postDelayed(() -> {
+                binding.btnInstall.setText("打开");
+                binding.btnInstall.setEnabled(true);
+
+                // 设置新的点击事件
+                binding.btnInstall.setOnClickListener(v -> {
+                    // 打开应用
+                    Toast.makeText(getApplicationContext(), "打开应用", Toast.LENGTH_SHORT).show();
+                });
+            }, 2000);
         });
     }
 
+    /**
+     * 加载示例数据
+     */
     private void setupInitialData() {
-        // 加载示例数据
         viewModel.loadRecommendationData();
         viewModel.loadIntroductionData();
     }
@@ -170,6 +188,8 @@ public class DetailActivity extends AppCompatActivity {
             binding.tvDownloads.setText(detailAppData.getDownloads());
             binding.tvMinAge.setText(detailAppData.getMinAge());
             binding.tvGradeDesc.setText(detailAppData.getGradeInfo().getGradeDesc());
+            String fullSize = detailAppData.getFullSize();
+            binding.btnInstall.setText(String.format(Locale.getDefault(), "安装 (%s)", fullSize));
         });
     }
 

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.activity.detail;
+package com.qiufengguang.ajstudy.ui.introduction;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.FragmentIntroductionBinding;
-
-import java.util.List;
 
 public class IntroductionFragment extends Fragment {
 
@@ -23,9 +21,16 @@ public class IntroductionFragment extends Fragment {
     private DetailViewModel viewModel;
     private IntroductionAdapter adapter;
 
+    public IntroductionFragment() {
+    }
+
+    public static IntroductionFragment newInstance() {
+        return new IntroductionFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+        @Nullable Bundle savedInstanceState) {
         binding = FragmentIntroductionBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

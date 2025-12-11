@@ -26,6 +26,8 @@
     <color name="ajstudy_subtab_text_on">#0A59F7</color>
     <color name="ajstudy_color_text_primary">#e5000000</color>
     <color name="ajstudy_color_text_secondary">#99000000</color>
+    <color name="ajstudy_download_button_background">#0072d6</color>
+    <color name="ajstudy_download_button_content_normal">#ffffff</color>
 
 
 

@@ -21,5 +21,6 @@
     <string name="user_reviews">用户评论</string>
     <string name="recommended_for_you">为你推荐</string>
     <string name="detail_download_suffix">次安装</string>
+    <string name="detail_btn_install">安装 (%s)</string>
 
 </resources>

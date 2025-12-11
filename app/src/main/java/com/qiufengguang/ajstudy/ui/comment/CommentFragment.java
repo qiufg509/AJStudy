@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.activity.detail;
+package com.qiufengguang.ajstudy.ui.comment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,21 +13,26 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
+import com.qiufengguang.ajstudy.databinding.FragmentCommentBinding;
 
-import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
+public class CommentFragment extends Fragment {
 
-import java.util.List;
-
-public class RecommendationFragment extends Fragment {
-
-    private FragmentRecommendationBinding binding;
+    private FragmentCommentBinding binding;
     private DetailViewModel viewModel;
-    private RecommendationAdapter adapter;
+    private CommentAdapter adapter;
+
+    public CommentFragment() {
+    }
+
+    public static CommentFragment newInstance() {
+        return new CommentFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = FragmentRecommendationBinding.inflate(inflater, container, false);
+        @Nullable Bundle savedInstanceState) {
+        binding = FragmentCommentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -49,7 +54,7 @@ public class RecommendationFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        adapter = new RecommendationAdapter();
+        adapter = new CommentAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
 
@@ -76,21 +81,26 @@ public class RecommendationFragment extends Fragment {
     }
 
     private void setupListeners() {
-        // Item点击事件
-        adapter.setOnItemClickListener((position, recommendation) ->
-            Toast.makeText(getContext(), "点击应用: " + recommendation.getAppName(), Toast.LENGTH_SHORT).show()
+        // 发表评价点击
+        binding.tvPostReview.setOnClickListener(v ->
+            Toast.makeText(getContext(), "发表评论", Toast.LENGTH_SHORT).show()
         );
 
-        // 安装按钮点击事件
-        adapter.setOnInstallClickListener((position, recommendation) ->
-            Toast.makeText(getContext(), "安装: " + recommendation.getAppName(), Toast.LENGTH_SHORT).show()
+        // 排序点击
+        binding.tvLatest.setOnClickListener(v ->
+            Toast.makeText(getContext(), "按最新排序", Toast.LENGTH_SHORT).show()
+        );
+
+        // 筛选点击
+        binding.tvAllReviews.setOnClickListener(v ->
+            Toast.makeText(getContext(), "全部评论筛选", Toast.LENGTH_SHORT).show()
         );
     }
 
     private void observeData() {
-        viewModel.getRecommendations().observe(getViewLifecycleOwner(), recommendations -> {
-            if (recommendations != null) {
-                adapter.setRecommendations(recommendations);
+        viewModel.getComments().observe(getViewLifecycleOwner(), detailComments -> {
+            if (detailComments != null) {
+                adapter.setReviews(detailComments);
             }
         });
     }

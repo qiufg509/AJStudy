@@ -1,20 +1,19 @@
-package com.qiufengguang.ajstudy.activity.detail;
+package com.qiufengguang.ajstudy.ui.introduction;
 
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.ItemIntroductionBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionAdapter.ViewHolder> {
+public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionAdapter.IntroductionViewHolder> {
 
     private List<DetailViewModel.Introduction> introductionList = new ArrayList<>();
 
@@ -25,14 +24,14 @@ public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionAdapte
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public IntroductionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemIntroductionBinding binding = ItemIntroductionBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(binding);
+        return new IntroductionViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull IntroductionViewHolder holder, int position) {
         holder.bind(introductionList.get(position));
     }
 
@@ -41,11 +40,11 @@ public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionAdapte
         return introductionList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class IntroductionViewHolder extends RecyclerView.ViewHolder {
 
-        private ItemIntroductionBinding binding;
+        private final ItemIntroductionBinding binding;
 
-        public ViewHolder(ItemIntroductionBinding binding) {
+        public IntroductionViewHolder(ItemIntroductionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

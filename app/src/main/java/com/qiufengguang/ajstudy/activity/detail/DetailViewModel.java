@@ -14,6 +14,7 @@ import com.qiufengguang.ajstudy.data.DetailComment;
 import com.qiufengguang.ajstudy.data.DetailHead;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
+import com.qiufengguang.ajstudy.utils.FileSizeFormatter;
 import com.qiufengguang.ajstudy.utils.FileUtil;
 
 import org.json.JSONArray;
@@ -146,6 +147,9 @@ public class DetailViewModel extends ViewModel {
 
         private void parseDetailAppData(@NonNull JSONObject dataListObj) {
             DetailAppData data = new DetailAppData();
+            long fullSize = dataListObj.optLong("setFullSize");
+            String appSize = FileSizeFormatter.format(fullSize);
+            data.setFullSize(appSize);
             data.setDownloads(dataListObj.optString("downloads"));
             data.setDownloadUnit(dataListObj.optString("downloadUnit"));
             data.setStars(dataListObj.optString("stars"));

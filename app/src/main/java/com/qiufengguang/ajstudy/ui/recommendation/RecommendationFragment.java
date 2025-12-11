@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.activity.detail;
+package com.qiufengguang.ajstudy.ui.recommendation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,31 +13,26 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
+import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
 
-import com.qiufengguang.ajstudy.databinding.FragmentReviewBinding;
+public class RecommendationFragment extends Fragment {
 
-public class ReviewFragment extends Fragment {
-
-    private FragmentReviewBinding binding;
+    private FragmentRecommendationBinding binding;
     private DetailViewModel viewModel;
-    private DetailCommentAdapter adapter;
+    private RecommendationAdapter adapter;
 
-    public ReviewFragment() {
-        // Required empty public constructor
+    public RecommendationFragment() {
     }
 
-    public static ReviewFragment newInstance(String content) {
-        ReviewFragment fragment = new ReviewFragment();
-        Bundle args = new Bundle();
-//        args.putString(ARG_CONTENT, content);
-        fragment.setArguments(args);
-        return fragment;
+    public static RecommendationFragment newInstance() {
+        return new RecommendationFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = FragmentReviewBinding.inflate(inflater, container, false);
+        @Nullable Bundle savedInstanceState) {
+        binding = FragmentRecommendationBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -59,7 +54,7 @@ public class ReviewFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        adapter = new DetailCommentAdapter();
+        adapter = new RecommendationAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
 
@@ -86,26 +81,21 @@ public class ReviewFragment extends Fragment {
     }
 
     private void setupListeners() {
-        // 发表评价点击
-        binding.tvPostReview.setOnClickListener(v ->
-            Toast.makeText(getContext(), "发表评论", Toast.LENGTH_SHORT).show()
+        // Item点击事件
+        adapter.setOnItemClickListener((position, recommendation) ->
+            Toast.makeText(getContext(), "点击应用: " + recommendation.getAppName(), Toast.LENGTH_SHORT).show()
         );
 
-        // 排序点击
-        binding.tvLatest.setOnClickListener(v ->
-            Toast.makeText(getContext(), "按最新排序", Toast.LENGTH_SHORT).show()
-        );
-
-        // 筛选点击
-        binding.tvAllReviews.setOnClickListener(v ->
-            Toast.makeText(getContext(), "全部评论筛选", Toast.LENGTH_SHORT).show()
+        // 安装按钮点击事件
+        adapter.setOnInstallClickListener((position, recommendation) ->
+            Toast.makeText(getContext(), "安装: " + recommendation.getAppName(), Toast.LENGTH_SHORT).show()
         );
     }
 
     private void observeData() {
-        viewModel.getComments().observe(getViewLifecycleOwner(), detailComments -> {
-            if (detailComments != null) {
-                adapter.setReviews(detailComments);
+        viewModel.getRecommendations().observe(getViewLifecycleOwner(), recommendations -> {
+            if (recommendations != null) {
+                adapter.setRecommendations(recommendations);
             }
         });
     }

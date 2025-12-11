@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.activity.detail;
+package com.qiufengguang.ajstudy.ui.comment;
 
 
 import android.view.LayoutInflater;
@@ -8,12 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.data.DetailComment;
-import com.qiufengguang.ajstudy.databinding.ItemReviewBinding;
+import com.qiufengguang.ajstudy.databinding.ItemCommentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdapter.CommentViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     private List<DetailComment> detailComments = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemReviewBinding binding = ItemReviewBinding.inflate(
+        ItemCommentBinding binding = ItemCommentBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
         return new CommentViewHolder(binding);
     }
@@ -42,9 +42,9 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
 
-        private final ItemReviewBinding binding;
+        private final ItemCommentBinding binding;
 
-        public CommentViewHolder(ItemReviewBinding binding) {
+        public CommentViewHolder(ItemCommentBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

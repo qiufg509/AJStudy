@@ -1,19 +1,19 @@
-package com.qiufengguang.ajstudy.activity.detail;
+package com.qiufengguang.ajstudy.ui.recommendation;
 
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.ItemRecommendationBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.ViewHolder> {
+public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder> {
 
     private List<DetailViewModel.Recommendation> recommendationList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
@@ -42,14 +42,14 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecommendationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemRecommendationBinding binding = ItemRecommendationBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(binding);
+        return new RecommendationViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecommendationViewHolder holder, int position) {
         holder.bind(recommendationList.get(position));
     }
 
@@ -58,11 +58,11 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         return recommendationList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class RecommendationViewHolder extends RecyclerView.ViewHolder {
 
-        private ItemRecommendationBinding binding;
+        private final ItemRecommendationBinding binding;
 
-        public ViewHolder(ItemRecommendationBinding binding) {
+        public RecommendationViewHolder(ItemRecommendationBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

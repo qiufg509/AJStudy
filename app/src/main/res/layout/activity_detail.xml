@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -235,7 +236,7 @@
             <!-- 标题栏 -->
             <include
                 android:id="@+id/title_bar"
-                layout="@layout/detail_page_title_bar" />
+                layout="@layout/title_bar_detail_page" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -262,14 +263,23 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!-- 浮动按钮 -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/item_icon_placeholder"
-        app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|end" />
+    <!-- 替换原来的 FloatingActionButton -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_install"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_l"
+        android:text="@string/detail_btn_install"
+        android:textAllCaps="false"
+        android:textColor="@color/ajstudy_download_button_content_normal"
+        android:textSize="16sp"
+        app:backgroundTint="@color/ajstudy_download_button_background"
+        app:cornerRadius="18dp"
+        app:elevation="8dp"
+        app:icon="@null"
+        app:iconTint="@color/ajstudy_transparent"
+        app:layout_anchor="@id/view_pager"
+        app:layout_anchorGravity="bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

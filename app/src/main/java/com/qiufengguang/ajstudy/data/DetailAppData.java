@@ -5,6 +5,8 @@ import java.util.Locale;
 public class DetailAppData {
     public static final String LAYOUT_NAME = "appdetaildatacard";
 
+    String fullSize;
+
     String scoredBy;
 
     String stars;
@@ -16,6 +18,14 @@ public class DetailAppData {
     String downloadUnit;
 
     GradeInfo gradeInfo;
+
+    public String getFullSize() {
+        return fullSize;
+    }
+
+    public void setFullSize(String fullSize) {
+        this.fullSize = fullSize;
+    }
 
     public String getScoredBy() {
         return scoredBy;
