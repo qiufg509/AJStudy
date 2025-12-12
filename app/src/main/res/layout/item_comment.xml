@@ -1,208 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- 用户信息 -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:contentDescription="@string/image_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="U********"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvDevice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="荣耀90Pro"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2025/11/19"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <!-- 评分和版本信息 -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="@color/ajstudy_color_text_primary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@+id/iv_avatar" />
+
+    <TextView
+        android:id="@+id/tv_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:text="荣耀90Pro"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_device"
+        app:layout_constraintTop_toTopOf="@+id/tv_device" />
+
+    <RatingBar
+        android:id="@+id/rb_rating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginTop="8dp"
-        android:orientation="horizontal">
+        android:numStars="5"
+        android:progressBackgroundTint="@color/ajstudy_color_text_secondary"
+        android:progressTint="#F7CE00"
+        android:rating="3.4"
+        android:secondaryProgressTint="#d1a738"
+        android:stepSize="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar" />
 
-        <RatingBar
-            android:id="@+id/rbRating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:numStars="5"
-            android:rating="3.4"
-            android:stepSize="1" />
 
-        <TextView
-            android:id="@+id/tvVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_gravity="center_vertical"
-            android:text="版本号 7.91.5.10"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:text="版本号 7.91.5.10"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/rb_rating"
+        app:layout_constraintTop_toTopOf="@+id/rb_rating" />
 
     <!-- 评论内容 -->
     <TextView
-        android:id="@+id/tvContent"
+        android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:lineSpacingExtra="4dp"
-        android:text="华为应用市场为什么更新好看视频这么，慢!"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textColor="@color/ajstudy_color_text_primary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rb_rating" />
 
-    <!-- 交互按钮 -->
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <!-- 点赞 -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_likes"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableStart="@drawable/ic_likes"
+        android:drawablePadding="4dp"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_dislikes"
+        app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:orientation="horizontal">
 
-            <!-- 点赞 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_vertical">
+    <!-- 踩 -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_dislikes"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableStart="@drawable/ic_dislikes"
+        android:drawablePadding="4dp"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_reply"
+        app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
-                <ImageView
-                    android:id="@+id/ivLike"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_preferences"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
+    <!-- 评论 -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_reply"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableStart="@drawable/ic_reply"
+        android:gravity="center_vertical"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
-                <TextView
-                    android:id="@+id/tvLikes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="69"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <!-- 踩 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/ivDislike"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_help"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
-
-                <TextView
-                    android:id="@+id/tvDislikes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="36"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <!-- 评论 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/ivComment"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_send"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
-
-                <TextView
-                    android:id="@+id/tvComments"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="1"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <!-- 分享 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/ivShare"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_share"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
-
-                <TextView
-                    android:id="@+id/tvShares"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="2"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

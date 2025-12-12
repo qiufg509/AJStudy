@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,9 +51,6 @@ public class CommentFragment extends Fragment {
         // 初始化RecyclerView
         setupRecyclerView();
 
-        // 设置监听器
-        setupListeners();
-
         // 观察数据变化
         observeData();
     }
@@ -66,41 +62,6 @@ public class CommentFragment extends Fragment {
 
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(adapter);
-
-        // 设置滚动监听，避免与父布局滚动冲突
-        binding.recyclerView.setOnTouchListener((v, event) -> {
-            v.getParent().requestDisallowInterceptTouchEvent(true);
-            return false;
-        });
-
-        binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                // 当RecyclerView滚动到顶部时，允许父布局拦截触摸事件
-                if (!recyclerView.canScrollVertically(-1)) {
-                    recyclerView.getParent().requestDisallowInterceptTouchEvent(false);
-                }
-            }
-        });
-    }
-
-    private void setupListeners() {
-        // 发表评价点击
-        binding.tvPostReview.setOnClickListener(v ->
-            Toast.makeText(getContext(), "发表评论", Toast.LENGTH_SHORT).show()
-        );
-
-        // 排序点击
-        binding.tvLatest.setOnClickListener(v ->
-            Toast.makeText(getContext(), "按最新排序", Toast.LENGTH_SHORT).show()
-        );
-
-        // 筛选点击
-        binding.tvAllReviews.setOnClickListener(v ->
-            Toast.makeText(getContext(), "全部评论筛选", Toast.LENGTH_SHORT).show()
-        );
     }
 
     private void observeData() {

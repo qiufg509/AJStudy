@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.DetailComment;
 import com.qiufengguang.ajstudy.databinding.ItemCommentBinding;
 
@@ -65,6 +68,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
             // 设置评论内容
             binding.tvContent.setText(comment.getCommentInfo());
+            binding.tvLikes.setText(String.valueOf(Math.abs(comment.getCommentTime().hashCode() % 100)));
+            binding.tvDislikes.setText(String.valueOf(Math.abs((int) comment.getStars() + 4)));
+
+            Glide.with(binding.getRoot().getContext())
+                .load(comment.getAvatar())
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .placeholder(R.drawable.ic_avatar)
+                .into(binding.ivAvatar);
         }
     }
 }

@@ -61,7 +61,6 @@ public class RecommendationFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-
         RecommendationItemDecoration decoration = new RecommendationItemDecoration(requireContext());
         binding.recyclerView.addItemDecoration(decoration);
         adapter = new RecommendationAdapter();
@@ -69,24 +68,6 @@ public class RecommendationFragment extends Fragment {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(adapter);
-
-        // 设置滚动监听，避免与父布局滚动冲突
-        binding.recyclerView.setOnTouchListener((v, event) -> {
-            v.getParent().requestDisallowInterceptTouchEvent(true);
-            return false;
-        });
-
-        binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                // 当RecyclerView滚动到顶部时，允许父布局拦截触摸事件
-                if (!recyclerView.canScrollVertically(-1)) {
-                    recyclerView.getParent().requestDisallowInterceptTouchEvent(false);
-                }
-            }
-        });
     }
 
     private void setupListeners() {

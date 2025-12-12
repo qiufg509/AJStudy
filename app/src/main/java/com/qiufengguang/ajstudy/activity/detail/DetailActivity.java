@@ -139,9 +139,8 @@ public class DetailActivity extends AppCompatActivity {
             getOnBackPressedDispatcher().onBackPressed());
 
         // 设置菜单按钮点击事件
-        binding.titleBar.barShare.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), "分享", Toast.LENGTH_SHORT).show();
-        });
+        binding.titleBar.barShare.setOnClickListener(v ->
+            Toast.makeText(getApplicationContext(), "分享", Toast.LENGTH_SHORT).show());
 
         binding.btnInstall.setOnClickListener(view -> {
             binding.btnInstall.setText("正在安装...");
