@@ -59,8 +59,14 @@ public class DashboardFragment extends BaseFragment {
     }
 
     private void adjustColumn() {
-        int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
         RecyclerView recyclerView = binding.getRoot();
+        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+        divider.setDividerThickness(1);
+        int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider);
+        divider.setDividerColor(color);
+        divider.setLastItemDecorated(false);
+        recyclerView.addItemDecoration(divider);
+        int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
         switch (columnCount) {
             case Constant.Grid.column_8:
                 recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
@@ -74,12 +80,6 @@ public class DashboardFragment extends BaseFragment {
         }
         adapter = new DashboardAdapter(viewModel.getLiveData().getValue());
         recyclerView.setAdapter(adapter);
-        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
-        divider.setDividerThickness(1);
-        int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider);
-        divider.setDividerColor(color);
-        divider.setLastItemDecorated(false);
-        recyclerView.addItemDecoration(divider);
     }
 
     @Override

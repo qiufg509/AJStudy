@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
+import com.qiufengguang.ajstudy.view.RecommendationItemDecoration;
 
 /**
  * 详情页-推荐子页面
@@ -60,10 +61,12 @@ public class RecommendationFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
+
+        RecommendationItemDecoration decoration = new RecommendationItemDecoration(requireContext());
+        binding.recyclerView.addItemDecoration(decoration);
         adapter = new RecommendationAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(adapter);
 
