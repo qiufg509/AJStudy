@@ -7,7 +7,7 @@
     <color name="ajstudy_window_background">#f1f3f5</color>
     <color name="ajstudy_transparent">#00000000</color>
     <color name="ajstudy_translucent">#00ffffff</color>
-    <color name="ajstudy_list_item_bg_pressed">#330a59f7</color>
+    <color name="ajstudy_list_item_bg_pressed">#0c000000</color>
     <color name="ajstudy_mask_img_press_color">#1a000000</color>
     <color name="ajstudy_placeholder_img_color">#e4e6e8</color>
     <color name="ajstudy_color_progress">#666666</color>
@@ -27,10 +27,11 @@
     <color name="ajstudy_subtab_text_on">#0A59F7</color>
     <color name="ajstudy_color_text_primary">#e5000000</color>
     <color name="ajstudy_color_text_secondary">#99000000</color>
-    <color name="ajstudy_download_button_background">#0072d6</color>
+    <color name="ajstudy_detail_download_button_background">#007BFF</color>
     <color name="ajstudy_download_button_content_normal">#ffffff</color>
-
-
+    <color name="ajstudy_download_button_content_active">#0a59f7</color>
+    <color name="ajstudy_download_button_background">#e0e0e0</color>
+    <color name="ajstudy_download_button_background_pressed">#efffffff</color>
 
     <!-- 基础颜色 -->
     <color name="wechat_green">#07C160</color>

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.qiufengguang.ajstudy.data.DetailAppData;
 import com.qiufengguang.ajstudy.data.DetailComment;
 import com.qiufengguang.ajstudy.data.DetailHead;
+import com.qiufengguang.ajstudy.data.DetailRecommend;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.FileSizeFormatter;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,8 +50,15 @@ public class DetailViewModel extends ViewModel {
      */
     private final MutableLiveData<List<DetailComment>> comments = new MutableLiveData<>();
 
-    private MutableLiveData<List<Recommendation>> recommendations;
-    private MutableLiveData<List<Introduction>> introduction;
+    /**
+     * 推荐列表
+     */
+    private final MutableLiveData<List<DetailRecommend>> recommendations = new MutableLiveData<>();
+
+    /**
+     * 介绍信息
+     */
+    private final MutableLiveData<List<Introduction>> introduction = new MutableLiveData<>();
 
     /**
      * 默认选中评论tab
@@ -57,8 +66,6 @@ public class DetailViewModel extends ViewModel {
     private final MutableLiveData<Integer> selectedTab = new MutableLiveData<>(1);
 
     public DetailViewModel() {
-        recommendations = new MutableLiveData<>();
-        introduction = new MutableLiveData<>();
         initData();
     }
 
@@ -74,7 +81,7 @@ public class DetailViewModel extends ViewModel {
         return comments;
     }
 
-    public LiveData<List<Recommendation>> getRecommendations() {
+    public LiveData<List<DetailRecommend>> getRecommendations() {
         return recommendations;
     }
 
@@ -115,6 +122,11 @@ public class DetailViewModel extends ViewModel {
             if (layoutData == null || layoutData.length() == 0) {
                 return;
             }
+
+            // 模拟介绍页数据
+            loadIntroductionData();
+
+            List<DetailRecommend> detailRecommends = new ArrayList<>();
             for (int index = 0, size = layoutData.length(); index < size; index++) {
                 JSONObject jsonObject = layoutData.optJSONObject(index);
                 JSONArray dataList = jsonObject.optJSONArray("dataList");
@@ -132,7 +144,13 @@ public class DetailViewModel extends ViewModel {
                 if (TextUtils.equals(layoutName, DetailComment.LAYOUT_NAME)) {
                     parseDetailComments(dataListObj);
                 }
+                if (TextUtils.equals(layoutName, DetailRecommend.LAYOUT_NAME)) {
+                    List<DetailRecommend> recommends = parseDetailRecommends(dataListObj);
+                    detailRecommends.addAll(recommends);
+                }
             }
+
+            recommendations.postValue(detailRecommends);
         }
 
         private void parseDetailHead(@NonNull JSONObject dataListObj) {
@@ -194,26 +212,26 @@ public class DetailViewModel extends ViewModel {
             }
             comments.postValue(detailComments);
         }
-    }
 
-    public void loadRecommendationData() {
-        // 模拟加载推荐数据
-        List<Recommendation> recommendationList = new ArrayList<>();
-
-        String[] appNames = {"腾讯视频", "爱奇艺", "优酷", "抖音", "快手", "B站", "芒果TV", "搜狐视频"};
-        String[] descriptions = {"精彩视频内容", "高清画质", "会员专享", "短视频平台", "直播娱乐", "弹幕视频", "综艺影视", "热门影视"};
-
-        for (int i = 0; i < 15; i++) {
-            Recommendation rec = new Recommendation();
-            rec.setAppName(appNames[i % appNames.length] + " v" + (i + 1));
-            rec.setDescription(descriptions[i % descriptions.length]);
-            rec.setRating(3.5f + (i % 3) * 0.3f);
-            rec.setInstalls("1000万+" + i);
-            rec.setIconResId(android.R.drawable.ic_menu_gallery + i);
-            recommendationList.add(rec);
+        private List<DetailRecommend> parseDetailRecommends(@NonNull JSONObject dataListObj) {
+            JSONArray listArr = dataListObj.optJSONArray("list");
+            if (listArr == null || listArr.isNull(0)) {
+                return Collections.emptyList();
+            }
+            List<DetailRecommend> detailRecommends = new ArrayList<>();
+            for (int pos = 0, sum = listArr.length(); pos < sum; pos++) {
+                JSONObject commentObj = listArr.optJSONObject(pos);
+                DetailRecommend recommend = new DetailRecommend();
+                recommend.setIcon(commentObj.optString("icon"));
+                recommend.setName(commentObj.optString("name"));
+                String stars = commentObj.optString("stars");
+                recommend.setStars(Float.parseFloat(stars));
+                recommend.setScore(commentObj.optString("score"));
+                recommend.setMemo(commentObj.optString("memo"));
+                detailRecommends.add(recommend);
+            }
+            return detailRecommends;
         }
-
-        recommendations.setValue(recommendationList);
     }
 
     public void loadIntroductionData() {
@@ -235,64 +253,14 @@ public class DetailViewModel extends ViewModel {
         intro3.setContent("1. 注册登录账户\n2. 选择感兴趣的内容分类\n3. 观看视频或直播\n4. 发表评论和分享");
         introList.add(intro3);
 
-        introduction.setValue(introList);
+        introduction.postValue(introList);
     }
 
-
-    public static class Recommendation {
-        private String appName;
-        private String description;
-        private float rating;
-        private String installs;
-        private int iconResId;
-
-        // Getters and Setters
-        public String getAppName() {
-            return appName;
-        }
-
-        public void setAppName(String appName) {
-            this.appName = appName;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public float getRating() {
-            return rating;
-        }
-
-        public void setRating(float rating) {
-            this.rating = rating;
-        }
-
-        public String getInstalls() {
-            return installs;
-        }
-
-        public void setInstalls(String installs) {
-            this.installs = installs;
-        }
-
-        public int getIconResId() {
-            return iconResId;
-        }
-
-        public void setIconResId(int iconResId) {
-            this.iconResId = iconResId;
-        }
-    }
 
     public static class Introduction {
         private String title;
         private String content;
 
-        // Getters and Setters
         public String getTitle() {
             return title;
         }

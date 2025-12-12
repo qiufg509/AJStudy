@@ -55,7 +55,6 @@ public class DetailActivity extends AppCompatActivity {
         setupToolbar();
         setupViewPager();
         setupListeners();
-        setupInitialData();
         observeData();
     }
 
@@ -159,14 +158,6 @@ public class DetailActivity extends AppCompatActivity {
                 });
             }, 2000);
         });
-    }
-
-    /**
-     * 加载示例数据
-     */
-    private void setupInitialData() {
-        viewModel.loadRecommendationData();
-        viewModel.loadIntroductionData();
     }
 
     private void observeData() {

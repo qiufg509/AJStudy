@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.data.DetailRecommend;
 import com.qiufengguang.ajstudy.databinding.ItemRecommendationBinding;
 
 import java.util.ArrayList;
@@ -21,16 +24,16 @@ import java.util.List;
  */
 public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder> {
 
-    private List<DetailViewModel.Recommendation> recommendationList = new ArrayList<>();
+    private List<DetailRecommend> recommends = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private OnInstallClickListener onInstallClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position, DetailViewModel.Recommendation recommendation);
+        void onItemClick(int position, DetailRecommend recommendation);
     }
 
     public interface OnInstallClickListener {
-        void onInstallClick(int position, DetailViewModel.Recommendation recommendation);
+        void onInstallClick(int position, DetailRecommend recommendation);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -41,8 +44,8 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         this.onInstallClickListener = listener;
     }
 
-    public void setRecommendations(List<DetailViewModel.Recommendation> recommendationList) {
-        this.recommendationList = recommendationList != null ? recommendationList : new ArrayList<>();
+    public void setRecommendations(List<DetailRecommend> recommends) {
+        this.recommends = recommends != null ? recommends : new ArrayList<>();
         notifyDataSetChanged();
     }
 
@@ -56,12 +59,12 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public void onBindViewHolder(@NonNull RecommendationViewHolder holder, int position) {
-        holder.bind(recommendationList.get(position));
+        holder.bind(recommends.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return recommendationList.size();
+        return recommends.size();
     }
 
     public class RecommendationViewHolder extends RecyclerView.ViewHolder {
@@ -73,29 +76,30 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
             this.binding = binding;
         }
 
-        public void bind(DetailViewModel.Recommendation recommendation) {
+        public void bind(DetailRecommend recommend) {
             // 设置应用信息
-            binding.tvAppName.setText(recommendation.getAppName());
-            binding.tvDescription.setText(recommendation.getDescription());
-            binding.tvRating.setText(String.valueOf(recommendation.getRating()));
-            binding.tvInstalls.setText(recommendation.getInstalls());
+            binding.tvAppName.setText(recommend.getName());
+            binding.tvDescription.setText(recommend.getMemo());
+            binding.tvRating.setText(recommend.getScore());
+            binding.tvRating.setText(recommend.getScore());
+            binding.rbRating.setRating(recommend.getStars());
 
-            // 设置评分
-            binding.rbRating.setRating(recommendation.getRating());
-
-            // 设置应用图标
-            binding.ivAppIcon.setImageResource(recommendation.getIconResId());
+            Glide.with(binding.getRoot().getContext())
+                .load(recommend.getIcon())
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .placeholder(R.drawable.item_icon_placeholder)
+                .into(binding.ivAppIcon);
 
             // 设置点击事件
             binding.getRoot().setOnClickListener(v -> {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(getAdapterPosition(), recommendation);
+                    onItemClickListener.onItemClick(getAdapterPosition(), recommend);
                 }
             });
 
             binding.btnInstall.setOnClickListener(v -> {
                 if (onInstallClickListener != null) {
-                    onInstallClickListener.onInstallClick(getAdapterPosition(), recommendation);
+                    onInstallClickListener.onInstallClick(getAdapterPosition(), recommend);
                 }
             });
         }

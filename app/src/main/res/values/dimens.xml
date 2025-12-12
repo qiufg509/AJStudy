@@ -11,5 +11,7 @@
     <dimen name="list_item_bg_radius">24dp</dimen>
     <dimen name="detail_info_divider_size">12dp</dimen>
     <dimen name="title_bar_horizontal_margin">4dp</dimen>
+    <dimen name="install_btn_width">64dp</dimen>
+    <dimen name="install_btn_height">28dp</dimen>
 
 </resources>
