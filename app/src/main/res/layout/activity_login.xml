@@ -145,19 +145,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:id="@+id/fl_back"
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/actionBarSize"
         android:fitsSystemWindows="true"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingHorizontal="@dimen/title_bar_horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_btn_chevron_left" />
+        <!-- 左侧返回按钮 -->
+        <ImageButton
+            android:id="@+id/bar_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start|center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/title_action_back_description"
+            android:scaleType="center"
+            android:src="@drawable/ic_btn_chevron_left"
+            app:tint="@color/ajstudy_color_toolbar_icon" />
 
     </FrameLayout>
 
