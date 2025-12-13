@@ -47,7 +47,7 @@ public class RoundedFrameLayout extends FrameLayout {
 
     private void loadAttributes(AttributeSet attrs) {
         if (attrs == null) {
-            cornerRadius = getResources().getDimensionPixelSize(R.dimen.dashboard_item_img_radius);
+            cornerRadius = getResources().getDimensionPixelSize(R.dimen.radius_l);
             return;
         }
         try (TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.RoundedFrameLayout)) {

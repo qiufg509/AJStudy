@@ -14,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin_l"
         android:src="@android:drawable/ic_menu_gallery" />
 
     <!-- 应用信息 -->
@@ -84,7 +84,7 @@
         android:layout_height="@dimen/install_btn_height"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_l"
         android:background="@drawable/download_btn_bg_selector"
         android:lines="1"
         android:padding="0dp"

@@ -33,7 +33,7 @@ public class RecommendationItemDecoration extends RecyclerView.ItemDecoration {
         paint.setStyle(Paint.Style.FILL);
 
         startMarginPx = DisplayMetricsHelper.dp2px(context, 76);
-        endMarginPx = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        endMarginPx = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_l);
         dividerHeightPx = 1;
     }
 

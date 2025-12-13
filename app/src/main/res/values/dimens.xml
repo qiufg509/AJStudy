@@ -1,17 +1,23 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="ajstudy_bottom_navigation_height">56dp</dimen>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin_l">16dp</dimen>
+    <dimen name="activity_horizontal_margin_m">12dp</dimen>
+    <dimen name="activity_horizontal_margin_s">8dp</dimen>
+    <dimen name="activity_horizontal_margin_xs">4dp</dimen>
     <dimen name="activity_horizontal_inner_gap">8dp</dimen>
     <dimen name="activity_vertical_margin_s">8dp</dimen>
     <dimen name="activity_vertical_margin_m">12dp</dimen>
     <dimen name="activity_vertical_margin_l">16dp</dimen>
     <dimen name="dashboard_item_icon_size">80dp</dimen>
-    <dimen name="dashboard_item_img_radius">16dp</dimen>
+    <dimen name="radius_l">16dp</dimen>
+    <dimen name="radius_m">12dp</dimen>
+    <dimen name="radius_s">8dp</dimen>
     <dimen name="list_item_bg_radius">24dp</dimen>
     <dimen name="detail_info_divider_size">12dp</dimen>
     <dimen name="title_bar_horizontal_margin">4dp</dimen>
     <dimen name="install_btn_width">64dp</dimen>
     <dimen name="install_btn_height">28dp</dimen>
+    <dimen name="screenshot_item_height">180dp</dimen>
 
 </resources>

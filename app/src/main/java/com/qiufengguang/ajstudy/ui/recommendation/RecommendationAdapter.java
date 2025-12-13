@@ -87,7 +87,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
             Glide.with(binding.getRoot().getContext())
                 .load(recommend.getIcon())
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .placeholder(R.drawable.item_icon_placeholder)
+                .placeholder(R.drawable.icon_placeholder)
                 .into(binding.ivAppIcon);
 
             // 设置点击事件

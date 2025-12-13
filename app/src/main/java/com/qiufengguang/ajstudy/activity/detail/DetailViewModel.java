@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.qiufengguang.ajstudy.data.DetailAppData;
 import com.qiufengguang.ajstudy.data.DetailComment;
 import com.qiufengguang.ajstudy.data.DetailHead;
+import com.qiufengguang.ajstudy.data.DetailIntroduction;
 import com.qiufengguang.ajstudy.data.DetailRecommend;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
@@ -58,7 +59,7 @@ public class DetailViewModel extends ViewModel {
     /**
      * 介绍信息
      */
-    private final MutableLiveData<List<Introduction>> introduction = new MutableLiveData<>();
+    private final MutableLiveData<DetailIntroduction> introduction = new MutableLiveData<>();
 
     /**
      * 默认选中评论tab
@@ -85,7 +86,7 @@ public class DetailViewModel extends ViewModel {
         return recommendations;
     }
 
-    public LiveData<List<Introduction>> getIntroduction() {
+    public LiveData<DetailIntroduction> getIntroduction() {
         return introduction;
     }
 
@@ -122,11 +123,8 @@ public class DetailViewModel extends ViewModel {
             if (layoutData == null || layoutData.length() == 0) {
                 return;
             }
-
-            // 模拟介绍页数据
-            loadIntroductionData();
-
             List<DetailRecommend> detailRecommends = new ArrayList<>();
+            DetailIntroduction detailIntroduction = new DetailIntroduction();
             for (int index = 0, size = layoutData.length(); index < size; index++) {
                 JSONObject jsonObject = layoutData.optJSONObject(index);
                 JSONArray dataList = jsonObject.optJSONArray("dataList");
@@ -148,8 +146,28 @@ public class DetailViewModel extends ViewModel {
                     List<DetailRecommend> recommends = parseDetailRecommends(dataListObj);
                     detailRecommends.addAll(recommends);
                 }
+                if (TextUtils.equals(layoutName, DetailIntroduction.LAYOUT_NAME_SCREEN)) {
+                    List<String> screenshots = parseDetailScreenshot(dataListObj);
+                    detailIntroduction.setImages(screenshots);
+                }
+                if (TextUtils.equals(layoutName, DetailIntroduction.LAYOUT_NAME_EDITOR_RECOMMEND)) {
+                    String editorRecommend = parseDetailEditorRecommend(dataListObj);
+                    detailIntroduction.setEditorRecommend(editorRecommend);
+                }
+                if (TextUtils.equals(layoutName, DetailIntroduction.LAYOUT_NAME_APP_INFO)) {
+                    parseDetailAppInfo(detailIntroduction, dataListObj);
+                }
+                if (TextUtils.equals(layoutName, DetailIntroduction.LAYOUT_NAME_APP_INTRO)) {
+                    String appIntro = parseDetailAppIntro(dataListObj);
+                    DetailIntroduction.AboutApp aboutApp = detailIntroduction.getAboutApp();
+                    if (aboutApp == null) {
+                        aboutApp = new DetailIntroduction.AboutApp();
+                        detailIntroduction.setAboutApp(aboutApp);
+                    }
+                    aboutApp.setAppIntro(appIntro);
+                }
             }
-
+            introduction.postValue(detailIntroduction);
             recommendations.postValue(detailRecommends);
         }
 
@@ -232,49 +250,40 @@ public class DetailViewModel extends ViewModel {
             }
             return detailRecommends;
         }
-    }
 
-    public void loadIntroductionData() {
-        // 模拟加载介绍数据
-        List<Introduction> introList = new ArrayList<>();
-
-        Introduction intro1 = new Introduction();
-        intro1.setTitle("应用特色");
-        intro1.setContent("好看视频致力于为用户提供高质量的视频内容，涵盖娱乐、教育、生活、科技等多个领域。");
-        introList.add(intro1);
-
-        Introduction intro2 = new Introduction();
-        intro2.setTitle("主要功能");
-        intro2.setContent("• 短视频播放与分享\n• 直播观看与互动\n• 个性化推荐算法\n• 高清视频播放");
-        introList.add(intro2);
-
-        Introduction intro3 = new Introduction();
-        intro3.setTitle("使用说明");
-        intro3.setContent("1. 注册登录账户\n2. 选择感兴趣的内容分类\n3. 观看视频或直播\n4. 发表评论和分享");
-        introList.add(intro3);
-
-        introduction.postValue(introList);
-    }
-
-
-    public static class Introduction {
-        private String title;
-        private String content;
-
-        public String getTitle() {
-            return title;
+        private List<String> parseDetailScreenshot(JSONObject dataListObj) {
+            JSONArray images = dataListObj.optJSONArray("imageCompress");
+            if (images == null || images.length() == 0) {
+                return null;
+            }
+            int sum = images.length();
+            List<String> imageList = new ArrayList<>(sum);
+            for (int index = 0; index < sum; index++) {
+                String imageUrl = images.optString(index);
+                imageList.add(imageUrl);
+            }
+            return imageList;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        private String parseDetailEditorRecommend(JSONObject dataListObj) {
+            return dataListObj.optString("body");
         }
 
-        public String getContent() {
-            return content;
+
+        private void parseDetailAppInfo(DetailIntroduction detailIntroduction, JSONObject dataListObj) {
+            detailIntroduction.setDeveloper(dataListObj.optString("developer"));
+            DetailIntroduction.AboutApp aboutApp = detailIntroduction.getAboutApp();
+            if (aboutApp == null) {
+                aboutApp = new DetailIntroduction.AboutApp();
+                detailIntroduction.setAboutApp(aboutApp);
+            }
+            aboutApp.setVersion(dataListObj.optString("version"));
+            aboutApp.setTariffDesc(dataListObj.optString("tariffDesc"));
         }
 
-        public void setContent(String content) {
-            this.content = content;
+
+        private String parseDetailAppIntro(JSONObject dataListObj) {
+            return dataListObj.optString("appIntro");
         }
     }
 }

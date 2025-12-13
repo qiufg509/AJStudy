@@ -81,10 +81,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
                 Glide.with(binding.getRoot().getContext())
                     .load(bean.getIcon())
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .placeholder(R.drawable.item_icon_placeholder)
+                    .placeholder(R.drawable.icon_placeholder)
                     .into(binding.ivIcon);
             } else {
-                binding.ivIcon.setImageResource(R.drawable.item_icon_placeholder);
+                binding.ivIcon.setImageResource(R.drawable.icon_placeholder);
             }
 
             CharSequence title = binding.tvTitle.getText();

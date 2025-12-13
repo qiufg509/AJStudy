@@ -21,10 +21,10 @@
         android:id="@+id/fl_container"
         android:layout_width="@dimen/dashboard_item_icon_size"
         android:layout_height="@dimen/dashboard_item_icon_size"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin_l"
         android:layout_marginTop="@dimen/activity_vertical_margin_s"
         android:layout_marginBottom="@dimen/activity_vertical_margin_s"
-        app:corner_radius="16dp"
+        app:corner_radius="@dimen/radius_l"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +35,7 @@
             android:layout_width="@dimen/dashboard_item_icon_size"
             android:layout_height="@dimen/dashboard_item_icon_size"
             android:contentDescription="@string/image_description"
-            android:src="@drawable/item_icon_placeholder" />
+            android:src="@drawable/icon_placeholder" />
 
         <!-- 按压蒙版 -->
         <ImageView
@@ -52,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_inner_gap"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_l"
         android:ellipsize="end"
         android:lines="1"
         android:textAlignment="textStart"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_inner_gap"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_l"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAlignment="textStart"
@@ -81,7 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_inner_gap"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_l"
         android:ellipsize="end"
         android:lines="1"
         android:textAlignment="textStart"

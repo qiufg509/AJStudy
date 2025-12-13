@@ -167,7 +167,7 @@ public class DetailActivity extends AppCompatActivity {
             Glide.with(binding.getRoot().getContext())
                 .load(detailHead.getIcoUri())
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .placeholder(R.drawable.item_icon_placeholder)
+                .placeholder(R.drawable.icon_placeholder)
                 .into(binding.ivIcon);
             binding.tvAppName.setText(detailHead.getName());
             binding.tvTariff.setText(detailHead.getTariffDesc());

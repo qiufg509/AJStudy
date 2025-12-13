@@ -3,21 +3,21 @@
 
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="16dp" />
+            <corners android:radius="@dimen/radius_l" />
             <solid android:color="@color/ajstudy_download_button_background_pressed" />
             <size android:width="@dimen/install_btn_width" android:height="@dimen/install_btn_height" />
         </shape>
     </item>
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <corners android:radius="16dp" />
+            <corners android:radius="@dimen/radius_l" />
             <solid android:color="@color/ajstudy_download_button_background_pressed" />
             <size android:width="@dimen/install_btn_width" android:height="@dimen/install_btn_height" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="16dp" />
+            <corners android:radius="@dimen/radius_l" />
             <solid android:color="@color/ajstudy_download_button_background" />
             <size android:width="@dimen/install_btn_width" android:height="@dimen/install_btn_height" />
         </shape>
