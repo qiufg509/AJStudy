@@ -35,9 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="48dp"
-            android:textColor="@color/ajstudy_color_toolbar_text"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
         <!-- 右侧菜单按钮 -->
         <ImageButton
