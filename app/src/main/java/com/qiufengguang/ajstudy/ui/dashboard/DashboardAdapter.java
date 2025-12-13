@@ -44,6 +44,18 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         diffResult.dispatchUpdatesTo(this);
     }
 
+    public void addData(List<DashboardBean> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        if (this.beans == null) {
+            this.beans = list;
+        } else {
+            this.beans.addAll(list);
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return Objects.isNull(this.beans) ? 0 : this.beans.size();

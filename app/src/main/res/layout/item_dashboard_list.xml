@@ -17,35 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.qiufengguang.ajstudy.view.RoundedFrameLayout
-        android:id="@+id/fl_container"
+    <!-- 图标 -->
+    <ImageView
+        android:id="@+id/iv_icon"
         android:layout_width="@dimen/dashboard_item_icon_size"
         android:layout_height="@dimen/dashboard_item_icon_size"
         android:layout_marginStart="@dimen/activity_horizontal_margin_l"
         android:layout_marginTop="@dimen/activity_vertical_margin_s"
         android:layout_marginBottom="@dimen/activity_vertical_margin_s"
-        app:corner_radius="@dimen/radius_l"
+        android:contentDescription="@string/image_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- 图标 -->
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="@dimen/dashboard_item_icon_size"
-            android:layout_height="@dimen/dashboard_item_icon_size"
-            android:contentDescription="@string/image_description"
-            android:src="@drawable/icon_placeholder" />
-
-        <!-- 按压蒙版 -->
-        <ImageView
-            android:id="@+id/iv_overlay"
-            android:layout_width="@dimen/dashboard_item_icon_size"
-            android:layout_height="@dimen/dashboard_item_icon_size"
-            android:contentDescription="@null"
-            android:duplicateParentState="true"
-            android:src="@drawable/image_mask_selector" />
-    </com.qiufengguang.ajstudy.view.RoundedFrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -56,10 +39,11 @@
         android:ellipsize="end"
         android:lines="1"
         android:textAlignment="textStart"
+        android:textColor="@color/ajstudy_color_text_primary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fl_container"
-        app:layout_constraintTop_toTopOf="@id/fl_container" />
+        app:layout_constraintStart_toEndOf="@id/iv_icon"
+        app:layout_constraintTop_toTopOf="@id/iv_icon" />
 
     <TextView
         android:id="@+id/tv_subtitle"
@@ -71,9 +55,10 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAlignment="textStart"
-        android:textSize="16sp"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fl_container"
+        app:layout_constraintStart_toEndOf="@id/iv_icon"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
     <TextView
@@ -85,9 +70,10 @@
         android:ellipsize="end"
         android:lines="1"
         android:textAlignment="textStart"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/fl_container"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fl_container" />
+        app:layout_constraintStart_toEndOf="@id/iv_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

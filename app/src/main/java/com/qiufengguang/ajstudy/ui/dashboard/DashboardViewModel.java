@@ -9,12 +9,13 @@ import androidx.lifecycle.SavedStateHandle;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.data.DashboardBean;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.ui.base.BaseViewModel;
 import com.qiufengguang.ajstudy.utils.FileUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,11 @@ public class DashboardViewModel extends BaseViewModel {
     private static final String TAG = "DashboardViewModel";
 
     private static final String KEY_CACHE_DATA = "cacheData";
+
+    /**
+     * 每一页加载总数量
+     */
+    private static final int PAGE_SIZE = 10;
 
     /**
      * 不需要保存的临时状态（使用普通的 LiveData）
@@ -68,6 +74,20 @@ public class DashboardViewModel extends BaseViewModel {
 
     public LiveData<List<DashboardBean>> getLiveData() {
         return liveData;
+    }
+
+    public List<DashboardBean> getPageData(int page) {
+        List<DashboardBean> value = liveData.getValue();
+        if (value == null || page < 0) {
+            return null;
+        }
+
+        int fromIndex = page * PAGE_SIZE;
+        int toIndex = Math.min((page + 1) * PAGE_SIZE, value.size());
+        if (fromIndex >= toIndex) {
+            return null;
+        }
+        return new ArrayList<>(value.subList(fromIndex, toIndex));
     }
 
     public void cacheData(String key) {

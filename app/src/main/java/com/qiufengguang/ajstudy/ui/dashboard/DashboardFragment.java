@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.data.DashboardBean;
 import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
+import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
+
+import java.util.List;
 
 /**
  * 列表页
@@ -39,8 +43,12 @@ public class DashboardFragment extends BaseFragment {
     }
 
     @Override
+    protected String getTitle() {
+        return "应用列表";
+    }
+
+    @Override
     protected void setupContent() {
-        baseBinding.toolbar.setTitle("仪表盘");
         binding = FragmentDashboardBinding.inflate(
             LayoutInflater.from(requireContext()),
             baseBinding.contentContainer,
@@ -55,7 +63,8 @@ public class DashboardFragment extends BaseFragment {
         adjustColumn();
 
         // 绑定数据
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), list -> adapter.setData(list));
+        viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
+            adapter.setData(viewModel.getPageData(0)));
     }
 
     private void adjustColumn() {
@@ -67,19 +76,30 @@ public class DashboardFragment extends BaseFragment {
         divider.setLastItemDecorated(false);
         recyclerView.addItemDecoration(divider);
         int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
+        LinearLayoutManager layoutManager;
         switch (columnCount) {
             case Constant.Grid.column_8:
-                recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+                layoutManager = new GridLayoutManager(requireContext(), 2);
                 break;
             case Constant.Grid.column_12:
-                recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
+                layoutManager = new GridLayoutManager(requireContext(), 3);
                 break;
             default:
-                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                layoutManager = new LinearLayoutManager(requireContext());
                 break;
         }
+        recyclerView.setLayoutManager(layoutManager);
         adapter = new DashboardAdapter(viewModel.getLiveData().getValue());
         recyclerView.setAdapter(adapter);
+        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                List<DashboardBean> data = viewModel.getPageData(page);
+                adapter.addData(data);
+            }
+        };
+
+        recyclerView.addOnScrollListener(scrollListener);
     }
 
     @Override

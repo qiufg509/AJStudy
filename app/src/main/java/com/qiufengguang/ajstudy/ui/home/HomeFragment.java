@@ -29,18 +29,21 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
+    protected String getTitle() {
+        return "首页";
+    }
+
+    @Override
     protected void setupContent() {
-        baseBinding.toolbar.setTitle("首页");
         // 使用单独的布局文件注入内容
         binding = FragmentHomeBinding.inflate(
             LayoutInflater.from(requireContext()),
-            baseBinding.contentContainer,
+            getContainer(),
             true
         );
         HomeViewModel viewModel =
             new ViewModelProvider(this).get(HomeViewModel.class);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(),
-            title -> baseBinding.toolbar.setTitle(title));
+        viewModel.getLiveData().observe(getViewLifecycleOwner(), this::setTitle);
     }
 
     @Override

@@ -28,8 +28,12 @@ public class NotificationsFragment extends BaseFragment {
     }
 
     @Override
+    protected String getTitle() {
+        return "我的";
+    }
+
+    @Override
     protected void setupContent() {
-        baseBinding.toolbar.setTitle("我的");
         // 使用单独的布局文件注入内容
         binding = FragmentNotificationsBinding.inflate(
             LayoutInflater.from(requireContext()),
@@ -40,7 +44,7 @@ public class NotificationsFragment extends BaseFragment {
         NotificationsViewModel viewModel =
             new ViewModelProvider(this).get(NotificationsViewModel.class);
         viewModel.getText().observe(getViewLifecycleOwner(), title -> {
-            baseBinding.toolbar.setTitle(title);
+            setTitle(title);
             binding.textNotifications.setText("这是内容");
         });
     }

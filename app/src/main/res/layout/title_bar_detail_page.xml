@@ -13,8 +13,8 @@
     <!-- 自定义工具栏布局，实现左右对称 -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:paddingHorizontal="@dimen/title_bar_horizontal_margin"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/title_bar_horizontal_margin">
 
         <!-- 左侧返回按钮 -->
         <ImageButton
