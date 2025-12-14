@@ -13,6 +13,6 @@
         </shape>
     </item>
     <item>
-        <color android:color="@color/ajstudy_translucent" />
+        <color android:color="@android:color/transparent" />
     </item>
 </selector>

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -196,7 +195,7 @@ public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetCha
     /**
      * 设置 Toolbar 图标颜色
      */
-    private void setToolbarIconColor(@ColorInt boolean shouldBeLight) {
+    private void setToolbarIconColor(boolean shouldBeLight) {
         // 设置返回按钮图标颜色
         ColorStateList tintList;
         if (shouldBeLight) {

@@ -9,15 +9,15 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ajstudy_transparent">
+        android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/ajstudy_transparent"
+            android:background="@android:color/transparent"
             app:collapsedTitleGravity="start"
-            app:contentScrim="@color/ajstudy_transparent"
+            app:contentScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimVisibleHeightTrigger="164dp"
             app:statusBarScrim="@android:color/transparent"
@@ -247,14 +247,14 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/ajstudy_transparent"
-            app:tabBackground="@color/ajstudy_transparent"
+            android:background="@android:color/transparent"
+            app:tabBackground="@android:color/transparent"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/ajstudy_subtab_indicator_color"
+            app:tabIndicatorColor="@color/ajstudy_color_primary"
             app:tabIndicatorHeight="2dp"
             app:tabMode="auto"
-            app:tabSelectedTextColor="@color/ajstudy_subtab_text_on"
-            app:tabTextColor="@color/ajstudy_subtab_text_off" />
+            app:tabSelectedTextColor="@color/ajstudy_color_primary"
+            app:tabTextColor="@color/ajstudy_color_secondary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -275,13 +275,13 @@
         android:padding="0dp"
         android:text="@string/detail_btn_install"
         android:textAllCaps="false"
-        android:textColor="@color/ajstudy_download_button_content_normal"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
-        app:backgroundTint="@color/ajstudy_detail_download_button_background"
+        app:backgroundTint="@color/ajstudy_color_primary"
         app:cornerRadius="18dp"
         app:elevation="8dp"
         app:icon="@null"
-        app:iconTint="@color/ajstudy_transparent"
+        app:iconTint="@android:color/transparent"
         app:layout_anchor="@id/view_pager"
         app:layout_anchorGravity="bottom" />
 

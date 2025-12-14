@@ -8,5 +8,6 @@
         android:bottomRightRadius="0dp"
         android:topLeftRadius="@dimen/detail_info_divider_size"
         android:topRightRadius="@dimen/detail_info_divider_size" />
+    <size android:height="@dimen/detail_info_divider_size" />
 
 </shape>

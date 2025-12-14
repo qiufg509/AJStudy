@@ -7,20 +7,12 @@
     <string name="title_action_back_description">返回</string>
     <string name="title_action_share_description">分享</string>
 
-    <!--详情页-->
-    <string name="introduction">介绍</string>
-    <string name="reviews">评论</string>
-    <string name="recommendations">推荐</string>
-    <string name="install">安装</string>
-    <string name="share">分享</string>
-    <string name="customer_service">客服</string>
-    <string name="post_review">发表评论</string>
-    <string name="latest">最新</string>
-    <string name="all_reviews">全部评论</string>
-    <string name="comprehensive_rating">综合评分</string>
-    <string name="user_reviews">用户评论</string>
-    <string name="recommended_for_you">为你推荐</string>
     <string name="detail_download_suffix">次安装</string>
     <string name="detail_btn_install">安装 (%s)</string>
+    <string name="login_phone">手机号</string>
+    <string name="login_pwd">密码</string>
+    <string name="login_auto_remember_pwd">记住密码</string>
+    <string name="login_sign_in">登录</string>
+    <string name="login_other_sign_in_methods">其他登录方式</string>
 
 </resources>

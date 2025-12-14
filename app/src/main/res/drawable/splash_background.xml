@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 设置背景颜色 -->
-    <item android:drawable="@color/ajstudy_splash_page_bg" />
+    <item android:drawable="@android:color/white" />
     <!-- 在背景中央放置你的应用Logo -->
     <item>
         <bitmap

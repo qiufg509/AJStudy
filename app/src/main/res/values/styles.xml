@@ -7,16 +7,16 @@
     </style>
     <!-- 底部导航栏样式 -->
     <style name="BottomNavStyles" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="android:background">@color/ajstudy_bottom_nav_bg_blur</item>
+        <item name="android:background">@drawable/bottom_nav_background_blur</item>
         <item name="itemBackground">@null</item>
         <item name="itemShapeAppearance">@null</item>
         <item name="itemShapeFillColor">@null</item>
         <item name="itemRippleColor">@null</item>
         <item name="itemHorizontalTranslationEnabled">false</item>
         <item name="labelVisibilityMode">labeled</item>
-        <item name="itemIconTint">@drawable/bottom_nav_icon_tint_immersive</item>
+        <item name="itemIconTint">@drawable/bottom_nav_icon_tint</item>
         <item name="itemIconSize">24dp</item>
-        <item name="itemTextColor">@drawable/bottom_nav_text_tint_immersive</item>
+        <item name="itemTextColor">@drawable/bottom_nav_text_tint</item>
         <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
         <item name="itemTextAppearanceInactive">@style/BottomNavTextStyle</item>
         <item name="itemTextAppearance">@style/BottomNavTextStyle</item>

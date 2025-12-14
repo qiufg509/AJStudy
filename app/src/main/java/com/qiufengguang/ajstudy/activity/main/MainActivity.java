@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -64,18 +63,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        setupEdgeToEdge();
         setupNavigation();
         setupCustomBackNavigation();
-    }
-
-    private void setupEdgeToEdge() {
-        // 设置导航栏颜色
-        Window window = getWindow();
-        if (window == null) {
-            return;
-        }
-        window.setNavigationBarContrastEnforced(false);
     }
 
     /**
@@ -119,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setupCustomBackNavigation() {
         getOnBackPressedDispatcher().addCallback(this,
-            new MainPageBackPressedCallback(true,this));
+            new MainPageBackPressedCallback(true, this));
     }
 
     @Override
