@@ -161,7 +161,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/title_action_back_description"
             android:scaleType="center"
-            android:src="@drawable/ic_btn_chevron_left"
+            android:src="@drawable/ic_btn_arrow_left"
             app:tint="@color/ajstudy_color_toolbar_icon" />
 
     </FrameLayout>

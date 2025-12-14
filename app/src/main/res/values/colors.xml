@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ajstudy_color_primary">#e5000000</color>
-    <color name="ajstudy_color_primary_dark">#DBFFFFFF</color>
-    <color name="ajstudy_color_primary_translucent">#FFFFFF</color>
+    <color name="ajstudy_color_primary">#ff0a59f7</color>
     <color name="ajstudy_color_secondary">#99000000</color>
     <color name="ajstudy_window_background">#f1f3f5</color>
     <color name="ajstudy_transparent">#00000000</color>
@@ -32,6 +30,18 @@
     <color name="ajstudy_download_button_content_active">#0a59f7</color>
     <color name="ajstudy_download_button_background">#e0e0e0</color>
     <color name="ajstudy_download_button_background_pressed">#efffffff</color>
+
+    <color name="bottomnavigationview_bg">#FFFFFF</color>
+    <color name="bottomnavigationview_blur_color">#F2FFFFFF</color>
+    <color name="bottomnavigationview_item_active">#0A59F7</color>
+    <color name="bottomnavigationview_item_default">#33000000</color>
+    <color name="bottomnavigationview_message_bg">#E84026</color>
+    <color name="bottomnavigationview_item_title_active">#0A59F7</color>
+    <color name="bottomnavigationview_item_title_default">#99000000</color>
+    <color name="bottomnavigationview_divider_color">#33000000</color>
+    <color name="ajstudy_clickeffic_default_color">#19000000</color>
+    <color name="ajstudy_control_hover">#0c000000</color>
+    <color name="ajstudy_control_focused_outline">#0a59f7</color>
 
     <!-- 基础颜色 -->
     <color name="wechat_green">#07C160</color>

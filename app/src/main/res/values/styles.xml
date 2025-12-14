@@ -5,4 +5,34 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/radius_s</item>
     </style>
+    <!-- 底部导航栏样式 -->
+    <style name="BottomNavStyles" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/ajstudy_bottom_nav_bg_blur</item>
+        <item name="itemBackground">@null</item>
+        <item name="itemShapeAppearance">@null</item>
+        <item name="itemShapeFillColor">@null</item>
+        <item name="itemRippleColor">@null</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemIconTint">@drawable/bottom_nav_icon_tint_immersive</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="itemTextColor">@drawable/bottom_nav_text_tint_immersive</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavTextStyle</item>
+        <item name="itemTextAppearance">@style/BottomNavTextStyle</item>
+        <item name="android:itemTextAppearance">@style/BottomNavTextStyle</item>
+    </style>
+    <!-- 底部导航栏文字基础样式 -->
+    <style name="BottomNavTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textColor">@null</item>
+
+    </style>
 </resources>

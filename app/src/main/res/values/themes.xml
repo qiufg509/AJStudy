@@ -8,6 +8,9 @@
         <!-- 设置自定义背景色 -->
         <item name="colorSurface">@color/ajstudy_window_background</item>
         <item name="android:windowBackground">@color/ajstudy_window_background</item>
+
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
     </style>
 
     <!--启动页主题-->
@@ -35,6 +38,7 @@
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
     </style>
+    <!--详情页主题-禁用所以滚动控件的边缘阴影效果-->
     <style name="Theme.Page.Detail" parent="Theme.AJStudy">
         <item name="android:overScrollMode">never</item>
     </style>

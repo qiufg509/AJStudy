@@ -4,6 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 列表滑动倒数第二条加载更多监听
+ *
+ * @author qiufengguang
+ * @since 2025/12/14 0:36
+ */
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     private static final int START_PAGE_INDEX = 0;
 
