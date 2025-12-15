@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -87,13 +88,18 @@ public class MainActivity extends AppCompatActivity {
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            NavDestination destination = navController.getCurrentDestination();
+            if (destination != null && destination.getId() == itemId) {
+                // BottomNavigationView会保持原item的选中状态，如果返回false它会先取消选中，然后重新选中，可能闪烁
+                return true;
+            }
             if (itemId == R.id.navigation_notifications) {
                 if (globalVm == null || !globalVm.isLoggedIn()) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.putExtra(LoginAction.ORIGINAL_PAGE, MainActivity.class.getName());
                     intent.putExtra(LoginAction.DESTINATION_ID, itemId);
                     startActivity(intent);
-                    // 跳转登录页面
+                    // "监听器没有处理这次点击",BottomNavigationView 会尝试恢复之前的选中状态
                     return false;
                 }
             }
