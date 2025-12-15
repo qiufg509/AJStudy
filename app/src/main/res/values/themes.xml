@@ -9,6 +9,9 @@
         <item name="colorSurface">@color/ajstudy_window_background</item>
         <item name="android:windowBackground">@color/ajstudy_window_background</item>
 
+        <item name="android:textColorHighlight">@color/ajstudy_color_text_primary</item>
+        <item name="android:textColorHighlightInverse">@color/ajstudy_color_text_primary</item>
+
         <!-- 关键：覆盖BottomNavigationView样式 -->
         <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
     </style>
@@ -26,9 +29,9 @@
         <item name="windowNoTitle">true</item>
     </style>
     <!--登录页主题-->
-    <style name="Theme.Page.Login" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Page.Login" parent="Theme.AJStudy">
         <!-- 关键：状态栏白色 -->
-        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
 
         <!-- 隐藏 ActionBar -->

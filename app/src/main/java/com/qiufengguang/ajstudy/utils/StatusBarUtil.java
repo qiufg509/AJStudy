@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -98,7 +99,7 @@ public class StatusBarUtil {
      * @param activity Activity页面
      * @param color    状态栏背景色
      */
-    public static void throttleUpdateStatusBarColor(Activity activity, int color) {
+    public static void throttleUpdateStatusBarColor(Activity activity, @ColorInt int color) {
         throttleUpdateStatusBarColor(getWindow(activity), color);
     }
 
@@ -109,7 +110,7 @@ public class StatusBarUtil {
      * @param window 当前窗口Window
      * @param color  状态栏背景色
      */
-    public static void throttleUpdateStatusBarColor(Window window, int color) {
+    public static void throttleUpdateStatusBarColor(Window window, @ColorInt int color) {
         if (window == null) {
             return;
         }

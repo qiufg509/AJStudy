@@ -95,7 +95,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <android.widget.CheckBox
+    <CheckBox
         android:id="@+id/cb_remember_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
