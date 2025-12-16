@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
             binding.ivIcon.setLayoutParams(iconParams);
         }
 
-        int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.dashboard_item_icon_size)
+        int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.item_icon_size)
             + getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
         offsetChangedCallback = new DetailHeadOffsetChangedCallback(this,
             toolbar,

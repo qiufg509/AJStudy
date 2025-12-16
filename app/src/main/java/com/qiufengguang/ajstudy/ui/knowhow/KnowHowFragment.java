@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.dashboard;
+package com.qiufengguang.ajstudy.ui.knowhow;
 
 import android.view.LayoutInflater;
 
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.data.DashboardBean;
-import com.qiufengguang.ajstudy.databinding.FragmentDashboardBinding;
+import com.qiufengguang.ajstudy.data.KnowHowBean;
+import com.qiufengguang.ajstudy.databinding.FragmentKnowHowBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
@@ -20,21 +20,21 @@ import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
 import java.util.List;
 
 /**
- * 列表页
+ * 知识列表页
  *
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class DashboardFragment extends BaseFragment {
-    private FragmentDashboardBinding binding;
+public class KnowHowFragment extends BaseFragment {
+    private FragmentKnowHowBinding binding;
 
-    private DashboardViewModel viewModel;
+    private KnowHowViewModel viewModel;
 
-    private DashboardAdapter adapter;
+    private KnowHowAdapter adapter;
 
     @Override
     protected void setPageBackground() {
-        baseBinding.backgroundImage.setBackgroundResource(R.drawable.dashboard_page_bg);
+        baseBinding.backgroundImage.setBackgroundResource(R.drawable.know_how_page_bg);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DashboardFragment extends BaseFragment {
 
     @Override
     protected void setupContent() {
-        binding = FragmentDashboardBinding.inflate(
+        binding = FragmentKnowHowBinding.inflate(
             LayoutInflater.from(requireContext()),
             baseBinding.contentContainer,
             true
@@ -58,7 +58,7 @@ public class DashboardFragment extends BaseFragment {
             requireActivity().getApplication(), this);
         // 看起来是"新建"，但实际上获取的是同一个实例
         viewModel = new ViewModelProvider(this, factory)
-            .get(DashboardViewModel.class);
+            .get(KnowHowViewModel.class);
 
         adjustColumn();
 
@@ -89,12 +89,12 @@ public class DashboardFragment extends BaseFragment {
                 break;
         }
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new DashboardAdapter(viewModel.getLiveData().getValue());
+        adapter = new KnowHowAdapter(viewModel.getLiveData().getValue());
         recyclerView.setAdapter(adapter);
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                List<DashboardBean> data = viewModel.getPageData(page);
+                List<KnowHowBean> data = viewModel.getPageData(page);
                 adapter.addData(data);
             }
         };

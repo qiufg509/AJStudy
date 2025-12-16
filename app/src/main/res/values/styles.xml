@@ -14,7 +14,6 @@
         <item name="itemRippleColor">@null</item>
         <item name="itemHorizontalTranslationEnabled">false</item>
         <item name="labelVisibilityMode">labeled</item>
-        <item name="itemIconTint">@drawable/bottom_nav_icon_tint</item>
         <item name="itemIconSize">24dp</item>
         <item name="itemTextColor">@drawable/bottom_nav_text_tint</item>
         <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>

@@ -47,8 +47,8 @@
                 <!-- 应用图标 -->
                 <ImageView
                     android:id="@+id/iv_icon"
-                    android:layout_width="@dimen/dashboard_item_icon_size"
-                    android:layout_height="@dimen/dashboard_item_icon_size"
+                    android:layout_width="@dimen/item_icon_size"
+                    android:layout_height="@dimen/item_icon_size"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_l"
                     android:layout_marginTop="84dp"
                     android:contentDescription="@string/image_description"

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.dashboard;
+package com.qiufengguang.ajstudy.ui.knowhow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,27 +14,27 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
-import com.qiufengguang.ajstudy.data.DashboardBean;
-import com.qiufengguang.ajstudy.databinding.ItemDashboardListBinding;
+import com.qiufengguang.ajstudy.data.KnowHowBean;
+import com.qiufengguang.ajstudy.databinding.ItemKnowHowBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * 列表页适配器
+ * 知识列表页适配器
  *
  * @author qiufengguang
  * @since 2025/11/26 22:19
  */
-public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder> {
-    private List<DashboardBean> beans;
+public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowViewHolder> {
+    private List<KnowHowBean> beans;
 
-    public DashboardAdapter(List<DashboardBean> beans) {
+    public KnowHowAdapter(List<KnowHowBean> beans) {
         this.beans = beans;
     }
 
-    public void setData(List<DashboardBean> list) {
+    public void setData(List<KnowHowBean> list) {
         if (Objects.equals(this.beans, list)) {
             return;
         }
@@ -44,7 +44,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         diffResult.dispatchUpdatesTo(this);
     }
 
-    public void addData(List<DashboardBean> list) {
+    public void addData(List<KnowHowBean> list) {
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -63,23 +63,23 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     @NonNull
     @Override
-    public DashboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new DashboardViewHolder(ItemDashboardListBinding.inflate(
+    public KnowHowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new KnowHowViewHolder(ItemKnowHowBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DashboardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull KnowHowViewHolder holder, int position) {
         int adapterPosition = holder.getAdapterPosition();
-        DashboardBean bean = this.beans.get(adapterPosition);
+        KnowHowBean bean = this.beans.get(adapterPosition);
         holder.bind(bean);
     }
 
 
-    public static class DashboardViewHolder extends RecyclerView.ViewHolder {
-        private final ItemDashboardListBinding binding;
+    public static class KnowHowViewHolder extends RecyclerView.ViewHolder {
+        private final ItemKnowHowBinding binding;
 
-        public DashboardViewHolder(@NonNull ItemDashboardListBinding binding) {
+        public KnowHowViewHolder(@NonNull ItemKnowHowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
@@ -87,7 +87,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         /**
          * 绑定数据到View，避免重复设置相同属性
          */
-        public void bind(DashboardBean bean) {
+        public void bind(KnowHowBean bean) {
             // 优化Glide加载，添加错误处理和进度指示
             if (!TextUtils.isEmpty(bean.getIcon())) {
                 Glide.with(binding.getRoot().getContext())
@@ -124,10 +124,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     }
 
     private static class ItemDiffCallback extends DiffUtil.Callback {
-        private List<DashboardBean> oldList;
-        private List<DashboardBean> newList;
+        private List<KnowHowBean> oldList;
+        private List<KnowHowBean> newList;
 
-        public ItemDiffCallback(List<DashboardBean> oldList, List<DashboardBean> newList) {
+        public ItemDiffCallback(List<KnowHowBean> oldList, List<KnowHowBean> newList) {
             if (oldList != null) {
                 this.oldList = new ArrayList<>(oldList);
             }
@@ -163,7 +163,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
                 || newItemPosition >= this.newList.size()) {
                 return false;
             }
-            DashboardBean bean = this.oldList.get(oldItemPosition);
+            KnowHowBean bean = this.oldList.get(oldItemPosition);
             if (Objects.isNull(bean)) {
                 return false;
             }

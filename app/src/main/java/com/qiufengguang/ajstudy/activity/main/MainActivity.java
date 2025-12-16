@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         // 仅设置底部导航与导航控制器的绑定
         NavigationUI.setupWithNavController(binding.navView, navController);
+        // 去掉icon染色，保持svg图多个path不同颜色
+        binding.navView.setItemIconTintList(null);
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 // BottomNavigationView会保持原item的选中状态，如果返回false它会先取消选中，然后重新选中，可能闪烁
                 return true;
             }
-            if (itemId == R.id.navigation_notifications) {
+            if (itemId == R.id.navigation_me) {
                 if (globalVm == null || !globalVm.isLoggedIn()) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.putExtra(LoginAction.ORIGINAL_PAGE, MainActivity.class.getName());

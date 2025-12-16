@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentBaseBinding;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
@@ -74,14 +73,6 @@ public abstract class BaseFragment extends Fragment {
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) containerLayoutParams;
             layoutParams.topMargin = totalHeight;
             baseBinding.contentContainer.setLayoutParams(layoutParams);
-        }
-
-        // 设置背景图在导航栏之上，避免过度绘制
-        ViewGroup.LayoutParams bgLayoutParams = baseBinding.backgroundImage.getLayoutParams();
-        if (bgLayoutParams instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) bgLayoutParams;
-            layoutParams.bottomMargin = getResources().getDimensionPixelSize(R.dimen.ajstudy_bottom_navigation_height);
-            baseBinding.backgroundImage.setLayoutParams(layoutParams);
         }
     }
 

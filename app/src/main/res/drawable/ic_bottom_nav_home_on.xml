@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24.0dip"
+    android:height="24.0dip"
+    android:autoMirrored="true"
+    android:viewportWidth="96.0"
+    android:viewportHeight="96.0">
+    <path
+        android:fillAlpha="1.0"
+        android:fillColor="@color/ajstudy_bottom_nav_icon_on"
+        android:pathData="M52.6,23.8l0.2,0.2l0.2,0.2L83,48.9V77c0,6 -4.8,10.9 -10.7,11L72,88H24c-6,0 -10.8,-4.8 -11,-10.7l0,-0.3V48.9l29.9,-24.8l0.2,-0.2C45.9,21.8 49.8,21.7 52.6,23.8zM56.5,10.2l0.3,0.2l35.8,29.7c1,0.8 1.1,2.2 0.3,3.2l-1.9,2.3c-0.8,1 -2.2,1.1 -3.2,0.3L52,16.2c-2.2,-1.9 -5.5,-1.9 -7.8,-0.2L44,16.2L8.2,45.8c-1,0.8 -2.4,0.7 -3.2,-0.3l-1.9,-2.3c-0.8,-1 -0.7,-2.4 0.3,-3.2l35.8,-29.7C44.2,6.3 51.4,6.2 56.5,10.2z"
+        android:strokeAlpha="1.0" />
+
+    <path
+        android:fillAlpha="1.0"
+        android:fillColor="@color/ajstudy_bottom_nav_icon_on_overlay_1"
+        android:pathData="M49,50h-2c-4.9,0 -8.9,3.9 -9,8.7l0,0.3v15c0,1.1 0.8,1.9 1.9,2l0.1,0h16c1.1,0 1.9,-0.8 2,-1.9l0,-0.1V59c0,-4.9 -3.9,-8.9 -8.7,-9L49,50z"
+        android:strokeAlpha="1.0" />
+</vector>

@@ -9,11 +9,11 @@
     <dimen name="activity_vertical_margin_s">8dp</dimen>
     <dimen name="activity_vertical_margin_m">12dp</dimen>
     <dimen name="activity_vertical_margin_l">16dp</dimen>
-    <dimen name="dashboard_item_icon_size">80dp</dimen>
+    <dimen name="item_icon_size">80dp</dimen>
     <dimen name="radius_l">16dp</dimen>
     <dimen name="radius_m">12dp</dimen>
     <dimen name="radius_s">8dp</dimen>
-    <dimen name="list_item_bg_radius">24dp</dimen>
+    <dimen name="item_bg_radius">24dp</dimen>
     <dimen name="detail_info_divider_size">12dp</dimen>
     <dimen name="title_bar_horizontal_margin">4dp</dimen>
     <dimen name="install_btn_width">64dp</dimen>

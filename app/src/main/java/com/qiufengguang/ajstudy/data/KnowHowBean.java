@@ -7,12 +7,12 @@ import androidx.annotation.NonNull;
 import java.util.Objects;
 
 /**
- * 列表页数据bean
+ * 知识列表页数据bean
  *
  * @author qiufengguang
  * @since 2025/5/5 23:54
  */
-public class DashboardBean {
+public class KnowHowBean {
     private int id;
     private String icon;
     private String title;
@@ -59,7 +59,7 @@ public class DashboardBean {
         this.brief = brief;
     }
 
-    public boolean isSame(DashboardBean bean) {
+    public boolean isSame(KnowHowBean bean) {
         if (Objects.isNull(bean)) {
             return false;
         }

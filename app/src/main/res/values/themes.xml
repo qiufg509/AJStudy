@@ -2,11 +2,22 @@
 <resources>
     <!-- 应用主题 -->
     <style name="Theme.AJStudy" parent="Theme.Material3.DayNight.NoActionBar">
+        <!--主品牌色-->
         <item name="colorPrimary">@color/ajstudy_color_primary</item>
+        <!--主色变体-->
+        <item name="colorPrimaryVariant">@color/ajstudy_color_primary_variant</item>
+        <!--强调色-->
         <item name="colorSecondary">@color/ajstudy_color_secondary</item>
+        <!--强调色变体-->
+        <item name="colorSecondaryVariant">@color/ajstudy_color_secondary</item>
+        <!--表面色-->
+        <item name="colorSurface">@color/ajstudy_window_background</item>
+        <!--主色上的文字色-->
+        <item name="colorOnPrimary">@color/ajstudy_color_text_primary</item>
+        <!--强调色上的文字色-->
+        <item name="colorOnSecondary">@color/ajstudy_color_text_secondary</item>
 
         <!-- 设置自定义背景色 -->
-        <item name="colorSurface">@color/ajstudy_window_background</item>
         <item name="android:windowBackground">@color/ajstudy_window_background</item>
 
         <item name="android:textColorHighlight">@color/ajstudy_color_text_primary</item>
@@ -17,7 +28,8 @@
     </style>
 
     <!--启动页主题-->
-    <style name="Theme.Page.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Page.Splash" parent="Theme.AJStudy">
+        <item name="colorSurface">@android:color/white</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
 
         <!-- 关键：状态栏白色 -->

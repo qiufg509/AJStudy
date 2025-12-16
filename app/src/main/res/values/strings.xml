@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">AJStudy</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="bottom_nav_title_home">首页</string>
+    <string name="bottom_nav_title_know_how">知识点</string>
+    <string name="bottom_nav_title_me">我的</string>
     <string name="image_description">图片</string>
     <string name="title_action_back_description">返回</string>
     <string name="title_action_share_description">分享</string>
-
     <string name="detail_download_suffix">次安装</string>
     <string name="detail_btn_install">安装 (%s)</string>
     <string name="login_phone">手机号</string>

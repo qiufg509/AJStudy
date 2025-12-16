@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.notifications;
+package com.qiufengguang.ajstudy.ui.me;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModel;
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class NotificationsViewModel extends ViewModel {
+public class MeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public MeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is me fragment");
     }
 
     public LiveData<String> getText() {

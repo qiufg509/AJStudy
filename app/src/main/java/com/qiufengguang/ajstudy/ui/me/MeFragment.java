@@ -1,11 +1,11 @@
-package com.qiufengguang.ajstudy.ui.notifications;
+package com.qiufengguang.ajstudy.ui.me;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.qiufengguang.ajstudy.databinding.FragmentNotificationsBinding;
+import com.qiufengguang.ajstudy.databinding.FragmentMeBinding;
 import com.qiufengguang.ajstudy.ui.base.BaseFragment;
 
 /**
@@ -14,8 +14,8 @@ import com.qiufengguang.ajstudy.ui.base.BaseFragment;
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class NotificationsFragment extends BaseFragment {
-    private FragmentNotificationsBinding binding;
+public class MeFragment extends BaseFragment {
+    private FragmentMeBinding binding;
 
     @Override
     protected void setPageBackground() {
@@ -35,17 +35,17 @@ public class NotificationsFragment extends BaseFragment {
     @Override
     protected void setupContent() {
         // 使用单独的布局文件注入内容
-        binding = FragmentNotificationsBinding.inflate(
+        binding = FragmentMeBinding.inflate(
             LayoutInflater.from(requireContext()),
             baseBinding.contentContainer,
             true
         );
 
-        NotificationsViewModel viewModel =
-            new ViewModelProvider(this).get(NotificationsViewModel.class);
+        MeViewModel viewModel =
+            new ViewModelProvider(this).get(MeViewModel.class);
         viewModel.getText().observe(getViewLifecycleOwner(), title -> {
             setTitle(title);
-            binding.textNotifications.setText("这是内容");
+            binding.tvContent.setText("这是内容");
         });
     }
 

@@ -2,13 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/list_item_bg_radius" />
+            <corners android:radius="@dimen/item_bg_radius" />
             <solid android:color="@color/ajstudy_list_item_bg_pressed" />
         </shape>
     </item>
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/list_item_bg_radius" />
+            <corners android:radius="@dimen/item_bg_radius" />
             <solid android:color="@color/ajstudy_list_item_bg_pressed" />
         </shape>
     </item>

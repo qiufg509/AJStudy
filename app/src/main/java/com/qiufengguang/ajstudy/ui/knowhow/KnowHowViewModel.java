@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.dashboard;
+package com.qiufengguang.ajstudy.ui.knowhow;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -9,7 +9,7 @@ import androidx.lifecycle.SavedStateHandle;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qiufengguang.ajstudy.data.DashboardBean;
+import com.qiufengguang.ajstudy.data.KnowHowBean;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.ui.base.BaseViewModel;
@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 列表页ViewModel
+ * 知识列表页ViewModel
  *
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class DashboardViewModel extends BaseViewModel {
-    private static final String TAG = "DashboardViewModel";
+public class KnowHowViewModel extends BaseViewModel {
+    private static final String TAG = "KnowHowViewModel";
 
     private static final String KEY_CACHE_DATA = "cacheData";
 
@@ -40,14 +40,14 @@ public class DashboardViewModel extends BaseViewModel {
     /**
      * 不需要保存的临时状态（使用普通的 LiveData）
      */
-    private final MutableLiveData<List<DashboardBean>> liveData = new MutableLiveData<>();
+    private final MutableLiveData<List<KnowHowBean>> liveData = new MutableLiveData<>();
 
     /**
      * 使用 SavedStateHandle 管理的状态
      */
     private final LiveData<Map<Integer, Integer>> cacheLiveData;
 
-    public DashboardViewModel(SavedStateHandle savedStateHandle) {
+    public KnowHowViewModel(SavedStateHandle savedStateHandle) {
         super(savedStateHandle);
 
         // 初始化保存的状态，设置默认值
@@ -64,20 +64,20 @@ public class DashboardViewModel extends BaseViewModel {
         handler.post(() -> {
             String listStr = FileUtil.readAssetsToString(GlobalApp.getContext(),
                 Constant.LIST_CONTENT_FILE);
-            List<DashboardBean> beans = new Gson().fromJson(listStr,
-                new TypeToken<List<DashboardBean>>() {
+            List<KnowHowBean> beans = new Gson().fromJson(listStr,
+                new TypeToken<List<KnowHowBean>>() {
                 }.getType());
             liveData.postValue(beans);
         });
 
     }
 
-    public LiveData<List<DashboardBean>> getLiveData() {
+    public LiveData<List<KnowHowBean>> getLiveData() {
         return liveData;
     }
 
-    public List<DashboardBean> getPageData(int page) {
-        List<DashboardBean> value = liveData.getValue();
+    public List<KnowHowBean> getPageData(int page) {
+        List<KnowHowBean> value = liveData.getValue();
         if (value == null || page < 0) {
             return null;
         }
