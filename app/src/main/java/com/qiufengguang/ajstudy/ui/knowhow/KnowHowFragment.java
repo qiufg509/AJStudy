@@ -33,16 +33,6 @@ public class KnowHowFragment extends BaseFragment {
     private KnowHowAdapter adapter;
 
     @Override
-    protected void setPageBackground() {
-        baseBinding.backgroundImage.setBackgroundResource(R.drawable.know_how_page_bg);
-    }
-
-    @Override
-    protected boolean isDarkBackgroundImage() {
-        return false;
-    }
-
-    @Override
     protected String getTitle() {
         return "应用列表";
     }
@@ -59,6 +49,8 @@ public class KnowHowFragment extends BaseFragment {
         // 看起来是"新建"，但实际上获取的是同一个实例
         viewModel = new ViewModelProvider(this, factory)
             .get(KnowHowViewModel.class);
+
+        setPageBackground(R.drawable.know_how_page_bg, false);
 
         adjustColumn();
 

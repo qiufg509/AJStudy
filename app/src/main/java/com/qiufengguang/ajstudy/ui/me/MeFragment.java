@@ -1,7 +1,6 @@
 package com.qiufengguang.ajstudy.ui.me;
 
 import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,16 +15,6 @@ import com.qiufengguang.ajstudy.ui.base.BaseFragment;
  */
 public class MeFragment extends BaseFragment {
     private FragmentMeBinding binding;
-
-    @Override
-    protected void setPageBackground() {
-        baseBinding.backgroundImage.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected boolean isDarkBackgroundImage() {
-        return true;
-    }
 
     @Override
     protected String getTitle() {

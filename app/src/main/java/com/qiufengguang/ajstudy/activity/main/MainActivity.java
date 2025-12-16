@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 完全恢复主题
-        setTheme(R.style.Theme_AJStudy);
+        setTheme(R.style.Theme_Page_Main);
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
