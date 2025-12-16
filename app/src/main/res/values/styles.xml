@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--详情页截图原件-->
     <style name="ScreenshotItemCorners">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/radius_s</item>
@@ -32,6 +32,5 @@
         <item name="android:letterSpacing">0</item>
         <item name="android:fontWeight">500</item>
         <item name="android:textColor">@null</item>
-
     </style>
 </resources>

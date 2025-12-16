@@ -61,7 +61,8 @@ public class KnowHowFragment extends BaseFragment {
 
     private void adjustColumn() {
         RecyclerView recyclerView = binding.getRoot();
-        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(),
+            LinearLayoutManager.VERTICAL);
         divider.setDividerThickness(1);
         int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider);
         divider.setDividerColor(color);

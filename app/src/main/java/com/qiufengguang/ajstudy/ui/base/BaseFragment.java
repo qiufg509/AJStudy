@@ -28,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     protected FragmentBaseBinding baseBinding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+        ViewGroup container, Bundle savedInstanceState) {
         baseBinding = FragmentBaseBinding.inflate(inflater, container, false);
         return baseBinding.getRoot();
     }
