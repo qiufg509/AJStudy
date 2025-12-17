@@ -63,7 +63,7 @@
             android:name=".activity.detail.DetailActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false"
-            android:theme="@style/Theme.Main.Blue" />
+            android:theme="@style/Theme.AJStudy.Blue" />
 
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->
         <meta-data
