@@ -34,7 +34,7 @@ public class KnowHowFragment extends BaseFragment {
 
     @Override
     protected boolean isDarkBackgroundImage() {
-        return false;
+        return true;
     }
 
     @Override

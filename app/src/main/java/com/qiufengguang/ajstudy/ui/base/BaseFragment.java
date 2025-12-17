@@ -36,7 +36,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StatusBarUtil.setLightStatusBar(requireActivity(), isDarkBackgroundImage());
+        StatusBarUtil.setLightStatusBar(requireActivity(), !isDarkBackgroundImage());
 
         setupBar();
         setupContent();
@@ -111,8 +111,8 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 是否为深色背景
-     * 深色背景则设置白色状态栏文字、icon
-     * 浅色背景则设置灰色状态栏文字、icon
+     * 深色背景则设置浅色状态栏文字、icon
+     * 浅色背景则设置深色状态栏文字、icon
      *
      * @return true深色 false浅色
      */

@@ -17,6 +17,11 @@ public class MeFragment extends BaseFragment {
     private FragmentMeBinding binding;
 
     @Override
+    protected boolean isDarkBackgroundImage() {
+        return false;
+    }
+
+    @Override
     protected String getTitle() {
         return "我的";
     }

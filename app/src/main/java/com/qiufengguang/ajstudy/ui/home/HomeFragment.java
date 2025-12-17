@@ -20,7 +20,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected boolean isDarkBackgroundImage() {
-        return true;
+        return false;
     }
 
     @Override
