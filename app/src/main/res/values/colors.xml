@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ajstudy_color_primary">#ff0a59f7</color>
-    <color name="ajstudy_color_primary_variant">#ffA2CAE9</color>
+    <color name="ajstudy_primary_red">#f44336</color>
+    <color name="ajstudy_primary_variant_red">#d32f2f</color>
+    <color name="ajstudy_primary_blue">#0a59f7</color>
+    <color name="ajstudy_primary_variant_blue">#1976d2</color>
+    <color name="ajstudy_primary_green">#4caf50</color>
+    <color name="ajstudy_primary_variant_green">#388e3c</color>
+    <color name="ajstudy_primary_orange">#ff9800</color>
+    <color name="ajstudy_primary_variant_orange">#f57c00</color>
+    <color name="ajstudy_primary_pink">#e91e63</color>
+    <color name="ajstudy_primary_variant_pink">#c2185b</color>
+    <color name="ajstudy_primary_black">#2e2e2e</color>
+    <color name="ajstudy_primary_variant_black">#707070</color>
+    <color name="ajstudy_primary_amber">#ffc107</color>
+    <color name="ajstudy_primary_variant_amber">#ffa000</color>
+    <color name="ajstudy_primary_indigo">#3f51b5</color>
+    <color name="ajstudy_primary_variant_indigo">#303f9f</color>
+    <color name="ajstudy_primary_lime">#cddc39</color>
+    <color name="ajstudy_primary_variant_lime">#afb42b</color>
+    <color name="ajstudy_primary_purple">#6200ee</color>
+    <color name="ajstudy_primary_variant_purple">#ff3700b3</color>
     <color name="ajstudy_color_secondary">#99000000</color>
     <color name="ajstudy_window_background">#f1f3f5</color>
     <color name="ajstudy_list_item_bg_pressed">#1a000000</color>
@@ -23,7 +41,6 @@
     <color name="ajstudy_bottom_nav_bg_end">#f2f1f3f5</color>
     <color name="ajstudy_bottom_nav_message_bg">#E84026</color>
     <color name="ajstudy_default_color_error">#b3261e</color>
-    <color name="ajstudy_bottom_nav_icon_on">#ff256fff</color>
     <color name="ajstudy_bottom_nav_icon_on_overlay_1">#b2ffffff</color>
     <color name="ajstudy_bottom_nav_icon_on_overlay_2">#ffffba1b</color>
     <color name="ajstudy_bottom_nav_icon_off">#33000000</color>

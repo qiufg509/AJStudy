@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 选中状态：深色文字 -->
-    <item android:color="@color/ajstudy_color_primary" android:state_checked="true" />
+    <item android:color="?attr/colorPrimary" android:state_checked="true" />
 
     <!-- 未选中状态：浅色文字 -->
     <item android:color="@color/ajstudy_color_secondary" android:state_checked="false" />

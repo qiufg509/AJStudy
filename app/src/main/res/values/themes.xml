@@ -3,9 +3,9 @@
     <!-- 应用主题 -->
     <style name="Theme.AJStudy" parent="Theme.Material3.DayNight.NoActionBar">
         <!--主品牌色-->
-        <item name="colorPrimary">@color/ajstudy_color_primary</item>
+        <item name="colorPrimary">@color/ajstudy_primary_blue</item>
         <!--主色变体-->
-        <item name="colorPrimaryVariant">@color/ajstudy_color_primary_variant</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_blue</item>
         <!--强调色-->
         <item name="colorSecondary">@color/ajstudy_color_secondary</item>
         <!--强调色变体-->
@@ -22,10 +22,18 @@
 
         <item name="android:textColorHighlight">@color/ajstudy_color_text_primary</item>
         <item name="android:textColorHighlightInverse">@color/ajstudy_color_text_primary</item>
+
+        <!--禁用所以滚动控件的边缘阴影效果-->
+        <item name="android:overScrollMode">never</item>
     </style>
 
-    <!--启动页主题-->
-    <style name="Theme.Page.Splash" parent="Theme.AJStudy">
+    <!--红色主题-->
+    <style name="Theme.AJStudy.Red" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_red</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_red</item>
+    </style>
+
+    <style name="Theme.Splash.Red" parent="Theme.AJStudy.Red">
         <item name="colorSurface">@android:color/white</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
 
@@ -38,37 +46,334 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!--主页主题-->
-    <style name="Theme.Page.Main" parent="Theme.AJStudy">
+    <style name="Theme.Main.Red" parent="Theme.AJStudy.Red">
         <!--由子页面fragment根据需求设置不同背景-->
         <item name="colorSurface">@android:color/transparent</item>
         <item name="android:windowBackground">@null</item>
-
-        <!-- 隐藏 ActionBar -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
         <!-- 关键：覆盖BottomNavigationView样式 -->
         <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
-        <item name="android:overScrollMode">never</item>
     </style>
 
-    <!--登录页主题-->
-    <style name="Theme.Page.Login" parent="Theme.AJStudy">
+    <style name="Theme.Login.Red" parent="Theme.AJStudy.Red">
         <!-- 关键：状态栏白色 -->
         <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--蓝色主题-->
+    <style name="Theme.AJStudy.Blue" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_blue</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_blue</item>
+    </style>
+
+    <style name="Theme.Splash.Blue" parent="Theme.AJStudy.Blue">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
 
         <!-- 隐藏 ActionBar -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="Theme.Main.Blue" parent="Theme.AJStudy.Blue">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Blue" parent="Theme.AJStudy.Blue">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
     </style>
 
-    <!--详情页主题-禁用所以滚动控件的边缘阴影效果-->
-    <style name="Theme.Page.Detail" parent="Theme.AJStudy">
-        <item name="android:overScrollMode">never</item>
+    <!--绿色主题-->
+    <style name="Theme.AJStudy.Green" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_green</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_green</item>
+    </style>
+
+    <style name="Theme.Splash.Green" parent="Theme.AJStudy.Green">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Green" parent="Theme.AJStudy.Green">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Green" parent="Theme.AJStudy.Green">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--橙色主题-->
+    <style name="Theme.AJStudy.Orange" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_orange</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_orange</item>
+    </style>
+
+    <style name="Theme.Splash.Orange" parent="Theme.AJStudy.Orange">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Orange" parent="Theme.AJStudy.Orange">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Orange" parent="Theme.AJStudy.Orange">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--粉色主题-->
+    <style name="Theme.AJStudy.Pink" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_pink</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_pink</item>
+    </style>
+
+    <style name="Theme.Splash.Pink" parent="Theme.AJStudy.Pink">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Pink" parent="Theme.AJStudy.Pink">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Pink" parent="Theme.AJStudy.Pink">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--黑色主题-->
+    <style name="Theme.AJStudy.Black" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_black</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_black</item>
+    </style>
+
+    <style name="Theme.Splash.Black" parent="Theme.AJStudy.Black">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Black" parent="Theme.AJStudy.Black">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Black" parent="Theme.AJStudy.Black">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--琥珀色主题-->
+    <style name="Theme.AJStudy.Amber" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_amber</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_amber</item>
+    </style>
+
+    <style name="Theme.Splash.Amber" parent="Theme.AJStudy.Amber">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Amber" parent="Theme.AJStudy.Amber">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Amber" parent="Theme.AJStudy.Amber">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--靛蓝色主题-->
+    <style name="Theme.AJStudy.Indigo" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_indigo</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_indigo</item>
+    </style>
+
+    <style name="Theme.Splash.Indigo" parent="Theme.AJStudy.Indigo">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Indigo" parent="Theme.AJStudy.Indigo">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Indigo" parent="Theme.AJStudy.Indigo">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--酸橙色主题-->
+    <style name="Theme.AJStudy.Lime" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_lime</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_lime</item>
+    </style>
+
+    <style name="Theme.Splash.Lime" parent="Theme.AJStudy.Lime">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Lime" parent="Theme.AJStudy.Lime">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Lime" parent="Theme.AJStudy.Lime">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <!--紫色主题-->
+    <style name="Theme.AJStudy.Purple" parent="Theme.AJStudy">
+        <item name="colorPrimary">@color/ajstudy_primary_purple</item>
+        <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_purple</item>
+    </style>
+
+    <style name="Theme.Splash.Purple" parent="Theme.AJStudy.Purple">
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+
+        <!-- 隐藏 ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Main.Purple" parent="Theme.AJStudy.Purple">
+        <!--由子页面fragment根据需求设置不同背景-->
+        <item name="colorSurface">@android:color/transparent</item>
+        <item name="android:windowBackground">@null</item>
+        <!-- 关键：覆盖BottomNavigationView样式 -->
+        <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+    </style>
+
+    <style name="Theme.Login.Purple" parent="Theme.AJStudy.Purple">
+        <!-- 关键：状态栏白色 -->
+        <item name="android:statusBarColor">@color/ajstudy_window_background</item>
+        <item name="android:windowLightStatusBar">?android:isLightTheme</item>
+        <!--手机最近任务中排除（安全属性）-->
+        <item name="android:excludeFromRecents">true</item>
     </style>
 </resources>

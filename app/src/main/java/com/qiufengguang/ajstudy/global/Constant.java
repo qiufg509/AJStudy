@@ -52,4 +52,15 @@ public interface Constant {
      * token失效时长 1周
      */
     long TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000L;
+
+    /**
+     * SharedPreferences存储相关常量
+     */
+    interface SP {
+        String PREF_CONFIG = "config_prefs";
+
+        String PREF_USER = "user_prefs";
+
+        String KEY_THEME_INDEX = "theme_index";
+    }
 }

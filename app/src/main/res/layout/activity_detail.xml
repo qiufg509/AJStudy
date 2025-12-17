@@ -250,10 +250,10 @@
             android:background="@android:color/transparent"
             app:tabBackground="@android:color/transparent"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/ajstudy_color_primary"
+            app:tabIndicatorColor="?attr/colorPrimary"
             app:tabIndicatorHeight="2dp"
             app:tabMode="auto"
-            app:tabSelectedTextColor="@color/ajstudy_color_primary"
+            app:tabSelectedTextColor="?attr/colorPrimary"
             app:tabTextColor="@color/ajstudy_color_secondary" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -277,7 +277,7 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        app:backgroundTint="@color/ajstudy_color_primary"
+        app:backgroundTint="?attr/colorPrimary"
         app:cornerRadius="18dp"
         app:elevation="8dp"
         app:icon="@null"

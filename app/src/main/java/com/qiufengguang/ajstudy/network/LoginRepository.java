@@ -4,7 +4,10 @@ import android.os.Handler;
 import android.os.HandlerThread;
 
 import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.utils.SpUtils;
+
+import java.util.Map;
 
 /**
  * 登录操作
@@ -13,13 +16,8 @@ import com.qiufengguang.ajstudy.utils.SpUtils;
  * @since 2025/11/30 2:15
  */
 public class LoginRepository {
-    private final SpUtils spManager;
 
     private HandlerThread thread;
-
-    public LoginRepository() {
-        this.spManager = new SpUtils();
-    }
 
     public void login(String phone, String password, LoginCallback callback) {
         if (thread == null) {
@@ -48,11 +46,44 @@ public class LoginRepository {
     }
 
     public void saveUserInfo(User user) {
-        spManager.saveUserInfo(user);
+        SpUtils.getInstance().commitBatch(Constant.SP.PREF_USER, (editor, cache, spName) -> {
+            String phone = user.getPhone();
+            editor.putString("phone", phone);
+            editor.putString("password", user.getPassword());
+            editor.putBoolean("rememberPwd", user.isRememberPwd());
+            editor.putLong("timestamp", user.getTimestamp());
+
+            // 同时更新内存缓存
+            cache.put(spName + "phone", phone);
+            cache.put(spName + "password", user.getPassword());
+            cache.put(spName + "rememberPwd", user.isRememberPwd());
+            cache.put(spName + "timestamp", user.getTimestamp());
+        });
     }
 
     public User getSavedUser() {
-        return spManager.getSavedUser();
+        Map<String, ?> all = SpUtils.getInstance().getAll(Constant.SP.PREF_USER);
+        if (all.isEmpty()) {
+            return null;
+        }
+        User user = new User();
+        Object timestamp = all.get("timestamp");
+        if (timestamp instanceof Long) {
+            user.setTimestamp((Long) timestamp);
+        }
+        Object phone = all.get("phone");
+        if (timestamp instanceof String) {
+            user.setPhone((String) phone);
+        }
+        Object password = all.get("password");
+        if (timestamp instanceof String) {
+            user.setPassword((String) password);
+        }
+        Object rememberPwd = all.get("rememberPwd");
+        if (rememberPwd instanceof Boolean) {
+            user.setRememberPwd((boolean) rememberPwd);
+        }
+        return user;
     }
 
     public void release() {

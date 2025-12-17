@@ -1,8 +1,11 @@
 package com.qiufengguang.ajstudy.ui.me;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 /**
  * 我的页面ViewModel
@@ -12,14 +15,23 @@ import androidx.lifecycle.ViewModel;
  */
 public class MeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<Integer> liveData;
 
     public MeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is me fragment");
+        liveData = new MutableLiveData<>();
+        initData();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    private void initData() {
+        liveData.setValue(ThemeUtils.getSelectedThemeIndex());
+    }
+
+    public LiveData<Integer> getLiveData() {
+        return liveData;
+    }
+
+    public void saveThemeIndex(@NonNull Integer themeIndex) {
+        liveData.setValue(themeIndex);
+        ThemeUtils.setSelectedThemeIndex(themeIndex);
     }
 }

@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.qiufengguang.ajstudy.data.LoginAction;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.network.LoginRepository;
+import com.qiufengguang.ajstudy.utils.SpUtils;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
@@ -36,6 +38,7 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
 
     @Override
     public void onCreate() {
+        setTheme(ThemeUtils.getSplashTheme());
         super.onCreate();
         contextReference = new WeakReference<>(this.getApplicationContext());
         // 初始化全局配置
@@ -50,6 +53,7 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
     public void onTerminate() {
         viewModelStore.clear();
         contextReference.clear();
+        SpUtils.getInstance().shutdown();
         viewModelProvider = null;
         super.onTerminate();
     }
@@ -67,6 +71,7 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
     }
 
     private void initializeApp() {
+        SpUtils.init(this);
         // 从 SharedPreferences 或其他存储检查登录状态
         LoginRepository userRepository = new LoginRepository();
         User savedUser = userRepository.getSavedUser();

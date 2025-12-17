@@ -74,7 +74,7 @@
         app:boxStrokeWidth="1dp"
         app:boxStrokeWidthFocused="1dp"
         app:endIconMode="password_toggle"
-        app:endIconTint="@color/ajstudy_color_primary"
+        app:endIconTint="?attr/colorPrimary"
         app:errorEnabled="true"
         app:errorTextColor="@color/ajstudy_default_color_error"
         app:hintTextColor="@color/ajstudy_color_text_secondary"

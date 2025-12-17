@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingStart="@dimen/activity_horizontal_margin_l"
-    android:paddingTop="@dimen/activity_vertical_margin_m"
-    android:paddingEnd="@dimen/activity_horizontal_margin_l">
+    android:paddingHorizontal="@dimen/activity_horizontal_margin_l"
+    android:paddingTop="@dimen/activity_vertical_margin_m">
 
     <TextView
         android:id="@+id/tv_title"
@@ -20,7 +19,7 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
         android:lineSpacingExtra="4dp"
         android:textColor="@color/ajstudy_color_text_secondary"
         android:textSize="16sp" />

@@ -18,6 +18,7 @@ import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.databinding.ActivityLoginBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 /**
  * 登录页面
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ThemeUtils.getLoginTheme());
         super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);

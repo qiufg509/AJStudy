@@ -48,6 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:numStars="5"
+                android:progressBackgroundTint="@color/ajstudy_color_secondary"
+                android:progressTint="?attr/colorPrimary"
                 android:rating="3.5"
                 android:stepSize="0.1" />
 
@@ -82,11 +84,11 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin_l"
-        android:background="@drawable/download_btn_bg_selector"
+        android:background="@drawable/detail_download_btn_bg_selector"
         android:lines="1"
         android:padding="0dp"
         android:text="安装"
-        android:textColor="@color/ajstudy_color_primary"
+        android:textColor="?attr/colorPrimary"
         android:textSize="12sp" />
 
 

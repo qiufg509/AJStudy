@@ -20,6 +20,7 @@ import com.qiufengguang.ajstudy.databinding.ActivityMainBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 import com.qiufengguang.ajstudy.view.MainPageBackPressedCallback;
 
 /**
@@ -37,9 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private GlobalViewModel globalVm;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getBooleanExtra("restart_theme", false)) {
+            recreate();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 完全恢复主题
-        setTheme(R.style.Theme_Page_Main);
+        setTheme(ThemeUtils.getMianTheme());
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

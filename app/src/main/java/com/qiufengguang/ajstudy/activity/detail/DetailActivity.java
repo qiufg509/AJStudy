@@ -20,6 +20,7 @@ import com.qiufengguang.ajstudy.ui.introduction.IntroductionFragment;
 import com.qiufengguang.ajstudy.ui.recommendation.RecommendationFragment;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 import com.qiufengguang.ajstudy.view.DetailHeadOffsetChangedCallback;
 
 import java.util.Arrays;
@@ -42,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ThemeUtils.getAppTheme());
         super.onCreate(savedInstanceState);
         binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

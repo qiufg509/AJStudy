@@ -23,7 +23,7 @@
         <activity
             android:name=".activity.main.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Page.Splash">
+            android:theme="@style/Theme.Splash.Blue">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,13 +57,13 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Page.Login"
+            android:theme="@style/Theme.Login.Blue"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".activity.detail.DetailActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false"
-            android:theme="@style/Theme.Page.Detail" />
+            android:theme="@style/Theme.Main.Blue" />
 
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->
         <meta-data

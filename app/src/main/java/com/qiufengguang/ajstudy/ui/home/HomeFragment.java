@@ -25,7 +25,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected String getTitle() {
-        return "首页";
+        return getString(R.string.bottom_nav_title_home);
     }
 
     @Override
