@@ -38,7 +38,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!--启动页主题-->
+    <!--主页主题-->
     <style name="Theme.Page.Main" parent="Theme.AJStudy">
         <!--由子页面fragment根据需求设置不同背景-->
         <item name="colorSurface">@android:color/transparent</item>
@@ -50,6 +50,7 @@
 
         <!-- 关键：覆盖BottomNavigationView样式 -->
         <item name="bottomNavigationStyle">@style/BottomNavStyles</item>
+        <item name="android:overScrollMode">never</item>
     </style>
 
     <!--登录页主题-->

@@ -37,7 +37,6 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setPageBackground(R.color.ajstudy_window_background, false);
         setupBar();
         setupContent();
         setTitle();
@@ -91,8 +90,8 @@ public abstract class BaseFragment extends Fragment {
         if (resId == 0) {
             StatusBarUtil.setLightStatusBar(requireActivity(), false);
             baseBinding.getRoot().setBackgroundResource(R.color.ajstudy_window_background);
-            baseBinding.backgroundImage.setBackground(null);
             baseBinding.backgroundImage.setVisibility(View.GONE);
+            baseBinding.backgroundImage.setBackground(null);
         } else {
             StatusBarUtil.setLightStatusBar(requireActivity(), !isDarkBackground);
             baseBinding.getRoot().setBackground(null);
