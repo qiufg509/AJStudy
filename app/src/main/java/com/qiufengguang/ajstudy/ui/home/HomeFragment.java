@@ -19,6 +19,11 @@ public class HomeFragment extends BaseFragment {
     private FragmentHomeBinding binding;
 
     @Override
+    protected boolean isDarkBackgroundImage() {
+        return true;
+    }
+
+    @Override
     protected String getTitle() {
         return "首页";
     }
@@ -33,7 +38,7 @@ public class HomeFragment extends BaseFragment {
         );
         HomeViewModel viewModel =
             new ViewModelProvider(this).get(HomeViewModel.class);
-        setPageBackground(R.drawable.home_page_bg, true);
+        setPageBackground(R.drawable.home_page_bg);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), this::setTitle);
     }
 

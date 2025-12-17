@@ -33,6 +33,11 @@ public class KnowHowFragment extends BaseFragment {
     private KnowHowAdapter adapter;
 
     @Override
+    protected boolean isDarkBackgroundImage() {
+        return false;
+    }
+
+    @Override
     protected String getTitle() {
         return "应用列表";
     }
@@ -50,7 +55,7 @@ public class KnowHowFragment extends BaseFragment {
         viewModel = new ViewModelProvider(this, factory)
             .get(KnowHowViewModel.class);
 
-        setPageBackground(R.drawable.know_how_page_bg, false);
+        setPageBackground(R.drawable.know_how_page_bg);
 
         adjustColumn();
 

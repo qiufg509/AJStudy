@@ -36,6 +36,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        StatusBarUtil.setLightStatusBar(requireActivity(), isDarkBackgroundImage());
 
         setupBar();
         setupContent();
@@ -81,19 +82,16 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 设置页面背景图
+     * 设置页面背景图，不设置或者入参0则默认背景色R.color.ajstudy_window_background
      *
-     * @param resId            图片资源
-     * @param isDarkBackground 是否为深色背景: 深色背景则设置白色状态栏文字、icon; 浅色背景则设置灰色状态栏文字、icon
+     * @param resId 图片资源
      */
-    protected void setPageBackground(@DrawableRes int resId, boolean isDarkBackground) {
+    protected void setPageBackground(@DrawableRes int resId) {
         if (resId == 0) {
-            StatusBarUtil.setLightStatusBar(requireActivity(), false);
             baseBinding.getRoot().setBackgroundResource(R.color.ajstudy_window_background);
             baseBinding.backgroundImage.setVisibility(View.GONE);
             baseBinding.backgroundImage.setBackground(null);
         } else {
-            StatusBarUtil.setLightStatusBar(requireActivity(), !isDarkBackground);
             baseBinding.getRoot().setBackground(null);
             baseBinding.backgroundImage.setImageResource(resId);
             baseBinding.backgroundImage.setVisibility(View.VISIBLE);
@@ -109,6 +107,16 @@ public abstract class BaseFragment extends Fragment {
     public FrameLayout getContainer() {
         return baseBinding.contentContainer;
     }
+
+
+    /**
+     * 是否为深色背景
+     * 深色背景则设置白色状态栏文字、icon
+     * 浅色背景则设置灰色状态栏文字、icon
+     *
+     * @return true深色 false浅色
+     */
+    protected abstract boolean isDarkBackgroundImage();
 
     /**
      * 可返回null，待需要的时候再调用setTitle设置标题
