@@ -36,7 +36,7 @@ public class CommentFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-        @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentCommentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -51,6 +51,9 @@ public class CommentFragment extends Fragment {
         // 初始化RecyclerView
         setupRecyclerView();
 
+        // 设置监听器
+        setupListeners();
+
         // 观察数据变化
         observeData();
     }
@@ -62,6 +65,12 @@ public class CommentFragment extends Fragment {
 
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setAdapter(adapter);
+    }
+
+
+    private void setupListeners() {
+        adapter.setLikeClickListener((position, comment) ->
+            adapter.notifyItemChanged(position, comment));
     }
 
     private void observeData() {

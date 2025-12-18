@@ -48,12 +48,16 @@ public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowV
         if (list == null || list.isEmpty()) {
             return;
         }
+        int positionStart;
+        int itemCount = list.size();
         if (this.beans == null) {
+            positionStart = 0;
             this.beans = list;
         } else {
+            positionStart = this.beans.size();
             this.beans.addAll(list);
         }
-        notifyDataSetChanged();
+        notifyItemRangeInserted(positionStart, itemCount);
     }
 
     @Override
@@ -118,6 +122,7 @@ public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowV
             binding.getRoot().setOnClickListener(v -> {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("detail_index", bean.getId());
                 context.startActivity(intent);
             });
         }

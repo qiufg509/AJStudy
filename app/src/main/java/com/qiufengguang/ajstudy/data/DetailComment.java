@@ -11,6 +11,12 @@ import android.text.TextUtils;
 public class DetailComment {
     public static final String LAYOUT_NAME = "pcscorecommentlistcard";
 
+    public static final int TYPE_LIKE = 1;
+
+    public static final int TYPE_DEFAULT = 0;
+
+    public static final int TYPE_DISLIKE = -1;
+
     String avatar;
 
     String commentInfo;
@@ -19,7 +25,13 @@ public class DetailComment {
 
     String nickName;
 
-    String stars;
+    float stars;
+
+    int likes;
+
+    int dislikes;
+
+    int likeType;
 
     public String getAvatar() {
         return avatar;
@@ -43,6 +55,7 @@ public class DetailComment {
 
     public void setCommentTime(String commentTime) {
         this.commentTime = commentTime;
+        this.likes = Math.abs(commentTime.hashCode() % 100);
     }
 
     public String getNickName() {
@@ -54,17 +67,42 @@ public class DetailComment {
     }
 
     public float getStars() {
-        if (TextUtils.isEmpty(stars)) {
-            return 0.0f;
-        }
-        try {
-            return Float.parseFloat(stars);
-        } catch (NumberFormatException e) {
-            return 0.0f;
-        }
+        return this.stars;
     }
 
     public void setStars(String stars) {
-        this.stars = stars;
+        if (TextUtils.isEmpty(stars)) {
+            this.stars = 0.0f;
+        }
+        try {
+            this.stars = Float.parseFloat(stars);
+        } catch (NumberFormatException e) {
+            this.stars = 0.0f;
+        }
+        this.dislikes = Math.abs((int) this.stars + 4);
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public int getLikeType() {
+        return likeType;
+    }
+
+    public void setLikeType(int likeType) {
+        this.likeType = likeType;
     }
 }

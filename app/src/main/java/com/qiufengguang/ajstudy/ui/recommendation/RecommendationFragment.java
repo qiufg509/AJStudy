@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
+import com.qiufengguang.ajstudy.data.DetailRecommend;
 import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
 import com.qiufengguang.ajstudy.view.RecommendationItemDecoration;
 
@@ -71,15 +72,19 @@ public class RecommendationFragment extends Fragment {
     }
 
     private void setupListeners() {
-        // Item点击事件
-        adapter.setOnItemClickListener((position, recommendation) ->
-            Toast.makeText(getContext(), "点击应用: " + recommendation.getName(), Toast.LENGTH_SHORT).show()
-        );
+        adapter.setOnRecommendClickListener(new RecommendationAdapter.OnRecommendClickListener() {
+            // Item点击事件
+            @Override
+            public void onItemClick(int position, DetailRecommend recommendation) {
+                Toast.makeText(getContext(), "点击应用: " + recommendation.getName(), Toast.LENGTH_SHORT).show();
+            }
 
-        // 安装按钮点击事件
-        adapter.setOnInstallClickListener((position, recommendation) ->
-            Toast.makeText(getContext(), "安装: " + recommendation.getName(), Toast.LENGTH_SHORT).show()
-        );
+            // 安装按钮点击事件
+            @Override
+            public void onInstallClick(int position, DetailRecommend recommendation) {
+                Toast.makeText(getContext(), "安装: " + recommendation.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void observeData() {

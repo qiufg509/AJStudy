@@ -46,7 +46,11 @@ public class IntroductionAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setIntroduction(DetailIntroduction detailIntro) {
         this.detailIntro = detailIntro;
-        notifyDataSetChanged();
+        if (detailIntro == null) {
+            notifyItemRangeRemoved(0, getItemCount());
+        } else {
+            notifyItemRangeInserted(0, getItemCount());
+        }
     }
 
     /**

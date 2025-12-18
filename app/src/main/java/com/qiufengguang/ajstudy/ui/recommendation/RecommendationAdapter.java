@@ -25,28 +25,20 @@ import java.util.List;
 public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder> {
 
     private List<DetailRecommend> recommends = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
-    private OnInstallClickListener onInstallClickListener;
+    private OnRecommendClickListener clickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position, DetailRecommend recommendation);
-    }
-
-    public interface OnInstallClickListener {
-        void onInstallClick(int position, DetailRecommend recommendation);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
-    }
-
-    public void setOnInstallClickListener(OnInstallClickListener listener) {
-        this.onInstallClickListener = listener;
+    public void setOnRecommendClickListener(OnRecommendClickListener listener) {
+        this.clickListener = listener;
     }
 
     public void setRecommendations(List<DetailRecommend> recommends) {
-        this.recommends = recommends != null ? recommends : new ArrayList<>();
-        notifyDataSetChanged();
+        if (recommends == null || recommends.isEmpty()) {
+            notifyItemRangeRemoved(0, this.recommends.size());
+            this.recommends.clear();
+        } else {
+            this.recommends = recommends;
+            notifyItemRangeInserted(0, this.recommends.size());
+        }
     }
 
     @NonNull
@@ -92,16 +84,23 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
             // 设置点击事件
             binding.getRoot().setOnClickListener(v -> {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(getAdapterPosition(), recommend);
+                if (clickListener != null) {
+                    clickListener.onItemClick(getAdapterPosition(), recommend);
                 }
             });
 
             binding.btnInstall.setOnClickListener(v -> {
-                if (onInstallClickListener != null) {
-                    onInstallClickListener.onInstallClick(getAdapterPosition(), recommend);
+                if (clickListener != null) {
+                    clickListener.onInstallClick(getAdapterPosition(), recommend);
                 }
             });
         }
+    }
+
+
+    public interface OnRecommendClickListener {
+        void onItemClick(int position, DetailRecommend recommendation);
+
+        void onInstallClick(int position, DetailRecommend recommendation);
     }
 }

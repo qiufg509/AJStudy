@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:numStars="5"
-                android:progressBackgroundTint="@color/ajstudy_color_secondary"
+                android:progressBackgroundTint="@color/ajstudy_color_text_secondary"
                 android:progressTint="?attr/colorPrimary"
                 android:rating="3.5"
                 android:stepSize="0.1" />

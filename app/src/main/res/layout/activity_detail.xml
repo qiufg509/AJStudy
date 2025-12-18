@@ -254,7 +254,7 @@
             app:tabIndicatorHeight="2dp"
             app:tabMode="auto"
             app:tabSelectedTextColor="?attr/colorPrimary"
-            app:tabTextColor="@color/ajstudy_color_secondary" />
+            app:tabTextColor="@color/ajstudy_color_text_secondary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

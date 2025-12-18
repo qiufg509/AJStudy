@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="12dp"
+    android:height="12dp"
+    android:autoMirrored="true"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <path
+        android:fillColor="@color/ajstudy_color_secondary"
+        android:pathData="M640,128L256,128c-35.4,0 -65.7,21.5 -78.5,52.1l-128.6,300.8c-3.8,9.8 -6.2,20.3 -6.2,31.1v81.7l0.4,0.4 -0.4,3.2c0,47.1 38.2,85.3 85.3,85.3h269.4l-40.7,195c-0.9,4.3 -1.5,8.7 -1.5,13.4 0,17.7 7.3,33.7 18.8,45.2l45.4,45 281,-281c15.4,-15.6 25,-36.9 25,-60.4L725.3,213.3c0,-47.1 -38.2,-85.3 -85.3,-85.3zM810.7,128v512h170.7L981.3,128L810.7,128z" />
+
+</vector>

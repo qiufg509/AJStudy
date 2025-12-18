@@ -4,8 +4,8 @@
     <item android:color="?attr/colorPrimary" android:state_checked="true" />
 
     <!-- 未选中状态：浅色文字 -->
-    <item android:color="@color/ajstudy_color_secondary" android:state_checked="false" />
+    <item android:color="@color/ajstudy_color_text_secondary" android:state_checked="false" />
 
     <!-- 默认状态 -->
-    <item android:color="@color/ajstudy_color_secondary" />
+    <item android:color="@color/ajstudy_color_text_secondary" />
 </selector>
