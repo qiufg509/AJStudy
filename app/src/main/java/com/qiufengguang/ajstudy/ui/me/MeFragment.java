@@ -61,6 +61,9 @@ public class MeFragment extends BaseFragment {
                     themeIndex = 0;
                     Log.e(TAG, "parseInt error.");
                 }
+                if (viewModel.getThemeIndex() == themeIndex) {
+                    return;
+                }
                 viewModel.saveThemeIndex(themeIndex);
 
                 Intent intent = new Intent(requireContext(), MainActivity.class);

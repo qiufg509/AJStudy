@@ -34,4 +34,12 @@ public class MeViewModel extends ViewModel {
         liveData.setValue(themeIndex);
         ThemeUtils.setSelectedThemeIndex(themeIndex);
     }
+
+    public int getThemeIndex() {
+        Integer value = liveData.getValue();
+        if (value == null) {
+            return ThemeUtils.getSelectedThemeIndex();
+        }
+        return value;
+    }
 }

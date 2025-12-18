@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.FrameLayout;
 
 import androidx.annotation.DrawableRes;
@@ -41,10 +40,6 @@ public abstract class BaseFragment extends Fragment {
         setupBar();
         setupContent();
         setTitle();
-        Window window = requireActivity().getWindow();
-        if (window != null) {
-            window.setBackgroundDrawable(null);
-        }
     }
 
     private void setTitle() {
