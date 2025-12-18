@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingHorizontal="@dimen/activity_horizontal_margin_l"
+    android:paddingTop="@dimen/activity_vertical_margin_m">
 
     <TextView
         android:id="@+id/tv_title"
@@ -17,14 +18,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_tariff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:lineSpacingExtra="4dp"
             android:lines="1"
             android:textColor="@color/ajstudy_color_text_secondary"
@@ -34,8 +35,7 @@
             android:id="@+id/tv_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin_s"
             android:lineSpacingExtra="4dp"
             android:lines="1"
             android:textColor="@color/ajstudy_color_text_secondary"

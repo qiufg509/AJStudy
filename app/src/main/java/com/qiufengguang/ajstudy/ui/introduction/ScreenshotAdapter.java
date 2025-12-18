@@ -29,7 +29,11 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
 
     public void updateData(List<String> screenshotUrls) {
         this.screenshotUrls = screenshotUrls;
-        notifyDataSetChanged();
+        if (screenshotUrls == null) {
+            notifyItemRangeRemoved(0, getItemCount());
+        } else {
+            notifyItemRangeInserted(0, getItemCount());
+        }
     }
 
 
