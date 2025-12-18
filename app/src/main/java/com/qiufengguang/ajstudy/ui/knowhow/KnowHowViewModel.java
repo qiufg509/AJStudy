@@ -63,7 +63,7 @@ public class KnowHowViewModel extends BaseViewModel {
         Handler handler = new Handler(handlerThread.getLooper());
         handler.post(() -> {
             String listStr = FileUtil.readAssetsToString(GlobalApp.getContext(),
-                Constant.LIST_CONTENT_FILE);
+                Constant.Data.LIST_CONTENT_FILE);
             List<KnowHowBean> beans = new Gson().fromJson(listStr,
                 new TypeToken<List<KnowHowBean>>() {
                 }.getType());

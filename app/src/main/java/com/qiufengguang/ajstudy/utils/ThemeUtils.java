@@ -89,7 +89,7 @@ public class ThemeUtils {
         if (spUtils == null) {
             return SPLASH_THEME[THEME_INDEX_DEFAULT];
         }
-        int selectedIndex = spUtils.getInt(Constant.SP.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
+        int selectedIndex = spUtils.getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
         if (selectedIndex >= SPLASH_THEME.length || selectedIndex < 0) {
             return SPLASH_THEME[THEME_INDEX_DEFAULT];
         }
@@ -97,7 +97,7 @@ public class ThemeUtils {
     }
 
     public static @StyleRes int getMianTheme() {
-        int selectedIndex = SpUtils.getInstance().getInt(Constant.SP.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
+        int selectedIndex = SpUtils.getInstance().getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
         if (selectedIndex >= MIAN_THEME.length || selectedIndex < 0) {
             return MIAN_THEME[THEME_INDEX_DEFAULT];
         }
@@ -105,7 +105,7 @@ public class ThemeUtils {
     }
 
     public static @StyleRes int getLoginTheme() {
-        int selectedIndex = SpUtils.getInstance().getInt(Constant.SP.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
+        int selectedIndex = SpUtils.getInstance().getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
         if (selectedIndex >= LOGIN_THEME.length || selectedIndex < 0) {
             return LOGIN_THEME[THEME_INDEX_DEFAULT];
         }
@@ -113,7 +113,7 @@ public class ThemeUtils {
     }
 
     public static @StyleRes int getAppTheme() {
-        int selectedIndex = SpUtils.getInstance().getInt(Constant.SP.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
+        int selectedIndex = SpUtils.getInstance().getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
         if (selectedIndex >= APP_THEME.length || selectedIndex < 0) {
             return APP_THEME[THEME_INDEX_DEFAULT];
         }
@@ -122,7 +122,7 @@ public class ThemeUtils {
 
 
     public static int getSelectedThemeIndex() {
-        int selectedIndex = SpUtils.getInstance().getInt(Constant.SP.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
+        int selectedIndex = SpUtils.getInstance().getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
         if (selectedIndex >= APP_THEME.length || selectedIndex < 0) {
             return THEME_INDEX_DEFAULT;
         }
@@ -130,6 +130,6 @@ public class ThemeUtils {
     }
 
     public static void setSelectedThemeIndex(@Range(from = 0, to = 9) int themeIndex) {
-        SpUtils.getInstance().putInt(Constant.SP.KEY_THEME_INDEX, themeIndex);
+        SpUtils.getInstance().putInt(Constant.Sp.KEY_THEME_INDEX, themeIndex);
     }
 }

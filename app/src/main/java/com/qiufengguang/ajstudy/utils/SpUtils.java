@@ -265,7 +265,7 @@ public final class SpUtils {
      * 保存 String 值（异步）
      */
     public void putString(@NonNull String key, @Nullable String value) {
-        putString(Constant.SP.PREF_CONFIG, key, value);
+        putString(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public void putString(@NonNull String spName, @NonNull String key, @Nullable String value) {
@@ -279,7 +279,7 @@ public final class SpUtils {
      * 保存 int 值（异步）
      */
     public void putInt(@NonNull String key, int value) {
-        putInt(Constant.SP.PREF_CONFIG, key, value);
+        putInt(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public void putInt(@NonNull String spName, @NonNull String key, int value) {
@@ -293,7 +293,7 @@ public final class SpUtils {
      * 保存 long 值（异步）
      */
     public void putLong(@NonNull String key, long value) {
-        putLong(Constant.SP.PREF_CONFIG, key, value);
+        putLong(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public void putLong(@NonNull String spName, @NonNull String key, long value) {
@@ -307,7 +307,7 @@ public final class SpUtils {
      * 保存 float 值（异步）
      */
     public void putFloat(@NonNull String key, float value) {
-        putFloat(Constant.SP.PREF_CONFIG, key, value);
+        putFloat(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public void putFloat(@NonNull String spName, @NonNull String key, float value) {
@@ -321,7 +321,7 @@ public final class SpUtils {
      * 保存 boolean 值（异步）
      */
     public void putBoolean(@NonNull String key, boolean value) {
-        putBoolean(Constant.SP.PREF_CONFIG, key, value);
+        putBoolean(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public void putBoolean(@NonNull String spName, @NonNull String key, boolean value) {
@@ -335,7 +335,7 @@ public final class SpUtils {
      * 保存 String Set（异步）
      */
     public void putStringSet(@NonNull String key, @Nullable Set<String> value) {
-        putStringSet(Constant.SP.PREF_CONFIG, key, value);
+        putStringSet(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public void putStringSet(@NonNull String spName, @NonNull String key, @Nullable Set<String> value) {
@@ -352,7 +352,7 @@ public final class SpUtils {
      */
     @Nullable
     public String getString(@NonNull String key, @Nullable String defaultValue) {
-        return getString(Constant.SP.PREF_CONFIG, key, defaultValue);
+        return getString(Constant.Sp.PREF_CONFIG, key, defaultValue);
     }
 
     @Nullable
@@ -378,7 +378,7 @@ public final class SpUtils {
      * 获取 int 值
      */
     public int getInt(@NonNull String key, int defaultValue) {
-        return getInt(Constant.SP.PREF_CONFIG, key, defaultValue);
+        return getInt(Constant.Sp.PREF_CONFIG, key, defaultValue);
     }
 
     public int getInt(@NonNull String spName, @NonNull String key, int defaultValue) {
@@ -401,7 +401,7 @@ public final class SpUtils {
      * 获取 long 值
      */
     public long getLong(@NonNull String key, long defaultValue) {
-        return getLong(Constant.SP.PREF_CONFIG, key, defaultValue);
+        return getLong(Constant.Sp.PREF_CONFIG, key, defaultValue);
     }
 
     public long getLong(@NonNull String spName, @NonNull String key, long defaultValue) {
@@ -424,7 +424,7 @@ public final class SpUtils {
      * 获取 float 值
      */
     public float getFloat(@NonNull String key, float defaultValue) {
-        return getFloat(Constant.SP.PREF_CONFIG, key, defaultValue);
+        return getFloat(Constant.Sp.PREF_CONFIG, key, defaultValue);
     }
 
     public float getFloat(@NonNull String spName, @NonNull String key, float defaultValue) {
@@ -447,7 +447,7 @@ public final class SpUtils {
      * 获取 boolean 值
      */
     public boolean getBoolean(@NonNull String key, boolean defaultValue) {
-        return getBoolean(Constant.SP.PREF_CONFIG, key, defaultValue);
+        return getBoolean(Constant.Sp.PREF_CONFIG, key, defaultValue);
     }
 
     public boolean getBoolean(@NonNull String spName, @NonNull String key, boolean defaultValue) {
@@ -471,7 +471,7 @@ public final class SpUtils {
      */
     @Nullable
     public Set<String> getStringSet(@NonNull String key, @Nullable Set<String> defaultValue) {
-        return getStringSet(Constant.SP.PREF_CONFIG, key, defaultValue);
+        return getStringSet(Constant.Sp.PREF_CONFIG, key, defaultValue);
     }
 
     @Nullable
@@ -503,7 +503,7 @@ public final class SpUtils {
      * 删除键
      */
     public void remove(@NonNull String key) {
-        remove(Constant.SP.PREF_CONFIG, key);
+        remove(Constant.Sp.PREF_CONFIG, key);
     }
 
     public void remove(@NonNull String spName, @NonNull String key) {
@@ -522,14 +522,14 @@ public final class SpUtils {
     }
 
     public void clear() {
-        clear(Constant.SP.PREF_CONFIG);
+        clear(Constant.Sp.PREF_CONFIG);
     }
 
     /**
      * 检查是否包含某个键
      */
     public boolean contains(@NonNull String key) {
-        return contains(Constant.SP.PREF_CONFIG, key);
+        return contains(Constant.Sp.PREF_CONFIG, key);
     }
 
     public boolean contains(@NonNull String spName, @NonNull String key) {
@@ -549,7 +549,7 @@ public final class SpUtils {
      */
     @NonNull
     public Map<String, ?> getAll() {
-        return getAll(Constant.SP.PREF_CONFIG);
+        return getAll(Constant.Sp.PREF_CONFIG);
     }
 
     @NonNull
@@ -564,7 +564,7 @@ public final class SpUtils {
      * 立即同步保存（阻塞调用线程）
      */
     public boolean commitString(@NonNull String key, @Nullable String value) {
-        return commitString(Constant.SP.PREF_CONFIG, key, value);
+        return commitString(Constant.Sp.PREF_CONFIG, key, value);
     }
 
     public boolean commitString(@NonNull String spName, @NonNull String key, @Nullable String value) {
@@ -585,7 +585,7 @@ public final class SpUtils {
      * 批量同步操作
      */
     public boolean commitBatch(@NonNull BatchOperation operation) {
-        return commitBatch(Constant.SP.PREF_CONFIG, operation);
+        return commitBatch(Constant.Sp.PREF_CONFIG, operation);
     }
 
     public boolean commitBatch(@NonNull String spName, @NonNull BatchOperation operation) {

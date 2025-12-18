@@ -46,7 +46,7 @@ public class LoginRepository {
     }
 
     public void saveUserInfo(User user) {
-        SpUtils.getInstance().commitBatch(Constant.SP.PREF_USER, (editor, cache, spName) -> {
+        SpUtils.getInstance().commitBatch(Constant.Sp.PREF_USER, (editor, cache, spName) -> {
             String phone = user.getPhone();
             editor.putString("phone", phone);
             editor.putString("password", user.getPassword());
@@ -62,7 +62,7 @@ public class LoginRepository {
     }
 
     public User getSavedUser() {
-        Map<String, ?> all = SpUtils.getInstance().getAll(Constant.SP.PREF_USER);
+        Map<String, ?> all = SpUtils.getInstance().getAll(Constant.Sp.PREF_USER);
         if (all.isEmpty()) {
             return null;
         }

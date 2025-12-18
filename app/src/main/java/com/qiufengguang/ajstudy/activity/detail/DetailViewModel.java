@@ -67,7 +67,6 @@ public class DetailViewModel extends ViewModel {
     private final MutableLiveData<Integer> selectedTab = new MutableLiveData<>(1);
 
     public DetailViewModel() {
-        initData();
     }
 
     public LiveData<DetailHead> getDetailHead() {
@@ -98,21 +97,38 @@ public class DetailViewModel extends ViewModel {
         selectedTab.setValue(position);
     }
 
-    private void initData() {
+    public void loadData(int detailIndex) {
         HandlerThread handlerThread = new HandlerThread(TAG + "-Thread");
         if (!handlerThread.isAlive()) {
             handlerThread.start();
         }
         Handler handler = new Handler(handlerThread.getLooper());
-        handler.post(new ParsePageDataTask());
+        handler.post(new ParsePageDataTask(detailIndex));
     }
 
     private class ParsePageDataTask implements Runnable {
+        private final String fileName;
+
+        public ParsePageDataTask(int index) {
+            switch (index % 4) {
+                case 1:
+                    fileName = Constant.Data.DETAIL_WX;
+                    break;
+                case 2:
+                    fileName = Constant.Data.DETAIL_SJZXD;
+                    break;
+                case 3:
+                    fileName = Constant.Data.DETAIL_HGDJ;
+                    break;
+                default:
+                    fileName = Constant.Data.DETAIL_XHS;
+                    break;
+            }
+        }
 
         @Override
         public void run() {
-            String pageStr = FileUtil.readAssetsToString(GlobalApp.getContext(),
-                Constant.DETAIL_PAGE_FILE);
+            String pageStr = FileUtil.readAssetsToString(GlobalApp.getContext(), fileName);
             JSONObject pageObject;
             try {
                 pageObject = new JSONObject(pageStr);

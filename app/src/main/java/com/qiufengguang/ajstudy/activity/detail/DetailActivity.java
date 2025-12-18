@@ -54,6 +54,8 @@ public class DetailActivity extends AppCompatActivity {
         // 初始化ViewModel
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
 
+        int detailIndex = getIntent().getIntExtra("detail_index", 0);
+        viewModel.loadData(detailIndex);
         setupToolbar();
         setupViewPager();
         setupListeners();

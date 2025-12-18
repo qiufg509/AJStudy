@@ -7,6 +7,20 @@ package com.qiufengguang.ajstudy.global;
  * @since 2025/11/26 22:19
  */
 public interface Constant {
+    /**
+     * 启动登录页面action
+     */
+    String START_ACTIVITY_ACTION_LOGIN = "com.qiufengguang.ajstudy.action.LOGIN";
+
+    /**
+     * 启动页面uri
+     */
+    String START_ACTIVITY_URI = "ajstudy://com.qfguang";
+
+    /**
+     * token失效时长 1周
+     */
+    long TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000L;
 
     /**
      * 栅格定义
@@ -29,34 +43,27 @@ public interface Constant {
     }
 
     /**
-     * 本地列表数据文件
+     * 本地测试数据
      */
-    String LIST_CONTENT_FILE = "know_how_list_data.json";
+    interface Data {
+        /**
+         * 知识点列表测试数据文件
+         */
+        String LIST_CONTENT_FILE = "know_how_list.json";
 
-    /**
-     * 本地列表详情页数据文件
-     */
-    String DETAIL_PAGE_FILE = "detail_page_data.json";
-
-    /**
-     * 启动登录页面action
-     */
-    String START_ACTIVITY_ACTION_LOGIN = "com.qiufengguang.ajstudy.action.LOGIN";
-
-    /**
-     * 启动页面uri
-     */
-    String START_ACTIVITY_URI = "ajstudy://com.qfguang";
-
-    /**
-     * token失效时长 1周
-     */
-    long TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000L;
+        /**
+         * 详情页测试数据文件
+         */
+        String DETAIL_XHS = "detail_page_xhs.json";
+        String DETAIL_WX = "detail_page_wx.json";
+        String DETAIL_HGDJ = "detail_page_hgdj.json";
+        String DETAIL_SJZXD = "detail_page_sjzxd.json";
+    }
 
     /**
      * SharedPreferences存储相关常量
      */
-    interface SP {
+    interface Sp {
         String PREF_CONFIG = "config_prefs";
 
         String PREF_USER = "user_prefs";
