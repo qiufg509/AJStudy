@@ -14,7 +14,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/title_bar_horizontal_margin">
+        android:paddingHorizontal="@dimen/activity_horizontal_margin_xs">
 
         <!-- 左侧返回按钮 -->
         <ImageButton

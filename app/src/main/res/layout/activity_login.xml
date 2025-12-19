@@ -150,7 +150,7 @@
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/actionBarSize"
         android:fitsSystemWindows="true"
-        android:paddingHorizontal="@dimen/title_bar_horizontal_margin"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin_xs"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

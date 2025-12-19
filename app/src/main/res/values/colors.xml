@@ -45,4 +45,6 @@
     <color name="ajstudy_bottom_nav_icon_on_overlay_2">#ffffba1b</color>
     <color name="ajstudy_bottom_nav_icon_off">#33000000</color>
     <color name="ajstudy_bottom_nav_icon_off_overlay">#2e000000</color>
+    <color name="banner_gradient_start_color">#99000000</color>
+    <color name="banner_gradient_center_color">#33000000</color>
 </resources>

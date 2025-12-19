@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 主要图片 -->
+    <ImageView
+        android:id="@+id/iv_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:foreground="@drawable/banner_gradient_overlay"
+        android:scaleType="centerCrop"
+        android:focusable="false"
+        android:transitionName="@string/banner_image_transition" />
+
+    <!-- 叠加层（用于点击反馈、点击事件） -->
+    <View
+        android:id="@+id/banner"
+        android:contentDescription="@string/image_description"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true" />
+
+</FrameLayout>
