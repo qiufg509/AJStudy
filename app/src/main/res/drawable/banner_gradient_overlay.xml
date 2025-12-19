@@ -3,8 +3,9 @@
     android:shape="rectangle">
     <gradient
         android:angle="90"
-        android:centerColor="@color/banner_gradient_center_color"
+        android:centerColor="@android:color/transparent"
+        android:centerY="0.4"
         android:endColor="@android:color/transparent"
-        android:startColor="@color/banner_gradient_start_color"
+        android:startColor="@color/ajstudy_color_text_secondary"
         android:type="linear" />
 </shape>

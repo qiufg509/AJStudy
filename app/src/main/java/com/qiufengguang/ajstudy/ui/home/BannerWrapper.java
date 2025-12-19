@@ -24,7 +24,10 @@ import java.util.List;
  */
 public class BannerWrapper {
 
-    private static final long AUTO_SCROLL_DELAY = 4000L; // 4秒间隔
+    /**
+     * 自动轮播滚动间隔4秒
+     */
+    private static final long AUTO_SCROLL_DELAY = 4000L;
 
     private RecyclerView recyclerBanner;
 
@@ -36,26 +39,39 @@ public class BannerWrapper {
 
     private Runnable autoScrollRunnable;
 
+    /**
+     * 是否自动轮播滚动
+     */
     private boolean isAutoScrolling = true;
 
+    /**
+     * 是否用户拖拽滚动操作中
+     */
     private boolean isUserScrolling = false;
 
-    private int currentPosition = 0;
+    /**
+     * 设置初始位置到中间，实现无限循环
+     */
+    private int currentPosition = Integer.MAX_VALUE / 2;
 
-    public BannerWrapper(@NonNull RecyclerView recyclerBanner, LinearLayout indicatorContainer, BannerAdapter.OnBannerClickListener clickListener) {
+    public BannerWrapper(@NonNull RecyclerView recyclerBanner, LinearLayout indicatorContainer,
+        BannerAdapter.OnBannerClickListener clickListener) {
         this.recyclerBanner = recyclerBanner;
         this.indicatorContainer = indicatorContainer;
 
         setupBanner(clickListener);
     }
 
+    /**
+     * 设置轮播数据
+     *
+     * @param bannerBeans List<BannerBean>
+     */
     public void setBannerBeans(List<BannerBean> bannerBeans) {
         adapter.setBannerBeans(bannerBeans);
         // 初始化指示器
         int size = bannerBeans == null ? 0 : bannerBeans.size();
         setupIndicator(size);
-        // 设置初始位置到中间，实现无限循环
-        currentPosition = Integer.MAX_VALUE / 2;
         // 调整位置到第一条数据上
         currentPosition += size - currentPosition % size;
         recyclerBanner.scrollToPosition(currentPosition);
@@ -104,6 +120,19 @@ public class BannerWrapper {
                 super.onScrollStateChanged(recyclerView, newState);
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
+                        // 获取当前显示的第一个可见项位置
+                        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                        if (layoutManager != null) {
+                            int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+                            int firstCompletelyVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+                            // 对于轮播图，通常取第一个完全可见项作为当前页,如果没有完全可见项，取第一个可见项
+                            int position = firstCompletelyVisiblePosition != -1
+                                ? firstCompletelyVisiblePosition : firstVisiblePosition;
+                            if (currentPosition != position) {
+                                currentPosition = position;
+                                updateIndicator(currentPosition);
+                            }
+                        }
                         // 滚动停止，恢复自动滚动
                         isUserScrolling = false;
                         resumeAutoScroll();
@@ -160,6 +189,9 @@ public class BannerWrapper {
         }
     }
 
+    /**
+     * 开启自动轮播
+     */
     public void startAutoScroll() {
         if (!isAutoScrolling || isUserScrolling || adapter.getRealItemCount() <= 0) {
             return;
@@ -187,6 +219,10 @@ public class BannerWrapper {
         autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
     }
 
+    /**
+     * 暂停自动轮播
+     * 页面onPause时调用
+     */
     public void pauseAutoScroll() {
         if (isAutoScrolling) {
             isAutoScrolling = false;
@@ -194,6 +230,10 @@ public class BannerWrapper {
         }
     }
 
+    /**
+     * 恢复自动轮播
+     * 页面onResume时调用
+     */
     public void resumeAutoScroll() {
         if (!isAutoScrolling && !isUserScrolling) {
             isAutoScrolling = true;
@@ -201,6 +241,10 @@ public class BannerWrapper {
         }
     }
 
+    /**
+     * 释放资源
+     * 页面onDestroyView时调用
+     */
     public void release() {
         if (autoScrollHandler != null) {
             autoScrollHandler.removeCallbacks(autoScrollRunnable);
