@@ -54,6 +54,11 @@ public class BannerWrapper {
         // 初始化指示器
         int size = bannerBeans == null ? 0 : bannerBeans.size();
         setupIndicator(size);
+        // 设置初始位置到中间，实现无限循环
+        currentPosition = Integer.MAX_VALUE / 2;
+        // 调整位置到第一条数据上
+        currentPosition += size - currentPosition % size;
+        recyclerBanner.scrollToPosition(currentPosition);
     }
 
     private void setupBanner(BannerAdapter.OnBannerClickListener clickListener) {
@@ -72,10 +77,6 @@ public class BannerWrapper {
         // 启用预取功能
         recyclerBanner.setItemViewCacheSize(3);
         recyclerBanner.setHasFixedSize(true);
-
-        // 设置初始位置到中间，实现无限循环
-        currentPosition = Integer.MAX_VALUE / 2;
-        recyclerBanner.scrollToPosition(currentPosition);
 
         // 设置滚动监听
         setupScrollListener();
