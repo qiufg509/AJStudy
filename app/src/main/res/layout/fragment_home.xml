@@ -7,18 +7,17 @@
     tools:context=".ui.home.HomeFragment">
 
     <!-- Banner轮播区域 -->
-    <com.google.android.material.card.MaterialCardView
+    <com.qiufengguang.ajstudy.view.RoundedFrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
         android:layout_marginTop="@dimen/activity_vertical_margin_m"
-        app:cardCornerRadius="@dimen/radius_m"
-        app:cardElevation="4dp"
-        app:cardPreventCornerOverlap="true"
+        app:corner_radius="@dimen/radius_l"
         app:layout_constraintDimensionRatio="H,16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_banner"
@@ -37,8 +36,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/activity_vertical_margin_s" />
-
-    </com.google.android.material.card.MaterialCardView>
+    </com.qiufengguang.ajstudy.view.RoundedFrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
