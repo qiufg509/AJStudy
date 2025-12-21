@@ -6,17 +6,16 @@
         <item name="colorPrimary">@color/ajstudy_primary_blue</item>
         <!--主色变体-->
         <item name="colorPrimaryVariant">@color/ajstudy_primary_variant_blue</item>
+        <!--主色上的文字色-->
+        <item name="colorOnPrimary">@android:color/white</item>
         <!--强调色-->
         <item name="colorSecondary">@color/ajstudy_color_secondary</item>
         <!--强调色变体-->
         <item name="colorSecondaryVariant">@color/ajstudy_color_secondary</item>
+        <!--强调色上的文字色-->
+        <item name="colorOnSecondary">@android:color/white</item>
         <!--表面色-->
         <item name="colorSurface">@color/ajstudy_window_background</item>
-        <!--主色上的文字色-->
-        <item name="colorOnPrimary">@color/ajstudy_color_text_primary</item>
-        <!--强调色上的文字色-->
-        <item name="colorOnSecondary">@color/ajstudy_color_text_secondary</item>
-
         <!-- 设置自定义背景色 -->
         <item name="android:windowBackground">@color/ajstudy_window_background</item>
 

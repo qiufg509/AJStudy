@@ -9,6 +9,7 @@
     <dimen name="activity_vertical_margin_m">12dp</dimen>
     <dimen name="activity_vertical_margin_s">8dp</dimen>
     <dimen name="activity_vertical_margin_xs">4dp</dimen>
+    <dimen name="activity_vertical_margin_xxs">2dp</dimen>
     <dimen name="item_icon_size">80dp</dimen>
     <dimen name="radius_l">16dp</dimen>
     <dimen name="radius_m">12dp</dimen>

@@ -6,81 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".ui.me.MeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/activity_horizontal_margin_l"
         android:paddingBottom="@dimen/ajstudy_bottom_navigation_height">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="16dp">
-
-            <ImageView
-                android:id="@+id/ivSettingsAvatar"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSettingsUsername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="用户名"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/etSettingsNickname"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:hint="输入新昵称"
-                        android:paddingHorizontal="12dp" />
-
-                    <Button
-                        android:id="@+id/btnSaveNickname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="8dp"
-                        android:text="保存"
-                        android:textColor="?attr/colorOnSecondary"
-                        app:backgroundTint="?attr/colorSecondary" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#EEEEEE" />
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_vertical_margin_m"
+            android:src="@drawable/ic_avatar"
+            android:tint="@color/ajstudy_placeholder_icon_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold" />
+            android:layout_marginStart="@dimen/activity_horizontal_margin_l"
+            android:layout_marginTop="@dimen/activity_vertical_margin_l"
+            android:text="用户名"
+            android:textColor="@color/ajstudy_color_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_avatar"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_user_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin_l"
+            android:layout_marginTop="@dimen/activity_vertical_margin_xxs"
+            android:text="189***9989"
+            android:textColor="@color/ajstudy_color_text_secondary"
+            app:layout_constraintStart_toEndOf="@id/iv_avatar"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
+        <!-- 屏障：创建基于ivAppIcon和tvABC底部的动态边界 -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_user_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="iv_avatar,tv_user_account" />
+
+        <View
+            android:id="@+id/divider_user_theme"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin_m"
+            android:background="@color/ajstudy_color_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_user_info" />
+
+        <TextView
+            android:id="@+id/tv_theme_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin_m"
@@ -88,8 +74,11 @@
             android:lines="1"
             android:text="主题色"
             android:textColor="@color/ajstudy_color_text_primary"
-            android:textSize="18sp" />
-
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_user_theme" />
 
         <GridLayout
             android:id="@+id/layout_theme"
@@ -97,17 +86,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/activity_vertical_margin_s"
-
             android:columnCount="5"
-            android:rowCount="2">
-
+            android:rowCount="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_theme_title">
 
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_red"
                 android:scaleType="centerInside"
                 android:tag="0" />
@@ -117,7 +107,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_blue"
                 android:scaleType="centerInside"
                 android:tag="1" />
@@ -127,7 +117,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_green"
                 android:scaleType="centerInside"
                 android:tag="2" />
@@ -137,7 +127,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_orange"
                 android:scaleType="centerInside"
                 android:tag="3" />
@@ -147,7 +137,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_pink"
                 android:scaleType="centerInside"
                 android:tag="4" />
@@ -157,7 +147,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_black"
                 android:scaleType="centerInside"
                 android:tag="5" />
@@ -168,7 +158,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_amber"
                 android:scaleType="centerInside"
                 android:tag="6" />
@@ -178,7 +168,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_indigo"
                 android:scaleType="centerInside"
                 android:tag="7" />
@@ -188,7 +178,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_lime"
                 android:scaleType="centerInside"
                 android:tag="8" />
@@ -199,50 +189,62 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/bg_color_circle"
+                android:background="@drawable/me_theme_btn_bg_circle"
                 android:backgroundTint="@color/ajstudy_primary_purple"
                 android:scaleType="centerInside"
                 android:tag="9" />
 
-
         </GridLayout>
 
         <View
+            android:id="@+id/divider_theme_sign"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#EEEEEE" />
+            android:layout_marginTop="@dimen/activity_vertical_margin_m"
+            android:background="@color/ajstudy_color_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_theme" />
 
         <Button
-            android:id="@+id/btnChangePassword"
+            android:id="@+id/btn_change_pwd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_follow_btn"
+            android:background="@drawable/me_account_btn_bg"
             android:text="修改密码"
-            android:textColor="?attr/colorOnSecondary"
-            app:backgroundTint="?attr/colorSecondary" />
+            android:textColor="?attr/colorOnPrimary"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_theme_sign" />
 
 
         <Button
-            android:id="@+id/btnLogout"
+            android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_follow_btn"
+            android:background="@drawable/me_account_btn_bg"
             android:text="退出登录"
-            android:textColor="?attr/colorOnSecondary"
-            app:backgroundTint="?attr/colorSecondary" />
+            android:textColor="?attr/colorOnPrimary"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_change_pwd" />
 
         <Button
-            android:id="@+id/btnDeleteAccount"
+            android:id="@+id/btn_delete_account"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_follow_btn"
+            android:background="@drawable/me_account_btn_bg"
             android:text="注销账号"
-            android:textColor="?attr/colorOnSecondary"
-            app:backgroundTint="?attr/colorSecondary" />
-    </LinearLayout>
+            android:textColor="?attr/colorOnPrimary"
+            app:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_logout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

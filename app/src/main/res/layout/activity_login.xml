@@ -117,7 +117,7 @@
         android:background="@drawable/login_btn_bg"
         android:stateListAnimator="@null"
         android:text="@string/login_sign_in"
-        android:textColor="@android:color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
