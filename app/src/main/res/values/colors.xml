@@ -24,8 +24,8 @@
     <color name="ajstudy_window_background">#f1f3f5</color>
     <color name="ajstudy_list_item_bg_pressed">#1a000000</color>
     <color name="ajstudy_mask_img_press_color">#1a000000</color>
-    <color name="ajstudy_placeholder_img_color">#e4e6e8</color>
-    <color name="ajstudy_color_progress">#666666</color>
+    <color name="ajstudy_placeholder_bg_color">#e4e6e8</color>
+    <color name="ajstudy_placeholder_icon_color">#dddddd</color>
     <color name="ajstudy_appbar_title">#e5000000</color>
     <color name="ajstudy_color_divider">#33000000</color>
     <color name="ajstudy_color_toolbar_bg">#f1f3f5</color>
