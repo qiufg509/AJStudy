@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 设置背景颜色 -->
-    <item>
+    <item
+        android:width="80dp"
+        android:height="80dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/ajstudy_placeholder_bg_color" />
             <corners android:radius="@dimen/radius_l" />
         </shape>
     </item>
-    <!-- 在背景中央放置你的应用Logo -->
-    <item>
-        <inset
-            android:drawable="@drawable/ic_placeholder"
-            android:gravity="center"
-            android:inset="28dp" />
-    </item>
+    <item
+        android:width="48dp"
+        android:height="48dp"
+        android:drawable="@drawable/ic_placeholder"
+        android:gravity="center" />
 </layer-list>

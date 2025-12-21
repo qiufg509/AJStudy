@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
@@ -152,7 +153,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .skipMemoryCache(false)
             .timeout(10000) // 10秒超时
-            .format(com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888);
+            .format(DecodeFormat.PREFER_ARGB_8888);
 
         private static final DrawableTransitionOptions TRANSITION_OPTIONS =
             new DrawableTransitionOptions().crossFade(300); // 300ms淡入动画

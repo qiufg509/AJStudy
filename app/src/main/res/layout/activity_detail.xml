@@ -238,7 +238,7 @@
             <!-- 标题栏 -->
             <include
                 android:id="@+id/title_bar"
-                layout="@layout/title_bar_detail_page" />
+                layout="@layout/layout_title_bar_detail" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

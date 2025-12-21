@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 底层：白色背景 -->
-    <item android:drawable="@color/ajstudy_placeholder_bg_color" />
+    <item
+        android:width="320dp"
+        android:height="180dp"
+        android:drawable="@color/ajstudy_placeholder_bg_color" />
 
     <!-- 上层：通过 inset 创建一个固定大小的“容器”来放置矢量图 -->
     <item
-        android:width="360dp"
-        android:height="360dp"
-        android:gravity="center">
-        <inset
-            android:drawable="@drawable/ic_placeholder"
-            android:gravity="center"
-            android:inset="120dp" />
-    </item>
+        android:width="80dp"
+        android:height="80dp"
+        android:drawable="@drawable/ic_placeholder"
+        android:gravity="center" />
 </layer-list>

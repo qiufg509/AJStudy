@@ -25,7 +25,7 @@
     <!-- 应用栏 -->
     <include
         android:id="@+id/title_bar"
-        layout="@layout/title_bar_main_page"
+        layout="@layout/layout_title_bar_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

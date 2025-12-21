@@ -9,19 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@null"
+        android:focusable="false"
         android:foreground="@drawable/banner_gradient_overlay"
         android:scaleType="centerCrop"
-        android:focusable="false"
         android:transitionName="@string/banner_image_transition" />
 
     <!-- 叠加层（用于点击反馈、点击事件） -->
     <View
         android:id="@+id/banner"
-        android:contentDescription="@string/image_description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
+        android:contentDescription="@string/image_description"
         android:focusable="true" />
 
 </FrameLayout>
