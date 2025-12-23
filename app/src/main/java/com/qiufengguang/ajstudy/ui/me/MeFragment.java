@@ -26,7 +26,7 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected boolean isDarkBackgroundImage() {
-        return false;
+        return true;
     }
 
     @Override
@@ -46,6 +46,8 @@ public class MeFragment extends BaseFragment {
         MeViewModel viewModel =
             new ViewModelProvider(this).get(MeViewModel.class);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), this::selectedTheme);
+
+        setPageBackground(R.drawable.me_head_bg);
 
         for (int index = 0, sum = binding.layoutTheme.getChildCount(); index < sum; index++) {
             View childAt = binding.layoutTheme.getChildAt(index);

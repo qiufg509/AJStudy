@@ -34,7 +34,7 @@ public class KnowHowFragment extends BaseFragment {
 
     @Override
     protected boolean isDarkBackgroundImage() {
-        return true;
+        return false;
     }
 
     @Override
@@ -54,8 +54,6 @@ public class KnowHowFragment extends BaseFragment {
         // 看起来是"新建"，但实际上获取的是同一个实例
         viewModel = new ViewModelProvider(this, factory)
             .get(KnowHowViewModel.class);
-
-        setPageBackground(R.drawable.know_how_page_bg);
 
         adjustColumn();
 
