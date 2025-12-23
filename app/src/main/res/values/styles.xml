@@ -33,4 +33,29 @@
         <item name="android:fontWeight">500</item>
         <item name="android:textColor">@null</item>
     </style>
+    <!--对话框动画-底部滑入滑出-->
+    <style name="DialogAnimPushBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_push_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_push_out_bottom</item>
+    </style>
+    <!--对话框动画-淡入淡出-->
+    <style name="DialogAnimFade" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_fade_out</item>
+    </style>
+    <!--对话框动画-material缩放透明-->
+    <style name="DialogAnimMaterial" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_material_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_material_out</item>
+    </style>
+    <!--对话框动画-缩放透明-->
+    <style name="DialogAnimScale" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_scale_out</item>
+    </style>
+    <!--对话框动画-底部淡入淡出-->
+    <style name="DialogAnimSlideBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_out_bottom</item>
+    </style>
 </resources>

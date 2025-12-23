@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.utils;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -59,6 +60,7 @@ public class DisplayMetricsHelper {
      */
     private static int getStatusBarHeightByResource(@NonNull Context context) {
         int result = 0;
+        @SuppressLint({"DiscouragedApi", "InternalInsetResource"})
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId != 0) {
             result = context.getResources().getDimensionPixelSize(resourceId);

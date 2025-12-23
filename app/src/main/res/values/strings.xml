@@ -6,6 +6,7 @@
     <string name="image_description">图片</string>
     <string name="title_action_back_description">返回</string>
     <string name="title_action_share_description">分享</string>
+    <string name="title_action_close_description">关闭</string>
     <string name="detail_download_suffix">次安装</string>
     <string name="detail_btn_install">安装 (%s)</string>
     <string name="login_phone">手机号</string>
@@ -14,4 +15,6 @@
     <string name="login_sign_in">登录</string>
     <string name="login_other_sign_in_methods">其他登录方式</string>
     <string name="banner_image_transition">banner_image</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
 </resources>

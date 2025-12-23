@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_default_bg">
+
+    <TextView
+        android:id="@id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:lineSpacingExtra="6dp"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="对话框"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@id/dialog_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin_m"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:gravity="center"
+        android:lineSpacingExtra="6dp"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title"
+        tools:text="我们将在30分钟处理，稍后通知您订单结果！感谢您选择" />
+
+    <View
+        android:id="@+id/divider_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:background="@color/ajstudy_color_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_content" />
+
+    <android.widget.Button
+        android:id="@id/dialog_btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_default_btn_left_selector"
+        android:gravity="center"
+        android:minHeight="44dp"
+        android:text="@string/cancel"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="17sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/divider_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_horizontal"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/divider_vertical"
+        android:layout_width="0.5dp"
+        android:layout_height="0dp"
+        android:background="@color/ajstudy_color_divider"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dialog_btn_cancel"
+        app:layout_constraintEnd_toStartOf="@id/dialog_btn_ok"
+        app:layout_constraintStart_toEndOf="@id/dialog_btn_cancel"
+        app:layout_constraintTop_toTopOf="@id/dialog_btn_cancel"
+        tools:visibility="visible" />
+
+    <android.widget.Button
+        android:id="@id/dialog_btn_ok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_default_btn_right_selector"
+        android:gravity="center"
+        android:minHeight="44dp"
+        android:text="@string/ok"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="17sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/divider_vertical"
+        app:layout_constraintTop_toBottomOf="@id/divider_horizontal"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

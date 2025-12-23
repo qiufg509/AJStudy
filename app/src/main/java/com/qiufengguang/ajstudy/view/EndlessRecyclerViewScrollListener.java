@@ -31,7 +31,10 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        if (dy <= 0) return; // 只处理向上滑动
+        if (dy <= 0) {
+            // 只处理向上滑动
+            return;
+        }
 
         int totalItemCount = layoutManager.getItemCount();
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();

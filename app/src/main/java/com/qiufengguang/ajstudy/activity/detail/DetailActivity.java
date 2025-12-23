@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.activity.detail;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -15,6 +16,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ActivityDetailBinding;
+import com.qiufengguang.ajstudy.dialog.Dialog;
+import com.qiufengguang.ajstudy.dialog.manager.DialogWrapper;
+import com.qiufengguang.ajstudy.dialog.manager.DialogsManager;
 import com.qiufengguang.ajstudy.ui.comment.CommentFragment;
 import com.qiufengguang.ajstudy.ui.introduction.IntroductionFragment;
 import com.qiufengguang.ajstudy.ui.recommendation.RecommendationFragment;
@@ -143,8 +147,7 @@ public class DetailActivity extends AppCompatActivity {
             getOnBackPressedDispatcher().onBackPressed());
 
         // 设置菜单按钮点击事件
-        binding.titleBar.barShare.setOnClickListener(v ->
-            Toast.makeText(getApplicationContext(), "分享", Toast.LENGTH_SHORT).show());
+        binding.titleBar.barShare.setOnClickListener(v -> showShareDialog());
 
         binding.btnInstall.setOnClickListener(view -> {
             binding.btnInstall.setText("正在安装...");
@@ -161,6 +164,31 @@ public class DetailActivity extends AppCompatActivity {
                 });
             }, 2000);
         });
+    }
+
+    private void showShareDialog() {
+        Dialog.Builder builder = new Dialog.Builder(this)
+            .setDialogView(R.layout.dialog_share_detail)
+            .setWindowBackgroundP(0.5f)
+            .setScreenWidthP(1.0f)
+            .setGravity(Gravity.BOTTOM)
+            .setCancelableOutSide(true)
+            .setAnimStyle(R.style.DialogAnimPushBottom)
+            .setBuildChildListener((dialog, parent, layoutRes) -> {
+                parent.findViewById(R.id.layout_share_wx).setOnClickListener(v1 -> {
+                    Toast.makeText(getApplicationContext(), "分享到微信", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                });
+                parent.findViewById(R.id.layout_share_zfb).setOnClickListener(v1 -> {
+                    Toast.makeText(getApplicationContext(), "分享到支付宝", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                });
+                parent.findViewById(R.id.layout_share_local).setOnClickListener(v1 -> {
+                    Toast.makeText(getApplicationContext(), "保存到本地", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                });
+            });
+        DialogsManager.getInstance().requestShow(new DialogWrapper(builder));
     }
 
     private void observeData() {
