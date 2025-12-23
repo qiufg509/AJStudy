@@ -16,75 +16,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/layout_share_wx"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin_s"
-        android:gravity="center"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/tv_share_wx"
+        android:layout_width="@dimen/item_icon_size_xl"
+        android:layout_height="@dimen/item_icon_size_xl"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:drawableTop="@drawable/placeholder_icon_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xs"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/activity_vertical_margin_s"
+        android:text="微信"
+        android:textColor="@color/ajstudy_color_text_primary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_share_title">
+        app:layout_constraintTop_toBottomOf="@id/tv_share_title" />
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/placeholder_icon" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin_xs"
-            android:src="@drawable/placeholder_icon"
-            android:text="微信"
-            android:textColor="@color/ajstudy_color_text_primary" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_share_zfb"
+        android:layout_width="@dimen/item_icon_size_xl"
+        android:layout_height="@dimen/item_icon_size_xl"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:drawableTop="@drawable/placeholder_icon_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xs"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/activity_vertical_margin_s"
+        android:text="微信"
+        android:textColor="@color/ajstudy_color_text_primary"
+        app:layout_constraintStart_toEndOf="@id/tv_share_wx"
+        app:layout_constraintTop_toBottomOf="@id/tv_share_title" />
 
-    <LinearLayout
-        android:id="@+id/layout_share_zfb"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin_s"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@id/layout_share_wx"
-        app:layout_constraintTop_toBottomOf="@id/tv_share_title">
+    <TextView
+        android:id="@+id/tv_share_local"
+        android:layout_width="@dimen/item_icon_size_xl"
+        android:layout_height="@dimen/item_icon_size_xl"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:drawableTop="@drawable/placeholder_icon_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xs"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/activity_vertical_margin_s"
+        android:text="微信"
+        android:textColor="@color/ajstudy_color_text_primary"
+        app:layout_constraintStart_toEndOf="@id/tv_share_zfb"
+        app:layout_constraintTop_toBottomOf="@id/tv_share_title" />
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/placeholder_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin_xs"
-            android:src="@drawable/placeholder_icon"
-            android:text="支付宝"
-            android:textColor="@color/ajstudy_color_text_primary" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_share_local"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin_s"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@id/layout_share_zfb"
-        app:layout_constraintTop_toBottomOf="@id/tv_share_title">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/placeholder_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin_xs"
-            android:src="@drawable/placeholder_icon"
-            android:text="本地"
-            android:textColor="@color/ajstudy_color_text_primary" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

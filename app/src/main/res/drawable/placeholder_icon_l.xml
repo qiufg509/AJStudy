@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:width="80dp"
-        android:height="80dp">
+        android:width="@dimen/item_icon_size_xl"
+        android:height="@dimen/item_icon_size_xl">
         <shape android:shape="rectangle">
             <solid android:color="@color/ajstudy_placeholder_bg_color" />
             <corners android:radius="@dimen/radius_l" />
         </shape>
     </item>
     <item
-        android:width="48dp"
-        android:height="48dp"
+        android:width="@dimen/item_icon_size_s"
+        android:height="@dimen/item_icon_size_s"
         android:drawable="@drawable/ic_placeholder"
         android:gravity="center" />
 </layer-list>

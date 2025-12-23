@@ -95,7 +95,7 @@ public class DetailActivity extends AppCompatActivity {
             binding.ivIcon.setLayoutParams(iconParams);
         }
 
-        int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.item_icon_size)
+        int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.item_icon_size_xl)
             + getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
         offsetChangedCallback = new DetailHeadOffsetChangedCallback(this,
             toolbar,
@@ -175,15 +175,15 @@ public class DetailActivity extends AppCompatActivity {
             .setCancelableOutSide(true)
             .setAnimStyle(R.style.DialogAnimPushBottom)
             .setBuildChildListener((dialog, parent, layoutRes) -> {
-                parent.findViewById(R.id.layout_share_wx).setOnClickListener(v1 -> {
+                parent.findViewById(R.id.tv_share_wx).setOnClickListener(v1 -> {
                     Toast.makeText(getApplicationContext(), "分享到微信", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 });
-                parent.findViewById(R.id.layout_share_zfb).setOnClickListener(v1 -> {
+                parent.findViewById(R.id.tv_share_zfb).setOnClickListener(v1 -> {
                     Toast.makeText(getApplicationContext(), "分享到支付宝", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 });
-                parent.findViewById(R.id.layout_share_local).setOnClickListener(v1 -> {
+                parent.findViewById(R.id.tv_share_local).setOnClickListener(v1 -> {
                     Toast.makeText(getApplicationContext(), "保存到本地", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 });
@@ -199,7 +199,7 @@ public class DetailActivity extends AppCompatActivity {
             Glide.with(binding.getRoot().getContext())
                 .load(detailHead.getIcoUri())
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
-                .placeholder(R.drawable.placeholder_icon)
+                .placeholder(R.drawable.placeholder_icon_l)
                 .into(binding.ivIcon);
             binding.tvAppName.setText(detailHead.getName());
             binding.tvTariff.setText(detailHead.getTariffDesc());

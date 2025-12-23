@@ -182,12 +182,12 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
             if (!TextUtils.isEmpty(bean.getImageUrl())) {
                 Glide.with(itemView.getContext())
                     .load(bean.getImageUrl())
-                    .placeholder(R.drawable.placeholder_image)
+                    .placeholder(R.drawable.placeholder_image_horizontal)
                     .apply(GLIDE_OPTIONS)
                     .transition(TRANSITION_OPTIONS)
                     .into(this.binding.ivBanner);
             } else {
-                this.binding.ivBanner.setImageResource(R.drawable.placeholder_image);
+                this.binding.ivBanner.setImageResource(R.drawable.placeholder_image_horizontal);
             }
         }
 

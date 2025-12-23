@@ -97,10 +97,10 @@ public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowV
                 Glide.with(binding.getRoot().getContext())
                     .load(bean.getIcon())
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .placeholder(R.drawable.placeholder_icon)
+                    .placeholder(R.drawable.placeholder_icon_l)
                     .into(binding.ivIcon);
             } else {
-                binding.ivIcon.setImageResource(R.drawable.placeholder_icon);
+                binding.ivIcon.setImageResource(R.drawable.placeholder_icon_l);
             }
 
             CharSequence title = binding.tvTitle.getText();

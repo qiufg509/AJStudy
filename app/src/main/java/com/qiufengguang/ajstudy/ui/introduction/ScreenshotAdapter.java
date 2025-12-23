@@ -76,8 +76,8 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
             // 使用Glide加载图片，添加圆角和过渡动画
             RequestOptions requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_icon)
-                .placeholder(R.drawable.placeholder_icon)
+                .error(R.drawable.placeholder_image_vertical)
+                .placeholder(R.drawable.placeholder_image_vertical)
                 .transform(new CenterCrop(), new RoundedCorners(roundingRadius));
 
             Glide.with(itemView.getContext())

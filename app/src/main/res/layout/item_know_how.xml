@@ -8,8 +8,8 @@
     <!-- 图标 -->
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="@dimen/item_icon_size"
-        android:layout_height="@dimen/item_icon_size"
+        android:layout_width="@dimen/item_icon_size_l"
+        android:layout_height="@dimen/item_icon_size_l"
         android:layout_marginStart="@dimen/activity_horizontal_margin_l"
         android:layout_marginTop="@dimen/activity_vertical_margin_s"
         android:layout_marginBottom="@dimen/activity_vertical_margin_s"
