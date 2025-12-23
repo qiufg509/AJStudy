@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.recommendation;
+package com.qiufengguang.ajstudy.fragment.recommendation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

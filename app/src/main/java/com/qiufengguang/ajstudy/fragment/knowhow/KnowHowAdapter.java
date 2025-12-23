@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.knowhow;
+package com.qiufengguang.ajstudy.fragment.knowhow;
 
 import android.content.Context;
 import android.content.Intent;

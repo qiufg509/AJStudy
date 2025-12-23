@@ -14,9 +14,9 @@ public class LoginResult {
         INVALID
     }
 
-    private Status status;
-    private String message;
-    private User user;
+    private final Status status;
+    private final String message;
+    private final User user;
 
     public LoginResult(Status status, String message, User user) {
         this.status = status;

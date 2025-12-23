@@ -10,7 +10,7 @@ public interface Constant {
     /**
      * 启动登录页面action
      */
-    String START_ACTIVITY_ACTION_LOGIN = "com.qiufengguang.ajstudy.action.LOGIN";
+    String START_ACTIVITY_ACTION_LOGIN = "com.qfguang.ajstudy.action.LOGIN";
 
     /**
      * 启动页面uri

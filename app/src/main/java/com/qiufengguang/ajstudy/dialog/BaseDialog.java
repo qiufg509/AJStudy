@@ -31,7 +31,8 @@ public abstract class BaseDialog extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+        @Nullable Bundle savedInstanceState) {
         Dialog dialog = getDialog();
         if (dialog != null) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

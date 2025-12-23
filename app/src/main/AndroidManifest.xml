@@ -42,7 +42,7 @@
             <intent-filter>
 
                 <!-- 隐式跳转 -->
-                <action android:name="com.qiufengguang.ajstudy.action.LOGIN" />
+                <action android:name="com.qfguang.ajstudy.action.LOGIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 

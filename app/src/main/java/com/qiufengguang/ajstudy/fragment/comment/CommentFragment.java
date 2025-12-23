@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.introduction;
+package com.qiufengguang.ajstudy.fragment.comment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,31 +13,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
-import com.qiufengguang.ajstudy.databinding.FragmentIntroductionBinding;
+import com.qiufengguang.ajstudy.databinding.FragmentCommentBinding;
 
 /**
- * 详情页-介绍子页面
+ * 详情页-评论子页面
  *
  * @author qiufengguang
  * @since 2025/12/10 0:18
  */
-public class IntroductionFragment extends Fragment {
+public class CommentFragment extends Fragment {
 
-    private FragmentIntroductionBinding binding;
+    private FragmentCommentBinding binding;
     private DetailViewModel viewModel;
-    private IntroductionAdapter adapter;
+    private CommentAdapter adapter;
 
-    public IntroductionFragment() {
+    public CommentFragment() {
     }
 
-    public static IntroductionFragment newInstance() {
-        return new IntroductionFragment();
+    public static CommentFragment newInstance() {
+        return new CommentFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentIntroductionBinding.inflate(inflater, container, false);
+        binding = FragmentCommentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -51,12 +51,15 @@ public class IntroductionFragment extends Fragment {
         // 初始化RecyclerView
         setupRecyclerView();
 
+        // 设置监听器
+        setupListeners();
+
         // 观察数据变化
         observeData();
     }
 
     private void setupRecyclerView() {
-        adapter = new IntroductionAdapter();
+        adapter = new CommentAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
 
@@ -64,10 +67,16 @@ public class IntroductionFragment extends Fragment {
         binding.recyclerView.setAdapter(adapter);
     }
 
+
+    private void setupListeners() {
+        adapter.setLikeClickListener((position, comment) ->
+            adapter.notifyItemChanged(position, comment));
+    }
+
     private void observeData() {
-        viewModel.getIntroduction().observe(getViewLifecycleOwner(), introductionList -> {
-            if (introductionList != null) {
-                adapter.setIntroduction(introductionList);
+        viewModel.getComments().observe(getViewLifecycleOwner(), detailComments -> {
+            if (detailComments != null) {
+                adapter.setReviews(detailComments);
             }
         });
     }

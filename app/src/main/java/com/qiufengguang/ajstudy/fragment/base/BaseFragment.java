@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.base;
+package com.qiufengguang.ajstudy.fragment.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

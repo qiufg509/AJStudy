@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.home;
+package com.qiufengguang.ajstudy.fragment.home;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;

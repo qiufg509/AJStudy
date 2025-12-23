@@ -14,7 +14,8 @@
         android:layout_width="@dimen/item_icon_size_m"
         android:layout_height="@dimen/item_icon_size_m"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/activity_horizontal_margin_l" />
+        android:layout_marginStart="@dimen/activity_horizontal_margin_l"
+        android:contentDescription="@string/image_description" />
 
     <!-- 应用信息 -->
     <LinearLayout
@@ -86,7 +87,7 @@
         android:background="@drawable/detail_download_btn_bg_selector"
         android:lines="1"
         android:padding="0dp"
-        android:text="安装"
+        android:text="@string/install"
         android:textColor="?attr/colorPrimary"
         android:textSize="12sp" />
 

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.me;
+package com.qiufengguang.ajstudy.fragment.me;
 
 import android.content.Intent;
 import android.util.Log;
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.main.MainActivity;
 import com.qiufengguang.ajstudy.databinding.FragmentMeBinding;
-import com.qiufengguang.ajstudy.ui.base.BaseFragment;
+import com.qiufengguang.ajstudy.fragment.base.BaseFragment;
 
 /**
  * 我的页面Fragment

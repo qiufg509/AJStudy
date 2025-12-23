@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.knowhow;
+package com.qiufengguang.ajstudy.fragment.knowhow;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.data.KnowHowBean;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
-import com.qiufengguang.ajstudy.ui.base.BaseViewModel;
+import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 import com.qiufengguang.ajstudy.utils.FileUtil;
 
 import java.util.ArrayList;

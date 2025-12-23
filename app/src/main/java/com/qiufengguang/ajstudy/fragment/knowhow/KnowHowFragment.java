@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.knowhow;
+package com.qiufengguang.ajstudy.fragment.knowhow;
 
 import android.view.LayoutInflater;
 
@@ -14,7 +14,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.KnowHowBean;
 import com.qiufengguang.ajstudy.databinding.FragmentKnowHowBinding;
 import com.qiufengguang.ajstudy.global.Constant;
-import com.qiufengguang.ajstudy.ui.base.BaseFragment;
+import com.qiufengguang.ajstudy.fragment.base.BaseFragment;
 import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.me;
+package com.qiufengguang.ajstudy.fragment.me;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

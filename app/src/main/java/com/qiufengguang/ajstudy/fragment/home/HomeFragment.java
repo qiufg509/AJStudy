@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.home;
+package com.qiufengguang.ajstudy.fragment.home;
 
 import android.view.LayoutInflater;
 import android.widget.Toast;
@@ -13,7 +13,7 @@ import com.qiufengguang.ajstudy.dialog.IDialog;
 import com.qiufengguang.ajstudy.dialog.manager.DialogWrapper;
 import com.qiufengguang.ajstudy.dialog.manager.DialogsManager;
 import com.qiufengguang.ajstudy.global.GlobalApp;
-import com.qiufengguang.ajstudy.ui.base.BaseFragment;
+import com.qiufengguang.ajstudy.fragment.base.BaseFragment;
 
 /**
  * 首页Fragment

@@ -5,4 +5,4 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingBottom="@dimen/ajstudy_bottom_navigation_height"
-    tools:context=".ui.knowhow.KnowHowFragment" />
+    tools:context=".fragment.knowhow.KnowHowFragment" />

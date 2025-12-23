@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/ajstudy_window_background"
     android:fitsSystemWindows="false"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".fragment.home.HomeFragment">
 
     <!-- 背景图，延伸到状态栏 -->
     <ImageView

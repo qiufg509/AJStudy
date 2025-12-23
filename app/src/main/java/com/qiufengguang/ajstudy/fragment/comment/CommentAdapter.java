@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.comment;
+package com.qiufengguang.ajstudy.fragment.comment;
 
 
 import android.graphics.drawable.Drawable;

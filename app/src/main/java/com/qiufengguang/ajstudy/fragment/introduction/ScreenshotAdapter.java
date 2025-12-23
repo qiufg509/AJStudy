@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.ui.introduction;
+package com.qiufengguang.ajstudy.fragment.introduction;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
