@@ -2,6 +2,7 @@ package com.qiufengguang.ajstudy.network;
 
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.text.TextUtils;
 
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -47,17 +48,23 @@ public class LoginRepository {
 
     public void saveUserInfo(User user) {
         SpUtils.getInstance().commitBatch(Constant.Sp.PREF_USER, (editor, cache, spName) -> {
+            // 保存sp同时更新内存缓存
             String phone = user.getPhone();
-            editor.putString("phone", phone);
-            editor.putString("password", user.getPassword());
-            editor.putBoolean("rememberPwd", user.isRememberPwd());
-            editor.putLong("timestamp", user.getTimestamp());
-
-            // 同时更新内存缓存
-            cache.put(spName + "phone", phone);
-            cache.put(spName + "password", user.getPassword());
-            cache.put(spName + "rememberPwd", user.isRememberPwd());
-            cache.put(spName + "timestamp", user.getTimestamp());
+            if (!TextUtils.isEmpty(phone)) {
+                editor.putString("phone", phone);
+                cache.put(spName + "phone", phone);
+            }
+            String password = user.getPassword();
+            if (!TextUtils.isEmpty(password)) {
+                editor.putString("password", password);
+                cache.put(spName + "password", password);
+            }
+            boolean rememberPwd = user.isRememberPwd();
+            editor.putBoolean("rememberPwd", rememberPwd);
+            cache.put(spName + "rememberPwd", rememberPwd);
+            long timestamp = user.getTimestamp();
+            editor.putLong("timestamp", timestamp);
+            cache.put(spName + "timestamp", timestamp);
         });
     }
 
@@ -72,11 +79,11 @@ public class LoginRepository {
             user.setTimestamp((Long) timestamp);
         }
         Object phone = all.get("phone");
-        if (timestamp instanceof String) {
+        if (phone instanceof String) {
             user.setPhone((String) phone);
         }
         Object password = all.get("password");
-        if (timestamp instanceof String) {
+        if (password instanceof String) {
             user.setPassword((String) password);
         }
         Object rememberPwd = all.get("rememberPwd");
