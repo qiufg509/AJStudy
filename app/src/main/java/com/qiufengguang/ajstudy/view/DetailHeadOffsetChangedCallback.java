@@ -96,8 +96,8 @@ public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetCha
     private static final float THRESHOLD = 0.5f;
 
     public DetailHeadOffsetChangedCallback(DetailActivity activity, @NonNull Toolbar toolbar,
-                                           @NonNull ImageButton barBackView, @NonNull ImageButton barShareView,
-                                           @NonNull TextView barTitleView, int expectedScrollRange) {
+        @NonNull ImageButton barBackView, @NonNull ImageButton barShareView,
+        @NonNull TextView barTitleView, int expectedScrollRange) {
         this.activity = activity;
         this.toolbar = toolbar;
         this.barBackView = barBackView;

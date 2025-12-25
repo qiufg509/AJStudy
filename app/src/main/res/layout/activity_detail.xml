@@ -9,13 +9,16 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:elevation="0dp"
+        app:elevation="0dp"
+        app:liftOnScroll="false"
+        android:background="@null">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@null"
             app:collapsedTitleGravity="start"
             app:contentScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -247,8 +250,8 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:tabBackground="@android:color/transparent"
+            android:background="@null"
+            app:tabBackground="@null"
             app:tabGravity="fill"
             app:tabIndicatorColor="?attr/colorPrimary"
             app:tabIndicatorHeight="2dp"
