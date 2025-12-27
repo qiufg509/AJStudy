@@ -58,6 +58,11 @@ public interface Constant {
         String DETAIL_WX = "detail_page_wx.json";
         String DETAIL_HGDJ = "detail_page_hgdj.json";
         String DETAIL_SJZXD = "detail_page_sjzxd.json";
+
+        /**
+         * markdown文件读取目录
+         */
+        String DOCUMENT_STUDY_DIR = "KotlinCourse/";
     }
 
     /**

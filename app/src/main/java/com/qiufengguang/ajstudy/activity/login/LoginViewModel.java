@@ -78,7 +78,9 @@ public class LoginViewModel extends ViewModel {
         loginResult.setValue(new LoginResult(status, "", savedUser));
     }
 
-    public void release() {
+    @Override
+    protected void onCleared() {
+        super.onCleared();
         if (loginRepository != null) {
             loginRepository.release();
         }

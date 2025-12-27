@@ -61,6 +61,10 @@ public final class SpUtils {
         return instance;
     }
 
+    private SpUtils() {
+        throw new UnsupportedOperationException("call init.");
+    }
+
     private SpUtils(@NonNull Context context) {
         this.appContext = context.getApplicationContext();
         startWriteWorker();

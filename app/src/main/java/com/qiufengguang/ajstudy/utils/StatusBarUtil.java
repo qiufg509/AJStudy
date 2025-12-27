@@ -34,6 +34,10 @@ public class StatusBarUtil {
      */
     private static final long STATUS_BAR_UPDATE_INTERVAL = 50;
 
+    private StatusBarUtil() {
+        throw new UnsupportedOperationException("Cannot instantiate utility class");
+    }
+
     /**
      * 设置内容延伸到状态栏，状态栏背景透明
      * setContentView之后调用，否则window.getInsetsController()抛空指针异常

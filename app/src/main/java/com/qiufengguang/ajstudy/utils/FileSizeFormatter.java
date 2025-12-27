@@ -13,6 +13,10 @@ public class FileSizeFormatter {
     private static final long MB = KB * 1024L;
     private static final long GB = MB * 1024L;
 
+    private FileSizeFormatter() {
+        throw new UnsupportedOperationException("Cannot instantiate utility class");
+    }
+
     public static String format(long sizeInBytes) {
         if (sizeInBytes <= 0) {
             return "0B";

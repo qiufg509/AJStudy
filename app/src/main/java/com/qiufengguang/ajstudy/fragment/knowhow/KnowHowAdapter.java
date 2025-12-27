@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
+import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
 import com.qiufengguang.ajstudy.data.KnowHowBean;
 import com.qiufengguang.ajstudy.databinding.ItemKnowHowBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +123,17 @@ public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowV
             // 优化点击事件，使用单个监听器
             binding.getRoot().setOnClickListener(v -> {
                 Context context = v.getContext();
+                String titleStr = bean.getTitle();
+                if (bean.getTargetPage() == KnowHowBean.TARGET_PAGE_MARKDOWN
+                    && !TextUtils.isEmpty(titleStr)) {
+                    Intent intent = new Intent(context, MarkdownActivity.class);
+                    String titleContent = titleStr.replaceAll("\\.(md|txt|json|xml)$", "");
+                    intent.putExtra("title", titleContent);
+                    intent.putExtra("filePath",
+                        Constant.Data.DOCUMENT_STUDY_DIR + titleStr);
+                    context.startActivity(intent);
+                    return;
+                }
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("detail_index", bean.getId());
                 context.startActivity(intent);

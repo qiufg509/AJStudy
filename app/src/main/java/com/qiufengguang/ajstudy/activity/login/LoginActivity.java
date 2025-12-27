@@ -158,9 +158,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (loginViewModel != null) {
-            loginViewModel.release();
-        }
         binding = null;
     }
 

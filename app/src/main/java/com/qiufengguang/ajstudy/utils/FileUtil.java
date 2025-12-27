@@ -17,10 +17,28 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * 文件操作工具类（内存安全/线程安全说明：所有方法均为同步方法，推荐在子线程中使用）
+ * 外部公共存储文件读取，请使用ContentResolver查询
+ * ContentResolver resolver = context.getContentResolver();
+ * String selection = MediaStore.Files.FileColumns.RELATIVE_PATH + " LIKE ?";
+ * String[] selectionArgs = new String[]{path};
+ * Cursor cursor = resolver.query(
+ * collection,
+ * projection,
+ * selection,
+ * selectionArgs,
+ * MediaStore.Files.FileColumns.DATE_ADDED + " DESC");
+ * while (cursor.moveToNext()) {
+ * String name = cursor.getString(nameIndex);
+ * Uri fileUri = ContentUris.withAppendedId(collection, id);
+ * }
  *
  * @author qiufengguang
  * @since 2025/5/5 22:12
@@ -32,6 +50,10 @@ public class FileUtil {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     // 缓冲区大小（8KB）
     private static final int BUFFER_SIZE = 8192;
+
+    private FileUtil() {
+        throw new UnsupportedOperationException("Cannot instantiate utility class");
+    }
 
     //--------------------------------- 读取Assets文件 ---------------------------------//
 
@@ -64,6 +86,9 @@ public class FileUtil {
      * 读取内部存储文件为String（默认UTF-8）
      */
     public static String readInternalFileToString(Context context, String fileName) {
+        if (Objects.isNull(context) || TextUtils.isEmpty(fileName)) {
+            return "";
+        }
         return readFileToString(new File(context.getFilesDir(), fileName), DEFAULT_CHARSET);
     }
 
@@ -81,6 +106,9 @@ public class FileUtil {
      * 读取外部私有存储文件为String（默认UTF-8）
      */
     public static String readExternalFileToString(Context context, String fileName) {
+        if (Objects.isNull(context) || TextUtils.isEmpty(fileName)) {
+            return "";
+        }
         File file = getExternalFile(context, fileName);
         return Objects.nonNull(file) ? readFileToString(file, DEFAULT_CHARSET) : "";
     }
@@ -89,11 +117,37 @@ public class FileUtil {
      * 获取外部私有存储File对象
      */
     public static File getExternalFile(Context context, String fileName) {
-        if (!isExternalStorageAvailable()) {
+        if (isExternalStorageInvalid()) {
             return null;
         }
         File file = new File(context.getExternalFilesDir(null), fileName);
         return validateFile(file) ? file : null;
+    }
+
+    /**
+     * 获取外部私有存储目录的文件列表
+     */
+    public static List<String> getExternalFileName(Context context, String fileName) {
+        if (Objects.isNull(context) || TextUtils.isEmpty(fileName)) {
+            return null;
+        }
+        if (isExternalStorageInvalid()) {
+            return null;
+        }
+        File dir = new File(context.getExternalFilesDir(null), fileName);
+        if (!validateDirectory(dir)) {
+            return null;
+        }
+        File[] files = dir.listFiles();
+        if (files == null || files.length == 0) {
+            return null;
+        }
+        Arrays.sort(files, Comparator.comparing(File::getName));
+        List<String> fileList = new ArrayList<>(files.length);
+        for (File file : files) {
+            fileList.add(file.getName());
+        }
+        return fileList;
     }
 
     //--------------------------------- 通用文件操作 ---------------------------------//
@@ -149,10 +203,17 @@ public class FileUtil {
     }
 
     /**
+     * 校验文件夹有效性
+     */
+    private static boolean validateDirectory(File file) {
+        return file != null && file.exists() && file.isDirectory();
+    }
+
+    /**
      * 检查外部存储可用性
      */
-    private static boolean isExternalStorageAvailable() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    private static boolean isExternalStorageInvalid() {
+        return !Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     //------------------------------ 可选：写入方法增强 ------------------------------//

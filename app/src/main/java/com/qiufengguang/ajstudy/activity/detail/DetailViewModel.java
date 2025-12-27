@@ -66,6 +66,8 @@ public class DetailViewModel extends ViewModel {
      */
     private final MutableLiveData<Integer> selectedTab = new MutableLiveData<>(1);
 
+    private HandlerThread handlerThread;
+
     public DetailViewModel() {
     }
 
@@ -98,7 +100,7 @@ public class DetailViewModel extends ViewModel {
     }
 
     public void loadData(int detailIndex) {
-        HandlerThread handlerThread = new HandlerThread(TAG + "-Thread");
+        handlerThread = new HandlerThread(TAG + "-Thread");
         if (!handlerThread.isAlive()) {
             handlerThread.start();
         }
@@ -300,6 +302,14 @@ public class DetailViewModel extends ViewModel {
 
         private String parseDetailAppIntro(JSONObject dataListObj) {
             return dataListObj.optString("appIntro");
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (handlerThread != null) {
+            handlerThread.quitSafely();
         }
     }
 }

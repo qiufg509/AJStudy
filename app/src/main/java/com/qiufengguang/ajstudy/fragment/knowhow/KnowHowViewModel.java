@@ -10,9 +10,9 @@ import androidx.lifecycle.SavedStateHandle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.data.KnowHowBean;
+import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
-import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 import com.qiufengguang.ajstudy.utils.FileUtil;
 
 import java.util.ArrayList;
@@ -47,6 +47,8 @@ public class KnowHowViewModel extends BaseViewModel {
      */
     private final LiveData<Map<Integer, Integer>> cacheLiveData;
 
+    private HandlerThread handlerThread;
+
     public KnowHowViewModel(SavedStateHandle savedStateHandle) {
         super(savedStateHandle);
 
@@ -56,7 +58,7 @@ public class KnowHowViewModel extends BaseViewModel {
     }
 
     private void initData() {
-        HandlerThread handlerThread = new HandlerThread(TAG + "-Thread");
+        handlerThread = new HandlerThread(TAG + "-Thread");
         if (!handlerThread.isAlive()) {
             handlerThread.start();
         }
@@ -67,6 +69,21 @@ public class KnowHowViewModel extends BaseViewModel {
             List<KnowHowBean> beans = new Gson().fromJson(listStr,
                 new TypeToken<List<KnowHowBean>>() {
                 }.getType());
+            if (beans == null || beans.isEmpty()) {
+                return;
+            }
+            List<String> fileNames = FileUtil.getExternalFileName(
+                GlobalApp.getContext(), Constant.Data.DOCUMENT_STUDY_DIR);
+            if (fileNames == null || fileNames.isEmpty()) {
+                liveData.postValue(beans);
+                return;
+            }
+            int size = Math.min(fileNames.size(), beans.size());
+            for (int index = 0; index < size; index++) {
+                KnowHowBean bean = beans.get(index);
+                bean.setTitle(fileNames.get(index));
+                bean.setTargetPage(KnowHowBean.TARGET_PAGE_MARKDOWN);
+            }
             liveData.postValue(beans);
         });
 
@@ -111,5 +128,13 @@ public class KnowHowViewModel extends BaseViewModel {
         }
         cacheMap.put(key, count);
         setSavedState(KEY_CACHE_DATA, cacheMap);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (handlerThread != null) {
+            handlerThread.quitSafely();
+        }
     }
 }

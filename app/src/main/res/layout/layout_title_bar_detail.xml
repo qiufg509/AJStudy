@@ -35,6 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="48dp"
+            android:ellipsize="marquee"
+            android:maxLines="2"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
         <!-- 右侧菜单按钮 -->

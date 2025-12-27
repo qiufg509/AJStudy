@@ -1,7 +1,10 @@
 package com.qiufengguang.ajstudy.fragment.knowhow;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,8 +16,8 @@ import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.KnowHowBean;
 import com.qiufengguang.ajstudy.databinding.FragmentKnowHowBinding;
-import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.fragment.base.BaseFragment;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
 
 import java.util.List;

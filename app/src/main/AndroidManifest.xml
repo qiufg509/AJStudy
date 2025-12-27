@@ -63,6 +63,9 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false"
             android:theme="@style/Theme.AJStudy.Blue" />
+        <activity
+            android:name=".activity.markdown.MarkdownActivity"
+            android:exported="false" />
 
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->
         <meta-data

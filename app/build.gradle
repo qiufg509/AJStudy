@@ -49,6 +49,18 @@ dependencies {
     // Glide 注解处理器（用于编译时生成代码）
     annotationProcessor libs.glide.compiler
 
+    // markdown核心库（必须）
+    implementation libs.markwon.core
+    // 支持解析图片语法（推荐）
+    implementation libs.markwon.image
+    // 使用Glide加载网络图片（已依赖Glide）（推荐）
+    implementation libs.markwon.image.glide
+    // 表格支持（可选）
+    implementation libs.markwon.ext.tables
+    // 内联HTML支持（可选）
+    implementation libs.markwon.html
+    implementation libs.markwon.linkify
+
     implementation libs.navigation.ui
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

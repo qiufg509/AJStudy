@@ -84,6 +84,10 @@ public class ThemeUtils {
      */
     public static final int THEME_INDEX_DEFAULT = 1;
 
+    private ThemeUtils() {
+        throw new UnsupportedOperationException("Cannot instantiate utility class");
+    }
+
     public static @StyleRes int getSplashTheme() {
         SpUtils spUtils = SpUtils.getInstance();
         if (spUtils == null) {
