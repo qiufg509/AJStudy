@@ -37,16 +37,16 @@ public class HomeViewModel extends ViewModel {
         bannerLiveData.setValue(items);
 
         List<GridCardBean> gridCardBeans = new ArrayList<>();
-        gridCardBeans.add(new GridCardBean("Advance", R.drawable.ic_book_0, ""));
-        gridCardBeans.add(new GridCardBean("alg.", R.drawable.ic_book_1, ""));
-        gridCardBeans.add(new GridCardBean("AS", R.drawable.ic_book_2, ""));
-        gridCardBeans.add(new GridCardBean("Architect", R.drawable.ic_book_3, ""));
-        gridCardBeans.add(new GridCardBean("Dagger2", R.drawable.ic_book_4, ""));
-        gridCardBeans.add(new GridCardBean("Basic", R.drawable.ic_book_5, ""));
-        gridCardBeans.add(new GridCardBean("Java", R.drawable.ic_book_6, ""));
-        gridCardBeans.add(new GridCardBean("Jetpack", R.drawable.ic_book_7, ""));
-        gridCardBeans.add(new GridCardBean("Kotlin", R.drawable.ic_book_8, ""));
-        gridCardBeans.add(new GridCardBean("RxJava", R.drawable.ic_book_9, ""));
+        gridCardBeans.add(new GridCardBean("Advance", R.drawable.ic_book_0, "AdavancedPart"));
+        gridCardBeans.add(new GridCardBean("alg.", R.drawable.ic_book_1, "Algorithm"));
+        gridCardBeans.add(new GridCardBean("AS", R.drawable.ic_book_2, "AndroidStudioCourse"));
+        gridCardBeans.add(new GridCardBean("Architect", R.drawable.ic_book_3, "Architect"));
+        gridCardBeans.add(new GridCardBean("Dagger2", R.drawable.ic_book_4, "Dagger2"));
+        gridCardBeans.add(new GridCardBean("Basic", R.drawable.ic_book_5, "BasicKnowledge"));
+        gridCardBeans.add(new GridCardBean("Java", R.drawable.ic_book_6, "JavaKnowledge"));
+        gridCardBeans.add(new GridCardBean("Jetpack", R.drawable.ic_book_7, "Jetpack"));
+        gridCardBeans.add(new GridCardBean("Kotlin", R.drawable.ic_book_8, "KotlinCourse"));
+        gridCardBeans.add(new GridCardBean("RxJava", R.drawable.ic_book_9, "RxJavaPart"));
         gridCardLiveData.setValue(gridCardBeans);
     }
 

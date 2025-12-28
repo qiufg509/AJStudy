@@ -1,16 +1,17 @@
 package com.qiufengguang.ajstudy.fragment.home;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.banner.BannerWrapper;
-import com.qiufengguang.ajstudy.card.grid.GridCardAdapter;
 import com.qiufengguang.ajstudy.card.grid.GridCardWrapper;
 import com.qiufengguang.ajstudy.data.BannerBean;
-import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.FragmentHomeBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;
 import com.qiufengguang.ajstudy.dialog.IDialog;
@@ -64,11 +65,12 @@ public class HomeFragment extends BaseFragment {
             .setSpanCount(5)
             .setItemType(GridCardWrapper.TYPE_TEXT)
             .setSpacing(spacing)
-            .setListener(new GridCardAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(GridCardBean bean) {
-
-                }
+            .setListener(bean -> {
+                NavController navController = Navigation.findNavController(requireActivity(),
+                    R.id.nav_host_fragment_activity_main);
+                Bundle bundle = new Bundle();
+                bundle.putString("Course", bean.getNavigatePage());
+                navController.navigate(R.id.navigation_know_how, bundle);
             })
             .create();
         gridCardWrapper.show();

@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 int destinationId = loginAction.getDestinationId();
                 binding.navView.setSelectedItemId(destinationId);
-                viewModel.setLiveData(destinationId);
             });
         }
 
@@ -105,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             return onNavItemSelected(itemId);
         });
+        navController.addOnDestinationChangedListener(
+            (navController, navDestination, bundle) -> {
+                int destinationId = navDestination.getId();
+                viewModel.setLiveData(destinationId);
+            });
     }
 
     /**
@@ -139,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 ContextCompat.getColor(this, R.color.ajstudy_window_background));
         }
         navController.navigate(itemId);
-        viewModel.setLiveData(itemId);
         return true;
     }
 

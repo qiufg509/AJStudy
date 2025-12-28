@@ -54,10 +54,9 @@ public class KnowHowViewModel extends BaseViewModel {
 
         // 初始化保存的状态，设置默认值
         this.cacheLiveData = getSavedStateLiveData(KEY_CACHE_DATA, Collections.emptyMap());
-        initData();
     }
 
-    private void initData() {
+    public void initData(String course) {
         handlerThread = new HandlerThread(TAG + "-Thread");
         if (!handlerThread.isAlive()) {
             handlerThread.start();
@@ -73,7 +72,7 @@ public class KnowHowViewModel extends BaseViewModel {
                 return;
             }
             List<String> fileNames = FileUtil.getExternalFileName(
-                GlobalApp.getContext(), Constant.Data.DOCUMENT_STUDY_DIR);
+                GlobalApp.getContext(), course);
             if (fileNames == null || fileNames.isEmpty()) {
                 liveData.postValue(beans);
                 return;
@@ -82,7 +81,7 @@ public class KnowHowViewModel extends BaseViewModel {
             for (int index = 0; index < size; index++) {
                 KnowHowBean bean = beans.get(index);
                 bean.setTitle(fileNames.get(index));
-                bean.setTargetPage(KnowHowBean.TARGET_PAGE_MARKDOWN);
+                bean.setTargetPage(course);
             }
             liveData.postValue(beans);
         });

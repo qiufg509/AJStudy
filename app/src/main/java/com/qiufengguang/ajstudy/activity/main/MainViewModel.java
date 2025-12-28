@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 
 import java.util.concurrent.ExecutorService;
@@ -29,7 +28,6 @@ public class MainViewModel extends ViewModel {
     private static Future<?> sInitFuture;
 
     public MainViewModel() {
-        liveData.setValue(R.id.navigation_home);
         initThirdSdk();
     }
 

@@ -62,7 +62,7 @@ public interface Constant {
         /**
          * markdown文件读取目录
          */
-        String DOCUMENT_STUDY_DIR = "KotlinCourse/";
+        String DOCUMENT_STUDY_DIR = "KotlinCourse";
     }
 
     /**

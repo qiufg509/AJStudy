@@ -123,7 +123,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
      * 计算真实位置，实现无限循环
      */
     public int getRealPosition(int position) {
-        return bannerBeans.isEmpty() ? 0 : position % bannerBeans.size();
+        return bannerBeans == null || bannerBeans.isEmpty() ? 0 : position % bannerBeans.size();
     }
 
     /**

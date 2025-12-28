@@ -79,7 +79,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public int getItemCount() {
-        return detailComments.size();
+        return detailComments == null ? 0 : detailComments.size();
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {

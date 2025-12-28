@@ -1,10 +1,9 @@
 package com.qiufengguang.ajstudy.fragment.knowhow;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,6 +59,12 @@ public class KnowHowFragment extends BaseFragment {
 
         adjustColumn();
 
+        Bundle args = getArguments();
+        String course = "";
+        if (args != null) {
+            course = args.getString("Course");
+        }
+        viewModel.initData(TextUtils.isEmpty(course) ? Constant.Data.DOCUMENT_STUDY_DIR : course);
         // 绑定数据
         viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
             adapter.setData(viewModel.getPageData(0)));

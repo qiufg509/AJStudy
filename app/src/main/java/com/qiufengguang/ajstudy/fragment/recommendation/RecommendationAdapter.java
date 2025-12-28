@@ -13,7 +13,6 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.DetailRecommend;
 import com.qiufengguang.ajstudy.databinding.ItemRecommendationBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
  */
 public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder> {
 
-    private List<DetailRecommend> recommends = new ArrayList<>();
+    private List<DetailRecommend> recommends;
     private OnRecommendClickListener clickListener;
 
     public void setOnRecommendClickListener(OnRecommendClickListener listener) {
@@ -61,7 +60,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public int getItemCount() {
-        return recommends.size();
+        return recommends == null ? 0 : recommends.size();
     }
 
     public class RecommendationViewHolder extends RecyclerView.ViewHolder {
