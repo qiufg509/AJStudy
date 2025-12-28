@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
@@ -12,8 +13,8 @@ import com.qiufengguang.ajstudy.dialog.Dialog;
 import com.qiufengguang.ajstudy.dialog.IDialog;
 import com.qiufengguang.ajstudy.dialog.manager.DialogWrapper;
 import com.qiufengguang.ajstudy.dialog.manager.DialogsManager;
-import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.fragment.base.BaseFragment;
+import com.qiufengguang.ajstudy.global.GlobalApp;
 
 /**
  * 首页Fragment
@@ -56,6 +57,12 @@ public class HomeFragment extends BaseFragment {
                 bannerWrapper.setBannerBeans(bannerBeans);
                 bannerWrapper.startAutoScroll();
             });
+
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 5);
+        binding.recyclerGrid.setLayoutManager(layoutManager);
+        binding.recyclerGrid.setAdapter(new GridCardAdapter());
+        binding.recyclerGrid.addItemDecoration(new GridSpacingItemDecoration(5,
+            getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_s)));
     }
 
     private void handleBannerClick(int position, BannerBean item) {

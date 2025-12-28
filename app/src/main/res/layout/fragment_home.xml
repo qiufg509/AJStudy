@@ -8,10 +8,10 @@
 
     <!-- Banner轮播区域 -->
     <com.qiufengguang.ajstudy.view.RoundedFrameLayout
+        android:id="@+id/layout_banner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
-        android:layout_marginTop="@dimen/activity_vertical_margin_m"
         app:corner_radius="@dimen/radius_l"
         app:layout_constraintDimensionRatio="H,16:9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +37,18 @@
             android:orientation="horizontal"
             android:paddingVertical="@dimen/activity_vertical_margin_s" />
     </com.qiufengguang.ajstudy.view.RoundedFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_banner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
