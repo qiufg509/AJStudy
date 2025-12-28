@@ -15,7 +15,6 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.DetailComment;
 import com.qiufengguang.ajstudy.databinding.ItemCommentBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ import java.util.List;
  */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
-    private List<DetailComment> detailComments = new ArrayList<>();
+    private List<DetailComment> detailComments;
 
     private CommentAdapter.OnLikeClickListener clickListener;
 
@@ -36,11 +35,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public void setReviews(List<DetailComment> detailComments) {
         if (detailComments == null || detailComments.isEmpty()) {
-            notifyItemRangeRemoved(0, this.detailComments.size());
-            this.detailComments.clear();
+            this.detailComments = detailComments;
+            notifyItemRangeRemoved(0, getItemCount());
+            return;
+        }
+        if (this.detailComments == null || this.detailComments.isEmpty()) {
+            this.detailComments = detailComments;
+            notifyItemRangeInserted(0, getItemCount());
         } else {
             this.detailComments = detailComments;
-            notifyItemRangeInserted(0, this.detailComments.size());
+            notifyItemRangeChanged(0, getItemCount());
         }
     }
 
@@ -139,7 +143,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                 comment.setLikes(Math.max(0, likes));
                 comment.setDislikes(Math.max(0, dislikes));
                 comment.setLikeType(newType);
-                clickListener.onLikeClick(getAdapterPosition(), comment);
+                clickListener.onLikeClick(getBindingAdapterPosition(), comment);
             });
             binding.tvDislikes.setOnClickListener(v -> {
                 if (clickListener == null) {
@@ -163,7 +167,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                 comment.setLikes(Math.max(0, likes));
                 comment.setDislikes(Math.max(0, dislikes));
                 comment.setLikeType(newType);
-                clickListener.onLikeClick(getAdapterPosition(), comment);
+                clickListener.onLikeClick(getBindingAdapterPosition(), comment);
             });
         }
 

@@ -35,9 +35,14 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         if (recommends == null || recommends.isEmpty()) {
             notifyItemRangeRemoved(0, this.recommends.size());
             this.recommends.clear();
+            return;
+        }
+        if (this.recommends == null || this.recommends.isEmpty()) {
+            this.recommends = recommends;
+            notifyItemRangeInserted(0, getItemCount());
         } else {
             this.recommends = recommends;
-            notifyItemRangeInserted(0, this.recommends.size());
+            notifyItemRangeChanged(0, getItemCount());
         }
     }
 
@@ -85,13 +90,13 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
             // 设置点击事件
             binding.getRoot().setOnClickListener(v -> {
                 if (clickListener != null) {
-                    clickListener.onItemClick(getAdapterPosition(), recommend);
+                    clickListener.onItemClick(getBindingAdapterPosition(), recommend);
                 }
             });
 
             binding.btnInstall.setOnClickListener(v -> {
                 if (clickListener != null) {
-                    clickListener.onInstallClick(getAdapterPosition(), recommend);
+                    clickListener.onInstallClick(getBindingAdapterPosition(), recommend);
                 }
             });
         }

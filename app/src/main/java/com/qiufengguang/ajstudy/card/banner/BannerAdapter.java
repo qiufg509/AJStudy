@@ -17,7 +17,6 @@ import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.databinding.ItemHomeBannerBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,16 +35,23 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     // 预加载配置
     private static final int PRELOAD_DISTANCE = 2;
 
-    private final List<BannerBean> bannerBeans = new ArrayList<>();
+    private List<BannerBean> bannerBeans;
 
     private OnBannerClickListener clickListener;
 
     public void setBannerBeans(List<BannerBean> bannerBeans) {
         if (bannerBeans == null || bannerBeans.isEmpty()) {
+            this.bannerBeans = bannerBeans;
+            notifyItemRangeRemoved(0, getItemCount());
             return;
         }
-        this.bannerBeans.addAll(bannerBeans);
-        notifyItemRangeInserted(0, this.bannerBeans.size());
+        if (this.bannerBeans == null || this.bannerBeans.isEmpty()) {
+            this.bannerBeans = bannerBeans;
+            notifyItemRangeInserted(0, getItemCount());
+        } else {
+            this.bannerBeans = bannerBeans;
+            notifyItemRangeChanged(0, getItemCount());
+        }
     }
 
     @NonNull

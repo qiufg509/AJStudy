@@ -40,14 +40,14 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (beans == null || beans.isEmpty()) {
             this.beans = beans;
             notifyItemRangeRemoved(0, getItemCount());
+            return;
+        }
+        if (this.beans == null || this.beans.isEmpty()) {
+            this.beans = beans;
+            notifyItemRangeInserted(0, getItemCount());
         } else {
-            if (this.beans == null || this.beans.isEmpty()) {
-                this.beans = beans;
-                notifyItemRangeInserted(0, getItemCount());
-            } else {
-                this.beans = beans;
-                notifyItemRangeChanged(0, getItemCount());
-            }
+            this.beans = beans;
+            notifyItemRangeChanged(0, getItemCount());
         }
     }
 

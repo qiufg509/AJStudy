@@ -76,7 +76,7 @@ public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowV
 
     @Override
     public void onBindViewHolder(@NonNull KnowHowViewHolder holder, int position) {
-        int adapterPosition = holder.getAdapterPosition();
+        int adapterPosition = holder.getBindingAdapterPosition();
         KnowHowBean bean = this.beans.get(adapterPosition);
         holder.bind(bean);
     }
