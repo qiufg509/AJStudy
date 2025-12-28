@@ -18,7 +18,7 @@ public class ThemeUtils {
     /**
      * 应用主题
      */
-    private static final int[] APP_THEME = {
+    public static final int[] APP_THEME = {
         R.style.Theme_AJStudy_Red,
         R.style.Theme_AJStudy_Blue,
         R.style.Theme_AJStudy_Green,

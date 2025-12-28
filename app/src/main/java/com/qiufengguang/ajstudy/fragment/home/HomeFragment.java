@@ -4,10 +4,13 @@ import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.banner.BannerWrapper;
+import com.qiufengguang.ajstudy.card.grid.GridCardAdapter;
+import com.qiufengguang.ajstudy.card.grid.GridCardWrapper;
 import com.qiufengguang.ajstudy.data.BannerBean;
+import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.FragmentHomeBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;
 import com.qiufengguang.ajstudy.dialog.IDialog;
@@ -27,6 +30,8 @@ public class HomeFragment extends BaseFragment {
     private FragmentHomeBinding binding;
 
     private BannerWrapper bannerWrapper;
+
+    private GridCardWrapper gridCardWrapper;
 
     @Override
     protected boolean isDarkBackgroundImage() {
@@ -52,17 +57,33 @@ public class HomeFragment extends BaseFragment {
 
         bannerWrapper = new BannerWrapper(binding.recyclerBanner, binding.indicatorContainer,
             this::handleBannerClick);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(),
+
+        int spacing = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_s);
+        gridCardWrapper = new GridCardWrapper.Builder(requireContext())
+            .setRecyclerView(binding.recyclerGrid)
+            .setSpanCount(5)
+            .setItemType(GridCardWrapper.TYPE_TEXT)
+            .setSpacing(spacing)
+            .setListener(new GridCardAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(GridCardBean bean) {
+
+                }
+            })
+            .create();
+        gridCardWrapper.show();
+
+        observeDataChanged(viewModel);
+    }
+
+    private void observeDataChanged(HomeViewModel viewModel) {
+        viewModel.getBannerLiveData().observe(getViewLifecycleOwner(),
             bannerBeans -> {
                 bannerWrapper.setBannerBeans(bannerBeans);
                 bannerWrapper.startAutoScroll();
             });
-
-        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 5);
-        binding.recyclerGrid.setLayoutManager(layoutManager);
-        binding.recyclerGrid.setAdapter(new GridCardAdapter());
-        binding.recyclerGrid.addItemDecoration(new GridSpacingItemDecoration(5,
-            getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_s)));
+        viewModel.getGridCardLiveData().observe(getViewLifecycleOwner(), gridCardBeans ->
+            gridCardWrapper.setData(gridCardBeans));
     }
 
     private void handleBannerClick(int position, BannerBean item) {
@@ -143,6 +164,9 @@ public class HomeFragment extends BaseFragment {
         super.onDestroyView();
         if (bannerWrapper != null) {
             bannerWrapper.release();
+        }
+        if (gridCardWrapper != null) {
+            gridCardWrapper.release();
         }
         binding = null;
     }

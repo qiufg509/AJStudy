@@ -1,15 +1,13 @@
 package com.qiufengguang.ajstudy.fragment.me;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.main.MainActivity;
+import com.qiufengguang.ajstudy.card.grid.GridCardWrapper;
 import com.qiufengguang.ajstudy.databinding.FragmentMeBinding;
 import com.qiufengguang.ajstudy.fragment.base.BaseFragment;
 
@@ -23,6 +21,8 @@ public class MeFragment extends BaseFragment {
     private static final String TAG = "MeFragment";
 
     private FragmentMeBinding binding;
+
+    private GridCardWrapper gridCardWrapper;
 
     @Override
     protected boolean isDarkBackgroundImage() {
@@ -45,60 +45,34 @@ public class MeFragment extends BaseFragment {
 
         MeViewModel viewModel =
             new ViewModelProvider(this).get(MeViewModel.class);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), this::selectedTheme);
 
         setPageBackground(R.drawable.me_head_bg);
 
-        for (int index = 0, sum = binding.layoutTheme.getChildCount(); index < sum; index++) {
-            View childAt = binding.layoutTheme.getChildAt(index);
-            if (childAt == null) {
-                continue;
-            }
-            childAt.setOnClickListener(v -> {
-                Object tag = v.getTag();
-                int themeIndex;
-                try {
-                    themeIndex = Integer.parseInt((String) tag);
-                } catch (NumberFormatException e) {
-                    themeIndex = 0;
-                    Log.e(TAG, "parseInt error.");
-                }
-                if (viewModel.getThemeIndex() == themeIndex) {
-                    return;
-                }
-                viewModel.saveThemeIndex(themeIndex);
+        gridCardWrapper = new GridCardWrapper.Builder(requireContext())
+            .setRecyclerView(binding.recyclerGrid)
+            .setSpanCount(5)
+            .setItemType(GridCardWrapper.TYPE_IMAGE)
+            .setListener(bean -> {
+                viewModel.saveThemeIndex(bean);
 
                 Intent intent = new Intent(requireContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtra("restart_theme", true);
                 startActivity(intent);
-            });
-        }
-    }
+            })
+            .create();
+        gridCardWrapper.show();
 
-    /**
-     * 选择主题
-     *
-     * @param themeIndex 主题序号
-     */
-    private void selectedTheme(Integer themeIndex) {
-        for (int index = 0, sum = binding.layoutTheme.getChildCount(); index < sum; index++) {
-            View childAt = binding.layoutTheme.getChildAt(index);
-            if (!(childAt instanceof ImageView)) {
-                continue;
-            }
-            ImageView imageView = (ImageView) childAt;
-            if (index == themeIndex) {
-                imageView.setImageResource(R.drawable.ic_checkmark);
-            } else {
-                imageView.setImageDrawable(null);
-            }
-        }
+        viewModel.getThemeLiveData().observe(getViewLifecycleOwner(),
+            gridCardBeans -> gridCardWrapper.setData(gridCardBeans));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (gridCardWrapper != null) {
+            gridCardWrapper.release();
+        }
         binding = null;
     }
 }

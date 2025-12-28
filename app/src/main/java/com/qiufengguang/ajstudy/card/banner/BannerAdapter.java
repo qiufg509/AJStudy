@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.fragment.home;
+package com.qiufengguang.ajstudy.card.banner;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;

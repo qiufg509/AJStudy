@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.fragment.home;
+package com.qiufengguang.ajstudy.card.grid;
 
 import android.graphics.Rect;
 import android.view.View;

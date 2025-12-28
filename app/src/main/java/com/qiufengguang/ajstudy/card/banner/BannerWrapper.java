@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.fragment.home;
+package com.qiufengguang.ajstudy.card.banner;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +17,7 @@ import com.qiufengguang.ajstudy.data.BannerBean;
 import java.util.List;
 
 /**
- * 轮播banner组件
+ * 轮播banner卡片
  *
  * @author qiufengguang
  * @since 2025/12/19 16:33
