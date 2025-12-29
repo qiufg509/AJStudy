@@ -129,7 +129,7 @@ public class KnowHowAdapter extends RecyclerView.Adapter<KnowHowAdapter.KnowHowV
                     String titleContent = titleStr.replaceAll("\\.(md|txt|json|xml)$", "");
                     intent.putExtra("title", titleContent);
                     intent.putExtra("filePath",
-                        targetPage + titleStr);
+                        targetPage + "/" + titleStr);
                     context.startActivity(intent);
                     return;
                 }
