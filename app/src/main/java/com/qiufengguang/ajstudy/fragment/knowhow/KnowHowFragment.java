@@ -71,7 +71,7 @@ public class KnowHowFragment extends BaseFragment {
     }
 
     private void adjustColumn() {
-        RecyclerView recyclerView = binding.getRoot();
+        RecyclerView recyclerView = binding.layoutKnowHow;
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(),
             LinearLayoutManager.VERTICAL);
         divider.setDividerThickness(1);

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qiufengguang.ajstudy.view.BounceScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:paddingBottom="@dimen/ajstudy_bottom_navigation_height"
-    tools:context=".fragment.knowhow.KnowHowFragment" />
+    tools:context=".fragment.knowhow.KnowHowFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/layout_know_how"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/ajstudy_bottom_navigation_height" />
+
+</com.qiufengguang.ajstudy.view.BounceScrollView>

@@ -23,4 +23,5 @@
     <dimen name="install_btn_height">28dp</dimen>
     <dimen name="screenshot_item_height">160dp</dimen>
     <dimen name="banner_indicator_size">8dp</dimen>
+    <dimen name="bounce_max_overscroll">150dp</dimen>
 </resources>

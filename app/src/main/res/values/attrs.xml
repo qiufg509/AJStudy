@@ -3,4 +3,12 @@
     <declare-styleable name="RoundedFrameLayout">
         <attr name="corner_radius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="BounceScrollView">
+        <!-- 回弹强度 -->
+        <attr name="bounceStrength" format="float" />
+        <!-- 最大越界距离 -->
+        <attr name="maxOverScroll" format="dimension" />
+        <!-- 越界阻尼系数 -->
+        <attr name="overScrollDamping" format="float" />
+    </declare-styleable>
 </resources>

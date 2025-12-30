@@ -1,146 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qiufengguang.ajstudy.view.BounceScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.me.MeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin_l"
-        android:paddingBottom="@dimen/ajstudy_bottom_navigation_height">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/item_icon_size_xl"
-            android:layout_height="@dimen/item_icon_size_xl"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin_m"
-            android:contentDescription="@string/image_description"
-            android:src="@drawable/ic_avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/ajstudy_placeholder_icon_color" />
-
-        <TextView
-            android:id="@+id/tv_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin_l"
-            android:layout_marginTop="@dimen/activity_vertical_margin_l"
-            android:text="用户名"
-            android:textColor="@color/ajstudy_color_text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/iv_avatar"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_user_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin_l"
-            android:layout_marginTop="@dimen/activity_vertical_margin_xxs"
-            android:text="189***9989"
-            android:textColor="@color/ajstudy_color_text_secondary"
-            app:layout_constraintStart_toEndOf="@id/iv_avatar"
-            app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
-
-        <!-- 屏障：创建基于ivAppIcon和tvABC底部的动态边界 -->
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_user_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="iv_avatar,tv_user_account" />
-
-        <View
-            android:id="@+id/divider_user_theme"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_m"
-            android:background="@color/ajstudy_color_divider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier_user_info" />
-
-        <TextView
-            android:id="@+id/tv_theme_title"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin_m"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="主题色"
-            android:textColor="@color/ajstudy_color_text_primary"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_user_theme" />
+            android:paddingHorizontal="@dimen/activity_horizontal_margin_l"
+            android:paddingBottom="@dimen/ajstudy_bottom_navigation_height">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_theme_title" />
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/item_icon_size_xl"
+                android:layout_height="@dimen/item_icon_size_xl"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/activity_vertical_margin_m"
+                android:contentDescription="@string/image_description"
+                android:src="@drawable/ic_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/ajstudy_placeholder_icon_color" />
 
-        <View
-            android:id="@+id/divider_theme_sign"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_m"
-            android:background="@color/ajstudy_color_divider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_grid" />
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin_l"
+                android:layout_marginTop="@dimen/activity_vertical_margin_l"
+                android:text="用户名"
+                android:textColor="@color/ajstudy_color_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_change_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/me_account_btn_bg"
-            android:text="修改密码"
-            android:textColor="?attr/colorOnPrimary"
-            app:backgroundTint="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_theme_sign" />
+            <TextView
+                android:id="@+id/tv_user_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin_l"
+                android:layout_marginTop="@dimen/activity_vertical_margin_xxs"
+                android:text="189***9989"
+                android:textColor="@color/ajstudy_color_text_secondary"
+                app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
+            <!-- 屏障：创建基于ivAppIcon和tvABC底部的动态边界 -->
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_user_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="iv_avatar,tv_user_account" />
+
+            <View
+                android:id="@+id/divider_user_theme"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin_m"
+                android:background="@color/ajstudy_color_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_user_info" />
+
+            <TextView
+                android:id="@+id/tv_theme_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin_m"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="主题色"
+                android:textColor="@color/ajstudy_color_text_primary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_user_theme" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin_s"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_theme_title" />
+
+            <View
+                android:id="@+id/divider_theme_sign"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin_m"
+                android:background="@color/ajstudy_color_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_grid" />
+
+            <Button
+                android:id="@+id/btn_change_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/me_account_btn_bg"
+                android:text="修改密码"
+                android:textColor="?attr/colorOnPrimary"
+                app:backgroundTint="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_theme_sign" />
 
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/me_account_btn_bg"
-            android:text="退出登录"
-            android:textColor="?attr/colorOnPrimary"
-            app:backgroundTint="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_change_pwd" />
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/me_account_btn_bg"
+                android:text="退出登录"
+                android:textColor="?attr/colorOnPrimary"
+                app:backgroundTint="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_change_pwd" />
 
-        <Button
-            android:id="@+id/btn_delete_account"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/me_account_btn_bg"
-            android:text="注销账号"
-            android:textColor="?attr/colorOnPrimary"
-            app:backgroundTint="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_logout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btn_delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/me_account_btn_bg"
+                android:text="注销账号"
+                android:textColor="?attr/colorOnPrimary"
+                app:backgroundTint="?attr/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_logout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>
+</com.qiufengguang.ajstudy.view.BounceScrollView>

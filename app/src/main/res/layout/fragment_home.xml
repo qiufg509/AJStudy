@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qiufengguang.ajstudy.view.BounceScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.home.HomeFragment">
 
-    <!-- Banner轮播区域 -->
-    <com.qiufengguang.ajstudy.view.RoundedFrameLayout
-        android:id="@+id/layout_banner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
-        app:corner_radius="@dimen/radius_l"
-        app:layout_constraintDimensionRatio="H,16:9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <!-- Banner轮播区域 -->
+        <com.qiufengguang.ajstudy.view.RoundedFrameLayout
+            android:id="@+id/layout_banner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
+            app:corner_radius="@dimen/radius_l"
+            app:layout_constraintDimensionRatio="H,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadingEdge="horizontal"
+                android:fadingEdgeLength="20dp"
+                android:scrollbars="none" />
+
+            <!-- 指示器容器 -->
+            <LinearLayout
+                android:id="@+id/indicator_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/activity_vertical_margin_s" />
+        </com.qiufengguang.ajstudy.view.RoundedFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_banner"
+            android:id="@+id/recycler_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:fadingEdge="horizontal"
-            android:fadingEdgeLength="20dp"
-            android:scrollbars="none" />
-
-        <!-- 指示器容器 -->
-        <LinearLayout
-            android:id="@+id/indicator_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:orientation="horizontal"
-            android:paddingVertical="@dimen/activity_vertical_margin_s" />
-    </com.qiufengguang.ajstudy.view.RoundedFrameLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
-        android:layout_marginTop="@dimen/activity_vertical_margin_m"
-        android:overScrollMode="never"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_banner" />
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
+            android:layout_marginTop="@dimen/activity_vertical_margin_m"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_banner" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.qiufengguang.ajstudy.view.BounceScrollView>
