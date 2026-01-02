@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -29,9 +30,9 @@ public class BannerWrapper {
      */
     private static final long AUTO_SCROLL_DELAY = 4000L;
 
-    private RecyclerView recyclerBanner;
+    private WeakReference<RecyclerView> recyclerBannerRef;
 
-    private LinearLayout indicatorContainer;
+    private WeakReference<LinearLayout> indicatorContainerRef;
 
     private BannerAdapter adapter;
 
@@ -54,10 +55,22 @@ public class BannerWrapper {
      */
     private int currentPosition = Integer.MAX_VALUE / 2;
 
+    /**
+     * 上一次指示器位置，用于避免频繁刷新
+     */
+    private int lastIndicatorPosition = -1;
+
+    /**
+     * 指示器刷新防抖动最小更新间隔（毫秒）
+     */
+    private static final long INDICATOR_UPDATE_THROTTLE_MS = 100L;
+
+    private long lastIndicatorUpdateTime = 0;
+
     public BannerWrapper(@NonNull RecyclerView recyclerBanner, LinearLayout indicatorContainer,
         BannerAdapter.OnBannerClickListener clickListener) {
-        this.recyclerBanner = recyclerBanner;
-        this.indicatorContainer = indicatorContainer;
+        this.recyclerBannerRef = new WeakReference<>(recyclerBanner);
+        this.indicatorContainerRef = new WeakReference<>(indicatorContainer);
 
         setupBanner(clickListener);
     }
@@ -68,16 +81,35 @@ public class BannerWrapper {
      * @param bannerBeans List<BannerBean>
      */
     public void setBannerBeans(List<BannerBean> bannerBeans) {
+        if (bannerBeans == null || bannerBeans.isEmpty()) {
+            return;
+        }
         adapter.setBannerBeans(bannerBeans);
         // 初始化指示器
-        int size = bannerBeans == null ? 0 : bannerBeans.size();
+        int size = bannerBeans.size();
         setupIndicator(size);
         // 调整位置到第一条数据上
         currentPosition += size - currentPosition % size;
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
         recyclerBanner.scrollToPosition(currentPosition);
+        // 重置上一次位置
+        lastIndicatorPosition = -1;
     }
 
     private void setupBanner(BannerAdapter.OnBannerClickListener clickListener) {
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerBanner.getContext(),
             LinearLayoutManager.HORIZONTAL, false);
         recyclerBanner.setLayoutManager(layoutManager);
@@ -90,9 +122,14 @@ public class BannerWrapper {
         adapter = new BannerAdapter();
         recyclerBanner.setAdapter(adapter);
 
-        // 启用预取功能
-        recyclerBanner.setItemViewCacheSize(3);
+        // 1. 使用ViewPool复用（在setupBanner方法中添加）
+        recyclerBanner.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        // 2. 优化Item缓存（根据实际需要调整）
+        recyclerBanner.setItemViewCacheSize(5);
         recyclerBanner.setHasFixedSize(true);
+        // 3. 使用预加载
+        layoutManager.setItemPrefetchEnabled(true);
+        layoutManager.setInitialPrefetchItemCount(3);
 
         // 设置滚动监听
         setupScrollListener();
@@ -102,6 +139,13 @@ public class BannerWrapper {
     }
 
     private void setupScrollListener() {
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
         recyclerBanner.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
@@ -121,18 +165,7 @@ public class BannerWrapper {
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         // 获取当前显示的第一个可见项位置
-                        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                        if (layoutManager != null) {
-                            int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-                            int firstCompletelyVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition();
-                            // 对于轮播图，通常取第一个完全可见项作为当前页,如果没有完全可见项，取第一个可见项
-                            int position = firstCompletelyVisiblePosition != -1
-                                ? firstCompletelyVisiblePosition : firstVisiblePosition;
-                            if (currentPosition != position) {
-                                currentPosition = position;
-                                updateIndicator(currentPosition);
-                            }
-                        }
+                        updateIndicatorFromScroll();
                         // 滚动停止，恢复自动滚动
                         isUserScrolling = false;
                         resumeAutoScroll();
@@ -147,10 +180,57 @@ public class BannerWrapper {
                         break;
                 }
             }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                // 在滚动过程中实时更新指示器
+                if (isUserScrolling || recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
+                    updateIndicatorFromScroll();
+                }
+            }
         });
     }
 
+    /**
+     * 从滚动状态获取当前位置并更新指示器
+     */
+    private void updateIndicatorFromScroll() {
+        // 防抖动处理
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastIndicatorUpdateTime < INDICATOR_UPDATE_THROTTLE_MS) {
+            return;
+        }
+
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerBanner.getLayoutManager();
+        if (layoutManager == null) {
+            return;
+        }
+        int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+        int firstCompletelyVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+
+        int position = firstCompletelyVisiblePosition != -1
+            ? firstCompletelyVisiblePosition : firstVisiblePosition;
+
+        if (position != RecyclerView.NO_POSITION && currentPosition != position) {
+            currentPosition = position;
+            updateIndicator(currentPosition);
+            lastIndicatorUpdateTime = currentTime;
+        }
+    }
+
     private void setupIndicator(int size) {
+        if (indicatorContainerRef == null) {
+            return;
+        }
+        LinearLayout indicatorContainer = indicatorContainerRef.get();
         if (indicatorContainer == null || size <= 0) {
             return;
         }
@@ -168,15 +248,27 @@ public class BannerWrapper {
             indicator.setAlpha(0.5f);
             indicatorContainer.addView(indicator);
         }
+        // 重置上一次位置
+        lastIndicatorPosition = -1;
         // 更新指示器状态
         updateIndicator(0);
     }
 
     private void updateIndicator(int currentPosition) {
+        if (indicatorContainerRef == null) {
+            return;
+        }
+        LinearLayout indicatorContainer = indicatorContainerRef.get();
         if (indicatorContainer == null) {
             return;
         }
         int realPosition = adapter.getRealPosition(currentPosition);
+
+        // 避免频繁刷新相同的指示器位置
+        if (realPosition == lastIndicatorPosition) {
+            return;
+        }
+
         for (int index = 0, sum = indicatorContainer.getChildCount(); index < sum; index++) {
             ImageView indicator = (ImageView) indicatorContainer.getChildAt(index);
             if (index == realPosition) {
@@ -187,6 +279,7 @@ public class BannerWrapper {
                 indicator.setAlpha(0.5f);
             }
         }
+        lastIndicatorPosition = realPosition;
     }
 
     /**
@@ -196,26 +289,52 @@ public class BannerWrapper {
         if (!isAutoScrolling || isUserScrolling || adapter.getRealItemCount() <= 0) {
             return;
         }
-        autoScrollHandler = new Handler(Looper.getMainLooper());
-        autoScrollRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (!isAutoScrolling || isUserScrolling) {
-                    return;
+
+        if (autoScrollHandler == null) {
+            autoScrollHandler = new Handler(Looper.getMainLooper());
+        }
+
+        if (autoScrollRunnable == null) {
+            autoScrollRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (!isAutoScrolling || isUserScrolling) {
+                        return;
+                    }
+
+                    int itemCount = adapter.getRealItemCount();
+                    if (itemCount <= 0) {
+                        return;
+                    }
+
+                    // 计算下一个位置（考虑真实数据数量）
+                    int nextPosition = currentPosition + 1;
+                    // 确保不会超出Integer.MAX_VALUE，但保持循环逻辑
+                    if (nextPosition >= Integer.MAX_VALUE - itemCount) {
+                        // 重置到安全位置
+                        nextPosition = Integer.MAX_VALUE / 2;
+                    }
+
+                    currentPosition = nextPosition;
+                    if (recyclerBannerRef == null) {
+                        return;
+                    }
+                    RecyclerView recyclerBanner = recyclerBannerRef.get();
+                    if (recyclerBanner == null) {
+                        return;
+                    }
+                    recyclerBanner.smoothScrollToPosition(currentPosition);
+                    updateIndicator(currentPosition);
+
+                    if (autoScrollHandler != null) {
+                        autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
+                    }
                 }
-                // 计算下一个位置
-                currentPosition = (currentPosition + 1) % (Integer.MAX_VALUE);
+            };
+        }
 
-                // 平滑滚动到下一个位置
-                recyclerBanner.smoothScrollToPosition(currentPosition);
-                updateIndicator(currentPosition);
-
-                // 重新安排下一次滚动
-                autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
-            }
-        };
-
-        // 开始自动滚动
+        // 移除之前的回调，避免重复
+        autoScrollHandler.removeCallbacks(autoScrollRunnable);
         autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
     }
 
@@ -224,7 +343,7 @@ public class BannerWrapper {
      * 页面onPause时调用
      */
     public void pauseAutoScroll() {
-        if (isAutoScrolling) {
+        if (isAutoScrolling && autoScrollHandler != null) {
             isAutoScrolling = false;
             autoScrollHandler.removeCallbacks(autoScrollRunnable);
         }
@@ -235,7 +354,7 @@ public class BannerWrapper {
      * 页面onResume时调用
      */
     public void resumeAutoScroll() {
-        if (!isAutoScrolling && !isUserScrolling) {
+        if (!isAutoScrolling && !isUserScrolling && autoScrollHandler != null) {
             isAutoScrolling = true;
             autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
         }
@@ -246,14 +365,31 @@ public class BannerWrapper {
      * 页面onDestroyView时调用
      */
     public void release() {
+        pauseAutoScroll();
         if (autoScrollHandler != null) {
             autoScrollHandler.removeCallbacks(autoScrollRunnable);
+            autoScrollHandler = null;
         }
-        if (recyclerBanner != null) {
-            recyclerBanner = null;
+        if (recyclerBannerRef != null) {
+            RecyclerView recyclerBanner = recyclerBannerRef.get();
+            if (recyclerBanner != null) {
+                recyclerBanner.clearOnScrollListeners();
+                recyclerBanner.setAdapter(null);
+                recyclerBannerRef.clear();
+            }
+            recyclerBannerRef = null;
         }
-        if (indicatorContainer != null) {
-            indicatorContainer = null;
+        if (indicatorContainerRef != null) {
+            LinearLayout indicatorContainer = indicatorContainerRef.get();
+            if (indicatorContainer != null) {
+                indicatorContainer.removeAllViews();
+                indicatorContainerRef.clear();
+            }
+            indicatorContainerRef = null;
+        }
+        if (adapter != null) {
+            adapter.setOnBannerClickListener(null);
+            adapter = null;
         }
     }
 }
