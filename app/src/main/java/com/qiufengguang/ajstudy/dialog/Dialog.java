@@ -428,7 +428,8 @@ public class Dialog extends BaseDialog implements IDialog {
         private void setDefaultOption() {
             params.layoutRes = R.layout.dialog_default;
             if (params.dialogWidth <= 0) {
-                params.dialogWidth = (int) (DisplayMetricsHelper.getScreenWidth(params.context) * 0.85f);
+                int[] screenSize = DisplayMetricsHelper.getScreenSize(params.context);
+                params.dialogWidth = (int) (Math.min(screenSize[0], screenSize[1]) * 0.85f);
             }
         }
 

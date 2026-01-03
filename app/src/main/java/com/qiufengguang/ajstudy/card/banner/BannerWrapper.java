@@ -144,22 +144,26 @@ public class BannerWrapper {
         float horizontalMargin = resources.getDimension(R.dimen.banner_horizontal_margin);
         int screenWidth = DisplayMetricsHelper.getScreenWidth(recyclerBanner.getContext());
         float bannerWidth = screenWidth - horizontalMargin * 2;
+        int snapDistancePx;
         switch (column) {
             case Constant.Grid.COLUMN_8:
                 this.itemWidth = (int) (bannerWidth - GAP * Constant.Pln.DEF_8) / Constant.Pln.DEF_8;
                 this.itemHeight = (int) ((bannerWidth - GAP * Constant.Pln.DEF_8) / Constant.Pln.DEF_8 * itemRatio);
+                snapDistancePx = (this.itemWidth + GAP) / 2;
                 break;
             case Constant.Grid.COLUMN_12:
                 this.itemWidth = (int) (bannerWidth - GAP * Constant.Pln.DEF_12) / Constant.Pln.DEF_12;
                 this.itemHeight = (int) ((bannerWidth - GAP * Constant.Pln.DEF_12) / Constant.Pln.DEF_12 * itemRatio);
+                snapDistancePx = (this.itemWidth + GAP) / 2;
                 break;
             default:
                 this.itemWidth = (int) bannerWidth;
                 this.itemHeight = (int) (bannerWidth * itemRatio);
+                snapDistancePx = this.itemWidth / 2;
                 break;
         }
 
-        setupBanner((this.itemWidth + GAP) / 2);
+        setupBanner(snapDistancePx);
     }
 
     /**

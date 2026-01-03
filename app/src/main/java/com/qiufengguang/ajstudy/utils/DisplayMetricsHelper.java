@@ -218,6 +218,17 @@ public class DisplayMetricsHelper {
     }
 
     /**
+     * 获取屏幕尺寸（px）
+     *
+     * @param context 上下文
+     * @return 屏幕宽高
+     */
+    public static int[] getScreenSize(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return new int[]{dm.widthPixels, dm.heightPixels};
+    }
+
+    /**
      * 获取屏幕宽度（dp）
      *
      * @param context 上下文
