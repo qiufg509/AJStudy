@@ -260,7 +260,7 @@ public class BannerWrapper {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 // 在滚动过程中实时更新指示器
-                if (isUserScrolling || recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
+                if (isUserScrolling && recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
                     updateIndicatorFromScroll();
                 }
             }
