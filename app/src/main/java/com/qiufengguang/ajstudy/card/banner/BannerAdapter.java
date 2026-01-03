@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.card.banner;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,7 +16,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.databinding.ItemHomeBannerBinding;
-import com.qiufengguang.ajstudy.global.GlobalApp;
 
 import java.util.List;
 
@@ -32,12 +32,27 @@ import java.util.List;
  * @since 2025/12/19 15:36
  */
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerViewHolder> {
-    // 预加载配置
-    private static final int PRELOAD_DISTANCE = 2;
+    private static final String TAG = "BannerAdapter";
+
+    // 预加载配置 - 修改为较小的值
+    private static final int PRELOAD_DISTANCE = 1;
 
     private List<BannerBean> bannerBeans;
 
     private OnBannerClickListener clickListener;
+
+    private final int itemWidth;
+
+    private final int itemHeight;
+
+    private final int itemRatio;
+
+
+    public BannerAdapter(int itemWidth, int itemHeight, int itemRatio) {
+        this.itemWidth = itemWidth;
+        this.itemHeight = itemHeight;
+        this.itemRatio = itemRatio;
+    }
 
     public void setBannerBeans(List<BannerBean> bannerBeans) {
         if (bannerBeans == null || bannerBeans.isEmpty()) {
@@ -59,6 +74,11 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     public BannerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemHomeBannerBinding binding = ItemHomeBannerBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
+        ViewGroup.LayoutParams layoutParams = binding.getRoot().getLayoutParams();
+        layoutParams.width = itemWidth;
+        layoutParams.height = itemHeight;
+        binding.getRoot().setLayoutParams(layoutParams);
+        binding.getRoot().setCornerRadius(itemRatio);
         return new BannerViewHolder(binding, clickListener);
     }
 
@@ -71,7 +91,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         holder.bind(item, realPosition);
 
         // 预加载相邻的图片
-        preloadAdjacentImages(position);
+        preloadAdjacentImages(holder, position);
     }
 
     @Override
@@ -95,7 +115,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         holder.clearGlideRequest();
     }
 
-    private void preloadAdjacentImages(int position) {
+    private void preloadAdjacentImages(BannerViewHolder currentHolder, int position) {
         // 预加载前后图片
         for (int i = -PRELOAD_DISTANCE; i <= PRELOAD_DISTANCE; i++) {
             int preloadPosition = position + i;
@@ -103,20 +123,25 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
                 int realPosition = getRealPosition(preloadPosition);
                 if (realPosition >= 0 && realPosition < bannerBeans.size()) {
                     BannerBean item = bannerBeans.get(realPosition);
-                    preloadImage(item.getImageUrl());
+                    preloadImage(currentHolder, item.getImageUrl());
                 }
             }
         }
     }
 
-    private void preloadImage(String imageUrl) {
-        if (GlobalApp.getContext() == null) {
+    private void preloadImage(BannerViewHolder holder, String imageUrl) {
+        if (TextUtils.isEmpty(imageUrl)) {
             return;
         }
-        Glide.with(GlobalApp.getContext())
-            .load(imageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .preload();
+        try {
+            Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .preload();
+        } catch (IllegalArgumentException e) {
+            // 捕获异常，防止崩溃
+            Log.w(TAG, "preloadImage error.");
+        }
     }
 
     /**
@@ -185,7 +210,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         }
 
         public void startImageLoading() {
-            if (!TextUtils.isEmpty(bean.getImageUrl())) {
+            if (bean != null && !TextUtils.isEmpty(bean.getImageUrl())) {
                 Glide.with(itemView.getContext())
                     .load(bean.getImageUrl())
                     .placeholder(R.drawable.placeholder_image_horizontal)
@@ -204,7 +229,12 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
         public void clearGlideRequest() {
             // 清理Glide请求，避免内存泄漏
-            Glide.with(itemView.getContext()).clear(this.binding.ivBanner);
+            try {
+                Glide.with(itemView.getContext()).clear(this.binding.ivBanner);
+            } catch (IllegalArgumentException e) {
+                // 忽略异常，Context可能已销毁
+                Log.w(TAG, "clearGlideRequest error.");
+            }
         }
     }
 

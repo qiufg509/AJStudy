@@ -56,8 +56,11 @@ public class HomeFragment extends BaseFragment {
             new ViewModelProvider(this).get(HomeViewModel.class);
         setPageBackground(R.drawable.home_page_bg);
 
-        bannerWrapper = new BannerWrapper(binding.recyclerBanner, binding.indicatorContainer,
-            this::handleBannerClick);
+        bannerWrapper = new BannerWrapper.Builder()
+            .setRecyclerView(binding.recyclerBanner)
+            .setIndicatorContainer(binding.indicatorContainer)
+            .setClickListener(this::handleBannerClick)
+            .create();
 
         int spacing = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_s);
         gridCardWrapper = new GridCardWrapper.Builder(requireContext())

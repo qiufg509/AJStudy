@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="ajstudy_column_count">8</integer>
+    <dimen name="banner_horizontal_margin">@dimen/activity_horizontal_margin_m</dimen>
+    <dimen name="banner_horizontal_gap">@dimen/activity_horizontal_margin_s</dimen>
 </resources>

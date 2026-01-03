@@ -82,10 +82,10 @@ public class KnowHowFragment extends BaseFragment {
         int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
         LinearLayoutManager layoutManager;
         switch (columnCount) {
-            case Constant.Grid.column_8:
+            case Constant.Grid.COLUMN_8:
                 layoutManager = new GridLayoutManager(requireContext(), 2);
                 break;
-            case Constant.Grid.column_12:
+            case Constant.Grid.COLUMN_12:
                 layoutManager = new GridLayoutManager(requireContext(), 3);
                 break;
             default:

@@ -61,7 +61,7 @@ public class GridCardWrapper {
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount,
+        recyclerView.addItemDecoration(new GridCardDecoration(spanCount,
             horizontalSpacing, verticalSpacing, includeEdge));
     }
 

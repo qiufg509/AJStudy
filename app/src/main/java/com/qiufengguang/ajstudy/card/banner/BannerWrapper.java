@@ -1,18 +1,22 @@
 package com.qiufengguang.ajstudy.card.banner;
 
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
+import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
+import com.qiufengguang.ajstudy.view.RoundedFrameLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -26,7 +30,7 @@ import java.util.List;
 public class BannerWrapper {
 
     /**
-     * 自动轮播滚动间隔4秒
+     * 自动轮播默认滚动间隔4秒
      */
     private static final long AUTO_SCROLL_DELAY = 4000L;
 
@@ -34,7 +38,29 @@ public class BannerWrapper {
 
     private WeakReference<LinearLayout> indicatorContainerRef;
 
+    /**
+     * 栅格数（4栅格显示1个、8栅格显示2个、12栅格显示3个）
+     */
+    private int column = Constant.Grid.COLUMN_DEFAULT;
+
+    private long carouselInterval = AUTO_SCROLL_DELAY;
+    /**
+     * 图片宽高比
+     */
+    private float itemRatio = 9.0f / 16.0f;
+
+    /**
+     * 圆角大小
+     */
+    private int cornerRadius = -1;
+
     private BannerAdapter adapter;
+
+    private int itemWidth;
+
+    private int itemHeight;
+
+    private BannerAdapter.OnBannerClickListener clickListener;
 
     private Handler autoScrollHandler;
 
@@ -67,12 +93,7 @@ public class BannerWrapper {
 
     private long lastIndicatorUpdateTime = 0;
 
-    public BannerWrapper(@NonNull RecyclerView recyclerBanner, LinearLayout indicatorContainer,
-        BannerAdapter.OnBannerClickListener clickListener) {
-        this.recyclerBannerRef = new WeakReference<>(recyclerBanner);
-        this.indicatorContainerRef = new WeakReference<>(indicatorContainer);
-
-        setupBanner(clickListener);
+    private BannerWrapper() {
     }
 
     /**
@@ -102,7 +123,10 @@ public class BannerWrapper {
         lastIndicatorPosition = -1;
     }
 
-    private void setupBanner(BannerAdapter.OnBannerClickListener clickListener) {
+    /**
+     * 初始化
+     */
+    private void init() {
         if (recyclerBannerRef == null) {
             return;
         }
@@ -110,16 +134,57 @@ public class BannerWrapper {
         if (recyclerBanner == null) {
             return;
         }
+        Resources resources = recyclerBanner.getResources();
+        float horizontalMargin = resources.getDimension(R.dimen.banner_horizontal_margin);
+        float gap = resources.getDimension(R.dimen.banner_horizontal_gap);
+        int screenWidth = DisplayMetricsHelper.getScreenWidth(recyclerBanner.getContext());
+        float bannerWidth = screenWidth - horizontalMargin * 2;
+        switch (column) {
+            case Constant.Grid.COLUMN_8:
+                this.itemWidth = (int) (bannerWidth - gap * 2) / 2;
+                this.itemHeight = (int) ((bannerWidth - gap * 2) / 2 * itemRatio);
+                break;
+            case Constant.Grid.COLUMN_12:
+                this.itemWidth = (int) (bannerWidth - gap * 3) / 3;
+                this.itemHeight = (int) ((bannerWidth - gap * 3) / 3 * itemRatio);
+                break;
+            default:
+                this.itemWidth = (int) bannerWidth;
+                this.itemHeight = (int) (bannerWidth * itemRatio);
+                break;
+        }
+
+        setupBanner((int) ((this.itemWidth + gap) / 2));
+    }
+
+    /**
+     * 初始化banner
+     *
+     * @param snapDistancePx 吸附位置
+     */
+    private void setupBanner(int snapDistancePx) {
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
+        setBannerRootRadius(recyclerBanner.getParent(), cornerRadius);
+        recyclerBanner.addItemDecoration(new BannerDecoration(
+            recyclerBanner.getResources().getDimensionPixelSize(R.dimen.banner_horizontal_gap), 0));
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerBanner.getContext(),
             LinearLayoutManager.HORIZONTAL, false);
         recyclerBanner.setLayoutManager(layoutManager);
 
         // 配置SnapHelper实现页面吸附效果
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        BannerItemSnapHelper snapHelper = new BannerItemSnapHelper(snapDistancePx);
         snapHelper.attachToRecyclerView(recyclerBanner);
 
         // 设置适配器
-        adapter = new BannerAdapter();
+        adapter = new BannerAdapter(this.itemWidth, this.itemHeight,
+            this.column == Constant.Grid.COLUMN_DEFAULT ? 0 : this.cornerRadius);
         recyclerBanner.setAdapter(adapter);
 
         // 1. 使用ViewPool复用（在setupBanner方法中添加）
@@ -131,13 +196,15 @@ public class BannerWrapper {
         layoutManager.setItemPrefetchEnabled(true);
         layoutManager.setInitialPrefetchItemCount(3);
 
-        // 设置滚动监听
         setupScrollListener();
 
         // 处理Banner点击事件
         adapter.setOnBannerClickListener(clickListener);
     }
 
+    /**
+     * 设置滚动监听
+     */
     private void setupScrollListener() {
         if (recyclerBannerRef == null) {
             return;
@@ -164,8 +231,6 @@ public class BannerWrapper {
                 super.onScrollStateChanged(recyclerView, newState);
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
-                        // 获取当前显示的第一个可见项位置
-                        updateIndicatorFromScroll();
                         // 滚动停止，恢复自动滚动
                         isUserScrolling = false;
                         resumeAutoScroll();
@@ -226,6 +291,11 @@ public class BannerWrapper {
         }
     }
 
+    /**
+     * 设置指示器
+     *
+     * @param size 指示器数量
+     */
     private void setupIndicator(int size) {
         if (indicatorContainerRef == null) {
             return;
@@ -235,8 +305,9 @@ public class BannerWrapper {
             return;
         }
         indicatorContainer.removeAllViews();
-        int indicatorSize = indicatorContainer.getResources().getDimensionPixelSize(R.dimen.banner_indicator_size);
-        int indicatorMargin = indicatorContainer.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_xs);
+        Resources resources = indicatorContainer.getResources();
+        int indicatorSize = resources.getDimensionPixelSize(R.dimen.banner_indicator_size);
+        int indicatorMargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin_xs);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
             indicatorSize, indicatorSize
         );
@@ -254,6 +325,11 @@ public class BannerWrapper {
         updateIndicator(0);
     }
 
+    /**
+     * 更新指示器
+     *
+     * @param currentPosition 当前位置
+     */
     private void updateIndicator(int currentPosition) {
         if (indicatorContainerRef == null) {
             return;
@@ -295,47 +371,49 @@ public class BannerWrapper {
         }
 
         if (autoScrollRunnable == null) {
-            autoScrollRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    if (!isAutoScrolling || isUserScrolling) {
-                        return;
-                    }
-
-                    int itemCount = adapter.getRealItemCount();
-                    if (itemCount <= 0) {
-                        return;
-                    }
-
-                    // 计算下一个位置（考虑真实数据数量）
-                    int nextPosition = currentPosition + 1;
-                    // 确保不会超出Integer.MAX_VALUE，但保持循环逻辑
-                    if (nextPosition >= Integer.MAX_VALUE - itemCount) {
-                        // 重置到安全位置
-                        nextPosition = Integer.MAX_VALUE / 2;
-                    }
-
-                    currentPosition = nextPosition;
-                    if (recyclerBannerRef == null) {
-                        return;
-                    }
-                    RecyclerView recyclerBanner = recyclerBannerRef.get();
-                    if (recyclerBanner == null) {
-                        return;
-                    }
-                    recyclerBanner.smoothScrollToPosition(currentPosition);
-                    updateIndicator(currentPosition);
-
-                    if (autoScrollHandler != null) {
-                        autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
-                    }
-                }
-            };
+            autoScrollRunnable = this::autoScroll;
         }
 
         // 移除之前的回调，避免重复
         autoScrollHandler.removeCallbacks(autoScrollRunnable);
-        autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
+        autoScrollHandler.postDelayed(autoScrollRunnable, carouselInterval);
+    }
+
+    /**
+     * 自动轮播
+     */
+    private void autoScroll() {
+        if (!isAutoScrolling || isUserScrolling) {
+            return;
+        }
+
+        int itemCount = adapter.getRealItemCount();
+        if (itemCount <= 0) {
+            return;
+        }
+
+        // 计算下一个位置（考虑真实数据数量）
+        int nextPosition = currentPosition + 1;
+        // 确保不会超出Integer.MAX_VALUE，但保持循环逻辑
+        if (nextPosition >= Integer.MAX_VALUE - itemCount) {
+            // 重置到安全位置
+            nextPosition = Integer.MAX_VALUE / 2;
+        }
+
+        currentPosition = nextPosition;
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
+        recyclerBanner.smoothScrollToPosition(currentPosition);
+        updateIndicator(currentPosition);
+
+        if (autoScrollHandler != null && autoScrollRunnable != null) {
+            autoScrollHandler.postDelayed(autoScrollRunnable, carouselInterval);
+        }
     }
 
     /**
@@ -356,7 +434,7 @@ public class BannerWrapper {
     public void resumeAutoScroll() {
         if (!isAutoScrolling && !isUserScrolling && autoScrollHandler != null) {
             isAutoScrolling = true;
-            autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
+            autoScrollHandler.postDelayed(autoScrollRunnable, carouselInterval);
         }
     }
 
@@ -379,6 +457,17 @@ public class BannerWrapper {
             }
             recyclerBannerRef = null;
         }
+        releaseIndicator();
+        if (adapter != null) {
+            adapter.setOnBannerClickListener(null);
+            adapter = null;
+        }
+    }
+
+    /**
+     * 是否导航点相关资源
+     */
+    private void releaseIndicator() {
         if (indicatorContainerRef != null) {
             LinearLayout indicatorContainer = indicatorContainerRef.get();
             if (indicatorContainer != null) {
@@ -387,9 +476,150 @@ public class BannerWrapper {
             }
             indicatorContainerRef = null;
         }
-        if (adapter != null) {
-            adapter.setOnBannerClickListener(null);
-            adapter = null;
+    }
+
+    /**
+     * 设置banner根布局RoundedFrameLayout圆角
+     *
+     * @param parent banner根布局RoundedFrameLayout
+     * @param radius 圆角大小
+     */
+    private void setBannerRootRadius(ViewParent parent, int radius) {
+        if (radius < 0) {
+            return;
+        }
+        if (parent instanceof RoundedFrameLayout) {
+            ((RoundedFrameLayout) parent).setCornerRadius(radius);
+        }
+    }
+
+    public static class Builder {
+        private RecyclerView recyclerView;
+
+        private LinearLayout indicatorContainer;
+
+        private int column;
+
+        private long carouselInterval = AUTO_SCROLL_DELAY;
+
+        private float itemRatio = 9.0f / 16.0f;
+
+        private int cornerRadius = -1;
+
+        private BannerAdapter.OnBannerClickListener clickListener;
+
+        /**
+         * 设置banner布局控件
+         *
+         * @param recyclerView RecyclerView
+         * @return Builder
+         */
+        public BannerWrapper.Builder setRecyclerView(@NonNull RecyclerView recyclerView) {
+            this.recyclerView = recyclerView;
+            return this;
+        }
+
+        /**
+         * 设置banner指示器布局
+         *
+         * @param indicatorContainer LinearLayout
+         * @return Builder
+         */
+        public BannerWrapper.Builder setIndicatorContainer(LinearLayout indicatorContainer) {
+            this.indicatorContainer = indicatorContainer;
+            return this;
+        }
+
+        /**
+         * 设置栅格数（4栅格显示1个、8栅格显示2个、12栅格显示3个，默认系统根据屏幕宽度读取ajstudy_column_count）
+         *
+         * @param column 栅格数 {@link Constant.Grid}
+         * @return Builder
+         */
+        public BannerWrapper.Builder setColumn(int column) {
+            this.column = column;
+
+            return this;
+        }
+
+        /**
+         * 设置轮播间隔时间（默认4s，设置大于500L有效）
+         *
+         * @param carouselInterval 间隔时间ms
+         * @return Builder
+         */
+        public BannerWrapper.Builder setCarouselInterval(long carouselInterval) {
+            this.carouselInterval = carouselInterval;
+            return this;
+        }
+
+        /**
+         * 设置图片高宽比（默认9.0f / 16.0f）
+         *
+         * @param itemRatio 宽高比值
+         * @return Builder
+         */
+        public BannerWrapper.Builder setItemRatio(float itemRatio) {
+            this.itemRatio = itemRatio;
+            return this;
+        }
+
+        /**
+         * 设置圆角大小（默认16dp，设置0为直角）
+         *
+         * @param cornerRadius 圆角大小
+         * @return Builder
+         */
+        public BannerWrapper.Builder setCornerRadius(int cornerRadius) {
+            this.cornerRadius = cornerRadius;
+            return this;
+        }
+
+        /**
+         * 设置item点击回调
+         *
+         * @param clickListener BannerAdapter.OnBannerClickListener
+         * @return Builder
+         */
+        public BannerWrapper.Builder setClickListener(
+            BannerAdapter.OnBannerClickListener clickListener) {
+            this.clickListener = clickListener;
+            return this;
+        }
+
+        public BannerWrapper create() {
+            if (this.recyclerView == null) {
+                throw new UnsupportedOperationException(
+                    "recyclerView is null, call setRecyclerView first.");
+            }
+            BannerWrapper wrapper = new BannerWrapper();
+            wrapper.recyclerBannerRef = new WeakReference<>(this.recyclerView);
+            if (this.column > 0) {
+                wrapper.column = this.column;
+            } else {
+                wrapper.column = this.recyclerView.getResources()
+                    .getInteger(R.integer.ajstudy_column_count);
+            }
+            if (wrapper.column == Constant.Grid.COLUMN_DEFAULT && this.indicatorContainer != null) {
+                wrapper.indicatorContainerRef = new WeakReference<>(this.indicatorContainer);
+            }
+            if (this.carouselInterval > 500L) {
+                wrapper.carouselInterval = this.carouselInterval;
+            }
+            if (this.itemRatio > 0) {
+                wrapper.itemRatio = this.itemRatio;
+            }
+            if (this.cornerRadius >= 0) {
+                wrapper.cornerRadius = this.cornerRadius;
+            } else {
+                wrapper.cornerRadius = this.recyclerView.getResources()
+                    .getDimensionPixelSize(R.dimen.radius_l);
+            }
+            if (this.clickListener != null) {
+                wrapper.clickListener = this.clickListener;
+            }
+            wrapper.init();
+            return wrapper;
         }
     }
 }

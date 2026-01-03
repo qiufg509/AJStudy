@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author qiufengguang
  * @since 2025/12/28 17:42
  */
-public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+public class GridCardDecoration extends RecyclerView.ItemDecoration {
     /**
      * 网格列数
      */
@@ -31,23 +31,23 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
      */
     private final boolean includeEdge;
 
-    public GridSpacingItemDecoration(int spanCount, int horizontalSpacing,
-                                     int verticalSpacing, boolean includeEdge) {
+    public GridCardDecoration(int spanCount, int horizontalSpacing,
+        int verticalSpacing, boolean includeEdge) {
         this.spanCount = spanCount;
         this.horizontalSpacing = horizontalSpacing;
         this.verticalSpacing = verticalSpacing;
         this.includeEdge = includeEdge;
     }
 
-    public GridSpacingItemDecoration(int spanCount, int horizontalSpacing, int verticalSpacing) {
+    public GridCardDecoration(int spanCount, int horizontalSpacing, int verticalSpacing) {
         this(spanCount, horizontalSpacing, verticalSpacing, false);
     }
 
-    public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+    public GridCardDecoration(int spanCount, int spacing, boolean includeEdge) {
         this(spanCount, spacing, spacing, includeEdge);
     }
 
-    public GridSpacingItemDecoration(int spanCount, int spacing) {
+    public GridCardDecoration(int spanCount, int spacing) {
         this(spanCount, spacing, spacing, false);
     }
 

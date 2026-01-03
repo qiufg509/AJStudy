@@ -29,17 +29,17 @@ public interface Constant {
         /**
          * 4栅格
          */
-        int column_default = 4;
+        int COLUMN_DEFAULT = 4;
 
         /**
          * 8栅格
          */
-        int column_8 = 8;
+        int COLUMN_8 = 8;
 
         /**
          * 12栅格
          */
-        int column_12 = 12;
+        int COLUMN_12 = 12;
     }
 
     /**
