@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
 import com.qiufengguang.ajstudy.data.DetailRecommend;
 import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
-import com.qiufengguang.ajstudy.view.RecommendationItemDecoration;
 
 /**
  * 详情页-推荐子页面

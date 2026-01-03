@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.view.RoundedFrameLayout;
 
@@ -33,6 +34,11 @@ public class BannerWrapper {
      * 自动轮播默认滚动间隔4秒
      */
     private static final long AUTO_SCROLL_DELAY = 4000L;
+
+    /**
+     * 8/12栅格item间距
+     */
+    private static final int GAP = DisplayMetricsHelper.dp2px(GlobalApp.getContext(), 8);
 
     private WeakReference<RecyclerView> recyclerBannerRef;
 
@@ -136,17 +142,16 @@ public class BannerWrapper {
         }
         Resources resources = recyclerBanner.getResources();
         float horizontalMargin = resources.getDimension(R.dimen.banner_horizontal_margin);
-        float gap = resources.getDimension(R.dimen.banner_horizontal_gap);
         int screenWidth = DisplayMetricsHelper.getScreenWidth(recyclerBanner.getContext());
         float bannerWidth = screenWidth - horizontalMargin * 2;
         switch (column) {
             case Constant.Grid.COLUMN_8:
-                this.itemWidth = (int) (bannerWidth - gap * 2) / 2;
-                this.itemHeight = (int) ((bannerWidth - gap * 2) / 2 * itemRatio);
+                this.itemWidth = (int) (bannerWidth - GAP * Constant.Pln.DEF_8) / Constant.Pln.DEF_8;
+                this.itemHeight = (int) ((bannerWidth - GAP * Constant.Pln.DEF_8) / Constant.Pln.DEF_8 * itemRatio);
                 break;
             case Constant.Grid.COLUMN_12:
-                this.itemWidth = (int) (bannerWidth - gap * 3) / 3;
-                this.itemHeight = (int) ((bannerWidth - gap * 3) / 3 * itemRatio);
+                this.itemWidth = (int) (bannerWidth - GAP * Constant.Pln.DEF_12) / Constant.Pln.DEF_12;
+                this.itemHeight = (int) ((bannerWidth - GAP * Constant.Pln.DEF_12) / Constant.Pln.DEF_12 * itemRatio);
                 break;
             default:
                 this.itemWidth = (int) bannerWidth;
@@ -154,7 +159,7 @@ public class BannerWrapper {
                 break;
         }
 
-        setupBanner((int) ((this.itemWidth + gap) / 2));
+        setupBanner((this.itemWidth + GAP) / 2);
     }
 
     /**
@@ -171,8 +176,7 @@ public class BannerWrapper {
             return;
         }
         setBannerRootRadius(recyclerBanner.getParent(), cornerRadius);
-        recyclerBanner.addItemDecoration(new BannerDecoration(
-            recyclerBanner.getResources().getDimensionPixelSize(R.dimen.banner_horizontal_gap), 0));
+        recyclerBanner.addItemDecoration(new BannerDecoration(GAP, 0));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerBanner.getContext(),
             LinearLayoutManager.HORIZONTAL, false);

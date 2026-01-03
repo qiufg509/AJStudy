@@ -43,6 +43,15 @@ public interface Constant {
     }
 
     /**
+     * 每行显示个数per line number
+     */
+    interface Pln {
+        int DEF_4 = 1;
+        int DEF_8 = 2;
+        int DEF_12 = 3;
+    }
+
+    /**
      * 本地测试数据
      */
     interface Data {

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.view;
+package com.qiufengguang.ajstudy.activity.detail;
 
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
@@ -15,7 +15,6 @@ import androidx.core.widget.ImageViewCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
 /**

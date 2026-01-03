@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.SavedStateViewModelFactory;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.KnowHowBean;
 import com.qiufengguang.ajstudy.databinding.FragmentKnowHowBinding;
@@ -72,26 +70,25 @@ public class KnowHowFragment extends BaseFragment {
 
     private void adjustColumn() {
         RecyclerView recyclerView = binding.layoutKnowHow;
-        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(),
-            LinearLayoutManager.VERTICAL);
-        divider.setDividerThickness(1);
-        int color = ContextCompat.getColor(requireContext(), R.color.ajstudy_color_divider);
-        divider.setDividerColor(color);
-        divider.setLastItemDecorated(false);
-        recyclerView.addItemDecoration(divider);
         int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
         LinearLayoutManager layoutManager;
+        int perLineNumber;
         switch (columnCount) {
             case Constant.Grid.COLUMN_8:
-                layoutManager = new GridLayoutManager(requireContext(), 2);
+                perLineNumber = Constant.Pln.DEF_8;
+                layoutManager = new GridLayoutManager(requireContext(), perLineNumber);
                 break;
             case Constant.Grid.COLUMN_12:
-                layoutManager = new GridLayoutManager(requireContext(), 3);
+                perLineNumber = Constant.Pln.DEF_12;
+                layoutManager = new GridLayoutManager(requireContext(), perLineNumber);
                 break;
             default:
+                perLineNumber = Constant.Pln.DEF_4;
                 layoutManager = new LinearLayoutManager(requireContext());
                 break;
         }
+        KnowHowItemDecoration decoration = new KnowHowItemDecoration(requireContext(), perLineNumber);
+        recyclerView.addItemDecoration(decoration);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new KnowHowAdapter(viewModel.getLiveData().getValue());
         recyclerView.setAdapter(adapter);

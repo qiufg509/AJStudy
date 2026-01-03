@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.view;
+package com.qiufengguang.ajstudy.fragment.knowhow;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,29 +11,26 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 
 /**
- * 详情页-推荐子页面列表分割线
+ * 知识列表页列表分割线
  *
  * @author qiufengguang
- * @since 2025/12/12 19:13
+ * @since 2026/1/3 19:05
  */
-public class RecommendationItemDecoration extends RecyclerView.ItemDecoration {
+public class KnowHowItemDecoration extends RecyclerView.ItemDecoration {
 
     private final Paint paint;
-    private final int startMarginPx;
-    private final int endMarginPx;
+    private final int perLineNumber;
     private final int dividerHeightPx;
 
-    public RecommendationItemDecoration(Context context) {
+    public KnowHowItemDecoration(Context context, int perLineNumber) {
         paint = new Paint();
         int color = ContextCompat.getColor(context, R.color.ajstudy_color_divider);
         paint.setColor(color); // 分割线颜色，可根据需要调整
         paint.setStyle(Paint.Style.FILL);
 
-        startMarginPx = DisplayMetricsHelper.dp2px(context, 76);
-        endMarginPx = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_l);
+        this.perLineNumber = perLineNumber;
         dividerHeightPx = 1;
     }
 
@@ -43,15 +40,19 @@ public class RecommendationItemDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
 
         int position = parent.getChildAdapterPosition(view);
-        // 最后一个item不加分割线
-        if (parent.getAdapter() != null && position < parent.getAdapter().getItemCount() - 1) {
+        RecyclerView.Adapter<?> adapter = parent.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+        // 最后一个perLineNumber不加分割线
+        if (position < adapter.getItemCount() - perLineNumber) {
             outRect.bottom = dividerHeightPx;
         }
     }
 
     @Override
     public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent,
-                       @NonNull RecyclerView.State state) {
+        @NonNull RecyclerView.State state) {
         super.onDraw(canvas, parent, state);
 
         int childCount = parent.getChildCount();
@@ -65,13 +66,13 @@ public class RecommendationItemDecoration extends RecyclerView.ItemDecoration {
             View child = parent.getChildAt(i);
             int position = parent.getChildAdapterPosition(child);
 
-            // 最后一个item不绘制分割线
-            if (position == itemCount - 1) {
+            // 判断是否是最后perLineNumber个item
+            if (position >= itemCount - perLineNumber) {
                 continue;
             }
 
-            int left = parent.getPaddingLeft() + startMarginPx;
-            int right = parent.getWidth() - parent.getPaddingRight() - endMarginPx;
+            int left = parent.getPaddingLeft();
+            int right = parent.getWidth() - parent.getPaddingRight();
             int top = child.getBottom();
             int bottom = top + dividerHeightPx;
 

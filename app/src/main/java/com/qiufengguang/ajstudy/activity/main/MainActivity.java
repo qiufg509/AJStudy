@@ -23,7 +23,6 @@ import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
-import com.qiufengguang.ajstudy.view.MainPageBackPressedCallback;
 
 /**
  * 主页面

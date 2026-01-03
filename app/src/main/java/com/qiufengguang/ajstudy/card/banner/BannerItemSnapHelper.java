@@ -34,7 +34,6 @@ public class BannerItemSnapHelper extends SnapHelper {
 
 
     public BannerItemSnapHelper(int snapDistancePx) {
-        // 将 dp 转换为像素
         this.snapPosition = snapDistancePx;
     }
 

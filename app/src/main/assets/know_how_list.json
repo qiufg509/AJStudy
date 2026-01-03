@@ -292,12 +292,5 @@
     "title": "驾驶模式",
     "subtitle": "车载智能助手",
     "brief": "专为驾驶场景设计的模式，提供导航和语音控制功能"
-  },
-  {
-    "id": 43,
-    "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/ffc115195b78417da686f4c30fcb63f6.webp",
-    "title": "办公套件",
-    "subtitle": "移动办公平台",
-    "brief": "集成文档、表格、演示文稿的移动办公解决方案"
   }
 ]

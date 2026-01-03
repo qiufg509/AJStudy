@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.view;
+package com.qiufengguang.ajstudy.activity.main;
 
 import android.app.Activity;
 

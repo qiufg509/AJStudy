@@ -88,41 +88,89 @@ public class GridCardWrapper {
             this.context = context;
         }
 
+        /**
+         * 设置格网卡片布局控件
+         *
+         * @param recyclerView RecyclerView
+         * @return Builder
+         */
         public GridCardWrapper.Builder setRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
             return this;
         }
 
+        /**
+         * 设置格网卡片列数
+         *
+         * @param spanCount 列数
+         * @return Builder
+         */
         public GridCardWrapper.Builder setSpanCount(int spanCount) {
             this.spanCount = spanCount;
             return this;
         }
 
+        /**
+         * 设置格网卡片item类型
+         *
+         * @param itemType 0-TextView展示，上边icon，下边文字；1-ImageView展示
+         * @return Builder
+         */
         public GridCardWrapper.Builder setItemType(@IntRange(from = 0, to = 1) int itemType) {
             this.itemType = itemType;
             return this;
         }
 
+        /**
+         * 设置格网卡片水平间距
+         *
+         * @param horizontalSpacing 水平间距大小
+         * @return Builder
+         */
         public GridCardWrapper.Builder setHorizontalSpacing(int horizontalSpacing) {
             this.horizontalSpacing = horizontalSpacing;
             return this;
         }
 
+        /**
+         * 设置格网卡片垂直间距
+         *
+         * @param verticalSpacing 垂直间距大小
+         * @return Builder
+         */
         public GridCardWrapper.Builder setVerticalSpacing(int verticalSpacing) {
             this.verticalSpacing = verticalSpacing;
             return this;
         }
 
+        /**
+         * 设置格网卡片间距
+         *
+         * @param spacing 间距大小
+         * @return Builder
+         */
         public GridCardWrapper.Builder setSpacing(int spacing) {
             this.spacing = spacing;
             return this;
         }
 
+        /**
+         * 设置格网卡片间距是否包含边距
+         *
+         * @param includeEdge 默认false不包含
+         * @return Builder
+         */
         public GridCardWrapper.Builder setIncludeEdge(boolean includeEdge) {
             this.includeEdge = includeEdge;
             return this;
         }
 
+        /**
+         * 设置格网卡片item点击事件
+         *
+         * @param listener GridCardAdapter.OnItemClickListener
+         * @return Builder
+         */
         public GridCardWrapper.Builder setListener(GridCardAdapter.OnItemClickListener listener) {
             this.listener = listener;
             return this;

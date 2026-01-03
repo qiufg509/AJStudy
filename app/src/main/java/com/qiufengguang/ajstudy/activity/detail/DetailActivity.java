@@ -25,7 +25,6 @@ import com.qiufengguang.ajstudy.fragment.recommendation.RecommendationFragment;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
-import com.qiufengguang.ajstudy.view.DetailHeadOffsetChangedCallback;
 
 import java.util.Arrays;
 import java.util.List;
