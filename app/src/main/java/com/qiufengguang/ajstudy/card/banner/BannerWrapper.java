@@ -176,7 +176,9 @@ public class BannerWrapper {
             return;
         }
         setBannerRootRadius(recyclerBanner.getParent(), cornerRadius);
-        recyclerBanner.addItemDecoration(new BannerDecoration(GAP, 0));
+        if (this.column != Constant.Grid.COLUMN_DEFAULT) {
+            recyclerBanner.addItemDecoration(new BannerDecoration(GAP, 0));
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerBanner.getContext(),
             LinearLayoutManager.HORIZONTAL, false);
