@@ -49,6 +49,10 @@ public interface Constant {
         int DEF_4 = 1;
         int DEF_8 = 2;
         int DEF_12 = 3;
+
+        int GRID_4 = 5;
+        int GRID_8 = 8;
+        int GRID_12 = 10;
     }
 
     /**

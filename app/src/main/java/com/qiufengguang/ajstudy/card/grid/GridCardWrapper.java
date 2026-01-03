@@ -1,14 +1,14 @@
 package com.qiufengguang.ajstudy.card.grid;
 
-import android.content.Context;
-
 import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.global.Constant;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -27,9 +27,7 @@ public class GridCardWrapper {
      */
     public static final int TYPE_IMAGE = 1;
 
-    private Context context;
-
-    private RecyclerView recyclerView;
+    private WeakReference<RecyclerView> recyclerViewRef;
 
     private GridCardAdapter adapter;
 
@@ -46,6 +44,9 @@ public class GridCardWrapper {
 
     private GridCardAdapter.OnItemClickListener listener;
 
+    private GridCardWrapper() {
+    }
+
     public void setData(List<GridCardBean> beans) {
         if (adapter == null) {
             adapter = new GridCardAdapter(itemType, null);
@@ -54,7 +55,14 @@ public class GridCardWrapper {
     }
 
     public void show() {
-        GridLayoutManager layoutManager = new GridLayoutManager(context, spanCount);
+        if (recyclerViewRef == null) {
+            return;
+        }
+        RecyclerView recyclerView = recyclerViewRef.get();
+        if (recyclerView == null) {
+            return;
+        }
+        GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
         if (adapter == null) {
             adapter = new GridCardAdapter(itemType, null);
@@ -66,8 +74,6 @@ public class GridCardWrapper {
     }
 
     public static class Builder {
-        private final Context context;
-
         private RecyclerView recyclerView;
 
         private int spanCount;
@@ -83,10 +89,6 @@ public class GridCardWrapper {
         private boolean includeEdge;
 
         private GridCardAdapter.OnItemClickListener listener;
-
-        public Builder(@NonNull Context context) {
-            this.context = context;
-        }
 
         /**
          * 设置格网卡片布局控件
@@ -177,10 +179,19 @@ public class GridCardWrapper {
         }
 
         public GridCardWrapper create() {
+            if (this.recyclerView == null) {
+                throw new UnsupportedOperationException(
+                    "recyclerView is null, call setRecyclerView first.");
+            }
             GridCardWrapper wrapper = new GridCardWrapper();
-            wrapper.context = this.context;
-            wrapper.recyclerView = this.recyclerView;
-            wrapper.spanCount = this.spanCount;
+            wrapper.recyclerViewRef = new WeakReference<>(this.recyclerView);
+            if (this.spanCount > 0) {
+                wrapper.spanCount = this.spanCount;
+            } else {
+                int column = this.recyclerView.getResources().getInteger(R.integer.ajstudy_column_count);
+                wrapper.spanCount = column == Constant.Grid.COLUMN_DEFAULT ? Constant.Pln.GRID_4 :
+                    (column == Constant.Grid.COLUMN_8 ? Constant.Pln.GRID_8 : Constant.Pln.GRID_12);
+            }
             wrapper.itemType = this.itemType;
             wrapper.horizontalSpacing = this.horizontalSpacing == 0 && this.spacing != 0
                 ? this.spacing : this.horizontalSpacing;
@@ -197,11 +208,17 @@ public class GridCardWrapper {
      * 页面onDestroyView时调用
      */
     public void release() {
-        if (recyclerView != null) {
-            recyclerView = null;
+        if (recyclerViewRef != null) {
+            RecyclerView recyclerBanner = recyclerViewRef.get();
+            if (recyclerBanner != null) {
+                recyclerBanner.setAdapter(null);
+                recyclerViewRef.clear();
+            }
+            recyclerViewRef = null;
         }
-        if (this.context != null) {
-            this.context = null;
+        if (adapter != null) {
+            adapter.setOnItemClickListener(null);
+            adapter = null;
         }
     }
 }

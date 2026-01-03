@@ -48,9 +48,8 @@ public class MeFragment extends BaseFragment {
 
         setPageBackground(R.drawable.me_head_bg);
 
-        gridCardWrapper = new GridCardWrapper.Builder(requireContext())
+        gridCardWrapper = new GridCardWrapper.Builder()
             .setRecyclerView(binding.recyclerGrid)
-            .setSpanCount(5)
             .setItemType(GridCardWrapper.TYPE_IMAGE)
             .setListener(bean -> {
                 viewModel.saveThemeIndex(bean);

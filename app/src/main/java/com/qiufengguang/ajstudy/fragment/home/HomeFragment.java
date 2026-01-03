@@ -63,9 +63,8 @@ public class HomeFragment extends BaseFragment {
             .create();
 
         int spacing = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_s);
-        gridCardWrapper = new GridCardWrapper.Builder(requireContext())
+        gridCardWrapper = new GridCardWrapper.Builder()
             .setRecyclerView(binding.recyclerGrid)
-            .setSpanCount(5)
             .setItemType(GridCardWrapper.TYPE_TEXT)
             .setSpacing(spacing)
             .setListener(bean -> {
