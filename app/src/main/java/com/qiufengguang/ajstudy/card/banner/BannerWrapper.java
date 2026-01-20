@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,7 +77,7 @@ public class BannerWrapper {
     /**
      * 是否自动轮播滚动
      */
-    private boolean isAutoScrolling = true;
+    private boolean isAutoScrolling = false;
 
     /**
      * 是否用户拖拽滚动操作中
@@ -127,6 +129,8 @@ public class BannerWrapper {
         recyclerBanner.scrollToPosition(currentPosition);
         // 重置上一次位置
         lastIndicatorPosition = -1;
+
+        readyAutoScroll();
     }
 
     /**
@@ -369,10 +373,10 @@ public class BannerWrapper {
     }
 
     /**
-     * 开启自动轮播
+     * 轮播就绪
      */
-    public void startAutoScroll() {
-        if (!isAutoScrolling || isUserScrolling || adapter.getRealItemCount() <= 0) {
+    private void readyAutoScroll() {
+        if (adapter.getRealItemCount() <= 0) {
             return;
         }
 
@@ -386,7 +390,6 @@ public class BannerWrapper {
 
         // 移除之前的回调，避免重复
         autoScrollHandler.removeCallbacks(autoScrollRunnable);
-        autoScrollHandler.postDelayed(autoScrollRunnable, carouselInterval);
     }
 
     /**
@@ -424,6 +427,13 @@ public class BannerWrapper {
         if (autoScrollHandler != null && autoScrollRunnable != null) {
             autoScrollHandler.postDelayed(autoScrollRunnable, carouselInterval);
         }
+    }
+
+    /**
+     * 开始轮播
+     */
+    public void startAutoScroll() {
+        resumeAutoScroll();
     }
 
     /**
@@ -521,6 +531,29 @@ public class BannerWrapper {
         /**
          * 设置banner布局控件
          *
+         * @param root 轮播banner根布局
+         * @return Builder
+         */
+        public BannerWrapper.Builder setBannerLayout(@NonNull View root) {
+            if (!(root instanceof ViewGroup)) {
+                throw new IllegalArgumentException("root must be of type RoundedFrameLayout.");
+            }
+            ViewGroup group = (ViewGroup) root;
+            for (int index = 0, sum = group.getChildCount(); index < sum; index++) {
+                View child = group.getChildAt(index);
+                if (child instanceof RecyclerView) {
+                    this.recyclerView = (RecyclerView) child;
+                }
+                if (child instanceof LinearLayout) {
+                    this.indicatorContainer = (LinearLayout) child;
+                }
+            }
+            return this;
+        }
+
+        /**
+         * 设置banner布局控件
+         *
          * @param recyclerView RecyclerView
          * @return Builder
          */
@@ -600,7 +633,7 @@ public class BannerWrapper {
         public BannerWrapper create() {
             if (this.recyclerView == null) {
                 throw new UnsupportedOperationException(
-                    "recyclerView is null, call setRecyclerView first.");
+                    "recyclerView is null, the root must contain a sub-child of RecyclerView.");
             }
             BannerWrapper wrapper = new BannerWrapper();
             wrapper.recyclerBannerRef = new WeakReference<>(this.recyclerView);

@@ -1,16 +1,14 @@
 package com.qiufengguang.ajstudy.fragment.home;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.card.banner.BannerWrapper;
-import com.qiufengguang.ajstudy.card.grid.GridCardWrapper;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.databinding.FragmentHomeBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;
@@ -30,9 +28,7 @@ public class HomeFragment extends BaseFragment {
 
     private FragmentHomeBinding binding;
 
-    private BannerWrapper bannerWrapper;
-
-    private GridCardWrapper gridCardWrapper;
+    private HomeAdapter homeAdapter;
 
     @Override
     protected boolean isDarkBackgroundImage() {
@@ -56,38 +52,16 @@ public class HomeFragment extends BaseFragment {
             new ViewModelProvider(this).get(HomeViewModel.class);
         setPageBackground(R.drawable.home_page_bg);
 
-        bannerWrapper = new BannerWrapper.Builder()
-            .setRecyclerView(binding.recyclerBanner)
-            .setIndicatorContainer(binding.indicatorContainer)
-            .setClickListener(this::handleBannerClick)
-            .create();
 
-        int spacing = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_s);
-        gridCardWrapper = new GridCardWrapper.Builder()
-            .setRecyclerView(binding.recyclerGrid)
-            .setItemType(GridCardWrapper.TYPE_TEXT)
-            .setSpacing(spacing)
-            .setListener(bean -> {
-                NavController navController = Navigation.findNavController(requireActivity(),
-                    R.id.nav_host_fragment_activity_main);
-                Bundle bundle = new Bundle();
-                bundle.putString("Course", bean.getNavigatePage());
-                navController.navigate(R.id.navigation_know_how, bundle);
-            })
-            .create();
-        gridCardWrapper.show();
+        binding.recyclerHome.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        observeDataChanged(viewModel);
-    }
+        homeAdapter = new HomeAdapter(getViewLifecycleOwner());
+        binding.recyclerHome.setAdapter(homeAdapter);
 
-    private void observeDataChanged(HomeViewModel viewModel) {
-        viewModel.getBannerLiveData().observe(getViewLifecycleOwner(),
-            bannerBeans -> {
-                bannerWrapper.setBannerBeans(bannerBeans);
-                bannerWrapper.startAutoScroll();
-            });
-        viewModel.getGridCardLiveData().observe(getViewLifecycleOwner(), gridCardBeans ->
-            gridCardWrapper.setData(gridCardBeans));
+        viewModel.getLiveData().observe(getViewLifecycleOwner(),
+            beans -> homeAdapter.setData(beans));
+
+        setupScrollListener();
     }
 
     private void handleBannerClick(int position, BannerBean item) {
@@ -147,31 +121,66 @@ public class HomeFragment extends BaseFragment {
             });
     }
 
+    private void setupScrollListener() {
+        binding.recyclerHome.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        // 滚动停止时检查 Banner 可见性
+                        if (homeAdapter.isBannerVisible(recyclerView)) {
+                            homeAdapter.resumeBannerIfVisible(recyclerView);
+                        }
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        // 滚动时暂停 Banner
+                        homeAdapter.pauseBanner();
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                // 实时检查 Banner 可见性
+                if (!recyclerView.isComputingLayout()) {
+                    checkBannerVisibility();
+                }
+            }
+        });
+    }
+
+    private void checkBannerVisibility() {
+        if (homeAdapter.isBannerVisible(binding.recyclerHome)) {
+            homeAdapter.resumeBannerIfVisible(binding.recyclerHome);
+        } else {
+            homeAdapter.pauseBanner();
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if (bannerWrapper != null) {
-            bannerWrapper.resumeAutoScroll();
-        }
+        // Activity 恢复时检查 Banner 可见性
+        checkBannerVisibility();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (bannerWrapper != null) {
-            bannerWrapper.pauseAutoScroll();
-        }
+        // Activity 暂停时停止所有 Banner
+        homeAdapter.pauseBanner();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (bannerWrapper != null) {
-            bannerWrapper.release();
-        }
-        if (gridCardWrapper != null) {
-            gridCardWrapper.release();
-        }
+        // 释放所有资源
+        homeAdapter.releaseAllResources();
+        binding.recyclerHome.setAdapter(null);
         binding = null;
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qiufengguang.ajstudy.view.RoundedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/banner_horizontal_margin">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="20dp"
+        android:scrollbars="none" />
+
+    <!-- 指示器容器 -->
+    <LinearLayout
+        android:id="@+id/indicator_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/activity_vertical_margin_s" />
+
+</com.qiufengguang.ajstudy.view.RoundedFrameLayout>
