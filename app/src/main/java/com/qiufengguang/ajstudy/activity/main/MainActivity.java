@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         // 去掉icon染色，保持svg图多个path不同颜色
         binding.navView.setItemIconTintList(null);
+        ThemeUtils.reapplyNavigationIcons(binding.navView);
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();

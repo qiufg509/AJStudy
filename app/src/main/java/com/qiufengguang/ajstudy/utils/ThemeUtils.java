@@ -1,7 +1,15 @@
 package com.qiufengguang.ajstudy.utils;
 
-import androidx.annotation.StyleRes;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.StyleRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.view.ContextThemeWrapper;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.global.Constant;
 
@@ -135,5 +143,37 @@ public class ThemeUtils {
 
     public static void setSelectedThemeIndex(@Range(from = 0, to = 9) int themeIndex) {
         SpUtils.getInstance().putInt(Constant.Sp.KEY_THEME_INDEX, themeIndex);
+    }
+
+    /**
+     * 重新设置导航按钮icon
+     *
+     * @param navView BottomNavigationView
+     */
+    public static void reapplyNavigationIcons(BottomNavigationView navView) {
+        if (navView == null) {
+            return;
+        }
+        // 使用当前主题创建 ContextThemeWrapper
+        Context themedContext = new ContextThemeWrapper(
+            navView.getContext(), ThemeUtils.getMianTheme());
+        Menu menu = navView.getMenu();
+        // 重新为每个菜单项设置图标
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            int itemId = item.getItemId();
+            int iconResId = -1;
+            if (itemId == R.id.navigation_home) {
+                iconResId = R.drawable.bottom_nav_icon_home;
+            } else if (itemId == R.id.navigation_know_how) {
+                iconResId = R.drawable.bottom_nav_icon_know_how;
+            } else if (itemId == R.id.navigation_me) {
+                iconResId = R.drawable.bottom_nav_icon_me;
+            }
+            if (iconResId != -1) {
+                Drawable icon = AppCompatResources.getDrawable(themedContext, iconResId);
+                item.setIcon(icon);
+            }
+        }
     }
 }
