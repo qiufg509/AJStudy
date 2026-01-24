@@ -1,0 +1,60 @@
+package com.qiufengguang.ajstudy.card.largegraphic;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
+
+import java.util.List;
+
+/**
+ * 大图文卡的ViewHolder
+ *
+ * @author qiufengguang
+ * @since 2026/1/24 23:31
+ */
+public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBinding, List<LargeGraphicCardBean>> {
+
+    private LargeGraphicCardWrapper cardWrapper;
+
+    public LargeGraphicViewHolder(@NonNull CardLargeGraphicBinding binding) {
+        super(binding);
+
+        int spacing = itemView.getResources().getDimensionPixelSize(
+            R.dimen.activity_horizontal_margin_s);
+        cardWrapper = new LargeGraphicCardWrapper.Builder()
+            .setRecyclerView(binding.getRoot())
+            .setSpacing(spacing)
+            .setListener(LargeGraphicViewHolder::onItemClickListener)
+            .create();
+        cardWrapper.show();
+    }
+
+    @Override
+    public void bind(List<LargeGraphicCardBean> beans) {
+        if (beans != null && cardWrapper != null) {
+            cardWrapper.setData(beans);
+        }
+    }
+
+    private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {
+        if (!(context instanceof AppCompatActivity)) {
+            return;
+        }
+        AppCompatActivity activity = (AppCompatActivity) context;
+    }
+
+    @Override
+    public void cleanup() {
+        if (cardWrapper != null) {
+            cardWrapper.release();
+            cardWrapper = null;
+        }
+        super.cleanup();
+    }
+}

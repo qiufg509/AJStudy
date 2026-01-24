@@ -71,21 +71,19 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
 
     public static class ScreenshotViewHolder extends RecyclerView.ViewHolder {
 
-        private final int roundingRadius;
+        private final RequestOptions requestOptions;
 
         ScreenshotViewHolder(SubItemIntroductionScreenBinding binding) {
             super(binding.getRoot());
-            roundingRadius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
+            int radius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
+            requestOptions = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.placeholder_image_vertical)
+                .transform(new CenterCrop(), new RoundedCorners(radius));
         }
 
         private void bind(String url) {
             // 使用Glide加载图片，添加圆角和过渡动画
-            RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .error(R.drawable.placeholder_image_vertical)
-                .placeholder(R.drawable.placeholder_image_vertical)
-                .transform(new CenterCrop(), new RoundedCorners(roundingRadius));
-
             Glide.with(itemView.getContext())
                 .load(url)
                 .apply(requestOptions)

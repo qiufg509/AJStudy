@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qiufengguang.ajstudy.card.banner.BannerViewHolder;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.grid.GridViewHolder;
+import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicViewHolder;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.BaseCardBean;
 import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
+import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
 
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
@@ -43,9 +46,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     private static final int VIEW_TYPE_TWO_PART_CARD = 3;
     /**
-     * 列表卡
+     * 图文大卡
      */
-    private static final int VIEW_TYPE_LIST = 4;
+    private static final int VIEW_TYPE_L_G_CARD = 4;
 
     private final LifecycleOwner lifecycleOwner;
 
@@ -96,8 +99,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return VIEW_TYPE_BANNER;
             case GridCardBean.LAYOUT_NAME:
                 return VIEW_TYPE_GRID_CARD;
+            case LargeGraphicCardBean.LAYOUT_NAME:
+                return VIEW_TYPE_L_G_CARD;
             default:
-                return VIEW_TYPE_LIST;
+                return VIEW_TYPE_TWO_PART_CARD;
         }
     }
 
@@ -129,12 +134,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderRefs.add(new WeakReference<>(bannerViewHolder));
                 return bannerViewHolder;
             case VIEW_TYPE_GRID_CARD:
-            default:
                 CardGridBinding gridBinding = CardGridBinding.inflate(
                     LayoutInflater.from(parent.getContext()), parent, false);
                 GridViewHolder gridViewHolder = new GridViewHolder(gridBinding);
                 viewHolderRefs.add(new WeakReference<>(gridViewHolder));
                 return gridViewHolder;
+            default:
+                CardLargeGraphicBinding largeGraphicBinding = CardLargeGraphicBinding.inflate(
+                    LayoutInflater.from(parent.getContext()), parent, false);
+                LargeGraphicViewHolder lgcViewHolder = new LargeGraphicViewHolder(largeGraphicBinding);
+                viewHolderRefs.add(new WeakReference<>(lgcViewHolder));
+                return lgcViewHolder;
         }
     }
 
@@ -157,6 +167,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @SuppressWarnings("unchecked")
             List<GridCardBean> gridCardBeans = (List<GridCardBean>) baseCardBeans;
             ((GridViewHolder) holder).bind(gridCardBeans);
+        } else if (holder instanceof LargeGraphicViewHolder
+            && TextUtils.equals(layoutName, LargeGraphicCardBean.LAYOUT_NAME)) {
+            @SuppressWarnings("unchecked")
+            List<LargeGraphicCardBean> lgcBeans = (List<LargeGraphicCardBean>) baseCardBeans;
+            ((LargeGraphicViewHolder) holder).bind(lgcBeans);
         }
     }
 

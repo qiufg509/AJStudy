@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.grid;
+package com.qiufengguang.ajstudy.card.base;
 
 import android.graphics.Rect;
 import android.view.View;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author qiufengguang
  * @since 2025/12/28 17:42
  */
-public class GridCardDecoration extends RecyclerView.ItemDecoration {
+public class GridDecoration extends RecyclerView.ItemDecoration {
     /**
      * 网格列数
      */
@@ -31,23 +31,23 @@ public class GridCardDecoration extends RecyclerView.ItemDecoration {
      */
     private final boolean includeEdge;
 
-    public GridCardDecoration(int spanCount, int horizontalSpacing,
-        int verticalSpacing, boolean includeEdge) {
+    public GridDecoration(int spanCount, int horizontalSpacing,
+                          int verticalSpacing, boolean includeEdge) {
         this.spanCount = spanCount;
         this.horizontalSpacing = horizontalSpacing;
         this.verticalSpacing = verticalSpacing;
         this.includeEdge = includeEdge;
     }
 
-    public GridCardDecoration(int spanCount, int horizontalSpacing, int verticalSpacing) {
+    public GridDecoration(int spanCount, int horizontalSpacing, int verticalSpacing) {
         this(spanCount, horizontalSpacing, verticalSpacing, false);
     }
 
-    public GridCardDecoration(int spanCount, int spacing, boolean includeEdge) {
+    public GridDecoration(int spanCount, int spacing, boolean includeEdge) {
         this(spanCount, spacing, spacing, includeEdge);
     }
 
-    public GridCardDecoration(int spanCount, int spacing) {
+    public GridDecoration(int spanCount, int spacing) {
         this(spanCount, spacing, spacing, false);
     }
 

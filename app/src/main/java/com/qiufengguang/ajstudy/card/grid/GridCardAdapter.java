@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.GridCardBean;
-import com.qiufengguang.ajstudy.databinding.CardGridImageBinding;
-import com.qiufengguang.ajstudy.databinding.CardGridTextBinding;
+import com.qiufengguang.ajstudy.databinding.ItemGridCardImageBinding;
+import com.qiufengguang.ajstudy.databinding.ItemGridCardTextBinding;
 
 import java.util.List;
 
@@ -68,11 +68,11 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == GridCardWrapper.TYPE_TEXT) {
-            CardGridTextBinding binding = CardGridTextBinding.inflate(
+            ItemGridCardTextBinding binding = ItemGridCardTextBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new GridCardTextHolder(binding, listener);
         } else {
-            CardGridImageBinding binding = CardGridImageBinding.inflate(
+            ItemGridCardImageBinding binding = ItemGridCardImageBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new GridCardImageHolder(binding, listener);
         }
@@ -95,11 +95,11 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public static class GridCardTextHolder extends RecyclerView.ViewHolder {
 
-        CardGridTextBinding binding;
+        ItemGridCardTextBinding binding;
 
         GridCardBean bean;
 
-        public GridCardTextHolder(@NonNull CardGridTextBinding binding, OnItemClickListener clickListener) {
+        public GridCardTextHolder(@NonNull ItemGridCardTextBinding binding, OnItemClickListener clickListener) {
             super(binding.getRoot());
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(v -> {
@@ -121,11 +121,11 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public static class GridCardImageHolder extends RecyclerView.ViewHolder {
 
-        CardGridImageBinding binding;
+        ItemGridCardImageBinding binding;
 
         GridCardBean bean;
 
-        public GridCardImageHolder(@NonNull CardGridImageBinding binding, OnItemClickListener clickListener) {
+        public GridCardImageHolder(@NonNull ItemGridCardImageBinding binding, OnItemClickListener clickListener) {
             super(binding.getRoot());
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(v -> {

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.grid;
+package com.qiufengguang.ajstudy.card.largegraphic;
 
 import androidx.annotation.IntRange;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -6,31 +6,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
-import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * 格网卡片
+ * 大图文卡
  *
  * @author qiufengguang
- * @since 2025/12/28 18:50
+ * @since 2026/1/24 23:31
  */
-public class GridCardWrapper {
-    /**
-     * item使用TextView，上icon下文字样式
-     */
-    public static final int TYPE_TEXT = 0;
-    /**
-     * item使用ImageView，圆形点中打勾样式
-     */
-    public static final int TYPE_IMAGE = 1;
-
+public class LargeGraphicCardWrapper {
     private WeakReference<RecyclerView> recyclerViewRef;
 
-    private GridCardAdapter adapter;
+    private LargeGraphicCardAdapter adapter;
 
     private int spanCount;
 
@@ -43,14 +34,14 @@ public class GridCardWrapper {
 
     private boolean includeEdge;
 
-    private GridCardAdapter.OnItemClickListener listener;
+    private LargeGraphicCardAdapter.OnItemClickListener listener;
 
-    private GridCardWrapper() {
+    private LargeGraphicCardWrapper() {
     }
 
-    public void setData(List<GridCardBean> beans) {
+    public void setData(List<LargeGraphicCardBean> beans) {
         if (adapter == null) {
-            adapter = new GridCardAdapter(itemType, beans);
+            adapter = new LargeGraphicCardAdapter(beans);
         } else {
             adapter.setData(beans);
         }
@@ -67,7 +58,7 @@ public class GridCardWrapper {
         GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
         if (adapter == null) {
-            adapter = new GridCardAdapter(itemType, null);
+            adapter = new LargeGraphicCardAdapter(null);
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
@@ -80,8 +71,6 @@ public class GridCardWrapper {
 
         private int spanCount;
 
-        private int itemType;
-
         private int horizontalSpacing;
 
         private int verticalSpacing;
@@ -90,7 +79,7 @@ public class GridCardWrapper {
 
         private boolean includeEdge;
 
-        private GridCardAdapter.OnItemClickListener listener;
+        private LargeGraphicCardAdapter.OnItemClickListener listener;
 
         /**
          * 设置格网卡片布局控件
@@ -98,7 +87,7 @@ public class GridCardWrapper {
          * @param recyclerView RecyclerView
          * @return Builder
          */
-        public GridCardWrapper.Builder setRecyclerView(RecyclerView recyclerView) {
+        public LargeGraphicCardWrapper.Builder setRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
             return this;
         }
@@ -109,19 +98,8 @@ public class GridCardWrapper {
          * @param spanCount 列数
          * @return Builder
          */
-        public GridCardWrapper.Builder setSpanCount(int spanCount) {
+        public LargeGraphicCardWrapper.Builder setSpanCount(int spanCount) {
             this.spanCount = spanCount;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片item类型
-         *
-         * @param itemType 0-TextView展示，上边icon，下边文字；1-ImageView展示
-         * @return Builder
-         */
-        public GridCardWrapper.Builder setItemType(@IntRange(from = 0, to = 1) int itemType) {
-            this.itemType = itemType;
             return this;
         }
 
@@ -131,7 +109,7 @@ public class GridCardWrapper {
          * @param horizontalSpacing 水平间距大小
          * @return Builder
          */
-        public GridCardWrapper.Builder setHorizontalSpacing(int horizontalSpacing) {
+        public LargeGraphicCardWrapper.Builder setHorizontalSpacing(int horizontalSpacing) {
             this.horizontalSpacing = horizontalSpacing;
             return this;
         }
@@ -142,7 +120,7 @@ public class GridCardWrapper {
          * @param verticalSpacing 垂直间距大小
          * @return Builder
          */
-        public GridCardWrapper.Builder setVerticalSpacing(int verticalSpacing) {
+        public LargeGraphicCardWrapper.Builder setVerticalSpacing(int verticalSpacing) {
             this.verticalSpacing = verticalSpacing;
             return this;
         }
@@ -153,7 +131,7 @@ public class GridCardWrapper {
          * @param spacing 间距大小
          * @return Builder
          */
-        public GridCardWrapper.Builder setSpacing(int spacing) {
+        public LargeGraphicCardWrapper.Builder setSpacing(int spacing) {
             this.spacing = spacing;
             return this;
         }
@@ -164,7 +142,7 @@ public class GridCardWrapper {
          * @param includeEdge 默认false不包含
          * @return Builder
          */
-        public GridCardWrapper.Builder setIncludeEdge(boolean includeEdge) {
+        public LargeGraphicCardWrapper.Builder setIncludeEdge(boolean includeEdge) {
             this.includeEdge = includeEdge;
             return this;
         }
@@ -175,26 +153,26 @@ public class GridCardWrapper {
          * @param listener GridCardAdapter.OnItemClickListener
          * @return Builder
          */
-        public GridCardWrapper.Builder setListener(GridCardAdapter.OnItemClickListener listener) {
+        public LargeGraphicCardWrapper.Builder setListener(
+            LargeGraphicCardAdapter.OnItemClickListener listener) {
             this.listener = listener;
             return this;
         }
 
-        public GridCardWrapper create() {
+        public LargeGraphicCardWrapper create() {
             if (this.recyclerView == null) {
                 throw new UnsupportedOperationException(
                     "recyclerView is null, call setRecyclerView first.");
             }
-            GridCardWrapper wrapper = new GridCardWrapper();
+            LargeGraphicCardWrapper wrapper = new LargeGraphicCardWrapper();
             wrapper.recyclerViewRef = new WeakReference<>(this.recyclerView);
             if (this.spanCount > 0) {
                 wrapper.spanCount = this.spanCount;
             } else {
                 int column = this.recyclerView.getResources().getInteger(R.integer.ajstudy_column_count);
-                wrapper.spanCount = column == Constant.Grid.COLUMN_DEFAULT ? Constant.Pln.GRID_4 :
-                    (column == Constant.Grid.COLUMN_8 ? Constant.Pln.GRID_8 : Constant.Pln.GRID_12);
+                wrapper.spanCount = column == Constant.Grid.COLUMN_DEFAULT ? Constant.Pln.DEF_4 :
+                    (column == Constant.Grid.COLUMN_8 ? Constant.Pln.DEF_8 : Constant.Pln.DEF_12);
             }
-            wrapper.itemType = this.itemType;
             wrapper.horizontalSpacing = this.horizontalSpacing == 0 && this.spacing != 0
                 ? this.spacing : this.horizontalSpacing;
             wrapper.verticalSpacing = this.verticalSpacing == 0 && this.spacing != 0
