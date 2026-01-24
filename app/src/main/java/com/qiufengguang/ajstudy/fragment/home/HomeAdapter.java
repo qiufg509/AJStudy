@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.card.banner.BannerViewHolder;
+import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.grid.GridViewHolder;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.BaseCardBean;
@@ -17,7 +18,9 @@ import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 
 import java.lang.ref.WeakReference;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 首页适配器
@@ -49,7 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<List<? extends BaseCardBean>> dataList;
 
     private int bannerPosition = -1;
-    private WeakReference<BannerViewHolder> bannerViewHolderRef;
+    private final Set<WeakReference<BaseViewHolder<?, ?>>> viewHolderRefs = new HashSet<>();
 
     public HomeAdapter(LifecycleOwner lifecycleOwner) {
         this.lifecycleOwner = lifecycleOwner;
@@ -122,14 +125,16 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 CardBannerBinding bannerBinding = CardBannerBinding.inflate(
                     LayoutInflater.from(parent.getContext()), parent, false);
                 BannerViewHolder bannerViewHolder = new BannerViewHolder(
-                    bannerBinding.getRoot(), this.lifecycleOwner);
-                bannerViewHolderRef = new WeakReference<>(bannerViewHolder);
+                    bannerBinding, this.lifecycleOwner);
+                viewHolderRefs.add(new WeakReference<>(bannerViewHolder));
                 return bannerViewHolder;
             case VIEW_TYPE_GRID_CARD:
             default:
                 CardGridBinding gridBinding = CardGridBinding.inflate(
                     LayoutInflater.from(parent.getContext()), parent, false);
-                return new GridViewHolder(gridBinding.getRoot(), this.lifecycleOwner);
+                GridViewHolder gridViewHolder = new GridViewHolder(gridBinding);
+                viewHolderRefs.add(new WeakReference<>(gridViewHolder));
+                return gridViewHolder;
         }
     }
 
@@ -159,18 +164,28 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if (holder instanceof BannerViewHolder) {
-            ((BannerViewHolder) holder).onViewAttachedToWindow();
+        if (holder instanceof BaseViewHolder) {
+            ((BaseViewHolder<?, ?>) holder).onViewAttachedToWindow();
         }
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        if (holder instanceof BannerViewHolder) {
-            ((BannerViewHolder) holder).onViewDetachedFromWindow();
+        if (holder instanceof BaseViewHolder) {
+            ((BaseViewHolder<?, ?>) holder).onViewDetachedFromWindow();
         }
     }
+
+    @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+        // 当 ViewHolder 被回收时，清理其资源
+        if (holder instanceof BaseViewHolder) {
+            ((BaseViewHolder<?, ?>) holder).cleanup();
+        }
+    }
+
 
     private void findBannerPosition() {
         for (int index = 0; index < dataList.size(); index++) {
@@ -188,18 +203,23 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void resumeBannerIfVisible(RecyclerView recyclerView) {
-        if (isBannerVisible(recyclerView)) {
-            BannerViewHolder holder = bannerViewHolderRef != null ? bannerViewHolderRef.get() : null;
-            if (holder != null) {
-                holder.setBannerActive(true);
+        if (!isBannerVisible(recyclerView)) {
+            return;
+        }
+        for (WeakReference<BaseViewHolder<?, ?>> ref : viewHolderRefs) {
+            BaseViewHolder<?, ?> holder = ref.get();
+            if (holder instanceof BannerViewHolder) {
+                ((BannerViewHolder) holder).setBannerActive(true);
             }
         }
     }
 
     public void pauseBanner() {
-        BannerViewHolder holder = bannerViewHolderRef != null ? bannerViewHolderRef.get() : null;
-        if (holder != null) {
-            holder.setBannerActive(false);
+        for (WeakReference<BaseViewHolder<?, ?>> ref : viewHolderRefs) {
+            BaseViewHolder<?, ?> holder = ref.get();
+            if (holder instanceof BannerViewHolder) {
+                ((BannerViewHolder) holder).setBannerActive(false);
+            }
         }
     }
 
@@ -220,12 +240,21 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return false;
     }
 
+    /**
+     * 清理所有 ViewHolder 的资源
+     */
     public void releaseAllResources() {
-        BannerViewHolder holder = bannerViewHolderRef != null ? bannerViewHolderRef.get() : null;
-        if (holder != null) {
-            holder.cleanup();
+        // 清理所有 BaseViewHolder
+        for (WeakReference<BaseViewHolder<?, ?>> ref : viewHolderRefs) {
+            BaseViewHolder<?, ?> holder = ref.get();
+            if (holder != null) {
+                holder.cleanup();
+            }
         }
-        bannerViewHolderRef = null;
+        viewHolderRefs.clear();
+
+        // 清理其他资源
         dataList = null;
+        bannerPosition = -1;
     }
 }

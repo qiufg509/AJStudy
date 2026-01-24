@@ -51,7 +51,7 @@ public class MeFragment extends BaseFragment {
         gridCardWrapper = new GridCardWrapper.Builder()
             .setRecyclerView(binding.recyclerGrid)
             .setItemType(GridCardWrapper.TYPE_IMAGE)
-            .setListener(bean -> {
+            .setListener((context, bean) -> {
                 viewModel.saveThemeIndex(bean);
 
                 Intent intent = new Intent(requireContext(), MainActivity.class);

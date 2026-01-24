@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.card.grid;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -103,7 +104,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(v -> {
                 if (clickListener != null && bean != null) {
-                    clickListener.onItemClick(bean);
+                    clickListener.onItemClick(v.getContext(), bean);
                 }
             });
         }
@@ -131,7 +132,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 if (clickListener != null && bean != null
                     && bean.getIcon() != R.drawable.ic_checkmark) {
                     bean.setIcon(R.drawable.ic_checkmark);
-                    clickListener.onItemClick(bean);
+                    clickListener.onItemClick(v.getContext(), bean);
                 }
             });
         }
@@ -150,6 +151,6 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public interface OnItemClickListener {
-        void onItemClick(GridCardBean bean);
+        void onItemClick(Context context, GridCardBean bean);
     }
 }

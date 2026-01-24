@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.card.banner;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -195,7 +196,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
             // 设置点击事件
             this.binding.banner.setOnClickListener(v -> {
                 if (clickListener != null && bean != null) {
-                    clickListener.onBannerClick(currentRealPosition, bean);
+                    clickListener.onBannerClick(v.getContext(), currentRealPosition, bean);
                 }
             });
         }
@@ -242,6 +243,6 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
      * Banner点击监听接口
      */
     public interface OnBannerClickListener {
-        void onBannerClick(int position, BannerBean bean);
+        void onBannerClick(Context context, int position, BannerBean bean);
     }
 }
