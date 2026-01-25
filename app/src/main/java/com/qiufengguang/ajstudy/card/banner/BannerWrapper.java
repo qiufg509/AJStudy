@@ -101,6 +101,8 @@ public class BannerWrapper {
 
     private long lastIndicatorUpdateTime = 0;
 
+    private BannerDecoration decor;
+
     private BannerWrapper() {
     }
 
@@ -183,9 +185,20 @@ public class BannerWrapper {
         if (recyclerBanner == null) {
             return;
         }
+
+        // 检查是否已经设置了 SnapHelper
+        if (recyclerBanner.getOnFlingListener() != null) {
+            // 如果已经有 SnapHelper，先清理
+            recyclerBanner.setOnFlingListener(null);
+        }
+
         setBannerRootRadius(recyclerBanner.getParent(), cornerRadius);
         if (this.column != Constant.Grid.COLUMN_DEFAULT) {
-            recyclerBanner.addItemDecoration(new BannerDecoration(GAP, 0));
+            if (decor == null) {
+                decor = new BannerDecoration(GAP, 0);
+            }
+            recyclerBanner.removeItemDecoration(decor);
+            recyclerBanner.addItemDecoration(decor);
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerBanner.getContext(),
@@ -472,11 +485,15 @@ public class BannerWrapper {
             RecyclerView recyclerBanner = recyclerBannerRef.get();
             if (recyclerBanner != null) {
                 recyclerBanner.clearOnScrollListeners();
+                recyclerBanner.setOnFlingListener(null);
                 recyclerBanner.setAdapter(null);
+                recyclerBanner.setLayoutManager(null);
+                recyclerBanner.removeItemDecoration(decor);
                 recyclerBannerRef.clear();
             }
             recyclerBannerRef = null;
         }
+        decor = null;
         releaseIndicator();
         if (adapter != null) {
             adapter.setOnBannerClickListener(null);

@@ -171,7 +171,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             @SuppressWarnings("unchecked")
             List<BannerBean> bannerBeans = (List<BannerBean>) baseCardBeans;
-            bannerViewHolder.bind(bannerBeans);
+            bannerViewHolder.bind(bannerBeans,this.lifecycleOwner);
             bannerViewHolder.setBannerActive(true);
         } else if (holder instanceof GridViewHolder
             && TextUtils.equals(layoutName, GridCardBean.LAYOUT_NAME)) {

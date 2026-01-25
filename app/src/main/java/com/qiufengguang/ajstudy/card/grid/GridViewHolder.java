@@ -27,7 +27,13 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding, List<GridCar
 
     public GridViewHolder(@NonNull CardGridBinding binding) {
         super(binding);
+    }
 
+    @Override
+    public void initCardWrapper() {
+        if (cardWrapper != null) {
+            return;
+        }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
         cardWrapper = new GridCardWrapper.Builder()
@@ -41,9 +47,13 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding, List<GridCar
 
     @Override
     public void bind(List<GridCardBean> beans) {
-        if (beans != null && cardWrapper != null) {
-            cardWrapper.setData(beans);
+        if (beans == null) {
+            return;
         }
+        if (cardWrapper == null) {
+            initCardWrapper();
+        }
+        cardWrapper.setData(beans);
     }
 
     private static void onItemClickListener(Context context, GridCardBean bean) {

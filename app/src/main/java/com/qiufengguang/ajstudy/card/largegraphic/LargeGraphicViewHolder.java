@@ -24,7 +24,13 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
 
     public LargeGraphicViewHolder(@NonNull CardLargeGraphicBinding binding) {
         super(binding);
+    }
 
+    @Override
+    public void initCardWrapper() {
+        if (cardWrapper != null) {
+            return;
+        }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
         cardWrapper = new LargeGraphicCardWrapper.Builder()
@@ -37,9 +43,13 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
 
     @Override
     public void bind(List<LargeGraphicCardBean> beans) {
-        if (beans != null && cardWrapper != null) {
-            cardWrapper.setData(beans);
+        if (beans == null) {
+            return;
         }
+        if (cardWrapper == null) {
+            initCardWrapper();
+        }
+        cardWrapper.setData(beans);
     }
 
     private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {

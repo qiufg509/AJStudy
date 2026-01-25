@@ -26,9 +26,10 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/19 14:03
  */
-public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<BannerBean>> {
+public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<BannerBean>>
+    implements DefaultLifecycleObserver {
 
-    private BannerWrapper bannerWrapper;
+    private BannerWrapper cardWrapper;
 
     private boolean isBannerActive = false;
 
@@ -38,8 +39,15 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<Ban
     public BannerViewHolder(@NonNull CardBannerBinding binding, @NonNull LifecycleOwner lifecycleOwner) {
         super(binding);
         this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
+        observeLifecycle();
+    }
 
-        bannerWrapper = new BannerWrapper.Builder()
+    @Override
+    public void initCardWrapper() {
+        if (cardWrapper != null) {
+            return;
+        }
+        cardWrapper = new BannerWrapper.Builder()
             .setRecyclerView(binding.recyclerBanner)
             .setIndicatorContainer(binding.indicatorContainer)
             .setClickListener((context, position, bean) -> {
@@ -49,16 +57,27 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<Ban
                 handleBannerClick((AppCompatActivity) context, position, bean);
             })
             .create();
-        observeLifecycle();
     }
 
     @Override
     public void bind(List<BannerBean> bannerBeans) {
-        if (bannerBeans != null && bannerWrapper != null) {
-            bannerWrapper.setBannerBeans(bannerBeans);
+        if (bannerBeans == null) {
+            return;
         }
+        if (cardWrapper == null) {
+            initCardWrapper();
+        }
+        cardWrapper.setBannerBeans(bannerBeans);
 
         checkAndResumeBanner();
+    }
+
+
+    public void bind(List<BannerBean> bannerBeans, LifecycleOwner lifecycleOwner) {
+        if (this.lifecycleOwnerRef == null || this.lifecycleOwnerRef.isEnqueued()) {
+            this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
+        }
+        bind(bannerBeans);
     }
 
     private void observeLifecycle() {
@@ -66,23 +85,23 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<Ban
         if (lifecycleOwner == null) {
             return;
         }
-        lifecycleOwner.getLifecycle().addObserver(new DefaultLifecycleObserver() {
-            @Override
-            public void onResume(@NonNull LifecycleOwner owner) {
-                checkAndResumeBanner();
-            }
+        lifecycleOwner.getLifecycle().addObserver(this);
+    }
 
-            @Override
-            public void onPause(@NonNull LifecycleOwner owner) {
-                pauseBanner();
-            }
+    @Override
+    public void onResume(@NonNull LifecycleOwner owner) {
+        checkAndResumeBanner();
+    }
 
-            @Override
-            public void onDestroy(@NonNull LifecycleOwner owner) {
-                releaseBanner();
-                owner.getLifecycle().removeObserver(this);
-            }
-        });
+    @Override
+    public void onPause(@NonNull LifecycleOwner owner) {
+        pauseBanner();
+    }
+
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
+        releaseBanner();
+        owner.getLifecycle().removeObserver(this);
     }
 
     @Override
@@ -102,7 +121,11 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<Ban
         super.cleanup();
         releaseBanner();
         if (lifecycleOwnerRef != null) {
-            lifecycleOwnerRef.clear();
+            LifecycleOwner lifecycleOwner = lifecycleOwnerRef.get();
+            if (lifecycleOwner != null) {
+                lifecycleOwner.getLifecycle().removeObserver(this);
+                lifecycleOwnerRef.clear();
+            }
             lifecycleOwnerRef = null;
         }
     }
@@ -111,22 +134,22 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<Ban
      * 检查是否需要恢复轮播
      */
     private void checkAndResumeBanner() {
-        if (bannerWrapper != null && isBannerActive) {
-            bannerWrapper.resumeAutoScroll();
+        if (cardWrapper != null && isBannerActive) {
+            cardWrapper.resumeAutoScroll();
         }
     }
 
     private void pauseBanner() {
-        if (bannerWrapper != null) {
-            bannerWrapper.pauseAutoScroll();
+        if (cardWrapper != null) {
+            cardWrapper.pauseAutoScroll();
         }
         isBannerActive = false;
     }
 
     private void releaseBanner() {
-        if (bannerWrapper != null) {
-            bannerWrapper.release();
-            bannerWrapper = null;
+        if (cardWrapper != null) {
+            cardWrapper.release();
+            cardWrapper = null;
         }
         isBannerActive = false;
     }

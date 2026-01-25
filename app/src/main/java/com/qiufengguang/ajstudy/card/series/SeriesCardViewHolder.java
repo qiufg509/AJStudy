@@ -23,7 +23,13 @@ public class SeriesCardViewHolder extends BaseViewHolder<CardSeriesBinding, List
 
     public SeriesCardViewHolder(@NonNull CardSeriesBinding binding) {
         super(binding);
+    }
 
+    @Override
+    public void initCardWrapper() {
+        if (cardWrapper != null) {
+            return;
+        }
         cardWrapper = new SeriesCardWrapper.Builder()
             .setBinding(binding)
             .setListener(SeriesCardViewHolder::onItemClickListener)
@@ -33,9 +39,13 @@ public class SeriesCardViewHolder extends BaseViewHolder<CardSeriesBinding, List
 
     @Override
     public void bind(List<SeriesCardBean> beans) {
-        if (beans != null && cardWrapper != null) {
-            cardWrapper.setData(beans);
+        if (beans == null) {
+            return;
         }
+        if (cardWrapper == null) {
+            initCardWrapper();
+        }
+        cardWrapper.setData(beans);
     }
 
     private static void onItemClickListener(Context context, SeriesCardBean bean) {

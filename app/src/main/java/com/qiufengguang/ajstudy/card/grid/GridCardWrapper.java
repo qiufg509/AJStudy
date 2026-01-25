@@ -43,6 +43,8 @@ public class GridCardWrapper {
 
     private boolean includeEdge;
 
+    private GridDecoration decor;
+
     private GridCardAdapter.OnItemClickListener listener;
 
     private GridCardWrapper() {
@@ -71,8 +73,12 @@ public class GridCardWrapper {
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new GridDecoration(spanCount,
-            horizontalSpacing, verticalSpacing, includeEdge));
+        if (decor == null) {
+            decor = new GridDecoration(spanCount,
+                horizontalSpacing, verticalSpacing, includeEdge);
+        }
+        recyclerView.removeItemDecoration(decor);
+        recyclerView.addItemDecoration(decor);
     }
 
     public static class Builder {
@@ -211,13 +217,16 @@ public class GridCardWrapper {
      */
     public void release() {
         if (recyclerViewRef != null) {
-            RecyclerView recyclerBanner = recyclerViewRef.get();
-            if (recyclerBanner != null) {
-                recyclerBanner.setAdapter(null);
+            RecyclerView recyclerView = recyclerViewRef.get();
+            if (recyclerView != null) {
+                recyclerView.setAdapter(null);
+                recyclerView.setLayoutManager(null);
+                recyclerView.removeItemDecoration(decor);
                 recyclerViewRef.clear();
             }
             recyclerViewRef = null;
         }
+        decor = null;
         if (adapter != null) {
             adapter.setOnItemClickListener(null);
             adapter = null;

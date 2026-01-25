@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
-import androidx.annotation.IntRange;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,9 +24,6 @@ public class LargeGraphicCardWrapper {
 
     private int spanCount;
 
-    @IntRange(from = 0, to = 1)
-    private int itemType;
-
     private int horizontalSpacing;
 
     private int verticalSpacing;
@@ -35,6 +31,8 @@ public class LargeGraphicCardWrapper {
     private boolean includeEdge;
 
     private LargeGraphicCardAdapter.OnItemClickListener listener;
+
+    private GridDecoration decor;
 
     private LargeGraphicCardWrapper() {
     }
@@ -62,8 +60,12 @@ public class LargeGraphicCardWrapper {
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new GridDecoration(spanCount,
-            horizontalSpacing, verticalSpacing, includeEdge));
+        if (decor == null) {
+            decor = new GridDecoration(spanCount,
+                horizontalSpacing, verticalSpacing, includeEdge);
+        }
+        recyclerView.removeItemDecoration(decor);
+        recyclerView.addItemDecoration(decor);
     }
 
     public static class Builder {
@@ -189,13 +191,16 @@ public class LargeGraphicCardWrapper {
      */
     public void release() {
         if (recyclerViewRef != null) {
-            RecyclerView recyclerBanner = recyclerViewRef.get();
-            if (recyclerBanner != null) {
-                recyclerBanner.setAdapter(null);
+            RecyclerView recyclerView = recyclerViewRef.get();
+            if (recyclerView != null) {
+                recyclerView.setAdapter(null);
+                recyclerView.setLayoutManager(null);
+                recyclerView.removeItemDecoration(decor);
                 recyclerViewRef.clear();
             }
             recyclerViewRef = null;
         }
+        decor = null;
         if (adapter != null) {
             adapter.setOnItemClickListener(null);
             adapter = null;
