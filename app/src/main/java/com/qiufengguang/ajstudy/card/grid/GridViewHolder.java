@@ -33,7 +33,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding, List<GridCar
         cardWrapper = new GridCardWrapper.Builder()
             .setRecyclerView(binding.getRoot())
             .setItemType(GridCardWrapper.TYPE_TEXT)
-            .setSpacing(spacing)
+            .setHorizontalSpacing(spacing)
             .setListener(GridViewHolder::onItemClickListener)
             .create();
         cardWrapper.show();

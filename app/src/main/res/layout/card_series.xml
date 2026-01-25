@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
+    android:layout_marginBottom="@dimen/activity_vertical_margin_l">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="原创短剧：日常自拍"
+        android:textColor="@color/ajstudy_color_text_primary"
+        android:textFontWeight="600"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 第一行：单张大图 -->
+    <ImageView
+        android:id="@+id/iv_cover_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        android:contentDescription="@string/image_description"
+        android:foreground="@drawable/series_card_gradient_overlay"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="H,20:8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_title_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_1"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_1"
+        app:layout_constraintTop_toBottomOf="@id/iv_cover_1" />
+
+    <!-- 关键：创建两个参考线，用于平分宽度并留出间距 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="-8dp"
+        app:layout_constraintGuide_percent="0.5" /> <!-- 向左偏移一半间距 -->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="-8dp"
+        app:layout_constraintGuide_percent="0.5" /> <!-- 向右偏移一半间距 -->
+
+    <!-- 第二行：两张并排图 -->
+    <ImageView
+        android:id="@+id/iv_cover_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_xs"
+        android:contentDescription="@string/image_description"
+        android:foreground="@drawable/series_card_gradient_overlay"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="H,20:8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_1" />
+
+    <TextView
+        android:id="@+id/tv_title_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_2"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_2"
+        app:layout_constraintTop_toBottomOf="@id/iv_cover_2" />
+
+    <ImageView
+        android:id="@+id/iv_cover_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin_xs"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        android:contentDescription="@string/image_description"
+        android:foreground="@drawable/series_card_gradient_overlay"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="H,20:8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_right"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_1" />
+
+    <TextView
+        android:id="@+id/tv_title_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_3"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_3"
+        app:layout_constraintTop_toBottomOf="@id/iv_cover_3" />
+
+    <!-- 关键：创建一个屏障，取 tv_title_2 和 tv_title_3 中较低的位置 -->
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_second_row_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tv_title_2,tv_title_3" />
+
+    <!-- 第三行：两张并排图 -->
+    <ImageView
+        android:id="@+id/iv_cover_4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_xs"
+        android:contentDescription="@string/image_description"
+        android:foreground="@drawable/series_card_gradient_overlay"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="H,20:8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_second_row_bottom" />
+
+    <TextView
+        android:id="@+id/tv_title_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_4"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_4"
+        app:layout_constraintTop_toBottomOf="@id/iv_cover_4" />
+
+    <ImageView
+        android:id="@+id/iv_cover_5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin_xs"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        android:contentDescription="@string/image_description"
+        android:foreground="@drawable/series_card_gradient_overlay"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="H,20:8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_right"
+        app:layout_constraintTop_toBottomOf="@id/barrier_second_row_bottom" />
+
+    <TextView
+        android:id="@+id/tv_title_5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_xs"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_5"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_5"
+        app:layout_constraintTop_toBottomOf="@id/iv_cover_5" />
+
+    <!-- 底部按钮区域 -->
+    <TextView
+        android:id="@+id/tv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="@string/series_card_more"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        app:drawableStartCompat="@drawable/ic_series_card_more"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_4"
+        app:layout_constraintStart_toStartOf="@id/tv_title_4"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_4" />
+
+    <TextView
+        android:id="@+id/tv_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="@string/series_card_change"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        app:drawableStartCompat="@drawable/ic_series_card_change"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_5"
+        app:layout_constraintStart_toStartOf="@id/tv_title_5"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

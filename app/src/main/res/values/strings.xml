@@ -18,4 +18,6 @@
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
     <string name="install">安装</string>
+    <string name="series_card_more">查看更多</string>
+    <string name="series_card_change">换一换</string>
 </resources>

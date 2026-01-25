@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:drawablePadding="@dimen/activity_vertical_margin_xs"
+    android:drawablePadding="@dimen/activity_vertical_margin_xxs"
     android:gravity="center_horizontal"
     android:paddingVertical="@dimen/activity_vertical_margin_xs"
     android:textColor="@color/ajstudy_color_text_primary"
-    android:textSize="14sp"
+    android:textSize="12sp"
     app:drawableTopCompat="@drawable/ic_book_7" />
