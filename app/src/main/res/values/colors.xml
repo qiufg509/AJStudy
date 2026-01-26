@@ -34,6 +34,7 @@
     <color name="ajstudy_color_toolbar_text_dark">#dbffffff</color>
     <color name="ajstudy_color_text_primary">#e5000000</color>
     <color name="ajstudy_color_text_secondary">#99000000</color>
+    <color name="ajstudy_color_text_tertiary">#66000000</color>
     <color name="ajstudy_download_btn_bg">#e0e0e0</color>
     <color name="ajstudy_download_btn_bg_pressed">#efffffff</color>
     <color name="ajstudy_bottom_nav_bg_start">#fff1f3f5</color>

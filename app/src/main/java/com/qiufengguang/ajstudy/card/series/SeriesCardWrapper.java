@@ -27,6 +27,8 @@ import java.util.List;
  * @since 2026/1/25 15:44
  */
 public class SeriesCardWrapper {
+    private String cardTitle;
+
     private List<SeriesCardBean> beans;
 
     private WeakReference<CardSeriesBinding> bindingRef;
@@ -40,7 +42,8 @@ public class SeriesCardWrapper {
     private SeriesCardWrapper() {
     }
 
-    public void setData(List<SeriesCardBean> beans) {
+    public void setData(List<SeriesCardBean> beans, String cardTitle) {
+        this.cardTitle = cardTitle;
         this.beans = beans;
         this.show();
     }
@@ -56,11 +59,12 @@ public class SeriesCardWrapper {
         if (binding == null) {
             return;
         }
-        fillItem(binding.ivCover1, binding.tvTitle1, getIncrementData());
-        fillItem(binding.ivCover2, binding.tvTitle2, getIncrementData());
-        fillItem(binding.ivCover3, binding.tvTitle3, getIncrementData());
-        fillItem(binding.ivCover4, binding.tvTitle4, getIncrementData());
-        fillItem(binding.ivCover5, binding.tvTitle5, getIncrementData());
+        binding.tvTitle.setText(cardTitle);
+        fillItem(binding.ivCover1, binding.tvTitle1);
+        fillItem(binding.ivCover2, binding.tvTitle2);
+        fillItem(binding.ivCover3, binding.tvTitle3);
+        fillItem(binding.ivCover4, binding.tvTitle4);
+        fillItem(binding.ivCover5, binding.tvTitle5);
 
         binding.tvMore.setOnClickListener(v ->
             Toast.makeText(GlobalApp.getContext(), "查看更多", Toast.LENGTH_SHORT).show());
@@ -76,7 +80,7 @@ public class SeriesCardWrapper {
         return this.beans.get(showIndex);
     }
 
-    private void fillItem(ImageView imageView, TextView textView, SeriesCardBean bean) {
+    private void fillItem(ImageView imageView, TextView textView) {
         if (this.requestOptions == null) {
             int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
             this.requestOptions = new RequestOptions()
@@ -84,6 +88,7 @@ public class SeriesCardWrapper {
                 .error(R.drawable.placeholder_large_graphic_card)
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
+        SeriesCardBean bean = getIncrementData();
         textView.setText(bean.getTitle());
         if (!TextUtils.isEmpty(bean.getImageUrl())) {
             Glide.with(imageView.getContext())

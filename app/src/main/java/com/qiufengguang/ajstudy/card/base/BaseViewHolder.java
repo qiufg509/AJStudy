@@ -4,13 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
+import com.qiufengguang.ajstudy.data.LayoutData;
+
 /**
  * 卡片基类ViewHolder
  *
  * @author qiufengguang
  * @since 2026/1/24 16:23
  */
-public abstract class BaseViewHolder<B extends ViewBinding, T> extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView.ViewHolder {
 
     protected B binding;
 
@@ -28,7 +30,7 @@ public abstract class BaseViewHolder<B extends ViewBinding, T> extends RecyclerV
     /**
      * 绑定数据
      */
-    public abstract void bind(T data);
+    public abstract void bind(LayoutData<?> data);
 
     /**
      * 清理资源，防止内存泄漏

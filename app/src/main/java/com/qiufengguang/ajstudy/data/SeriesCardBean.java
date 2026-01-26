@@ -6,22 +6,17 @@ package com.qiufengguang.ajstudy.data;
  * @author qiufengguang
  * @since 2026/1/25 15:44
  */
-public class SeriesCardBean extends BaseCardBean {
+public class SeriesCardBean {
 
     public static final String LAYOUT_NAME = "seriesCard";
 
-    private String title;
+    private final String title;
 
-    private String imageUrl;
+    private final String imageUrl;
 
     public SeriesCardBean(String title, String imageUrl) {
         this.title = title;
         this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
     }
 
     public String getTitle() {

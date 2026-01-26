@@ -14,9 +14,9 @@ import com.qiufengguang.ajstudy.card.grid.GridViewHolder;
 import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicViewHolder;
 import com.qiufengguang.ajstudy.card.series.SeriesCardViewHolder;
 import com.qiufengguang.ajstudy.data.BannerBean;
-import com.qiufengguang.ajstudy.data.BaseCardBean;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
@@ -55,10 +55,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final LifecycleOwner lifecycleOwner;
 
-    private List<List<? extends BaseCardBean>> dataList;
+    private List<LayoutData<?>> dataList;
 
     private int bannerPosition = -1;
-    private final Set<WeakReference<BaseViewHolder<?, ?>>> viewHolderRefs = new HashSet<>();
+    private final Set<WeakReference<BaseViewHolder<?>>> viewHolderRefs = new HashSet<>();
 
     public HomeAdapter(LifecycleOwner lifecycleOwner) {
         this.lifecycleOwner = lifecycleOwner;
@@ -69,7 +69,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      *
      * @param dataList 页面数据
      */
-    public void setData(List<List<? extends BaseCardBean>> dataList) {
+    public void setData(List<LayoutData<?>> dataList) {
         if (dataList == null || dataList.isEmpty()) {
             this.dataList = dataList;
             pauseBanner();
@@ -92,12 +92,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     @Override
     public int getItemViewType(int position) {
-        List<? extends BaseCardBean> baseCardBeans = dataList.get(position);
-        if (baseCardBeans == null || baseCardBeans.isEmpty()) {
+        LayoutData<?> layoutData = dataList.get(position);
+        if (layoutData == null) {
             return -1;
         }
-        BaseCardBean baseCardBean = baseCardBeans.get(0);
-        switch (baseCardBean.getLayoutName()) {
+        switch (layoutData.getLayoutName()) {
             case BannerBean.LAYOUT_NAME:
                 return VIEW_TYPE_BANNER;
             case GridCardBean.LAYOUT_NAME:
@@ -118,8 +117,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         int count = 0;
         for (int index = 0, sum = dataList.size(); index < sum; index++) {
-            List<? extends BaseCardBean> baseCardBeans = dataList.get(index);
-            if (baseCardBeans == null || baseCardBeans.isEmpty()) {
+            LayoutData<?> layoutData = dataList.get(index);
+            if (layoutData == null || layoutData.getBeans() == null) {
                 continue;
             }
             count++;
@@ -161,33 +160,29 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        List<? extends BaseCardBean> baseCardBeans = dataList.get(position);
-        if (baseCardBeans == null || baseCardBeans.isEmpty()) {
+        LayoutData<?> layoutData = dataList.get(position);
+        if (layoutData == null) {
             return;
         }
-        String layoutName = baseCardBeans.get(0).getLayoutName();
+        Object data = layoutData.getBeans();
+        if (data == null) {
+            return;
+        }
+        String layoutName = layoutData.getLayoutName();
         if (holder instanceof BannerViewHolder
             && TextUtils.equals(layoutName, BannerBean.LAYOUT_NAME)) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            @SuppressWarnings("unchecked")
-            List<BannerBean> bannerBeans = (List<BannerBean>) baseCardBeans;
-            bannerViewHolder.bind(bannerBeans,this.lifecycleOwner);
+            bannerViewHolder.bind(layoutData, this.lifecycleOwner);
             bannerViewHolder.setBannerActive(true);
         } else if (holder instanceof GridViewHolder
             && TextUtils.equals(layoutName, GridCardBean.LAYOUT_NAME)) {
-            @SuppressWarnings("unchecked")
-            List<GridCardBean> gridCardBeans = (List<GridCardBean>) baseCardBeans;
-            ((GridViewHolder) holder).bind(gridCardBeans);
+            ((GridViewHolder) holder).bind(layoutData);
         } else if (holder instanceof LargeGraphicViewHolder
             && TextUtils.equals(layoutName, LargeGraphicCardBean.LAYOUT_NAME)) {
-            @SuppressWarnings("unchecked")
-            List<LargeGraphicCardBean> lgcBeans = (List<LargeGraphicCardBean>) baseCardBeans;
-            ((LargeGraphicViewHolder) holder).bind(lgcBeans);
+            ((LargeGraphicViewHolder) holder).bind(layoutData);
         } else if (holder instanceof SeriesCardViewHolder
             && TextUtils.equals(layoutName, SeriesCardBean.LAYOUT_NAME)) {
-            @SuppressWarnings("unchecked")
-            List<SeriesCardBean> seriesCardBeans = (List<SeriesCardBean>) baseCardBeans;
-            ((SeriesCardViewHolder) holder).bind(seriesCardBeans);
+            ((SeriesCardViewHolder) holder).bind(layoutData);
         }
     }
 
@@ -196,7 +191,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         if (holder instanceof BaseViewHolder) {
-            ((BaseViewHolder<?, ?>) holder).onViewAttachedToWindow();
+            ((BaseViewHolder<?>) holder).onViewAttachedToWindow();
         }
     }
 
@@ -204,7 +199,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder instanceof BaseViewHolder) {
-            ((BaseViewHolder<?, ?>) holder).onViewDetachedFromWindow();
+            ((BaseViewHolder<?>) holder).onViewDetachedFromWindow();
         }
     }
 
@@ -213,20 +208,18 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         super.onViewRecycled(holder);
         // 当 ViewHolder 被回收时，清理其资源
         if (holder instanceof BaseViewHolder) {
-            ((BaseViewHolder<?, ?>) holder).cleanup();
+            ((BaseViewHolder<?>) holder).cleanup();
         }
     }
 
 
     private void findBannerPosition() {
         for (int index = 0; index < dataList.size(); index++) {
-            List<? extends BaseCardBean> baseCardBeans = dataList.get(index);
-            if (baseCardBeans == null || baseCardBeans.isEmpty()) {
+            LayoutData<?> layoutData = dataList.get(index);
+            if (layoutData == null || layoutData.getBeans() == null) {
                 continue;
             }
-            BaseCardBean baseCardBean = baseCardBeans.get(0);
-            if (baseCardBean != null
-                && TextUtils.equals(baseCardBean.getLayoutName(), BannerBean.LAYOUT_NAME)) {
+            if (TextUtils.equals(layoutData.getLayoutName(), BannerBean.LAYOUT_NAME)) {
                 bannerPosition = index;
                 break;
             }
@@ -237,8 +230,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (!isBannerVisible(recyclerView)) {
             return;
         }
-        for (WeakReference<BaseViewHolder<?, ?>> ref : viewHolderRefs) {
-            BaseViewHolder<?, ?> holder = ref.get();
+        for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
+            BaseViewHolder<?> holder = ref.get();
             if (holder instanceof BannerViewHolder) {
                 ((BannerViewHolder) holder).setBannerActive(true);
             }
@@ -246,8 +239,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void pauseBanner() {
-        for (WeakReference<BaseViewHolder<?, ?>> ref : viewHolderRefs) {
-            BaseViewHolder<?, ?> holder = ref.get();
+        for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
+            BaseViewHolder<?> holder = ref.get();
             if (holder instanceof BannerViewHolder) {
                 ((BannerViewHolder) holder).setBannerActive(false);
             }
@@ -276,8 +269,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     public void releaseAllResources() {
         // 清理所有 BaseViewHolder
-        for (WeakReference<BaseViewHolder<?, ?>> ref : viewHolderRefs) {
-            BaseViewHolder<?, ?> holder = ref.get();
+        for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
+            BaseViewHolder<?> holder = ref.get();
             if (holder != null) {
                 holder.cleanup();
             }

@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.BannerBean;
+import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;
 import com.qiufengguang.ajstudy.dialog.IDialog;
@@ -26,7 +27,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/19 14:03
  */
-public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<BannerBean>>
+public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
     implements DefaultLifecycleObserver {
 
     private BannerWrapper cardWrapper;
@@ -60,24 +61,25 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding, List<Ban
     }
 
     @Override
-    public void bind(List<BannerBean> bannerBeans) {
-        if (bannerBeans == null) {
+    public void bind(LayoutData<?> data) {
+        if (data == null || data.getBeans() == null) {
             return;
         }
         if (cardWrapper == null) {
             initCardWrapper();
         }
-        cardWrapper.setBannerBeans(bannerBeans);
+        @SuppressWarnings("unchecked")
+        List<BannerBean> beans = (List<BannerBean>) data.getBeans();
+        cardWrapper.setBannerBeans(beans);
 
         checkAndResumeBanner();
     }
 
-
-    public void bind(List<BannerBean> bannerBeans, LifecycleOwner lifecycleOwner) {
+    public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
         if (this.lifecycleOwnerRef == null || this.lifecycleOwnerRef.isEnqueued()) {
             this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
         }
-        bind(bannerBeans);
+        this.bind(data);
     }
 
     private void observeLifecycle() {

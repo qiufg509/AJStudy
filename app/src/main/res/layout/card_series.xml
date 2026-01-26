@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
-    android:layout_marginBottom="@dimen/activity_vertical_margin_l">
+    android:layout_marginBottom="@dimen/activity_vertical_margin_l"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin_l">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
         android:lines="1"
-        android:text="原创短剧：日常自拍"
         android:textColor="@color/ajstudy_color_text_primary"
         android:textFontWeight="600"
         android:textSize="18sp"
@@ -40,6 +40,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin_xs"
         android:ellipsize="end"
         android:lines="1"
+        android:textColor="@color/ajstudy_color_text_primary"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_1"
         app:layout_constraintStart_toStartOf="@id/iv_cover_1"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_1" />
@@ -83,6 +84,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin_xs"
         android:ellipsize="end"
         android:lines="1"
+        android:textColor="@color/ajstudy_color_text_primary"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_2"
         app:layout_constraintStart_toStartOf="@id/iv_cover_2"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_2" />
@@ -108,6 +110,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin_xs"
         android:ellipsize="end"
         android:lines="1"
+        android:textColor="@color/ajstudy_color_text_primary"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_3"
         app:layout_constraintStart_toStartOf="@id/iv_cover_3"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_3" />
@@ -142,6 +145,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin_xs"
         android:ellipsize="end"
         android:lines="1"
+        android:textColor="@color/ajstudy_color_text_primary"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_4"
         app:layout_constraintStart_toStartOf="@id/iv_cover_4"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_4" />
@@ -167,6 +171,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin_xs"
         android:ellipsize="end"
         android:lines="1"
+        android:textColor="@color/ajstudy_color_text_primary"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_5"
         app:layout_constraintStart_toStartOf="@id/iv_cover_5"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_5" />
@@ -180,7 +185,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="@string/series_card_more"
-        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textColor="@color/ajstudy_color_text_tertiary"
         app:drawableStartCompat="@drawable/ic_series_card_more"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_4"
         app:layout_constraintStart_toStartOf="@id/tv_title_4"
@@ -194,7 +199,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="@string/series_card_change"
-        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textColor="@color/ajstudy_color_text_tertiary"
         app:drawableStartCompat="@drawable/ic_series_card_change"
         app:layout_constraintEnd_toEndOf="@id/iv_cover_5"
         app:layout_constraintStart_toStartOf="@id/tv_title_5"

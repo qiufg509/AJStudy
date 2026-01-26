@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/24 23:31
  */
-public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBinding, List<LargeGraphicCardBean>> {
+public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBinding> {
 
     private LargeGraphicCardWrapper cardWrapper;
 
@@ -34,7 +35,8 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
         cardWrapper = new LargeGraphicCardWrapper.Builder()
-            .setRecyclerView(binding.getRoot())
+            .setRecyclerView(binding.recyclerLgc)
+            .setTitleView(binding.tvTitle)
             .setSpacing(spacing)
             .setListener(LargeGraphicViewHolder::onItemClickListener)
             .create();
@@ -42,14 +44,16 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
     }
 
     @Override
-    public void bind(List<LargeGraphicCardBean> beans) {
-        if (beans == null) {
+    public void bind(LayoutData<?> data) {
+        if (data == null || data.getBeans() == null) {
             return;
         }
         if (cardWrapper == null) {
             initCardWrapper();
         }
-        cardWrapper.setData(beans);
+        @SuppressWarnings("unchecked")
+        List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getBeans();
+        cardWrapper.setData(beans, data.getCardTitle());
     }
 
     private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {

@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
-import com.qiufengguang.ajstudy.data.BaseCardBean;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<List<List<? extends BaseCardBean>>> liveData;
+    private final MutableLiveData<List<LayoutData<?>>> liveData;
 
     public HomeViewModel() {
         liveData = new MutableLiveData<>();
@@ -35,6 +35,8 @@ public class HomeViewModel extends ViewModel {
         bannerBeans.add(new BannerBean("多读科普涨知识", "https://appimg-drcn.dbankcdn.com/entranceIcon/9a3d003858bc47969d2bb461a2c11b12/64/1595299811024_1080x684.jpg"));
         bannerBeans.add(new BannerBean("手工客，感受匠心之美", "https://appimg-drcn.dbankcdn.com/entranceIcon/f2d2895630c14be28306aa5466e76754/64/1595299797898_1080x684.jpg"));
         bannerBeans.add(new BannerBean("掌上的生活管家", "https://appimg-drcn.dbankcdn.com/entranceIcon/74ddfa53ce2244848e4b4c61471a7353/64/1595299783266_1080x684.jpg"));
+        LayoutData<List<BannerBean>> bannerCardData = new LayoutData<>(BannerBean.LAYOUT_NAME, bannerBeans);
+        LayoutData<List<BannerBean>> bannerCardData2 = new LayoutData<>(BannerBean.LAYOUT_NAME, new ArrayList<>(bannerBeans));
 
         List<GridCardBean> gridCardBeans = new ArrayList<>();
         gridCardBeans.add(new GridCardBean("Advance", R.drawable.ic_book_0, "AdavancedPart"));
@@ -47,6 +49,7 @@ public class HomeViewModel extends ViewModel {
         gridCardBeans.add(new GridCardBean("Jetpack", R.drawable.ic_book_7, "Jetpack"));
         gridCardBeans.add(new GridCardBean("Kotlin", R.drawable.ic_book_8, "KotlinCourse"));
         gridCardBeans.add(new GridCardBean("RxJava", R.drawable.ic_book_9, "RxJavaPart"));
+        LayoutData<List<GridCardBean>> gridCardData = new LayoutData<>(GridCardBean.LAYOUT_NAME, gridCardBeans);
 
         List<SeriesCardBean> seriesCardBeans = new ArrayList<>();
         seriesCardBeans.add(new SeriesCardBean("与宠物双向治愈，让爱与责任同行", "https://www.foodiesfeed.com/wp-content/uploads/2023/10/girl-holding-takeaway-coffee-cup.jpg"));
@@ -58,6 +61,8 @@ public class HomeViewModel extends ViewModel {
         seriesCardBeans.add(new SeriesCardBean("让孩子在趣味中获得知识", "https://images.unsplash.com/photo-1761850648640-2ee5870ee883?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
         seriesCardBeans.add(new SeriesCardBean("种草人生第一件汉服", "https://www.foodiesfeed.com/wp-content/uploads/2023/03/french-fries-detail.jpg"));
         seriesCardBeans.add(new SeriesCardBean("珍惜每一口粮食", "https://plus.unsplash.com/premium_photo-1761839920135-4bf781de96e3?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
+        LayoutData<List<SeriesCardBean>> seriesCardData = new LayoutData<>(SeriesCardBean.LAYOUT_NAME, seriesCardBeans, "原创短剧：日常自拍");
+        LayoutData<List<SeriesCardBean>> seriesCardData2 = new LayoutData<>(SeriesCardBean.LAYOUT_NAME, new ArrayList<>(seriesCardBeans), "SERIES 1");
 
         List<LargeGraphicCardBean> lgcBeans = new ArrayList<>();
         lgcBeans.add(new LargeGraphicCardBean("欢迎加入爱宠一族", "与宠物双向治愈，让爱与责任同行", "https://www.foodiesfeed.com/wp-content/uploads/2023/10/girl-holding-takeaway-coffee-cup.jpg"));
@@ -69,18 +74,21 @@ public class HomeViewModel extends ViewModel {
         lgcBeans.add(new LargeGraphicCardBean("边玩边学", "让孩子在趣味中获得知识", "https://images.unsplash.com/photo-1761850648640-2ee5870ee883?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
         lgcBeans.add(new LargeGraphicCardBean("跟李子柒见证汉服魅力", "种草人生第一件汉服", "https://www.foodiesfeed.com/wp-content/uploads/2023/03/french-fries-detail.jpg"));
         lgcBeans.add(new LargeGraphicCardBean("一粥一饭，来之不易", "珍惜每一口粮食", "https://plus.unsplash.com/premium_photo-1761839920135-4bf781de96e3?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
+        LayoutData<List<LargeGraphicCardBean>> lgcData = new LayoutData<>(LargeGraphicCardBean.LAYOUT_NAME, lgcBeans);
+        LayoutData<List<LargeGraphicCardBean>> lgcData2 = new LayoutData<>(LargeGraphicCardBean.LAYOUT_NAME, new ArrayList<>(lgcBeans), "时下热门");
 
-        List<List<? extends BaseCardBean>> dataList = new ArrayList<>();
-        dataList.add(bannerBeans);
-        dataList.add(gridCardBeans);
-        dataList.add(seriesCardBeans);
-        dataList.add(lgcBeans);
-        dataList.add(new ArrayList<>(seriesCardBeans));
-        dataList.add(new ArrayList<>(lgcBeans));
+        List<LayoutData<?>> dataList = new ArrayList<>();
+        dataList.add(bannerCardData);
+        dataList.add(gridCardData);
+        dataList.add(seriesCardData);
+        dataList.add(lgcData);
+        dataList.add(seriesCardData2);
+        dataList.add(bannerCardData2);
+        dataList.add(lgcData2);
         liveData.setValue(dataList);
     }
 
-    public LiveData<List<List<? extends BaseCardBean>>> getLiveData() {
+    public LiveData<List<LayoutData<?>>> getLiveData() {
         return liveData;
     }
 }

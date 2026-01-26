@@ -1,5 +1,9 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +24,8 @@ import java.util.List;
 public class LargeGraphicCardWrapper {
     private WeakReference<RecyclerView> recyclerViewRef;
 
+    private WeakReference<TextView> titleViewRef;
+
     private LargeGraphicCardAdapter adapter;
 
     private int spanCount;
@@ -37,11 +43,24 @@ public class LargeGraphicCardWrapper {
     private LargeGraphicCardWrapper() {
     }
 
-    public void setData(List<LargeGraphicCardBean> beans) {
+    public void setData(List<LargeGraphicCardBean> beans, String cardTitle) {
         if (adapter == null) {
             adapter = new LargeGraphicCardAdapter(beans);
         } else {
             adapter.setData(beans);
+        }
+        if (titleViewRef == null) {
+            return;
+        }
+        TextView textView = titleViewRef.get();
+        if (textView == null) {
+            return;
+        }
+        if (TextUtils.isEmpty(cardTitle)) {
+            textView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(cardTitle);
         }
     }
 
@@ -71,6 +90,8 @@ public class LargeGraphicCardWrapper {
     public static class Builder {
         private RecyclerView recyclerView;
 
+        private TextView titleView;
+
         private int spanCount;
 
         private int horizontalSpacing;
@@ -84,13 +105,24 @@ public class LargeGraphicCardWrapper {
         private LargeGraphicCardAdapter.OnItemClickListener listener;
 
         /**
-         * 设置格网卡片布局控件
+         * 设置格网卡片内容布局控件
          *
          * @param recyclerView RecyclerView
          * @return Builder
          */
         public LargeGraphicCardWrapper.Builder setRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
+            return this;
+        }
+
+        /**
+         * 设置格网卡片标题控件
+         *
+         * @param titleView TextView
+         * @return Builder
+         */
+        public LargeGraphicCardWrapper.Builder setTitleView(TextView titleView) {
+            this.titleView = titleView;
             return this;
         }
 
@@ -168,6 +200,7 @@ public class LargeGraphicCardWrapper {
             }
             LargeGraphicCardWrapper wrapper = new LargeGraphicCardWrapper();
             wrapper.recyclerViewRef = new WeakReference<>(this.recyclerView);
+            wrapper.titleViewRef = new WeakReference<>(this.titleView);
             if (this.spanCount > 0) {
                 wrapper.spanCount = this.spanCount;
             } else {

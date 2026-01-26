@@ -6,7 +6,7 @@ package com.qiufengguang.ajstudy.data;
  * @author qiufengguang
  * @since 2025/12/19 15:41
  */
-public class BannerBean extends BaseCardBean {
+public class BannerBean {
     public static final String LAYOUT_NAME = "bannerCard";
 
     String title;
@@ -16,11 +16,6 @@ public class BannerBean extends BaseCardBean {
     public BannerBean(String title, String imageUrl) {
         this.title = title;
         this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
     }
 
     public String getTitle() {

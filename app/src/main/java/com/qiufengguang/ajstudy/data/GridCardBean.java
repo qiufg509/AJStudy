@@ -9,7 +9,7 @@ import androidx.annotation.DrawableRes;
  * @author qiufengguang
  * @since 2025/12/28 19:12
  */
-public class GridCardBean extends BaseCardBean {
+public class GridCardBean {
     public static final String LAYOUT_NAME = "gridCard";
 
     private String title;
@@ -28,12 +28,6 @@ public class GridCardBean extends BaseCardBean {
 
     public GridCardBean(int backgroundTint) {
         this.backgroundTint = backgroundTint;
-    }
-
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
     }
 
     public String getTitle() {

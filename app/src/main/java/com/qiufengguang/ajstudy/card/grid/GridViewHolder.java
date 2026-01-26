@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/19 14:03
  */
-public class GridViewHolder extends BaseViewHolder<CardGridBinding, List<GridCardBean>> {
+public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
     private GridCardWrapper cardWrapper;
 
@@ -46,13 +47,15 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding, List<GridCar
     }
 
     @Override
-    public void bind(List<GridCardBean> beans) {
-        if (beans == null) {
+    public void bind(LayoutData<?> data) {
+        if (data == null || data.getBeans() == null) {
             return;
         }
         if (cardWrapper == null) {
             initCardWrapper();
         }
+        @SuppressWarnings("unchecked")
+        List<GridCardBean> beans = (List<GridCardBean>) data.getBeans();
         cardWrapper.setData(beans);
     }
 
