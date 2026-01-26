@@ -177,4 +177,179 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_title" />
 
+    <TextView
+        android:id="@+id/tv_tag_1"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:background="@drawable/card_tag_bg"
+        android:gravity="center"
+        android:padding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_1"
+        app:layout_constraintTop_toTopOf="@id/iv_cover_1" />
+
+    <TextView
+        android:id="@+id/tv_tag_2"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:background="@drawable/card_tag_bg"
+        android:gravity="center"
+        android:padding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_2"
+        app:layout_constraintTop_toTopOf="@id/iv_cover_2" />
+
+    <TextView
+        android:id="@+id/tv_tag_3"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:background="@drawable/card_tag_bg"
+        android:gravity="center"
+        android:padding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_3"
+        app:layout_constraintTop_toTopOf="@id/iv_cover_3" />
+
+    <TextView
+        android:id="@+id/tv_tag_4"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:background="@drawable/card_tag_bg"
+        android:gravity="center"
+        android:padding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_4"
+        app:layout_constraintTop_toTopOf="@id/iv_cover_4" />
+
+    <TextView
+        android:id="@+id/tv_tag_5"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:background="@drawable/card_tag_bg"
+        android:gravity="center"
+        android:padding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_5"
+        app:layout_constraintTop_toTopOf="@id/iv_cover_5" />
+
+    <TextView
+        android:id="@+id/tv_count_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:drawableStartCompat="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_1"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_1" />
+
+    <TextView
+        android:id="@+id/tv_count_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:drawableStartCompat="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_2"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_2" />
+
+    <TextView
+        android:id="@+id/tv_count_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:drawableStartCompat="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_3"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_3" />
+
+    <TextView
+        android:id="@+id/tv_count_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:drawableStartCompat="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_4"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_4" />
+
+    <TextView
+        android:id="@+id/tv_count_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:drawablePadding="@dimen/activity_vertical_margin_xxs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:drawableStartCompat="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_5"
+        app:layout_constraintStart_toStartOf="@id/iv_cover_5" />
+
+    <TextView
+        android:id="@+id/tv_duration_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_1" />
+
+    <TextView
+        android:id="@+id/tv_duration_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_2"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_2" />
+
+    <TextView
+        android:id="@+id/tv_duration_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_3"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_3" />
+
+    <TextView
+        android:id="@+id/tv_duration_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_4"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_4" />
+
+    <TextView
+        android:id="@+id/tv_duration_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin_xs"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover_5"
+        app:layout_constraintEnd_toEndOf="@id/iv_cover_5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

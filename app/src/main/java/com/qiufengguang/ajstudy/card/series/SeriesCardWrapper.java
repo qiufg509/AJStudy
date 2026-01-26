@@ -60,11 +60,11 @@ public class SeriesCardWrapper {
             return;
         }
         binding.tvTitle.setText(cardTitle);
-        fillItem(binding.ivCover1, binding.tvTitle1);
-        fillItem(binding.ivCover2, binding.tvTitle2);
-        fillItem(binding.ivCover3, binding.tvTitle3);
-        fillItem(binding.ivCover4, binding.tvTitle4);
-        fillItem(binding.ivCover5, binding.tvTitle5);
+        fillItem(binding.ivCover1, binding.tvTitle1, binding.tvTag1, binding.tvCount1, binding.tvDuration1);
+        fillItem(binding.ivCover2, binding.tvTitle2, binding.tvTag2, binding.tvCount2, binding.tvDuration2);
+        fillItem(binding.ivCover3, binding.tvTitle3, binding.tvTag3, binding.tvCount3, binding.tvDuration3);
+        fillItem(binding.ivCover4, binding.tvTitle4, binding.tvTag4, binding.tvCount4, binding.tvDuration4);
+        fillItem(binding.ivCover5, binding.tvTitle5, binding.tvTag5, binding.tvCount5, binding.tvDuration5);
 
         binding.tvMore.setOnClickListener(v ->
             Toast.makeText(GlobalApp.getContext(), "查看更多", Toast.LENGTH_SHORT).show());
@@ -80,7 +80,7 @@ public class SeriesCardWrapper {
         return this.beans.get(showIndex);
     }
 
-    private void fillItem(ImageView imageView, TextView textView) {
+    private void fillItem(ImageView imageView, TextView textView, TextView tvTag, TextView tvCount, TextView tvDuration) {
         if (this.requestOptions == null) {
             int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
             this.requestOptions = new RequestOptions()
@@ -108,6 +108,24 @@ public class SeriesCardWrapper {
         };
         textView.setOnClickListener(onClickListener);
         imageView.setOnClickListener(onClickListener);
+        if (TextUtils.isEmpty(bean.getTag())) {
+            tvTag.setVisibility(View.GONE);
+        } else {
+            tvTag.setVisibility(View.VISIBLE);
+            tvTag.setText(bean.getTag());
+        }
+        if (TextUtils.isEmpty(bean.getViewCount())) {
+            tvCount.setVisibility(View.GONE);
+        } else {
+            tvCount.setVisibility(View.VISIBLE);
+            tvCount.setText(bean.getViewCount());
+        }
+        if (TextUtils.isEmpty(bean.getTotalDuration())) {
+            tvDuration.setVisibility(View.GONE);
+        } else {
+            tvDuration.setVisibility(View.VISIBLE);
+            tvDuration.setText(bean.getTotalDuration());
+        }
     }
 
     /**

@@ -52,15 +52,15 @@ public class HomeViewModel extends ViewModel {
         LayoutData<List<GridCardBean>> gridCardData = new LayoutData<>(GridCardBean.LAYOUT_NAME, gridCardBeans);
 
         List<SeriesCardBean> seriesCardBeans = new ArrayList<>();
-        seriesCardBeans.add(new SeriesCardBean("与宠物双向治愈，让爱与责任同行", "https://www.foodiesfeed.com/wp-content/uploads/2023/10/girl-holding-takeaway-coffee-cup.jpg"));
-        seriesCardBeans.add(new SeriesCardBean("抓住科技风口，觅得高薪工作", "https://www.foodiesfeed.com/wp-content/uploads/2023/05/juicy-cheeseburger.jpg"));
-        seriesCardBeans.add(new SeriesCardBean("每天刷新，每天积累", "https://ts2.tc.mm.bing.net/th/id/OIP-C.HF1qwV9btnJwbj4SWnZqogHaE7?rs=1&pid=ImgDetMain&o=7&rm=3"));
+        seriesCardBeans.add(new SeriesCardBean("与宠物双向治愈，让爱与责任同行", "https://www.foodiesfeed.com/wp-content/uploads/2023/10/girl-holding-takeaway-coffee-cup.jpg", "新"));
+        seriesCardBeans.add(new SeriesCardBean("抓住科技风口，觅得高薪工作", "https://www.foodiesfeed.com/wp-content/uploads/2023/05/juicy-cheeseburger.jpg", "新", "14", "10:51"));
+        seriesCardBeans.add(new SeriesCardBean("每天刷新，每天积累", "https://ts2.tc.mm.bing.net/th/id/OIP-C.HF1qwV9btnJwbj4SWnZqogHaE7?rs=1&pid=ImgDetMain&o=7&rm=3", "免费"));
         seriesCardBeans.add(new SeriesCardBean("冬天的 passion 来自滑雪", "https://plus.unsplash.com/premium_photo-1664438942504-cc05d2c80f38?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
-        seriesCardBeans.add(new SeriesCardBean("用影像讲述她的故事", "https://images.unsplash.com/photo-1768898794985-35c68b2df9b7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
-        seriesCardBeans.add(new SeriesCardBean("用这些 APP 探索宇宙", "https://images.unsplash.com/photo-1768325400062-2b63fec226c3?q=80&w=1175&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
+        seriesCardBeans.add(new SeriesCardBean("用影像讲述她的故事", "https://images.unsplash.com/photo-1768898794985-35c68b2df9b7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "免费"));
+        seriesCardBeans.add(new SeriesCardBean("用这些 APP 探索宇宙", "https://images.unsplash.com/photo-1768325400062-2b63fec226c3?q=80&w=1175&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "VIP", "368", "12:26"));
         seriesCardBeans.add(new SeriesCardBean("让孩子在趣味中获得知识", "https://images.unsplash.com/photo-1761850648640-2ee5870ee883?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
-        seriesCardBeans.add(new SeriesCardBean("种草人生第一件汉服", "https://www.foodiesfeed.com/wp-content/uploads/2023/03/french-fries-detail.jpg"));
-        seriesCardBeans.add(new SeriesCardBean("珍惜每一口粮食", "https://plus.unsplash.com/premium_photo-1761839920135-4bf781de96e3?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
+        seriesCardBeans.add(new SeriesCardBean("种草人生第一件汉服", "https://www.foodiesfeed.com/wp-content/uploads/2023/03/french-fries-detail.jpg", "免费"));
+        seriesCardBeans.add(new SeriesCardBean("珍惜每一口粮食", "https://plus.unsplash.com/premium_photo-1761839920135-4bf781de96e3?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", "66", "17:51"));
         LayoutData<List<SeriesCardBean>> seriesCardData = new LayoutData<>(SeriesCardBean.LAYOUT_NAME, seriesCardBeans, "原创短剧：日常自拍");
         LayoutData<List<SeriesCardBean>> seriesCardData2 = new LayoutData<>(SeriesCardBean.LAYOUT_NAME, new ArrayList<>(seriesCardBeans), "SERIES 1");
 

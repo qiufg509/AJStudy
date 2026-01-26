@@ -14,9 +14,37 @@ public class SeriesCardBean {
 
     private final String imageUrl;
 
+    private String tag;
+
+    private String viewCount;
+
+    private String totalDuration;
+
+
     public SeriesCardBean(String title, String imageUrl) {
         this.title = title;
         this.imageUrl = imageUrl;
+    }
+
+    public SeriesCardBean(String title, String imageUrl, String tag) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.tag = tag;
+    }
+
+    public SeriesCardBean(String title, String imageUrl, String viewCount, String totalDuration) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.viewCount = viewCount;
+        this.totalDuration = totalDuration;
+    }
+
+    public SeriesCardBean(String title, String imageUrl, String tag, String viewCount, String totalDuration) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.tag = tag;
+        this.viewCount = viewCount;
+        this.totalDuration = totalDuration;
     }
 
     public String getTitle() {
@@ -25,5 +53,17 @@ public class SeriesCardBean {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getViewCount() {
+        return viewCount;
+    }
+
+    public String getTotalDuration() {
+        return totalDuration;
     }
 }
