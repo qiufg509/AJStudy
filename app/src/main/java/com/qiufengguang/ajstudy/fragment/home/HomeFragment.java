@@ -66,14 +66,12 @@ public class HomeFragment extends BaseFragment {
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         // 滚动停止时检查 Banner 可见性
-                        if (homeAdapter.isBannerVisible(recyclerView)) {
-                            homeAdapter.resumeBannerIfVisible(recyclerView);
-                        }
+                        homeAdapter.activeBannersIfVisible(binding.recyclerHome);
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING:
                     case RecyclerView.SCROLL_STATE_SETTLING:
                         // 滚动时暂停 Banner
-                        homeAdapter.pauseBanner();
+                        homeAdapter.pauseAllBanners();
                         break;
                 }
             }
@@ -83,32 +81,24 @@ public class HomeFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 // 实时检查 Banner 可见性
                 if (!recyclerView.isComputingLayout()) {
-                    checkBannerVisibility();
+                    homeAdapter.activeBannersIfVisible(binding.recyclerHome);
                 }
             }
         });
-    }
-
-    private void checkBannerVisibility() {
-        if (homeAdapter.isBannerVisible(binding.recyclerHome)) {
-            homeAdapter.resumeBannerIfVisible(binding.recyclerHome);
-        } else {
-            homeAdapter.pauseBanner();
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // Activity 恢复时检查 Banner 可见性
-        checkBannerVisibility();
+        homeAdapter.activeBannersIfVisible(binding.recyclerHome);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         // Activity 暂停时停止所有 Banner
-        homeAdapter.pauseBanner();
+        homeAdapter.pauseAllBanners();
     }
 
     @Override

@@ -89,7 +89,7 @@ public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCa
             int radius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
             this.requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_large_graphic_card)
+                .error(R.drawable.placeholder_image_1_1)
                 .transform(new CenterCrop(), new RoundedCornersTransformation(radius, 0,
                     RoundedCornersTransformation.CornerType.TOP));
             this.binding.getRoot().setOnClickListener(v -> {
@@ -110,7 +110,7 @@ public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCa
                     .transition(DrawableTransitionOptions.withCrossFade(300))
                     .into(this.binding.ivPic);
             } else {
-                this.binding.ivPic.setImageResource(R.drawable.placeholder_large_graphic_card);
+                this.binding.ivPic.setImageResource(R.drawable.placeholder_image_1_1);
             }
         }
     }

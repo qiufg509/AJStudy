@@ -247,7 +247,7 @@ public class BannerWrapper {
                 if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
                     pauseAutoScroll();
                 } else {
-                    resumeAutoScroll();
+                    startOrResumeAutoScroll();
                 }
                 return super.onInterceptTouchEvent(rv, e);
             }
@@ -260,7 +260,7 @@ public class BannerWrapper {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         // 滚动停止，恢复自动滚动
                         isUserScrolling = false;
-                        resumeAutoScroll();
+                        startOrResumeAutoScroll();
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING:
                         // 用户拖拽，暂停自动滚动
@@ -443,15 +443,8 @@ public class BannerWrapper {
     }
 
     /**
-     * 开始轮播
-     */
-    public void startAutoScroll() {
-        resumeAutoScroll();
-    }
-
-    /**
      * 暂停自动轮播
-     * 页面onPause时调用
+     * 页面onPause时调用  或 卡片不可见时调用
      */
     public void pauseAutoScroll() {
         if (isAutoScrolling && autoScrollHandler != null) {
@@ -461,10 +454,10 @@ public class BannerWrapper {
     }
 
     /**
-     * 恢复自动轮播
-     * 页面onResume时调用
+     * 开始轮播/恢复自动轮播
+     * 页面onResume时调用 或 卡片恢复可见时调用
      */
-    public void resumeAutoScroll() {
+    public void startOrResumeAutoScroll() {
         if (!isAutoScrolling && !isUserScrolling && autoScrollHandler != null) {
             isAutoScrolling = true;
             autoScrollHandler.postDelayed(autoScrollRunnable, carouselInterval);
@@ -478,7 +471,6 @@ public class BannerWrapper {
     public void release() {
         pauseAutoScroll();
         if (autoScrollHandler != null) {
-            autoScrollHandler.removeCallbacks(autoScrollRunnable);
             autoScrollHandler = null;
         }
         if (recyclerBannerRef != null) {

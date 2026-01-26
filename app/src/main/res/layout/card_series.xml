@@ -26,6 +26,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/activity_vertical_margin_s"
         android:contentDescription="@string/image_description"
+        android:src="@drawable/placeholder_image_20_8"
         android:foreground="@drawable/series_card_gradient_overlay"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="H,20:8"

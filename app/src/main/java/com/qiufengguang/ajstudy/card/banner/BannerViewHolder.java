@@ -137,7 +137,7 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
      */
     private void checkAndResumeBanner() {
         if (cardWrapper != null && isBannerActive) {
-            cardWrapper.resumeAutoScroll();
+            cardWrapper.startOrResumeAutoScroll();
         }
     }
 

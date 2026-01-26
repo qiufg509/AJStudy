@@ -85,7 +85,7 @@ public class SeriesCardWrapper {
             int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
             this.requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_large_graphic_card)
+                .error(R.drawable.placeholder_image_20_8)
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
         SeriesCardBean bean = getIncrementData();
@@ -97,7 +97,7 @@ public class SeriesCardWrapper {
                 .transition(DrawableTransitionOptions.withCrossFade(300))
                 .into(imageView);
         } else {
-            imageView.setImageResource(R.drawable.placeholder_image_horizontal);
+            imageView.setImageResource(R.drawable.placeholder_image_20_8);
         }
 
         View.OnClickListener onClickListener = v -> {

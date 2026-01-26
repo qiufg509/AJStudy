@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.card.banner.BannerViewHolder;
@@ -24,6 +25,7 @@ import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +36,7 @@ import java.util.Set;
  * @author qiufengguang
  * @since 2026/1/19 15:26
  */
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
 
     /**
      * banner卡片
@@ -57,7 +59,19 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<LayoutData<?>> dataList;
 
-    private int bannerPosition = -1;
+    /**
+     * 存储所有banner的位置
+     */
+    private final List<Integer> bannerPositions = new ArrayList<>();
+
+    /**
+     * 存储所有BannerViewHolder的引用
+     */
+    private final Set<WeakReference<BannerViewHolder>> bannerViewHolderRefs = new HashSet<>();
+
+    /**
+     * 存储所有ViewHolder的引用（用于资源清理）
+     */
     private final Set<WeakReference<BaseViewHolder<?>>> viewHolderRefs = new HashSet<>();
 
     public HomeAdapter(LifecycleOwner lifecycleOwner) {
@@ -72,17 +86,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setData(List<LayoutData<?>> dataList) {
         if (dataList == null || dataList.isEmpty()) {
             this.dataList = dataList;
-            pauseBanner();
+            pauseAllBanners();
             notifyItemRangeRemoved(0, getItemCount());
             return;
         }
         if (this.dataList == null || this.dataList.isEmpty()) {
             this.dataList = dataList;
-            findBannerPosition();
+            findAllBannerPositions();
             notifyItemRangeInserted(0, getItemCount());
         } else {
             this.dataList = dataList;
-            findBannerPosition();
+            findAllBannerPositions();
             notifyItemRangeChanged(0, getItemCount());
         }
     }
@@ -128,13 +142,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseViewHolder<?> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_BANNER:
                 CardBannerBinding bannerBinding = CardBannerBinding.inflate(
                     LayoutInflater.from(parent.getContext()), parent, false);
                 BannerViewHolder bannerViewHolder = new BannerViewHolder(
                     bannerBinding, this.lifecycleOwner);
+                // 添加到专门的banner引用集合
+                bannerViewHolderRefs.add(new WeakReference<>(bannerViewHolder));
                 viewHolderRefs.add(new WeakReference<>(bannerViewHolder));
                 return bannerViewHolder;
             case VIEW_TYPE_GRID_CARD:
@@ -159,7 +175,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position) {
         LayoutData<?> layoutData = dataList.get(position);
         if (layoutData == null) {
             return;
@@ -173,101 +189,111 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             && TextUtils.equals(layoutName, BannerBean.LAYOUT_NAME)) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             bannerViewHolder.bind(layoutData, this.lifecycleOwner);
-            bannerViewHolder.setBannerActive(true);
-        } else if (holder instanceof GridViewHolder
-            && TextUtils.equals(layoutName, GridCardBean.LAYOUT_NAME)) {
-            ((GridViewHolder) holder).bind(layoutData);
-        } else if (holder instanceof LargeGraphicViewHolder
-            && TextUtils.equals(layoutName, LargeGraphicCardBean.LAYOUT_NAME)) {
-            ((LargeGraphicViewHolder) holder).bind(layoutData);
-        } else if (holder instanceof SeriesCardViewHolder
-            && TextUtils.equals(layoutName, SeriesCardBean.LAYOUT_NAME)) {
-            ((SeriesCardViewHolder) holder).bind(layoutData);
+        } else {
+            holder.bind(layoutData);
         }
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            // 如果没有payload，执行完整的绑定
+            super.onBindViewHolder(holder, position, payloads);
+        } else {
+            // 根据payload的内容，只更新特定的视图
+            for (Object payload : payloads) {
+                if (payload instanceof LayoutData) {
+                    holder.update((LayoutData<?>) payload);
+                }
+            }
+        }
+    }
 
     @Override
-    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull BaseViewHolder<?> holder) {
         super.onViewAttachedToWindow(holder);
-        if (holder instanceof BaseViewHolder) {
-            ((BaseViewHolder<?>) holder).onViewAttachedToWindow();
-        }
+        holder.onViewAttachedToWindow();
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull BaseViewHolder<?> holder) {
         super.onViewDetachedFromWindow(holder);
-        if (holder instanceof BaseViewHolder) {
-            ((BaseViewHolder<?>) holder).onViewDetachedFromWindow();
-        }
+        holder.onViewDetachedFromWindow();
     }
 
     @Override
-    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(@NonNull BaseViewHolder<?> holder) {
         super.onViewRecycled(holder);
         // 当 ViewHolder 被回收时，清理其资源
-        if (holder instanceof BaseViewHolder) {
-            ((BaseViewHolder<?>) holder).cleanup();
-        }
+        holder.cleanup();
     }
 
-
-    private void findBannerPosition() {
+    /**
+     * 查找所有banner的位置
+     */
+    private void findAllBannerPositions() {
+        bannerPositions.clear();
         for (int index = 0; index < dataList.size(); index++) {
             LayoutData<?> layoutData = dataList.get(index);
             if (layoutData == null || layoutData.getBeans() == null) {
                 continue;
             }
             if (TextUtils.equals(layoutData.getLayoutName(), BannerBean.LAYOUT_NAME)) {
-                bannerPosition = index;
-                break;
+                bannerPositions.add(index);
             }
         }
     }
 
-    public void resumeBannerIfVisible(RecyclerView recyclerView) {
-        if (!isBannerVisible(recyclerView)) {
+    /**
+     * 激活所有范围内的轮播banner，不可见则停止轮播
+     *
+     * @param recyclerView 页面列表RecyclerView
+     */
+    public void activeBannersIfVisible(RecyclerView recyclerView) {
+        if (recyclerView.getLayoutManager() == null) {
             return;
         }
-        for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
-            BaseViewHolder<?> holder = ref.get();
-            if (holder instanceof BannerViewHolder) {
-                ((BannerViewHolder) holder).setBannerActive(true);
+
+        // 获取当前可见位置范围
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int firstVisible = layoutManager.findFirstVisibleItemPosition();
+        int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+        // 遍历所有banner位置，恢复可见的banner
+        for (int bannerPos : bannerPositions) {
+            if (bannerPos < firstVisible || bannerPos > lastVisible) {
+                continue;
+            }
+            for (WeakReference<BannerViewHolder> ref : bannerViewHolderRefs) {
+                BannerViewHolder holder = ref.get();
+                if (holder == null) {
+                    continue;
+                }
+                holder.setBannerActive(holder.getBindingAdapterPosition() == bannerPos);
             }
         }
     }
 
-    public void pauseBanner() {
-        for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
-            BaseViewHolder<?> holder = ref.get();
-            if (holder instanceof BannerViewHolder) {
-                ((BannerViewHolder) holder).setBannerActive(false);
+    /**
+     * 暂停所有banner的轮播
+     */
+    public void pauseAllBanners() {
+        for (WeakReference<BannerViewHolder> ref : bannerViewHolderRefs) {
+            BannerViewHolder holder = ref.get();
+            if (holder != null) {
+                holder.setBannerActive(false);
             }
         }
-    }
-
-    public boolean isBannerVisible(RecyclerView recyclerView) {
-        if (bannerPosition == -1 || recyclerView.getLayoutManager() == null) {
-            return false;
-        }
-
-        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-        if (layoutManager instanceof androidx.recyclerview.widget.LinearLayoutManager) {
-            androidx.recyclerview.widget.LinearLayoutManager linearLayoutManager =
-                (androidx.recyclerview.widget.LinearLayoutManager) layoutManager;
-            int firstVisible = linearLayoutManager.findFirstVisibleItemPosition();
-            int lastVisible = linearLayoutManager.findLastVisibleItemPosition();
-
-            return bannerPosition >= firstVisible && bannerPosition <= lastVisible;
-        }
-        return false;
     }
 
     /**
      * 清理所有 ViewHolder 的资源
      */
     public void releaseAllResources() {
+        // 清理所有BannerViewHolder引用
+        bannerViewHolderRefs.clear();
+        bannerPositions.clear();
+
         // 清理所有 BaseViewHolder
         for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
             BaseViewHolder<?> holder = ref.get();
@@ -279,6 +305,5 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         // 清理其他资源
         dataList = null;
-        bannerPosition = -1;
     }
 }

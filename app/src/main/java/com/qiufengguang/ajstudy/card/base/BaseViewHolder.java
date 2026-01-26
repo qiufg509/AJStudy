@@ -51,4 +51,12 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
      */
     public void onViewDetachedFromWindow() {
     }
+
+    /**
+     * 更新卡片
+     *
+     * @param data 卡片数据
+     */
+    public void update(LayoutData<?> data){
+    }
 }
