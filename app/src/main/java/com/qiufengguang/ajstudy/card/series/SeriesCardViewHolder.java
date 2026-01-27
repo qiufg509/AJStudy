@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.card.series;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +41,8 @@ public class SeriesCardViewHolder extends BaseViewHolder<CardSeriesBinding> {
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null) {
+        if (data == null || data.getBeans() == null
+            || !TextUtils.equals(data.getLayoutName(), SeriesCardBean.LAYOUT_NAME)) {
             return;
         }
         if (cardWrapper == null) {

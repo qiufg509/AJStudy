@@ -9,6 +9,6 @@
         android:startColor="@color/ajstudy_color_text_secondary"
         android:type="linear" />
     <corners
-        android:bottomLeftRadius="@dimen/radius_l"
-        android:bottomRightRadius="@dimen/radius_l" />
+        android:bottomLeftRadius="@dimen/radius_m"
+        android:bottomRightRadius="@dimen/radius_m" />
 </shape>

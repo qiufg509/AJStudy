@@ -2,6 +2,7 @@ package com.qiufengguang.ajstudy.card.grid;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,8 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null) {
+        if (data == null || data.getBeans() == null
+            || !TextUtils.equals(data.getLayoutName(), GridCardBean.LAYOUT_NAME)) {
             return;
         }
         if (cardWrapper == null) {

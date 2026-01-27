@@ -82,7 +82,7 @@ public class SeriesCardWrapper {
 
     private void fillItem(ImageView imageView, TextView textView, TextView tvTag, TextView tvCount, TextView tvDuration) {
         if (this.requestOptions == null) {
-            int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
+            int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_m);
             this.requestOptions = new RequestOptions()
                 .centerCrop()
                 .error(R.drawable.placeholder_image_20_8)

@@ -1,12 +1,14 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
@@ -45,7 +47,8 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null) {
+        if (data == null || data.getBeans() == null
+            || !TextUtils.equals(data.getLayoutName(), LargeGraphicCardBean.LAYOUT_NAME)) {
             return;
         }
         if (cardWrapper == null) {
