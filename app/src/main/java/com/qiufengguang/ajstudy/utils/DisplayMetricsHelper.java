@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.qiufengguang.ajstudy.R;
+
 /**
  * 系统栏高度工具类
  * 提供获取状态栏和ActionBar高度的最新兼容方法，支持至SDK 29。
@@ -103,6 +105,16 @@ public class DisplayMetricsHelper {
                 context.getResources().getDisplayMetrics());
         }
         return actionBarHeight;
+    }
+
+    /**
+     * 获取标题栏高度
+     *
+     * @param context 上下文
+     * @return 标题栏高度
+     */
+    public static int getTitleBarHeight(@NonNull Context context) {
+        return context.getResources().getDimensionPixelSize(R.dimen.ajstudy_title_bar_height);
     }
 
     /**

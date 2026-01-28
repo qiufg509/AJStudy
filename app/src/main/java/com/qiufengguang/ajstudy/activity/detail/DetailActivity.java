@@ -72,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         int statusBarHeight = DisplayMetricsHelper.getStatusBarHeight(this);
-        int actionBarHeight = DisplayMetricsHelper.getActionBarHeight(this);
+        int titleBarHeight = DisplayMetricsHelper.getTitleBarHeight(this);
 
         Toolbar toolbar = binding.titleBar.toolbar;
         toolbar.setPadding(
@@ -81,8 +81,8 @@ public class DetailActivity extends AppCompatActivity {
             toolbar.getPaddingRight(),
             toolbar.getPaddingBottom()
         );
-        // 设置Toolbar最小高度为ActionBar高度 + 状态栏高度
-        int totalHeight = actionBarHeight + statusBarHeight;
+        // 设置Toolbar高度为titleBarHeight + 状态栏高度
+        int totalHeight = titleBarHeight + statusBarHeight;
         ViewGroup.LayoutParams toolbarParams = toolbar.getLayoutParams();
         toolbarParams.height = totalHeight;
         toolbar.setLayoutParams(toolbarParams);

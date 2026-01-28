@@ -74,6 +74,7 @@ public class LargeGraphicCardWrapper {
         }
         GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         if (adapter == null) {
             adapter = new LargeGraphicCardAdapter(null);
         }

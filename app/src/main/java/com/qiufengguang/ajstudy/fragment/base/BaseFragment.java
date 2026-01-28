@@ -52,7 +52,7 @@ public abstract class BaseFragment extends Fragment {
 
     private void setupBar() {
         int statusBarHeight = DisplayMetricsHelper.getStatusBarHeight(requireActivity());
-        int actionBarHeight = DisplayMetricsHelper.getActionBarHeight(requireActivity());
+        int titleBarHeight = DisplayMetricsHelper.getTitleBarHeight(requireActivity());
 
         FrameLayout titleBarRoot = baseBinding.titleBar.getRoot();
         titleBarRoot.setPadding(
@@ -61,8 +61,8 @@ public abstract class BaseFragment extends Fragment {
             titleBarRoot.getPaddingRight(),
             titleBarRoot.getPaddingBottom()
         );
-        // 设置titleBar最小高度为ActionBar高度 + 状态栏高度
-        int totalHeight = actionBarHeight + statusBarHeight;
+        // 设置titleBar高度为titleBarHeight + 状态栏高度
+        int totalHeight = titleBarHeight + statusBarHeight;
         ViewGroup.LayoutParams toolbarParams = titleBarRoot.getLayoutParams();
         toolbarParams.height = totalHeight;
         titleBarRoot.setLayoutParams(toolbarParams);

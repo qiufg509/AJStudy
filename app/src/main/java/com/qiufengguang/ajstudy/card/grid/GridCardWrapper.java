@@ -68,6 +68,7 @@ public class GridCardWrapper {
         }
         GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         if (adapter == null) {
             adapter = new GridCardAdapter(itemType, null);
         }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:minHeight="?attr/actionBarSize"
+    android:layout_height="@dimen/ajstudy_title_bar_height"
     android:paddingHorizontal="@dimen/activity_horizontal_margin_l">
 
     <TextView
