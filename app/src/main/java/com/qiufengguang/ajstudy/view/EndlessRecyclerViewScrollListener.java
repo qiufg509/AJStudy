@@ -57,12 +57,12 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // 判断是否需要加载更多
         if (!loading && (lastVisibleItemPosition + VISIBLE_THRESHOLD) >= totalItemCount) {
             currentPage++;
-            onLoadMore(currentPage, totalItemCount, recyclerView);
+            onLoadMore(currentPage, totalItemCount);
             loading = true;
         }
     }
 
-    public abstract void onLoadMore(int page, int totalItemsCount, RecyclerView view);
+    public abstract void onLoadMore(int page, int totalItemsCount);
 
     // 重置状态
     public void resetState() {

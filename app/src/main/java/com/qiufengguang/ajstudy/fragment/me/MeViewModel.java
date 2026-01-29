@@ -1,11 +1,15 @@
 package com.qiufengguang.ajstudy.fragment.me;
 
+import android.text.TextUtils;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.util.ArrayList;
@@ -19,10 +23,10 @@ import java.util.List;
  */
 public class MeViewModel extends ViewModel {
 
-    private final MutableLiveData<List<GridCardBean>> themeLiveData;
+    private final MutableLiveData<List<LayoutData<?>>> liveData;
 
     public MeViewModel() {
-        themeLiveData = new MutableLiveData<>();
+        liveData = new MutableLiveData<>();
         initData();
     }
 
@@ -41,27 +45,43 @@ public class MeViewModel extends ViewModel {
         int themeIndex = ThemeUtils.getSelectedThemeIndex();
         GridCardBean bean = gridCardBeans.get(themeIndex);
         bean.setIcon(R.drawable.ic_checkmark);
-        themeLiveData.setValue(gridCardBeans);
+
+        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(gridCardBeans);
+
+        List<LayoutData<?>> dataList = new ArrayList<>();
+        dataList.add(gridCardData);
+        liveData.setValue(dataList);
     }
 
-    public LiveData<List<GridCardBean>> getThemeLiveData() {
-        return themeLiveData;
+
+    public LiveData<List<LayoutData<?>>> getLiveData() {
+        return liveData;
     }
+
 
     public void saveThemeIndex(GridCardBean bean) {
-        List<GridCardBean> cardBeans = themeLiveData.getValue();
-        if (cardBeans == null) {
+        List<LayoutData<?>> value = liveData.getValue();
+        if (value == null) {
             return;
         }
-        for (int index = 0, sum = cardBeans.size(); index < sum; index++) {
-            GridCardBean cardBean = cardBeans.get(index);
-            if (bean == cardBean) {
-                cardBean.setIcon(R.drawable.ic_checkmark);
-                ThemeUtils.setSelectedThemeIndex(index);
+        for (int index = 0, sum = value.size(); index < sum; index++) {
+            LayoutData<?> layoutData = value.get(index);
+            if (!TextUtils.equals(layoutData.getLayoutName(), GridCardBean.LAYOUT_NAME)) {
                 continue;
             }
-            cardBean.setIcon(0);
+            @SuppressWarnings("unchecked")
+            List<GridCardBean> beans = (List<GridCardBean>) layoutData.getData();
+            for (int pos = 0, size = beans.size(); pos < size; pos++) {
+                GridCardBean cardBean = beans.get(pos);
+                if (bean == cardBean) {
+                    cardBean.setIcon(R.drawable.ic_checkmark);
+                    ThemeUtils.setSelectedThemeIndex(pos);
+                    continue;
+                }
+                cardBean.setIcon(0);
+            }
         }
-        themeLiveData.setValue(cardBeans);
+
+        liveData.setValue(value);
     }
 }

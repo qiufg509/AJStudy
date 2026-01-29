@@ -1,14 +1,18 @@
 package com.qiufengguang.ajstudy.data;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+
 /**
  * 系列卡片数据bean
  *
  * @author qiufengguang
  * @since 2026/1/25 15:44
  */
-public class SeriesCardBean {
+public class SeriesCardBean extends BaseCardBean {
 
     public static final String LAYOUT_NAME = "seriesCard";
+
+    public static final int LAYOUT_ID = 2;
 
     private final String title;
 
@@ -45,6 +49,16 @@ public class SeriesCardBean {
         this.tag = tag;
         this.viewCount = viewCount;
         this.totalDuration = totalDuration;
+    }
+
+    @Override
+    public String getLayoutName() {
+        return LAYOUT_NAME;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return LAYOUT_ID;
     }
 
     public String getTitle() {

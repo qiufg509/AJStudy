@@ -26,28 +26,39 @@ import java.util.List;
  */
 public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int itemType;
+    private int itemType = GridCardBean.TYPE_TEXT;
 
     private List<GridCardBean> beans;
 
     private OnItemClickListener listener;
 
-    public GridCardAdapter(int itemType, @Nullable List<GridCardBean> beans) {
-        this.itemType = itemType;
+    public GridCardAdapter(@Nullable List<GridCardBean> beans) {
         this.beans = beans;
+        setItemType();
+    }
+
+    private void setItemType() {
+        if (beans == null || beans.isEmpty()) {
+            return;
+        }
+        GridCardBean bean = beans.get(0);
+        this.itemType = bean.getItemType();
     }
 
     public void setData(List<GridCardBean> beans) {
         if (beans == null || beans.isEmpty()) {
             this.beans = beans;
+            setItemType();
             notifyItemRangeRemoved(0, getItemCount());
             return;
         }
         if (this.beans == null || this.beans.isEmpty()) {
             this.beans = beans;
+            setItemType();
             notifyItemRangeInserted(0, getItemCount());
         } else {
             this.beans = beans;
+            setItemType();
             notifyItemRangeChanged(0, getItemCount());
         }
     }
@@ -67,7 +78,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == GridCardWrapper.TYPE_TEXT) {
+        if (viewType == GridCardBean.TYPE_TEXT) {
             ItemGridCardTextBinding binding = ItemGridCardTextBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new GridCardTextHolder(binding, listener);

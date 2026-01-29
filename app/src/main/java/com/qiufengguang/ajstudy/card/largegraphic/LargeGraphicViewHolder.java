@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
-import com.qiufengguang.ajstudy.data.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null
+        if (data == null || data.getData() == null || !data.isCollection()
             || !TextUtils.equals(data.getLayoutName(), LargeGraphicCardBean.LAYOUT_NAME)) {
             return;
         }
@@ -55,7 +54,7 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
             initCardWrapper();
         }
         @SuppressWarnings("unchecked")
-        List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getBeans();
+        List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getData();
         cardWrapper.setData(beans, data.getCardTitle());
     }
 

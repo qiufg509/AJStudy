@@ -31,13 +31,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 内容区域，在应用栏下方 -->
-    <FrameLayout
-        android:id="@+id/content_container"
+    <com.qiufengguang.ajstudy.view.BounceScrollView
+        android:id="@+id/bounce_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_bar" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+    </com.qiufengguang.ajstudy.view.BounceScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

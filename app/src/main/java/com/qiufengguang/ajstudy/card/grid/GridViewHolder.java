@@ -12,7 +12,7 @@ import androidx.navigation.Navigation;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.GridCardBean;
-import com.qiufengguang.ajstudy.data.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 
 import java.util.List;
@@ -40,7 +40,6 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             R.dimen.activity_horizontal_margin_s);
         cardWrapper = new GridCardWrapper.Builder()
             .setRecyclerView(binding.getRoot())
-            .setItemType(GridCardWrapper.TYPE_TEXT)
             .setHorizontalSpacing(spacing)
             .setListener(GridViewHolder::onItemClickListener)
             .create();
@@ -49,7 +48,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null
+        if (data == null || data.getData() == null || !data.isCollection()
             || !TextUtils.equals(data.getLayoutName(), GridCardBean.LAYOUT_NAME)) {
             return;
         }
@@ -57,7 +56,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             initCardWrapper();
         }
         @SuppressWarnings("unchecked")
-        List<GridCardBean> beans = (List<GridCardBean>) data.getBeans();
+        List<GridCardBean> beans = (List<GridCardBean>) data.getData();
         cardWrapper.setData(beans);
     }
 

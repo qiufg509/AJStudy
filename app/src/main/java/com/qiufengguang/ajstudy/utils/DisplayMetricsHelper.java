@@ -118,6 +118,17 @@ public class DisplayMetricsHelper {
     }
 
     /**
+     * 获取底部导航栏高度
+     *
+     * @param context 上下文
+     * @return 标题栏高度
+     */
+    public static int getNavigationBarHeight(@NonNull Context context) {
+        return context.getResources().getDimensionPixelSize(
+            R.dimen.ajstudy_bottom_navigation_height);
+    }
+
+    /**
      * dp转px
      *
      * @param context 上下文

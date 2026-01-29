@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
-import com.qiufengguang.ajstudy.data.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
 
 /**
  * 卡片基类ViewHolder
@@ -15,6 +15,11 @@ import com.qiufengguang.ajstudy.data.LayoutData;
 public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView.ViewHolder {
 
     protected B binding;
+
+    /**
+     * 是否监听 onResume 和 onPause
+     */
+    public boolean isObserveResumePause = false;
 
     public BaseViewHolder(@NonNull B binding) {
         super(binding.getRoot());
@@ -53,10 +58,22 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
     }
 
     /**
+     * Called when the card is no longer resumed
+     */
+    public void onResume() {
+    }
+
+    /**
+     * Called when the card is visible to the user and actively running.
+     */
+    public void onPause() {
+    }
+
+    /**
      * 更新卡片
      *
      * @param data 卡片数据
      */
-    public void update(LayoutData<?> data){
+    public void update(LayoutData<?> data) {
     }
 }

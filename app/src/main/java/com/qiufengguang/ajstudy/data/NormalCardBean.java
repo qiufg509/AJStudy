@@ -4,15 +4,19 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import java.util.Objects;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
 /**
- * 知识列表页数据bean
+ * 普通卡片数据bean
  *
  * @author qiufengguang
  * @since 2025/5/5 23:54
  */
-public class KnowHowBean {
+public class NormalCardBean extends BaseCardBean {
+    public static final String LAYOUT_NAME = "normalCard";
+
+    public static final int LAYOUT_ID = 4;
+
     private int id;
     private String icon;
     private String title;
@@ -20,6 +24,16 @@ public class KnowHowBean {
     private String brief;
 
     private String targetPage;
+
+    @Override
+    public String getLayoutName() {
+        return LAYOUT_NAME;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return LAYOUT_ID;
+    }
 
     public int getId() {
         return id;
@@ -67,15 +81,5 @@ public class KnowHowBean {
 
     public void setTargetPage(String targetPage) {
         this.targetPage = targetPage;
-    }
-
-    public boolean isSame(KnowHowBean bean) {
-        if (Objects.isNull(bean)) {
-            return false;
-        }
-        return TextUtils.equals(icon, bean.getIcon())
-            && TextUtils.equals(title, bean.getTitle())
-            && TextUtils.equals(subtitle, bean.getSubtitle())
-            && TextUtils.equals(brief, bean.getBrief());
     }
 }

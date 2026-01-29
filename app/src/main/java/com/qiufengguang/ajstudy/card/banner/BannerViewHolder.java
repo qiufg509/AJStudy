@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.BannerBean;
-import com.qiufengguang.ajstudy.data.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;
 import com.qiufengguang.ajstudy.dialog.IDialog;
@@ -33,14 +33,13 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
 
     private BannerWrapper cardWrapper;
 
-    private boolean isBannerActive = false;
-
     private WeakReference<LifecycleOwner> lifecycleOwnerRef;
 
 
     public BannerViewHolder(@NonNull CardBannerBinding binding, @NonNull LifecycleOwner lifecycleOwner) {
         super(binding);
         this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
+        this.isObserveResumePause = true;
         observeLifecycle();
     }
 
@@ -63,7 +62,7 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null
+        if (data == null || data.getData() == null || !data.isCollection()
             || !TextUtils.equals(data.getLayoutName(), BannerBean.LAYOUT_NAME)) {
             return;
         }
@@ -71,7 +70,7 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
             initCardWrapper();
         }
         @SuppressWarnings("unchecked")
-        List<BannerBean> beans = (List<BannerBean>) data.getBeans();
+        List<BannerBean> beans = (List<BannerBean>) data.getData();
         cardWrapper.setBannerBeans(beans);
 
         checkAndResumeBanner();
@@ -99,6 +98,16 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
 
     @Override
     public void onPause(@NonNull LifecycleOwner owner) {
+        pauseBanner();
+    }
+
+    @Override
+    public void onResume() {
+        checkAndResumeBanner();
+    }
+
+    @Override
+    public void onPause() {
         pauseBanner();
     }
 
@@ -138,7 +147,7 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
      * 检查是否需要恢复轮播
      */
     private void checkAndResumeBanner() {
-        if (cardWrapper != null && isBannerActive) {
+        if (cardWrapper != null) {
             cardWrapper.startOrResumeAutoScroll();
         }
     }
@@ -147,23 +156,12 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
         if (cardWrapper != null) {
             cardWrapper.pauseAutoScroll();
         }
-        isBannerActive = false;
     }
 
     private void releaseBanner() {
         if (cardWrapper != null) {
             cardWrapper.release();
             cardWrapper = null;
-        }
-        isBannerActive = false;
-    }
-
-    public void setBannerActive(boolean active) {
-        this.isBannerActive = active;
-        if (active) {
-            checkAndResumeBanner();
-        } else {
-            pauseBanner();
         }
     }
 

@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.LayoutData;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class SeriesCardViewHolder extends BaseViewHolder<CardSeriesBinding> {
 
     @Override
     public void bind(LayoutData<?> data) {
-        if (data == null || data.getBeans() == null
+        if (data == null || data.getData() == null || !data.isCollection()
             || !TextUtils.equals(data.getLayoutName(), SeriesCardBean.LAYOUT_NAME)) {
             return;
         }
@@ -49,7 +49,7 @@ public class SeriesCardViewHolder extends BaseViewHolder<CardSeriesBinding> {
             initCardWrapper();
         }
         @SuppressWarnings("unchecked")
-        List<SeriesCardBean> beans = (List<SeriesCardBean>) data.getBeans();
+        List<SeriesCardBean> beans = (List<SeriesCardBean>) data.getData();
         cardWrapper.setData(beans, data.getCardTitle());
     }
 

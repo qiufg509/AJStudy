@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.grid;
 
-import androidx.annotation.IntRange;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,23 +18,12 @@ import java.util.List;
  * @since 2025/12/28 18:50
  */
 public class GridCardWrapper {
-    /**
-     * item使用TextView，上icon下文字样式
-     */
-    public static final int TYPE_TEXT = 0;
-    /**
-     * item使用ImageView，圆形点中打勾样式
-     */
-    public static final int TYPE_IMAGE = 1;
 
     private WeakReference<RecyclerView> recyclerViewRef;
 
     private GridCardAdapter adapter;
 
     private int spanCount;
-
-    @IntRange(from = 0, to = 1)
-    private int itemType;
 
     private int horizontalSpacing;
 
@@ -52,7 +40,7 @@ public class GridCardWrapper {
 
     public void setData(List<GridCardBean> beans) {
         if (adapter == null) {
-            adapter = new GridCardAdapter(itemType, beans);
+            adapter = new GridCardAdapter(beans);
         } else {
             adapter.setData(beans);
         }
@@ -70,7 +58,7 @@ public class GridCardWrapper {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         if (adapter == null) {
-            adapter = new GridCardAdapter(itemType, null);
+            adapter = new GridCardAdapter(null);
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
@@ -86,8 +74,6 @@ public class GridCardWrapper {
         private RecyclerView recyclerView;
 
         private int spanCount;
-
-        private int itemType;
 
         private int horizontalSpacing;
 
@@ -118,17 +104,6 @@ public class GridCardWrapper {
          */
         public GridCardWrapper.Builder setSpanCount(int spanCount) {
             this.spanCount = spanCount;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片item类型
-         *
-         * @param itemType 0-TextView展示，上边icon，下边文字；1-ImageView展示
-         * @return Builder
-         */
-        public GridCardWrapper.Builder setItemType(@IntRange(from = 0, to = 1) int itemType) {
-            this.itemType = itemType;
             return this;
         }
 
@@ -201,7 +176,6 @@ public class GridCardWrapper {
                 wrapper.spanCount = column == Constant.Grid.COLUMN_DEFAULT ? Constant.Pln.GRID_4 :
                     (column == Constant.Grid.COLUMN_8 ? Constant.Pln.GRID_8 : Constant.Pln.GRID_12);
             }
-            wrapper.itemType = this.itemType;
             wrapper.horizontalSpacing = this.horizontalSpacing == 0 && this.spacing != 0
                 ? this.spacing : this.horizontalSpacing;
             wrapper.verticalSpacing = this.verticalSpacing == 0 && this.spacing != 0

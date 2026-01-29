@@ -3,15 +3,30 @@ package com.qiufengguang.ajstudy.data;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+
 /**
  * 格网列表卡片数据
  *
  * @author qiufengguang
  * @since 2025/12/28 19:12
  */
-public class GridCardBean {
+public class GridCardBean extends BaseCardBean {
     public static final String LAYOUT_NAME = "gridCard";
 
+    public static final int LAYOUT_ID = 1;
+
+    /**
+     * item使用TextView，上icon下文字样式
+     */
+    public static final int TYPE_TEXT = 0;
+
+    /**
+     * item使用ImageView，圆形点中打勾样式
+     */
+    public static final int TYPE_IMAGE = 1;
+
+    private final int itemType;
     private String title;
 
     private @DrawableRes int icon;
@@ -20,14 +35,27 @@ public class GridCardBean {
 
     private String navigatePage;
 
+    public GridCardBean(int backgroundTint) {
+        this.backgroundTint = backgroundTint;
+        this.itemType = TYPE_IMAGE;
+    }
+
     public GridCardBean(String title, int icon, String navigatePage) {
         this.title = title;
         this.icon = icon;
         this.navigatePage = navigatePage;
+        this.itemType = TYPE_TEXT;
     }
 
-    public GridCardBean(int backgroundTint) {
-        this.backgroundTint = backgroundTint;
+
+    @Override
+    public String getLayoutName() {
+        return LAYOUT_NAME;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return LAYOUT_ID;
     }
 
     public String getTitle() {
@@ -48,5 +76,9 @@ public class GridCardBean {
 
     public String getNavigatePage() {
         return navigatePage;
+    }
+
+    public int getItemType() {
+        return itemType;
     }
 }
