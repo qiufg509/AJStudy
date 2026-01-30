@@ -72,6 +72,8 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
 
     private void initializeApp() {
         SpUtils.init(this);
+        CardRegistrar.initialize();
+
         // 从 SharedPreferences 或其他存储检查登录状态
         LoginRepository userRepository = new LoginRepository();
         User savedUser = userRepository.getSavedUser();

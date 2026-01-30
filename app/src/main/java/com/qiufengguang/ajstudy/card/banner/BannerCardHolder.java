@@ -28,15 +28,15 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/19 14:03
  */
-public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
+public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
     implements DefaultLifecycleObserver {
 
-    private BannerWrapper cardWrapper;
+    private BannerCard cardWrapper;
 
     private WeakReference<LifecycleOwner> lifecycleOwnerRef;
 
 
-    public BannerViewHolder(@NonNull CardBannerBinding binding, @NonNull LifecycleOwner lifecycleOwner) {
+    public BannerCardHolder(@NonNull CardBannerBinding binding, @NonNull LifecycleOwner lifecycleOwner) {
         super(binding);
         this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
         this.isObserveResumePause = true;
@@ -48,7 +48,7 @@ public class BannerViewHolder extends BaseViewHolder<CardBannerBinding>
         if (cardWrapper != null) {
             return;
         }
-        cardWrapper = new BannerWrapper.Builder()
+        cardWrapper = new BannerCard.Builder()
             .setRecyclerView(binding.recyclerBanner)
             .setIndicatorContainer(binding.indicatorContainer)
             .setClickListener((context, position, bean) -> {

@@ -2,6 +2,11 @@ package com.qiufengguang.ajstudy.card.normal;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -9,10 +14,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.Card;
+import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 
 /**
  * 普通卡片
@@ -20,7 +30,7 @@ import java.lang.ref.WeakReference;
  * @author qiufengguang
  * @since 2026/1/29 19:18
  */
-public class NormalCardWrapper {
+public class NormalCard extends Card {
 
     private NormalCardBean bean;
 
@@ -30,7 +40,7 @@ public class NormalCardWrapper {
 
     private RequestOptions requestOptions;
 
-    private NormalCardWrapper() {
+    private NormalCard() {
     }
 
     public void setData(NormalCardBean bean) {
@@ -101,6 +111,20 @@ public class NormalCardWrapper {
         listener = null;
     }
 
+    public static class Creator implements CardCreator {
+        @Override
+        public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
+            CardNormalBinding normalBinding = CardNormalBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+            return new NormalCardHolder(normalBinding);
+        }
+
+        @Override
+        public Map<Integer, Integer> getSpanSize() {
+            return getSpanSizeMap(Constant.Pln.DEF_4, Constant.Pln.DEF_8, Constant.Pln.DEF_12);
+        }
+    }
+
     public static class Builder {
         private CardNormalBinding binding;
 
@@ -112,7 +136,7 @@ public class NormalCardWrapper {
          * @param binding CardNormalBinding
          * @ Builder
          */
-        public NormalCardWrapper.Builder setBinding(CardNormalBinding binding) {
+        public NormalCard.Builder setBinding(CardNormalBinding binding) {
             this.binding = binding;
             return this;
         }
@@ -123,17 +147,17 @@ public class NormalCardWrapper {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public NormalCardWrapper.Builder setListener(OnItemClickListener listener) {
+        public NormalCard.Builder setListener(OnItemClickListener listener) {
             this.listener = listener;
             return this;
         }
 
-        public NormalCardWrapper create() {
+        public NormalCard create() {
             if (this.binding == null) {
                 throw new UnsupportedOperationException(
                     "binding is null, call setBinding first.");
             }
-            NormalCardWrapper wrapper = new NormalCardWrapper();
+            NormalCard wrapper = new NormalCard();
             wrapper.bindingRef = new WeakReference<>(binding);
             wrapper.listener = this.listener;
             return wrapper;

@@ -3,6 +3,7 @@ package com.qiufengguang.ajstudy.card.banner;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.Card;
+import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.data.BannerBean;
+import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
@@ -23,6 +29,7 @@ import com.qiufengguang.ajstudy.view.RoundedFrameLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 轮播banner卡片
@@ -30,7 +37,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2025/12/19 16:33
  */
-public class BannerWrapper {
+public class BannerCard extends Card {
 
     /**
      * 自动轮播默认滚动间隔4秒
@@ -103,7 +110,7 @@ public class BannerWrapper {
 
     private BannerDecoration decor;
 
-    private BannerWrapper() {
+    private BannerCard() {
     }
 
     /**
@@ -522,6 +529,20 @@ public class BannerWrapper {
         }
     }
 
+    public static class Creator implements CardCreator {
+        @Override
+        public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
+            CardBannerBinding binding = CardBannerBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+            return new BannerCardHolder(binding, lifecycleOwner);
+        }
+
+        @Override
+        public Map<Integer, Integer> getSpanSize() {
+            return getSpanSizeMap(Constant.Pln.DEF_4);
+        }
+    }
+
     public static class Builder {
         private RecyclerView recyclerView;
 
@@ -543,7 +564,7 @@ public class BannerWrapper {
          * @param root 轮播banner根布局
          * @return Builder
          */
-        public BannerWrapper.Builder setBannerLayout(@NonNull View root) {
+        public BannerCard.Builder setBannerLayout(@NonNull View root) {
             if (!(root instanceof ViewGroup)) {
                 throw new IllegalArgumentException("root must be of type RoundedFrameLayout.");
             }
@@ -566,7 +587,7 @@ public class BannerWrapper {
          * @param recyclerView RecyclerView
          * @return Builder
          */
-        public BannerWrapper.Builder setRecyclerView(@NonNull RecyclerView recyclerView) {
+        public BannerCard.Builder setRecyclerView(@NonNull RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
             return this;
         }
@@ -577,7 +598,7 @@ public class BannerWrapper {
          * @param indicatorContainer LinearLayout
          * @return Builder
          */
-        public BannerWrapper.Builder setIndicatorContainer(LinearLayout indicatorContainer) {
+        public BannerCard.Builder setIndicatorContainer(LinearLayout indicatorContainer) {
             this.indicatorContainer = indicatorContainer;
             return this;
         }
@@ -588,7 +609,7 @@ public class BannerWrapper {
          * @param column 栅格数 {@link Constant.Grid}
          * @return Builder
          */
-        public BannerWrapper.Builder setColumn(int column) {
+        public BannerCard.Builder setColumn(int column) {
             this.column = column;
 
             return this;
@@ -600,7 +621,7 @@ public class BannerWrapper {
          * @param carouselInterval 间隔时间ms
          * @return Builder
          */
-        public BannerWrapper.Builder setCarouselInterval(long carouselInterval) {
+        public BannerCard.Builder setCarouselInterval(long carouselInterval) {
             this.carouselInterval = carouselInterval;
             return this;
         }
@@ -611,7 +632,7 @@ public class BannerWrapper {
          * @param itemRatio 宽高比值
          * @return Builder
          */
-        public BannerWrapper.Builder setItemRatio(float itemRatio) {
+        public BannerCard.Builder setItemRatio(float itemRatio) {
             this.itemRatio = itemRatio;
             return this;
         }
@@ -622,7 +643,7 @@ public class BannerWrapper {
          * @param cornerRadius 圆角大小
          * @return Builder
          */
-        public BannerWrapper.Builder setCornerRadius(int cornerRadius) {
+        public BannerCard.Builder setCornerRadius(int cornerRadius) {
             this.cornerRadius = cornerRadius;
             return this;
         }
@@ -633,18 +654,18 @@ public class BannerWrapper {
          * @param clickListener BannerAdapter.OnBannerClickListener
          * @return Builder
          */
-        public BannerWrapper.Builder setClickListener(
+        public BannerCard.Builder setClickListener(
             BannerAdapter.OnBannerClickListener clickListener) {
             this.clickListener = clickListener;
             return this;
         }
 
-        public BannerWrapper create() {
+        public BannerCard create() {
             if (this.recyclerView == null) {
                 throw new UnsupportedOperationException(
                     "recyclerView is null, the root must contain a sub-child of RecyclerView.");
             }
-            BannerWrapper wrapper = new BannerWrapper();
+            BannerCard wrapper = new BannerCard();
             wrapper.recyclerBannerRef = new WeakReference<>(this.recyclerView);
             if (this.column > 0) {
                 wrapper.column = this.column;

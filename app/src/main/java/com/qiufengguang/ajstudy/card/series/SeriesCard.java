@@ -2,10 +2,15 @@ package com.qiufengguang.ajstudy.card.series;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -13,12 +18,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.Card;
+import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系列卡片
@@ -26,7 +36,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/25 15:44
  */
-public class SeriesCardWrapper {
+public class SeriesCard extends Card {
     private String cardTitle;
 
     private List<SeriesCardBean> beans;
@@ -39,7 +49,7 @@ public class SeriesCardWrapper {
 
     private RequestOptions requestOptions;
 
-    private SeriesCardWrapper() {
+    private SeriesCard() {
     }
 
     public void setData(List<SeriesCardBean> beans, String cardTitle) {
@@ -156,6 +166,20 @@ public class SeriesCardWrapper {
         showIndex = -1;
     }
 
+    public static class Creator implements CardCreator {
+        @Override
+        public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
+            CardSeriesBinding binding = CardSeriesBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+            return new SeriesCardHolder(binding);
+        }
+
+        @Override
+        public Map<Integer, Integer> getSpanSize() {
+            return getSpanSizeMap(Constant.Pln.DEF_4);
+        }
+    }
+
     public static class Builder {
         private CardSeriesBinding binding;
 
@@ -167,7 +191,7 @@ public class SeriesCardWrapper {
          * @param binding CardSeriesBinding
          * @ Builder
          */
-        public SeriesCardWrapper.Builder setBinding(CardSeriesBinding binding) {
+        public SeriesCard.Builder setBinding(CardSeriesBinding binding) {
             this.binding = binding;
             return this;
         }
@@ -178,17 +202,17 @@ public class SeriesCardWrapper {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public SeriesCardWrapper.Builder setListener(OnItemClickListener listener) {
+        public SeriesCard.Builder setListener(OnItemClickListener listener) {
             this.listener = listener;
             return this;
         }
 
-        public SeriesCardWrapper create() {
+        public SeriesCard create() {
             if (this.binding == null) {
                 throw new UnsupportedOperationException(
                     "binding is null, call setBinding first.");
             }
-            SeriesCardWrapper wrapper = new SeriesCardWrapper();
+            SeriesCard wrapper = new SeriesCard();
             wrapper.bindingRef = new WeakReference<>(binding);
             wrapper.listener = this.listener;
             return wrapper;

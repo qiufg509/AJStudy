@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
-    private GridCardWrapper cardWrapper;
+    private GridCard cardWrapper;
 
     public GridViewHolder(@NonNull CardGridBinding binding) {
         super(binding);
@@ -38,7 +38,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
-        cardWrapper = new GridCardWrapper.Builder()
+        cardWrapper = new GridCard.Builder()
             .setRecyclerView(binding.getRoot())
             .setHorizontalSpacing(spacing)
             .setListener(GridViewHolder::onItemClickListener)

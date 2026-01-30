@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.largegraphic;
+package com.qiufengguang.ajstudy.card.series;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -6,25 +6,24 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
+import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 
 import java.util.List;
 
 /**
- * 大图文卡的ViewHolder
+ * 系列卡片的ViewHolder
  *
  * @author qiufengguang
- * @since 2026/1/24 23:31
+ * @since 2026/1/25 17:20
  */
-public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBinding> {
+public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
 
-    private LargeGraphicCardWrapper cardWrapper;
+    private SeriesCard cardWrapper;
 
-    public LargeGraphicViewHolder(@NonNull CardLargeGraphicBinding binding) {
+    public SeriesCardHolder(@NonNull CardSeriesBinding binding) {
         super(binding);
     }
 
@@ -33,13 +32,9 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
         if (cardWrapper != null) {
             return;
         }
-        int spacing = itemView.getResources().getDimensionPixelSize(
-            R.dimen.activity_horizontal_margin_s);
-        cardWrapper = new LargeGraphicCardWrapper.Builder()
-            .setRecyclerView(binding.recyclerLgc)
-            .setTitleView(binding.tvTitle)
-            .setSpacing(spacing)
-            .setListener(LargeGraphicViewHolder::onItemClickListener)
+        cardWrapper = new SeriesCard.Builder()
+            .setBinding(binding)
+            .setListener(SeriesCardHolder::onItemClickListener)
             .create();
         cardWrapper.show();
     }
@@ -47,18 +42,18 @@ public class LargeGraphicViewHolder extends BaseViewHolder<CardLargeGraphicBindi
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), LargeGraphicCardBean.LAYOUT_NAME)) {
+            || !TextUtils.equals(data.getLayoutName(), SeriesCardBean.LAYOUT_NAME)) {
             return;
         }
         if (cardWrapper == null) {
             initCardWrapper();
         }
         @SuppressWarnings("unchecked")
-        List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getData();
+        List<SeriesCardBean> beans = (List<SeriesCardBean>) data.getData();
         cardWrapper.setData(beans, data.getCardTitle());
     }
 
-    private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {
+    private static void onItemClickListener(Context context, SeriesCardBean bean) {
         if (!(context instanceof AppCompatActivity)) {
             return;
         }

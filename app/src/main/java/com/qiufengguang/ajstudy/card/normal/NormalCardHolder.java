@@ -19,11 +19,11 @@ import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
  * @author qiufengguang
  * @since 2026/1/29 19:40
  */
-public class NormalCardViewHolder extends BaseViewHolder<CardNormalBinding> {
+public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
 
-    private NormalCardWrapper cardWrapper;
+    private NormalCard cardWrapper;
 
-    public NormalCardViewHolder(@NonNull CardNormalBinding binding) {
+    public NormalCardHolder(@NonNull CardNormalBinding binding) {
         super(binding);
     }
 
@@ -32,9 +32,9 @@ public class NormalCardViewHolder extends BaseViewHolder<CardNormalBinding> {
         if (cardWrapper != null) {
             return;
         }
-        cardWrapper = new NormalCardWrapper.Builder()
+        cardWrapper = new NormalCard.Builder()
             .setBinding(binding)
-            .setListener(NormalCardViewHolder::onItemClickListener)
+            .setListener(NormalCardHolder::onItemClickListener)
             .create();
         cardWrapper.show();
     }

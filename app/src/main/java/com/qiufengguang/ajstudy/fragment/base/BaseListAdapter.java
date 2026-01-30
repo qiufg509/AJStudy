@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
-import com.qiufengguang.ajstudy.card.banner.BannerViewHolder;
+import com.qiufengguang.ajstudy.card.banner.BannerCardHolder;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
 import com.qiufengguang.ajstudy.data.BannerBean;
@@ -146,10 +146,10 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
             return;
         }
         String layoutName = layoutData.getLayoutName();
-        if (holder instanceof BannerViewHolder
+        if (holder instanceof BannerCardHolder
             && TextUtils.equals(layoutName, BannerBean.LAYOUT_NAME)) {
-            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            bannerViewHolder.bind(layoutData, this.lifecycleOwner);
+            BannerCardHolder bannerCardHolder = (BannerCardHolder) holder;
+            bannerCardHolder.bind(layoutData, this.lifecycleOwner);
         } else {
             holder.bind(layoutData);
         }
