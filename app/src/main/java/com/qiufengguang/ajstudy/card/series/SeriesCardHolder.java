@@ -34,7 +34,7 @@ public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
         }
         cardWrapper = new SeriesCard.Builder()
             .setBinding(binding)
-            .setListener(SeriesCardHolder::onItemClickListener)
+            .setListener(this::onItemClickListener)
             .create();
         cardWrapper.show();
     }
@@ -53,7 +53,7 @@ public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
         cardWrapper.setData(beans, data.getCardTitle());
     }
 
-    private static void onItemClickListener(Context context, SeriesCardBean bean) {
+    private void onItemClickListener(Context context, SeriesCardBean bean) {
         if (!(context instanceof AppCompatActivity)) {
             return;
         }

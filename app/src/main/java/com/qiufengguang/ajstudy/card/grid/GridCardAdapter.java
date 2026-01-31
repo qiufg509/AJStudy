@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.grid;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.ItemGridCardImageBinding;
 import com.qiufengguang.ajstudy.databinding.ItemGridCardTextBinding;
@@ -30,7 +30,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<GridCardBean> beans;
 
-    private OnItemClickListener listener;
+    private OnItemClickListener<GridCardBean> listener;
 
     public GridCardAdapter(@Nullable List<GridCardBean> beans) {
         this.beans = beans;
@@ -63,7 +63,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener<GridCardBean> listener) {
         this.listener = listener;
     }
 
@@ -110,7 +110,10 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         GridCardBean bean;
 
-        public GridCardTextHolder(@NonNull ItemGridCardTextBinding binding, OnItemClickListener clickListener) {
+        public GridCardTextHolder(
+            @NonNull ItemGridCardTextBinding binding,
+            OnItemClickListener<GridCardBean> clickListener
+        ) {
             super(binding.getRoot());
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(v -> {
@@ -136,7 +139,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         GridCardBean bean;
 
-        public GridCardImageHolder(@NonNull ItemGridCardImageBinding binding, OnItemClickListener clickListener) {
+        public GridCardImageHolder(@NonNull ItemGridCardImageBinding binding, OnItemClickListener<GridCardBean> clickListener) {
             super(binding.getRoot());
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(v -> {
@@ -159,9 +162,5 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 binding.getRoot().setImageResource(bean.getIcon());
             }
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Context context, GridCardBean bean);
     }
 }

@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.card.banner;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
@@ -51,11 +53,18 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
         cardWrapper = new BannerCard.Builder()
             .setRecyclerView(binding.recyclerBanner)
             .setIndicatorContainer(binding.indicatorContainer)
-            .setClickListener((context, position, bean) -> {
-                if (!(context instanceof AppCompatActivity)) {
-                    return;
+            .setClickListener(new OnItemClickListener<>() {
+                @Override
+                public void onItemClick(Context context, BannerBean data) {
                 }
-                handleBannerClick((AppCompatActivity) context, position, bean);
+
+                @Override
+                public void onItemClick(Context context, int position, BannerBean data) {
+                    if (!(context instanceof AppCompatActivity)) {
+                        return;
+                    }
+                    handleBannerClick((AppCompatActivity) context, position, data);
+                }
             })
             .create();
     }

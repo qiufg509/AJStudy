@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.normal;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -36,7 +36,7 @@ public class NormalCard extends Card {
 
     private WeakReference<CardNormalBinding> bindingRef;
 
-    private OnItemClickListener listener;
+    private OnItemClickListener<NormalCardBean> listener;
 
     private RequestOptions requestOptions;
 
@@ -128,7 +128,7 @@ public class NormalCard extends Card {
     public static class Builder {
         private CardNormalBinding binding;
 
-        private OnItemClickListener listener;
+        private OnItemClickListener<NormalCardBean> listener;
 
         /**
          * 设置系列卡片布局viewbinding
@@ -147,7 +147,7 @@ public class NormalCard extends Card {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public NormalCard.Builder setListener(OnItemClickListener listener) {
+        public NormalCard.Builder setListener(OnItemClickListener<NormalCardBean> listener) {
             this.listener = listener;
             return this;
         }
@@ -162,10 +162,6 @@ public class NormalCard extends Card {
             wrapper.listener = this.listener;
             return wrapper;
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Context context, NormalCardBean bean);
     }
 }
 

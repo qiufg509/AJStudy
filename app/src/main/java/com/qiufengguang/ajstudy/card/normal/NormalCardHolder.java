@@ -34,7 +34,7 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
         }
         cardWrapper = new NormalCard.Builder()
             .setBinding(binding)
-            .setListener(NormalCardHolder::onItemClickListener)
+            .setListener(this::onItemClickListener)
             .create();
         cardWrapper.show();
     }
@@ -52,7 +52,7 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
         cardWrapper.setData(bean);
     }
 
-    private static void onItemClickListener(Context context, NormalCardBean bean) {
+    private void onItemClickListener(Context context, NormalCardBean bean) {
         String titleStr = bean.getTitle();
         String targetPage = bean.getTargetPage();
         if (!TextUtils.isEmpty(targetPage) && !TextUtils.isEmpty(titleStr)) {

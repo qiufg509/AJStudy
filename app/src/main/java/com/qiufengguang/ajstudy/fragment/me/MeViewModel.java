@@ -10,6 +10,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
+import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class MeViewModel extends ViewModel {
         GridCardBean bean = gridCardBeans.get(themeIndex);
         bean.setIcon(R.drawable.ic_checkmark);
 
-        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(gridCardBeans);
+        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(gridCardBeans,"主题色");
 
         List<LayoutData<?>> dataList = new ArrayList<>();
         dataList.add(gridCardData);

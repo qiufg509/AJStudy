@@ -20,6 +20,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -75,7 +76,7 @@ public class BannerCard extends Card {
 
     private int itemHeight;
 
-    private BannerAdapter.OnBannerClickListener clickListener;
+    private OnItemClickListener<BannerBean> clickListener;
 
     private Handler autoScrollHandler;
 
@@ -556,7 +557,7 @@ public class BannerCard extends Card {
 
         private int cornerRadius = -1;
 
-        private BannerAdapter.OnBannerClickListener clickListener;
+        private OnItemClickListener<BannerBean> clickListener;
 
         /**
          * 设置banner布局控件
@@ -651,11 +652,11 @@ public class BannerCard extends Card {
         /**
          * 设置item点击回调
          *
-         * @param clickListener BannerAdapter.OnBannerClickListener
+         * @param clickListener {@link OnItemClickListener}
          * @return Builder
          */
         public BannerCard.Builder setClickListener(
-            BannerAdapter.OnBannerClickListener clickListener) {
+            OnItemClickListener<BannerBean> clickListener) {
             this.clickListener = clickListener;
             return this;
         }

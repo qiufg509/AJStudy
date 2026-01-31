@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.data;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.global.Constant;
 
 /**
@@ -8,9 +9,16 @@ import com.qiufengguang.ajstudy.global.Constant;
  * @author qiufengguang
  * @since 2025/11/30 2:15
  */
-public class User {
+public class User extends BaseCardBean {
+
+    public static final String LAYOUT_NAME = "userCard";
+
+    public static final int LAYOUT_ID = 5;
+
     private String phone;
+
     private String password;
+
     private boolean rememberPwd;
 
     private long timestamp;
@@ -22,6 +30,16 @@ public class User {
         this.phone = phone;
         this.password = password;
         this.timestamp = System.currentTimeMillis();
+    }
+
+    @Override
+    public String getLayoutName() {
+        return LAYOUT_NAME;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return LAYOUT_ID;
     }
 
     public String getPhone() {
@@ -63,5 +81,16 @@ public class User {
             this.timestamp = -1;
         }
         return isInvalid;
+    }
+
+    /**
+     * 保留前3位和后4位，中间用*代替
+     * 例如：13800138000 → 138****8000
+     */
+    public String anonymizePhone() {
+        if (phone == null || phone.length() != 11) {
+            return phone;
+        }
+        return phone.substring(0, 3) + "****" + phone.substring(7);
     }
 }

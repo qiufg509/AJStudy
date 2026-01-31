@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.series;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -43,7 +43,7 @@ public class SeriesCard extends Card {
 
     private WeakReference<CardSeriesBinding> bindingRef;
 
-    private OnItemClickListener listener;
+    private OnItemClickListener<SeriesCardBean> listener;
 
     private int showIndex = -1;
 
@@ -183,7 +183,7 @@ public class SeriesCard extends Card {
     public static class Builder {
         private CardSeriesBinding binding;
 
-        private OnItemClickListener listener;
+        private OnItemClickListener<SeriesCardBean> listener;
 
         /**
          * 设置系列卡片布局viewbinding
@@ -202,7 +202,7 @@ public class SeriesCard extends Card {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public SeriesCard.Builder setListener(OnItemClickListener listener) {
+        public SeriesCard.Builder setListener(OnItemClickListener<SeriesCardBean> listener) {
             this.listener = listener;
             return this;
         }
@@ -217,10 +217,6 @@ public class SeriesCard extends Card {
             wrapper.listener = this.listener;
             return wrapper;
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Context context, SeriesCardBean bean);
     }
 }
 

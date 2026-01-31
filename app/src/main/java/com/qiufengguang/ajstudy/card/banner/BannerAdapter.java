@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.banner;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.databinding.ItemHomeBannerBinding;
 
@@ -40,7 +40,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
     private List<BannerBean> bannerBeans;
 
-    private OnBannerClickListener clickListener;
+    private OnItemClickListener<BannerBean> clickListener;
 
     private final int itemWidth;
 
@@ -165,7 +165,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         return bannerBeans.isEmpty() ? 0 : Integer.MAX_VALUE;
     }
 
-    public void setOnBannerClickListener(OnBannerClickListener listener) {
+    public void setOnBannerClickListener(OnItemClickListener<BannerBean> listener) {
         this.clickListener = listener;
     }
 
@@ -190,13 +190,16 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         private static final DrawableTransitionOptions TRANSITION_OPTIONS =
             new DrawableTransitionOptions().crossFade(300); // 300ms淡入动画
 
-        public BannerViewHolder(@NonNull ItemHomeBannerBinding binding, OnBannerClickListener clickListener) {
+        public BannerViewHolder(
+            @NonNull ItemHomeBannerBinding binding,
+            OnItemClickListener<BannerBean> clickListener
+        ) {
             super(binding.getRoot());
             this.binding = binding;
             // 设置点击事件
             this.binding.banner.setOnClickListener(v -> {
                 if (clickListener != null && bean != null) {
-                    clickListener.onBannerClick(v.getContext(), currentRealPosition, bean);
+                    clickListener.onItemClick(v.getContext(), currentRealPosition, bean);
                 }
             });
         }
@@ -237,12 +240,5 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
                 Log.w(TAG, "clearGlideRequest error.");
             }
         }
-    }
-
-    /**
-     * Banner点击监听接口
-     */
-    public interface OnBannerClickListener {
-        void onBannerClick(Context context, int position, BannerBean bean);
     }
 }

@@ -13,6 +13,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -43,7 +44,7 @@ public class GridCard extends Card {
 
     private GridDecoration decor;
 
-    private GridCardAdapter.OnItemClickListener listener;
+    private OnItemClickListener<GridCardBean> listener;
 
     private GridCard() {
     }
@@ -107,7 +108,7 @@ public class GridCard extends Card {
 
         private boolean includeEdge;
 
-        private GridCardAdapter.OnItemClickListener listener;
+        private OnItemClickListener<GridCardBean> listener;
 
         /**
          * 设置格网卡片布局控件
@@ -178,10 +179,10 @@ public class GridCard extends Card {
         /**
          * 设置格网卡片item点击事件
          *
-         * @param listener GridCardAdapter.OnItemClickListener
+         * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public GridCard.Builder setListener(GridCardAdapter.OnItemClickListener listener) {
+        public GridCard.Builder setListener(OnItemClickListener<GridCardBean> listener) {
             this.listener = listener;
             return this;
         }

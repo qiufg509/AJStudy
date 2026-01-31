@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.ItemLargeGraphicBinding;
 
@@ -31,7 +31,7 @@ public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCa
 
     private List<LargeGraphicCardBean> beans;
 
-    private OnItemClickListener listener;
+    private OnItemClickListener<LargeGraphicCardBean> listener;
 
     public LargeGraphicCardAdapter(@Nullable List<LargeGraphicCardBean> beans) {
         this.beans = beans;
@@ -52,7 +52,7 @@ public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCa
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener<LargeGraphicCardBean> listener) {
         this.listener = listener;
     }
 
@@ -83,7 +83,10 @@ public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCa
 
         final RequestOptions requestOptions;
 
-        public LargeGraphicViewHolder(@NonNull ItemLargeGraphicBinding binding, OnItemClickListener clickListener) {
+        public LargeGraphicViewHolder(
+            @NonNull ItemLargeGraphicBinding binding,
+            OnItemClickListener<LargeGraphicCardBean> clickListener
+        ) {
             super(binding.getRoot());
             this.binding = binding;
             int radius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
@@ -113,9 +116,5 @@ public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCa
                 this.binding.ivPic.setImageResource(R.drawable.placeholder_image_1_1);
             }
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Context context, LargeGraphicCardBean bean);
     }
 }
