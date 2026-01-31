@@ -7,46 +7,26 @@ package com.qiufengguang.ajstudy.fragment.base;
  * @since 2026/1/29 11:29
  */
 public class PageConfig {
-    /**
-     *
-     */
-    boolean overlayNaviBar;
+    boolean isDarkBackground;
 
     boolean overlayTitleBar;
 
-    boolean isDarkBackground;
+    boolean hasNaviBar = true;
+
+    boolean overlayNaviBar;
 
     private PageConfig() {
     }
 
     public static class Builder {
+        boolean isDarkBackground;
+
         boolean overlayTitleBar;
+
+        boolean hasNaviBar = true;
 
         boolean overlayNaviBar;
 
-        boolean isDarkBackground;
-
-        /**
-         * 内容是否延伸到标题栏下面
-         *
-         * @param overlayTitleBar true内容与标题栏重叠 false内容在标题栏下
-         * @return Builder
-         */
-        public PageConfig.Builder setOverlayTitleBar(boolean overlayTitleBar) {
-            this.overlayTitleBar = overlayTitleBar;
-            return this;
-        }
-
-        /**
-         * 内容是否延伸到半透明底部导航栏下面
-         *
-         * @param overlayNaviBar true内容与导航栏重叠 false内容在导航栏以上
-         * @return Builder
-         */
-        public PageConfig.Builder setOverlayNaviBar(boolean overlayNaviBar) {
-            this.overlayNaviBar = overlayNaviBar;
-            return this;
-        }
 
         /**
          * 内容是否延伸到半透明底部导航栏下面是否为深色背景
@@ -61,11 +41,46 @@ public class PageConfig {
             return this;
         }
 
+        /**
+         * 内容是否延伸到标题栏下面
+         *
+         * @param overlayTitleBar true内容与标题栏重叠 false内容在标题栏下
+         * @return Builder
+         */
+        public PageConfig.Builder setOverlayTitleBar(boolean overlayTitleBar) {
+            this.overlayTitleBar = overlayTitleBar;
+            return this;
+        }
+
+        /**
+         * 设置是否存在底部导航栏(以主页为基础，默认 hasNaviBar = true 存在导航栏)
+         * 如果不存在，{@link Builder#setOverlayNaviBar(boolean)}无效
+         *
+         * @param hasNaviBar true存在 false不存在
+         * @return Builder
+         */
+        public PageConfig.Builder setHasNaviBar(boolean hasNaviBar) {
+            this.hasNaviBar = hasNaviBar;
+            return this;
+        }
+
+        /**
+         * 内容是否延伸到半透明底部导航栏下面
+         *
+         * @param overlayNaviBar true内容与导航栏重叠 false内容在导航栏以上
+         * @return Builder
+         */
+        public PageConfig.Builder setOverlayNaviBar(boolean overlayNaviBar) {
+            this.overlayNaviBar = overlayNaviBar;
+            return this;
+        }
+
         public PageConfig create() {
             PageConfig config = new PageConfig();
-            config.overlayTitleBar = this.overlayTitleBar;
-            config.overlayNaviBar = this.overlayNaviBar;
             config.isDarkBackground = this.isDarkBackground;
+            config.overlayTitleBar = this.overlayTitleBar;
+            config.hasNaviBar = this.hasNaviBar;
+            config.overlayNaviBar = this.overlayNaviBar;
             return config;
         }
     }

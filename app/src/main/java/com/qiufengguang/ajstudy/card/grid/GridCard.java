@@ -1,7 +1,10 @@
 package com.qiufengguang.ajstudy.card.grid;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -32,6 +35,8 @@ public class GridCard extends Card {
 
     private WeakReference<RecyclerView> recyclerViewRef;
 
+    private WeakReference<TextView> titleViewRef;
+
     private GridCardAdapter adapter;
 
     private int spanCount;
@@ -42,6 +47,8 @@ public class GridCard extends Card {
 
     private boolean includeEdge;
 
+    private boolean wrapContent;
+
     private GridDecoration decor;
 
     private OnItemClickListener<GridCardBean> listener;
@@ -49,11 +56,24 @@ public class GridCard extends Card {
     private GridCard() {
     }
 
-    public void setData(List<GridCardBean> beans) {
+    public void setData(List<GridCardBean> beans, String cardTitle) {
         if (adapter == null) {
             adapter = new GridCardAdapter(beans);
         } else {
             adapter.setData(beans);
+        }
+        if (titleViewRef == null) {
+            return;
+        }
+        TextView textView = titleViewRef.get();
+        if (textView == null) {
+            return;
+        }
+        if (TextUtils.isEmpty(cardTitle)) {
+            textView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(cardTitle);
         }
     }
 
@@ -65,6 +85,11 @@ public class GridCard extends Card {
         if (recyclerView == null) {
             return;
         }
+        ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+        layoutParams.width = this.wrapContent ? ViewGroup.LayoutParams.WRAP_CONTENT
+            : ViewGroup.LayoutParams.MATCH_PARENT;
+        recyclerView.setLayoutParams(layoutParams);
+
         GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), spanCount);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -98,6 +123,8 @@ public class GridCard extends Card {
     public static class Builder {
         private RecyclerView recyclerView;
 
+        private TextView titleView;
+
         private int spanCount;
 
         private int horizontalSpacing;
@@ -107,6 +134,8 @@ public class GridCard extends Card {
         private int spacing;
 
         private boolean includeEdge;
+
+        private boolean wrapContent;
 
         private OnItemClickListener<GridCardBean> listener;
 
@@ -118,6 +147,17 @@ public class GridCard extends Card {
          */
         public GridCard.Builder setRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
+            return this;
+        }
+
+        /**
+         * 设置卡片标题控件
+         *
+         * @param titleView TextView
+         * @return Builder
+         */
+        public GridCard.Builder setTitleView(TextView titleView) {
+            this.titleView = titleView;
             return this;
         }
 
@@ -177,6 +217,18 @@ public class GridCard extends Card {
         }
 
         /**
+         * 设置格网卡片间距是否包含边距
+         * 默认false撑满窗口宽度
+         *
+         * @param wrapContent 内容是否Wrap Content
+         * @return Builder
+         */
+        public GridCard.Builder setWrapContent(boolean wrapContent) {
+            this.wrapContent = wrapContent;
+            return this;
+        }
+
+        /**
          * 设置格网卡片item点击事件
          *
          * @param listener {@link OnItemClickListener}
@@ -194,6 +246,7 @@ public class GridCard extends Card {
             }
             GridCard wrapper = new GridCard();
             wrapper.recyclerViewRef = new WeakReference<>(this.recyclerView);
+            wrapper.titleViewRef = new WeakReference<>(this.titleView);
             if (this.spanCount > 0) {
                 wrapper.spanCount = this.spanCount;
             } else {
@@ -206,6 +259,7 @@ public class GridCard extends Card {
             wrapper.verticalSpacing = this.verticalSpacing == 0 && this.spacing != 0
                 ? this.spacing : this.verticalSpacing;
             wrapper.includeEdge = this.includeEdge;
+            wrapper.wrapContent = this.wrapContent;
             wrapper.listener = this.listener;
             return wrapper;
         }

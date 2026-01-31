@@ -107,14 +107,14 @@ public class SettingCardAdapter extends RecyclerView.Adapter<SettingCardAdapter.
             }
             this.binding.getRoot().setOnClickListener(v -> {
                 if (clickListener != null && bean != null
-                    && TextUtils.isEmpty(bean.getDestinationAction())) {
+                    && !TextUtils.isEmpty(bean.getDestinationAction())) {
                     clickListener.onItemClick(v.getContext(), bean);
                 }
             });
             binding.btnSwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> {
                 if (clickListener != null && bean != null
-                    && TextUtils.isEmpty(bean.getDestinationAction())) {
+                    && !TextUtils.isEmpty(bean.getDestinationAction())) {
                     clickListener.onCheckChange(buttonView.getContext(), bean, isChecked);
                 }
             });

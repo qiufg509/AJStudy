@@ -37,6 +37,9 @@ public class LookupController extends GridLayoutManager.SpanSizeLookup {
 
     @Override
     public int getSpanSize(int position) {
+        if (adapter == null) {
+            return DEFAULT_COLUMNS;
+        }
         int itemViewType = adapter.getItemViewType(position);
         CardCreator creator = Card.getCreator(itemViewType);
         if (creator == null) {

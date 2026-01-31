@@ -17,7 +17,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
-import com.qiufengguang.ajstudy.fragment.me.MeViewModel;
+import com.qiufengguang.ajstudy.fragment.second.SecondViewModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -32,7 +32,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
     private GridCard card;
 
-    private WeakReference<MeViewModel> viewModelRef;
+    private WeakReference<SecondViewModel> viewModelRef;
 
     public GridViewHolder(@NonNull CardGridBinding binding) {
         super(binding);
@@ -41,8 +41,8 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             return;
         }
         AppCompatActivity activity = (AppCompatActivity) context;
-        MeViewModel viewModel =
-            new ViewModelProvider(activity).get(MeViewModel.class);
+        SecondViewModel viewModel =
+            new ViewModelProvider(activity).get(SecondViewModel.class);
         viewModelRef = new WeakReference<>(viewModel);
     }
 
@@ -54,7 +54,8 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
         card = new GridCard.Builder()
-            .setRecyclerView(binding.getRoot())
+            .setRecyclerView(binding.recyclerGrid)
+            .setTitleView(binding.tvTitle)
             .setHorizontalSpacing(spacing)
             .setListener(this::onItemClickListener)
             .create();
@@ -72,7 +73,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         }
         @SuppressWarnings("unchecked")
         List<GridCardBean> beans = (List<GridCardBean>) data.getData();
-        card.setData(beans);
+        card.setData(beans, data.getCardTitle());
     }
 
     private void onItemClickListener(Context context, GridCardBean bean) {
@@ -83,7 +84,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             if (viewModelRef == null) {
                 return;
             }
-            MeViewModel viewModel = viewModelRef.get();
+            SecondViewModel viewModel = viewModelRef.get();
             if (viewModel == null) {
                 return;
             }
@@ -93,6 +94,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.putExtra("restart_theme", true);
             context.startActivity(intent);
+            ((AppCompatActivity) context).finish();
             return;
         }
         AppCompatActivity activity = (AppCompatActivity) context;

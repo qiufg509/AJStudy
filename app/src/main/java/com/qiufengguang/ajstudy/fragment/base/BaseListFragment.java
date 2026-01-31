@@ -31,8 +31,11 @@ public abstract class BaseListFragment extends Fragment {
 
     protected BaseListAdapter baseListAdapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+        @NonNull LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState
+    ) {
         baseBinding = FragmentBaseBinding.inflate(inflater, container, false);
         return baseBinding.getRoot();
     }
@@ -69,6 +72,7 @@ public abstract class BaseListFragment extends Fragment {
         super.onDestroyView();
         // 释放所有资源
         baseListAdapter.releaseAllResources();
+        baseListAdapter = null;
         baseBinding.recyclerContainer.setAdapter(null);
         baseBinding.recyclerContainer.setLayoutManager(null);
         baseBinding.recyclerContainer.clearOnScrollListeners();
@@ -99,16 +103,16 @@ public abstract class BaseListFragment extends Fragment {
         if (containerLayoutParams instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) containerLayoutParams;
             layoutParams.topMargin = config.overlayTitleBar ? 0 : totalHeight;
-            layoutParams.bottomMargin = config.overlayNaviBar ? 0 : naviBarHeight;
+            layoutParams.bottomMargin = (config.hasNaviBar && !config.overlayNaviBar) ? naviBarHeight : 0;
             baseBinding.bounceContainer.setLayoutParams(layoutParams);
         }
         baseBinding.recyclerContainer.setPaddingRelative(
             baseBinding.recyclerContainer.getPaddingStart(),
             baseBinding.recyclerContainer.getTop(),
             baseBinding.recyclerContainer.getPaddingEnd(),
-            config.overlayNaviBar ? naviBarHeight : 0
+            (config.hasNaviBar && config.overlayNaviBar) ? naviBarHeight : 0
         );
-        baseBinding.recyclerContainer.setClipToPadding(!config.overlayNaviBar);
+        baseBinding.recyclerContainer.setClipToPadding(!config.hasNaviBar || !config.overlayNaviBar);
     }
 
     /**
