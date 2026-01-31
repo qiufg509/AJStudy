@@ -8,9 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.SettingCardBean;
+import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
-import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.util.ArrayList;
@@ -32,25 +33,47 @@ public class MeViewModel extends ViewModel {
     }
 
     private void initData() {
-        List<GridCardBean> gridCardBeans = new ArrayList<>();
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_red));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_blue));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_green));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_orange));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_pink));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_black));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_amber));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_indigo));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_lime));
-        gridCardBeans.add(new GridCardBean(R.color.ajstudy_primary_purple));
+        List<GridCardBean> gridCardBeans = List.of(
+            new GridCardBean(R.color.ajstudy_primary_red),
+            new GridCardBean(R.color.ajstudy_primary_blue),
+            new GridCardBean(R.color.ajstudy_primary_green),
+            new GridCardBean(R.color.ajstudy_primary_orange),
+            new GridCardBean(R.color.ajstudy_primary_pink),
+            new GridCardBean(R.color.ajstudy_primary_black),
+            new GridCardBean(R.color.ajstudy_primary_amber),
+            new GridCardBean(R.color.ajstudy_primary_indigo),
+            new GridCardBean(R.color.ajstudy_primary_lime),
+            new GridCardBean(R.color.ajstudy_primary_purple)
+        );
         int themeIndex = ThemeUtils.getSelectedThemeIndex();
         GridCardBean bean = gridCardBeans.get(themeIndex);
         bean.setIcon(R.drawable.ic_checkmark);
+        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(gridCardBeans, "主题色");
 
-        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(gridCardBeans,"主题色");
+
+        List<SettingCardBean> settingCardBeans1 = List.of(
+            new SettingCardBean("配色", null, "color")
+        );
+        CollectionLayoutData<SettingCardBean> settingData1 = LayoutDataFactory.createCollection(settingCardBeans1);
+
+        List<SettingCardBean> settingCardBeans2 = List.of(
+            new SettingCardBean("音效", true),
+            new SettingCardBean("触觉反馈", true)
+        );
+        CollectionLayoutData<SettingCardBean> settingData2 = LayoutDataFactory.createCollection(settingCardBeans2);
+
+        List<SettingCardBean> settingCardBeans3 = List.of(
+            new SettingCardBean("帮助与反馈", "", "help"),
+            new SettingCardBean("关于", "版本号 1.0.0.1", "")
+        );
+        CollectionLayoutData<SettingCardBean> settingData3 = LayoutDataFactory.createCollection(settingCardBeans3);
+
 
         List<LayoutData<?>> dataList = new ArrayList<>();
-        dataList.add(gridCardData);
+//        dataList.add(gridCardData);
+        dataList.add(settingData1);
+        dataList.add(settingData2);
+        dataList.add(settingData3);
         liveData.setValue(dataList);
     }
 

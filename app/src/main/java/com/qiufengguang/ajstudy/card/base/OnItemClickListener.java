@@ -16,4 +16,7 @@ public interface OnItemClickListener<T extends BaseCardBean> {
     default void onItemClick(Context context, int position, T data) {
         onItemClick(context, data);
     }
+
+    default void onCheckChange(Context context, T data, boolean isChecked) {
+    }
 }
