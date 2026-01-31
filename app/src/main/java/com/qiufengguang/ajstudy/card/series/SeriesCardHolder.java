@@ -21,22 +21,22 @@ import java.util.List;
  */
 public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
 
-    private SeriesCard cardWrapper;
+    private SeriesCard card;
 
     public SeriesCardHolder(@NonNull CardSeriesBinding binding) {
         super(binding);
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
-        cardWrapper = new SeriesCard.Builder()
+        card = new SeriesCard.Builder()
             .setBinding(binding)
             .setListener(this::onItemClickListener)
             .create();
-        cardWrapper.show();
+        card.show();
     }
 
     @Override
@@ -45,12 +45,12 @@ public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
             || !TextUtils.equals(data.getLayoutName(), SeriesCardBean.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         @SuppressWarnings("unchecked")
         List<SeriesCardBean> beans = (List<SeriesCardBean>) data.getData();
-        cardWrapper.setData(beans, data.getCardTitle());
+        card.setData(beans, data.getCardTitle());
     }
 
     private void onItemClickListener(Context context, SeriesCardBean bean) {
@@ -62,9 +62,9 @@ public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
 
     @Override
     public void cleanup() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
         }
         super.cleanup();
     }

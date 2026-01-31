@@ -1,20 +1,25 @@
 package com.qiufengguang.ajstudy.card.grid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.activity.main.MainActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
+import com.qiufengguang.ajstudy.fragment.me.MeViewModel;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -25,25 +30,35 @@ import java.util.List;
  */
 public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
-    private GridCard cardWrapper;
+    private GridCard card;
+
+    private WeakReference<MeViewModel> viewModelRef;
 
     public GridViewHolder(@NonNull CardGridBinding binding) {
         super(binding);
+        Context context = binding.getRoot().getContext();
+        if (!(context instanceof AppCompatActivity)) {
+            return;
+        }
+        AppCompatActivity activity = (AppCompatActivity) context;
+        MeViewModel viewModel =
+            new ViewModelProvider(activity).get(MeViewModel.class);
+        viewModelRef = new WeakReference<>(viewModel);
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
-        cardWrapper = new GridCard.Builder()
+        card = new GridCard.Builder()
             .setRecyclerView(binding.getRoot())
             .setHorizontalSpacing(spacing)
-            .setListener(GridViewHolder::onItemClickListener)
+            .setListener(this::onItemClickListener)
             .create();
-        cardWrapper.show();
+        card.show();
     }
 
     @Override
@@ -52,16 +67,32 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             || !TextUtils.equals(data.getLayoutName(), GridCardBean.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         @SuppressWarnings("unchecked")
         List<GridCardBean> beans = (List<GridCardBean>) data.getData();
-        cardWrapper.setData(beans);
+        card.setData(beans);
     }
 
-    private static void onItemClickListener(Context context, GridCardBean bean) {
+    private void onItemClickListener(Context context, GridCardBean bean) {
         if (!(context instanceof AppCompatActivity)) {
+            return;
+        }
+        if (bean.getItemType() == GridCardBean.TYPE_IMAGE) {
+            if (viewModelRef == null) {
+                return;
+            }
+            MeViewModel viewModel = viewModelRef.get();
+            if (viewModel == null) {
+                return;
+            }
+            viewModel.saveThemeIndex(bean);
+
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("restart_theme", true);
+            context.startActivity(intent);
             return;
         }
         AppCompatActivity activity = (AppCompatActivity) context;
@@ -74,9 +105,13 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
     @Override
     public void cleanup() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
+        }
+        if (viewModelRef != null) {
+            viewModelRef.clear();
+            viewModelRef = null;
         }
         super.cleanup();
     }

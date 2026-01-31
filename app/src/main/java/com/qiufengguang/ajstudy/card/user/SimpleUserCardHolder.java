@@ -25,22 +25,22 @@ import com.qiufengguang.ajstudy.global.GlobalApp;
  */
 public class SimpleUserCardHolder extends BaseViewHolder<CardSimpleUserBinding> {
 
-    private SimpleUserCard cardWrapper;
+    private SimpleUserCard card;
 
     public SimpleUserCardHolder(@NonNull CardSimpleUserBinding binding) {
         super(binding);
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
-        cardWrapper = new SimpleUserCard.Builder()
+        card = new SimpleUserCard.Builder()
             .setBinding(binding)
             .setListener(SimpleUserCardHolder.this::onItemClick)
             .create();
-        cardWrapper.show();
+        card.show();
     }
 
     @Override
@@ -49,11 +49,11 @@ public class SimpleUserCardHolder extends BaseViewHolder<CardSimpleUserBinding> 
             || !TextUtils.equals(data.getLayoutName(), User.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         User user = (User) data.getData();
-        cardWrapper.setData(user);
+        card.setData(user);
     }
 
     private void onItemClick(Context context, User user) {
@@ -69,9 +69,9 @@ public class SimpleUserCardHolder extends BaseViewHolder<CardSimpleUserBinding> 
 
     @Override
     public void cleanup() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
         }
         super.cleanup();
     }

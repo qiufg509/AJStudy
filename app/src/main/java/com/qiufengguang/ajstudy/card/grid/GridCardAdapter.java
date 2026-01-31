@@ -139,7 +139,10 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         GridCardBean bean;
 
-        public GridCardImageHolder(@NonNull ItemGridCardImageBinding binding, OnItemClickListener<GridCardBean> clickListener) {
+        public GridCardImageHolder(
+            @NonNull ItemGridCardImageBinding binding,
+            OnItemClickListener<GridCardBean> clickListener
+        ) {
             super(binding.getRoot());
             this.binding = binding;
             this.binding.getRoot().setOnClickListener(v -> {

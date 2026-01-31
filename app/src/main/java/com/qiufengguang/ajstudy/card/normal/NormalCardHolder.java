@@ -21,22 +21,22 @@ import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
  */
 public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
 
-    private NormalCard cardWrapper;
+    private NormalCard card;
 
     public NormalCardHolder(@NonNull CardNormalBinding binding) {
         super(binding);
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
-        cardWrapper = new NormalCard.Builder()
+        card = new NormalCard.Builder()
             .setBinding(binding)
             .setListener(this::onItemClickListener)
             .create();
-        cardWrapper.show();
+        card.show();
     }
 
     @Override
@@ -45,11 +45,11 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
             || !TextUtils.equals(data.getLayoutName(), NormalCardBean.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         NormalCardBean bean = (NormalCardBean) data.getData();
-        cardWrapper.setData(bean);
+        card.setData(bean);
     }
 
     private void onItemClickListener(Context context, NormalCardBean bean) {
@@ -71,9 +71,9 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
 
     @Override
     public void cleanup() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
         }
         super.cleanup();
     }

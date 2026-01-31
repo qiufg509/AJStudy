@@ -24,13 +24,13 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
     public BaseViewHolder(@NonNull B binding) {
         super(binding.getRoot());
         this.binding = binding;
-        initCardWrapper();
+        initCard();
     }
 
     /**
-     * 初始化卡片Wrapper
+     * 初始化卡片
      */
-    public abstract void initCardWrapper();
+    public abstract void initCard();
 
     /**
      * 绑定数据

@@ -22,26 +22,26 @@ import java.util.List;
  */
 public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
 
-    private SettingCard cardWrapper;
+    private SettingCard card;
 
     public SettingCardHolder(@NonNull CardSettingBinding binding) {
         super(binding);
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
-        cardWrapper = new SettingCard.Builder()
+        card = new SettingCard.Builder()
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
             .setHorizontalSpacing(spacing)
             .setListener(SettingCardHolder::onItemClickListener)
             .create();
-        cardWrapper.show();
+        card.show();
     }
 
     @Override
@@ -50,12 +50,12 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
             || !TextUtils.equals(data.getLayoutName(), SettingCardBean.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         @SuppressWarnings("unchecked")
         List<SettingCardBean> beans = (List<SettingCardBean>) data.getData();
-        cardWrapper.setData(beans, data.getCardTitle());
+        card.setData(beans, data.getCardTitle());
     }
 
     private static void onItemClickListener(Context context, SettingCardBean bean) {
@@ -67,9 +67,9 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
 
     @Override
     public void cleanup() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
         }
         super.cleanup();
     }

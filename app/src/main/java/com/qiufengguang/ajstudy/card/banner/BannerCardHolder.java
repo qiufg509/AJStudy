@@ -33,7 +33,7 @@ import java.util.List;
 public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
     implements DefaultLifecycleObserver {
 
-    private BannerCard cardWrapper;
+    private BannerCard card;
 
     private WeakReference<LifecycleOwner> lifecycleOwnerRef;
 
@@ -46,11 +46,11 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
-        cardWrapper = new BannerCard.Builder()
+        card = new BannerCard.Builder()
             .setRecyclerView(binding.recyclerBanner)
             .setIndicatorContainer(binding.indicatorContainer)
             .setClickListener(new OnItemClickListener<>() {
@@ -75,12 +75,12 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
             || !TextUtils.equals(data.getLayoutName(), BannerBean.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         @SuppressWarnings("unchecked")
         List<BannerBean> beans = (List<BannerBean>) data.getData();
-        cardWrapper.setBannerBeans(beans);
+        card.setBannerBeans(beans);
 
         checkAndResumeBanner();
     }
@@ -156,21 +156,21 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
      * 检查是否需要恢复轮播
      */
     private void checkAndResumeBanner() {
-        if (cardWrapper != null) {
-            cardWrapper.startOrResumeAutoScroll();
+        if (card != null) {
+            card.startOrResumeAutoScroll();
         }
     }
 
     private void pauseBanner() {
-        if (cardWrapper != null) {
-            cardWrapper.pauseAutoScroll();
+        if (card != null) {
+            card.pauseAutoScroll();
         }
     }
 
     private void releaseBanner() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
         }
     }
 

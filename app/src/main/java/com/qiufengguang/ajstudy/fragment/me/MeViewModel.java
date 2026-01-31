@@ -70,7 +70,7 @@ public class MeViewModel extends ViewModel {
 
 
         List<LayoutData<?>> dataList = new ArrayList<>();
-//        dataList.add(gridCardData);
+        dataList.add(gridCardData);
         dataList.add(settingData1);
         dataList.add(settingData2);
         dataList.add(settingData3);
@@ -84,6 +84,9 @@ public class MeViewModel extends ViewModel {
 
 
     public void saveThemeIndex(GridCardBean bean) {
+        if (bean.getItemType() != GridCardBean.TYPE_IMAGE) {
+            return;
+        }
         List<LayoutData<?>> value = liveData.getValue();
         if (value == null) {
             return;
@@ -97,7 +100,8 @@ public class MeViewModel extends ViewModel {
             List<GridCardBean> beans = (List<GridCardBean>) layoutData.getData();
             for (int pos = 0, size = beans.size(); pos < size; pos++) {
                 GridCardBean cardBean = beans.get(pos);
-                if (bean == cardBean) {
+                if (bean.getBackgroundTint() == cardBean.getBackgroundTint()
+                    && bean.getItemType() == cardBean.getItemType()) {
                     cardBean.setIcon(R.drawable.ic_checkmark);
                     ThemeUtils.setSelectedThemeIndex(pos);
                     continue;

@@ -22,26 +22,26 @@ import java.util.List;
  */
 public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBinding> {
 
-    private LargeGraphicCard cardWrapper;
+    private LargeGraphicCard card;
 
     public LargeGraphicCardHolder(@NonNull CardLargeGraphicBinding binding) {
         super(binding);
     }
 
     @Override
-    public void initCardWrapper() {
-        if (cardWrapper != null) {
+    public void initCard() {
+        if (card != null) {
             return;
         }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
-        cardWrapper = new LargeGraphicCard.Builder()
+        card = new LargeGraphicCard.Builder()
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
             .setSpacing(spacing)
             .setListener(LargeGraphicCardHolder::onItemClickListener)
             .create();
-        cardWrapper.show();
+        card.show();
     }
 
     @Override
@@ -50,12 +50,12 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
             || !TextUtils.equals(data.getLayoutName(), LargeGraphicCardBean.LAYOUT_NAME)) {
             return;
         }
-        if (cardWrapper == null) {
-            initCardWrapper();
+        if (card == null) {
+            initCard();
         }
         @SuppressWarnings("unchecked")
         List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getData();
-        cardWrapper.setData(beans, data.getCardTitle());
+        card.setData(beans, data.getCardTitle());
     }
 
     private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {
@@ -67,9 +67,9 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
 
     @Override
     public void cleanup() {
-        if (cardWrapper != null) {
-            cardWrapper.release();
-            cardWrapper = null;
+        if (card != null) {
+            card.release();
+            card = null;
         }
         super.cleanup();
     }
