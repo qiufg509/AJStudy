@@ -272,4 +272,15 @@ public class DisplayMetricsHelper {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         return dm.heightPixels / dm.density;
     }
+
+    /**
+     * 获取设备屏幕密度
+     *
+     * @param context 上下文
+     * @return 屏幕密度
+     */
+    public static int getDensityDpi(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.densityDpi;
+    }
 }

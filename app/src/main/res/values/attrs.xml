@@ -11,4 +11,10 @@
         <!-- 越界阻尼系数 -->
         <attr name="overScrollDamping" format="float" />
     </declare-styleable>
+    <declare-styleable name="LuckyWheel">
+        <attr name="iconSize" format="dimension" />
+        <attr name="centerBtn" format="reference" />
+        <attr name="centerBtnSize" format="dimension" />
+        <attr name="isTowardCenter" format="boolean" />
+    </declare-styleable>
 </resources>

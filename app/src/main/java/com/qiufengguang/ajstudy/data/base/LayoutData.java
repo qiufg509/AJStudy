@@ -19,6 +19,8 @@ public abstract class LayoutData<T> {
 
     protected final T data;
 
+    private String ext;
+
     protected LayoutData(T beans) {
         this.data = beans;
     }
@@ -50,6 +52,14 @@ public abstract class LayoutData<T> {
 
     public String getCardTitle() {
         return cardTitle;
+    }
+
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
     }
 
     public abstract boolean isCollection();

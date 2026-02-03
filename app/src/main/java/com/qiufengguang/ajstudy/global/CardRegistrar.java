@@ -4,6 +4,7 @@ import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCard;
+import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
@@ -11,6 +12,7 @@ import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.SettingCardBean;
@@ -32,5 +34,6 @@ public class CardRegistrar {
         Card.register(SeriesCardBean.LAYOUT_ID, new SeriesCard.Creator());
         Card.register(User.LAYOUT_ID, new SimpleUserCard.Creator());
         Card.register(SettingCardBean.LAYOUT_ID, new SettingCard.Creator());
+        Card.register(LuckyWheelCardBean.LAYOUT_ID, new LuckyWheelCard.Creator());
     }
 }

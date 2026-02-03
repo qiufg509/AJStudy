@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
+    android:layout_marginBottom="@dimen/activity_vertical_margin_m"
+    android:paddingHorizontal="@dimen/activity_vertical_margin_m"
+    android:paddingTop="@dimen/activity_vertical_margin_xs"
+    android:paddingBottom="@dimen/activity_vertical_margin_s">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_s"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:lines="1"
+        android:textColor="@color/ajstudy_color_text_primary"
+        android:textFontWeight="600"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.qiufengguang.ajstudy.view.LuckyWheel
+        android:id="@+id/lucky_wheel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin_s"
+        app:centerBtn="@drawable/node"
+        app:centerBtnSize="72dp"
+        app:iconSize="40dp"
+        app:isTowardCenter="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

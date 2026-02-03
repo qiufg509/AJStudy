@@ -8,6 +8,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
@@ -82,9 +83,20 @@ public class HomeViewModel extends ViewModel {
         lgcBeans2.add(new LargeGraphicCardBean("一粥一饭，来之不易", "珍惜每一口粮食", "https://plus.unsplash.com/premium_photo-1761839920135-4bf781de96e3?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
         LayoutData<List<LargeGraphicCardBean>> lgcData2 = LayoutDataFactory.createCollection(lgcBeans2, "时下热门");
 
+        List<LuckyWheelCardBean> wheelCardBeans = List.of(
+            new LuckyWheelCardBean("炖猪脚", "https://ts2.tc.mm.bing.net/th/id/OIP-C.zNBQPxhzp8IBnvdl3K589AHaGd?rs=1&pid=ImgDetMain&o=7&rm=3", "#7B35D1"),
+            new LuckyWheelCardBean("五指毛桃鸡汤", "https://ts1.tc.mm.bing.net/th/id/OIP-C.i3kkhgHNTFZStre1RHsFlQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3", "#1F59CE"),
+            new LuckyWheelCardBean("紫苏鱼", "https://ts1.tc.mm.bing.net/th/id/OIP-C.KKjSIjdKkoFVnt2Lpgys5wHaGH?rs=1&pid=ImgDetMain&o=7&rm=3", "#3F90BB"),
+            new LuckyWheelCardBean("辣椒炒鱿鱼", "https://ts3.tc.mm.bing.net/th/id/OIP-C.h9nbcn5v25Nib_e5GEdvqAHaFy?rs=1&pid=ImgDetMain&o=7&rm=3", "#82AF48"),
+            new LuckyWheelCardBean("肉末茄子", "https://ts4.tc.mm.bing.net/th/id/OIP-C.3tPKliS241LpwDCLwY4s6AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3", "#EB6F3E"),
+            new LuckyWheelCardBean("蒜香黑鱼片", "https://ts3.tc.mm.bing.net/th/id/OIP-C.Z63O5HeuJDQBwSmWXihhSgHaJ4?rs=1&pid=ImgDetMain&o=7&rm=3", "#D63339")
+        );
+        LayoutData<List<LuckyWheelCardBean>> wheelCardData = LayoutDataFactory.createCollection(wheelCardBeans, "今天吃什么？");
+
         List<LayoutData<?>> dataList = new ArrayList<>();
         dataList.add(bannerCardData);
         dataList.add(gridCardData);
+        dataList.add(wheelCardData);
         dataList.add(seriesCardData);
         dataList.add(lgcData);
         dataList.add(seriesCardData2);
