@@ -103,7 +103,7 @@ public class LuckyWheel extends View {
 
     private AnimationEndListener animationEndListener;
 
-    private boolean isFlingFinishedCallbackFired = false;
+    private boolean isFlingFinishedCallbackFired = true;
 
     public LuckyWheel(Context context) {
         this(context, null);
@@ -685,6 +685,9 @@ public class LuckyWheel extends View {
 
     @Override
     protected void onDetachedFromWindow() {
+        // 停止所有旋转
+        stopAllRotations();
+
         clearAnimation();
         // 释放资源
         if (this.releaseOnSelfDetached) {
@@ -699,6 +702,11 @@ public class LuckyWheel extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // 如果触摸被禁用，直接返回false
+        if (!isTouchEnabled) {
+            return false;
+        }
+
         float x = event.getX();
         float y = event.getY();
 
@@ -706,8 +714,6 @@ public class LuckyWheel extends View {
         if (isPointInCenterButton(x, y)) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    // 按钮按下效果（可选）
-                    // 可以在这里改变按钮透明度或添加其他视觉反馈
                     return true;
 
                 case MotionEvent.ACTION_UP:
@@ -724,17 +730,16 @@ public class LuckyWheel extends View {
             return super.onTouchEvent(event);
         }
 
-        if (isTouchEnabled) {
-            if (detector.onTouchEvent(event)) {
-                if (getParent() != null && getParent().getParent() != null) {
-                    getParent().getParent().requestDisallowInterceptTouchEvent(true);
-                }
-                // 如果处理了点击事件，调用 performClick() 确保辅助功能正常工作
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    performClick();
-                }
-                return true;
+        // 使用detector处理手势
+        if (detector.onTouchEvent(event)) {
+            if (getParent() != null && getParent().getParent() != null) {
+                getParent().getParent().requestDisallowInterceptTouchEvent(true);
             }
+            // 如果处理了点击事件，调用 performClick() 确保辅助功能正常工作
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                performClick();
+            }
+            return true;
         }
 
         // 调用父类处理
@@ -775,15 +780,14 @@ public class LuckyWheel extends View {
                 invalidate();
             }
 
-            // 重置回调标志
-            isFlingFinishedCallbackFired = false;
-
             // 继续滚动
             postInvalidateOnAnimation();
         } else {
             // 滚动结束，检查是否需要触发回调
             if (!isFlingFinishedCallbackFired) {
                 isFlingFinishedCallbackFired = true;
+                // 滚动结束，重新启用触摸
+                isTouchEnabled = true;
 
                 // 延迟一小段时间确保动画完全停止
                 postDelayed(() -> {
@@ -802,6 +806,11 @@ public class LuckyWheel extends View {
     private class RotatePanGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDown(@NonNull MotionEvent e) {
+            // 如果触摸被禁用，不处理手势
+            if (!isTouchEnabled) {
+                return false;
+            }
+
             // 检查触摸点是否在中心按钮上
             if (isPointInCenterButton(e.getX(), e.getY())) {
                 return false; // 中心按钮事件单独处理
@@ -840,7 +849,9 @@ public class LuckyWheel extends View {
                 e2.getX() - centerX, e2.getY() - centerY);
 
             scroller.abortAnimation();
-            // 重置回调标志
+            // fling开始时禁用触摸
+            isTouchEnabled = false;
+            // 开始 fling，重置回调标志
             isFlingFinishedCallbackFired = false;
             scroller.fling(0, initAngle, 0, (int) scrollTheta / FLING_VELOCITY_DOWNSCALE,
                 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -864,6 +875,24 @@ public class LuckyWheel extends View {
         float dot = (-y * dx + x * dy);
         float sign = Math.signum(dot);
         return l * sign;
+    }
+
+    /**
+     * 停止所有旋转和滚动，重置触摸状态
+     */
+    public void stopAllRotations() {
+        // 停止动画
+        clearAnimation();
+
+        // 停止scroller
+        if (!scroller.isFinished()) {
+            scroller.abortAnimation();
+            scroller.forceFinished(true);
+        }
+
+        // 重置所有状态
+        isTouchEnabled = true;
+        isFlingFinishedCallbackFired = true;
     }
 
     private void releaseOldBitmaps() {
