@@ -103,6 +103,8 @@ public class LuckyWheel extends View {
 
     private AnimationEndListener animationEndListener;
 
+    private boolean isFlingFinishedCallbackFired = false;
+
     public LuckyWheel(Context context) {
         this(context, null);
     }
@@ -497,21 +499,27 @@ public class LuckyWheel extends View {
             return;
         }
         int sectorCount = beans.size();
-        int drawAngle = initAngle + diffRadius;
+        // 计算每个图标的起始角度（扇形中心角度）
+        float startAngle = initAngle + diffRadius; // diffRadius = verPanRadius / 2
+
         for (int i = 0; i < sectorCount; i++) {
             Bitmap bitmap = beans.get(i).getBitmap();
-            if (bitmap != null && !bitmap.isRecycled()) {
-                float bitmapAngle = (float) Math.toRadians(verPanRadius + drawAngle);
-                // 使用centerX和centerY计算图片位置
-                float x = (float) (centerX + (radius / 2.0 + radius / 12.0) * Math.cos(bitmapAngle));
-                float y = (float) (centerY + (radius / 2.0 + radius / 12.0) * Math.sin(bitmapAngle));
-
-                float halfSize = iconSize / 2.0f;
-                iconRect.set(x - halfSize, y - halfSize, x + halfSize, y + halfSize);
-
-                canvas.drawBitmap(bitmap, null, iconRect, null);
+            if (bitmap == null || bitmap.isRecycled()) {
+                continue;
             }
-            drawAngle += verPanRadius;
+            // 计算当前扇形中心的角度（弧度）
+            float centerAngle = startAngle + i * verPanRadius;
+            float centerAngleRad = (float) Math.toRadians(centerAngle);
+
+            // 计算图标位置（在半径的 2/3 处）
+            float iconRadius = radius * 2.0f / 3.0f;
+            float x = centerX + iconRadius * (float) Math.cos(centerAngleRad);
+            float y = centerY + iconRadius * (float) Math.sin(centerAngleRad);
+
+            float halfSize = iconSize / 2.0f;
+            iconRect.set(x - halfSize, y - halfSize, x + halfSize, y + halfSize);
+
+            canvas.drawBitmap(bitmap, null, iconRect, null);
         }
     }
 
@@ -603,8 +611,11 @@ public class LuckyWheel extends View {
         animator.setDuration(time);
         animator.addUpdateListener(animation -> {
             int updateValue = (int) animation.getAnimatedValue();
-            initAngle = (updateValue % 360 + 360) % 360;
-            postInvalidateOnAnimation();
+            int newAngle = (updateValue % 360 + 360) % 360;
+            if (initAngle != newAngle) {
+                initAngle = newAngle;
+                invalidate();
+            }
         });
 
         animator.addListener(new AnimatorListenerAdapter() {
@@ -644,16 +655,30 @@ public class LuckyWheel extends View {
             return 0;
         }
 
-        initAngle = (initAngle % 360 + 360) % 360;
-        int pos = initAngle / verPanRadius;
         int sectorCount = beans.size();
-        if (sectorCount == 4) {
-            pos++;
+        int sectorAngle = verPanRadius; // 每个扇形的角度 = 360 / sectorCount
+
+        // 将 initAngle 规范化到 [0, 360) 范围
+        int normalizedAngle = ((initAngle % 360) + 360) % 360;
+
+        // Android 坐标系中，0度在右侧，90度在底部，180度在左侧，270度在顶部
+        // 我们需要找到顶部（270度）对应的扇形
+
+        // 计算当前顶部位置对应的角度
+        // 顶部角度 = 270度，转盘旋转后，原来的顶部现在在 (270 - normalizedAngle) 度
+        int topAngle = (270 - normalizedAngle) % 360;
+        if (topAngle < 0) {
+            topAngle += 360;
         }
-        if (pos >= 0 && pos <= sectorCount / 2) {
-            pos = sectorCount / 2 - pos;
-        } else {
-            pos = (sectorCount - pos) + sectorCount / 2;
+
+        // 计算扇形索引（从0开始）
+        int pos = topAngle / sectorAngle;
+
+        // 确保 pos 在有效范围内
+        if (pos >= sectorCount) {
+            pos = sectorCount - 1;
+        } else if (pos < 0) {
+            pos = 0;
         }
         return pos;
     }
@@ -732,14 +757,44 @@ public class LuckyWheel extends View {
 
     public void setRotate(int rotation) {
         rotation = (rotation % 360 + 360) % 360;
-        initAngle = rotation;
-        postInvalidateOnAnimation();
+        if (initAngle != rotation) {
+            initAngle = rotation;
+            invalidate();
+        }
     }
 
     @Override
     public void computeScroll() {
         if (scroller.computeScrollOffset()) {
-            setRotate(scroller.getCurrY());
+            // 还在滚动中，更新角度
+            int rotation = scroller.getCurrY();
+            rotation = (rotation % 360 + 360) % 360;
+
+            if (initAngle != rotation) {
+                initAngle = rotation;
+                invalidate();
+            }
+
+            // 重置回调标志
+            isFlingFinishedCallbackFired = false;
+
+            // 继续滚动
+            postInvalidateOnAnimation();
+        } else {
+            // 滚动结束，检查是否需要触发回调
+            if (!isFlingFinishedCallbackFired) {
+                isFlingFinishedCallbackFired = true;
+
+                // 延迟一小段时间确保动画完全停止
+                postDelayed(() -> {
+                    if (animationEndListener != null && beans != null && !beans.isEmpty()) {
+                        int pos = queryPosition();
+                        if (pos >= 0 && pos < beans.size()) {
+                            animationEndListener.endAnimation(getContext(), beans.get(pos));
+                        }
+                    }
+                }, 50); // 50ms 延迟确保转盘完全停止
+            }
         }
         super.computeScroll();
     }
@@ -785,8 +840,11 @@ public class LuckyWheel extends View {
                 e2.getX() - centerX, e2.getY() - centerY);
 
             scroller.abortAnimation();
+            // 重置回调标志
+            isFlingFinishedCallbackFired = false;
             scroller.fling(0, initAngle, 0, (int) scrollTheta / FLING_VELOCITY_DOWNSCALE,
                 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            // 开始滚动
             postInvalidateOnAnimation();
             return true;
         }
