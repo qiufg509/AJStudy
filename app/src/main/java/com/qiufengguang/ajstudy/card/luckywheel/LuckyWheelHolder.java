@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.luckywheel;
 
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +41,7 @@ public class LuckyWheelHolder extends BaseViewHolder<CardLuckyWheelBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), LuckyWheelCardBean.LAYOUT_NAME)) {
+            || data.getLayoutId() != LuckyWheelCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

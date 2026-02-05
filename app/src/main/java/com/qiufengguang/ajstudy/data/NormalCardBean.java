@@ -13,10 +13,6 @@ import com.qiufengguang.ajstudy.data.base.BaseCardBean;
  * @since 2025/5/5 23:54
  */
 public class NormalCardBean extends BaseCardBean {
-    public static final String LAYOUT_NAME = "normalCard";
-
-    public static final int LAYOUT_ID = 4;
-
     private int id;
     private String icon;
     private String title;
@@ -24,16 +20,6 @@ public class NormalCardBean extends BaseCardBean {
     private String brief;
 
     private String targetPage;
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return LAYOUT_ID;
-    }
 
     public int getId() {
         return id;

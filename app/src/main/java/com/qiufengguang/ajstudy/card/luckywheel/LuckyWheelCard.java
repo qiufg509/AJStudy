@@ -26,6 +26,11 @@ import java.util.Map;
  * @since 2026/2/1 21:49
  */
 public class LuckyWheelCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 3;
+
     private String cardTitle;
 
     private List<LuckyWheelCardBean> beans;
@@ -95,7 +100,7 @@ public class LuckyWheelCard extends Card {
 
         @Override
         public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
+            return getSpanSizeMap(Constant.Pln.DEF_4, Constant.Pln.DEF_8, Constant.Pln.DEF_12);
         }
     }
 

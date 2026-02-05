@@ -9,14 +9,6 @@ import com.qiufengguang.ajstudy.card.normal.NormalCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
-import com.qiufengguang.ajstudy.data.BannerBean;
-import com.qiufengguang.ajstudy.data.GridCardBean;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
-import com.qiufengguang.ajstudy.data.LuckyWheelCardBean;
-import com.qiufengguang.ajstudy.data.NormalCardBean;
-import com.qiufengguang.ajstudy.data.SeriesCardBean;
-import com.qiufengguang.ajstudy.data.SettingCardBean;
-import com.qiufengguang.ajstudy.data.User;
 
 /**
  * 卡片注册器
@@ -27,13 +19,13 @@ import com.qiufengguang.ajstudy.data.User;
 public class CardRegistrar {
 
     public static void initialize() {
-        Card.register(BannerBean.LAYOUT_ID, new BannerCard.Creator());
-        Card.register(GridCardBean.LAYOUT_ID, new GridCard.Creator());
-        Card.register(LargeGraphicCardBean.LAYOUT_ID, new LargeGraphicCard.Creator());
-        Card.register(NormalCardBean.LAYOUT_ID, new NormalCard.Creator());
-        Card.register(SeriesCardBean.LAYOUT_ID, new SeriesCard.Creator());
-        Card.register(User.LAYOUT_ID, new SimpleUserCard.Creator());
-        Card.register(SettingCardBean.LAYOUT_ID, new SettingCard.Creator());
-        Card.register(LuckyWheelCardBean.LAYOUT_ID, new LuckyWheelCard.Creator());
+        Card.register(BannerCard.LAYOUT_ID, new BannerCard.Creator());
+        Card.register(GridCard.LAYOUT_ID, new GridCard.Creator());
+        Card.register(LuckyWheelCard.LAYOUT_ID, new LuckyWheelCard.Creator());
+        Card.register(LargeGraphicCard.LAYOUT_ID, new LargeGraphicCard.Creator());
+        Card.register(SeriesCard.LAYOUT_ID, new SeriesCard.Creator());
+        Card.register(NormalCard.LAYOUT_ID, new NormalCard.Creator());
+        Card.register(SimpleUserCard.LAYOUT_ID, new SimpleUserCard.Creator());
+        Card.register(SettingCard.LAYOUT_ID, new SettingCard.Creator());
     }
 }

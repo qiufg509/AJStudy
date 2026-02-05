@@ -25,6 +25,11 @@ import java.util.Map;
  * @since 2026/1/31 1:24
  */
 public class SimpleUserCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 8;
+
     private User user;
 
     private WeakReference<CardSimpleUserBinding> bindingRef;
@@ -91,11 +96,6 @@ public class SimpleUserCard extends Card {
             CardSimpleUserBinding binding = CardSimpleUserBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new SimpleUserCardHolder(binding);
-        }
-
-        @Override
-        public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
         }
     }
 

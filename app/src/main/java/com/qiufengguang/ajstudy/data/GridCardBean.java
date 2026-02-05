@@ -12,10 +12,6 @@ import com.qiufengguang.ajstudy.data.base.BaseCardBean;
  * @since 2025/12/28 19:12
  */
 public class GridCardBean extends BaseCardBean {
-    public static final String LAYOUT_NAME = "gridCard";
-
-    public static final int LAYOUT_ID = 1;
-
     /**
      * item使用TextView，上icon下文字样式
      */
@@ -45,17 +41,6 @@ public class GridCardBean extends BaseCardBean {
         this.icon = icon;
         this.navigatePage = navigatePage;
         this.itemType = TYPE_TEXT;
-    }
-
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return LAYOUT_ID;
     }
 
     public String getTitle() {

@@ -23,12 +23,10 @@ import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
-import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 系列卡片
@@ -37,6 +35,11 @@ import java.util.Map;
  * @since 2026/1/25 15:44
  */
 public class SeriesCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 5;
+
     private String cardTitle;
 
     private List<SeriesCardBean> beans;
@@ -172,11 +175,6 @@ public class SeriesCard extends Card {
             CardSeriesBinding binding = CardSeriesBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new SeriesCardHolder(binding);
-        }
-
-        @Override
-        public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
         }
     }
 

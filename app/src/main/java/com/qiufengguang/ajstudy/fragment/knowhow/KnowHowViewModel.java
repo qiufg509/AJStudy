@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qiufengguang.ajstudy.card.normal.NormalCard;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
@@ -73,7 +74,8 @@ public class KnowHowViewModel extends ViewModel {
             List<LayoutData<?>> dataList = Optional.of(beans)
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(LayoutDataFactory::createSingle)
+                .map(normalCardBean ->
+                    LayoutDataFactory.createSingle(NormalCard.LAYOUT_ID, normalCardBean))
                 .collect(Collectors.toList());
 
             liveData.postValue(dataList);

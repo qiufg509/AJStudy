@@ -1,12 +1,11 @@
 package com.qiufengguang.ajstudy.fragment.second;
 
-import android.text.TextUtils;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
@@ -46,7 +45,7 @@ public class SecondViewModel extends ViewModel {
         int themeIndex = ThemeUtils.getSelectedThemeIndex();
         GridCardBean bean = gridCardBeans.get(themeIndex);
         bean.setIcon(R.drawable.ic_checkmark);
-        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(gridCardBeans, "主题色");
+        LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(GridCard.LAYOUT_ID, gridCardBeans, "主题色");
         List<LayoutData<?>> dataList = new ArrayList<>();
         dataList.add(gridCardData);
         liveData.setValue(dataList);
@@ -66,7 +65,7 @@ public class SecondViewModel extends ViewModel {
         }
         for (int index = 0, sum = value.size(); index < sum; index++) {
             LayoutData<?> layoutData = value.get(index);
-            if (!TextUtils.equals(layoutData.getLayoutName(), GridCardBean.LAYOUT_NAME)) {
+            if (layoutData.getLayoutId() != GridCard.LAYOUT_ID) {
                 continue;
             }
             @SuppressWarnings("unchecked")

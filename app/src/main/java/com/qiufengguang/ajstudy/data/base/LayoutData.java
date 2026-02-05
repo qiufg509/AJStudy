@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.base;
 
+import androidx.annotation.IntRange;
+
 /**
  * 整个卡片数据Bean
  *
@@ -7,12 +9,9 @@ package com.qiufengguang.ajstudy.data.base;
  * @since 2026/1/19 14:20
  */
 public abstract class LayoutData<T> {
-    public static final String LAYOUT_NAME = "default";
+    public static final int LAYOUT_ID = 0;
 
-    public static final int LAYOUT_ID = -1;
-
-    private String layoutName;
-
+    @IntRange
     private int layoutId;
 
     private String cardTitle;
@@ -30,19 +29,12 @@ public abstract class LayoutData<T> {
         this.cardTitle = cardTitle;
     }
 
-    public String getLayoutName() {
-        return layoutName;
-    }
-
-    public void setLayoutName(String layoutName) {
-        this.layoutName = layoutName;
-    }
-
+    @IntRange
     public int getLayoutId() {
         return layoutId;
     }
 
-    public void setLayoutId(int layoutId) {
+    public void setLayoutId(@IntRange int layoutId) {
         this.layoutId = layoutId;
     }
 

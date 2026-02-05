@@ -30,7 +30,6 @@ import com.qiufengguang.ajstudy.view.RoundedFrameLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 轮播banner卡片
@@ -39,6 +38,10 @@ import java.util.Map;
  * @since 2025/12/19 16:33
  */
 public class BannerCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 1;
 
     /**
      * 自动轮播默认滚动间隔4秒
@@ -539,8 +542,8 @@ public class BannerCard extends Card {
         }
 
         @Override
-        public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
+        public boolean needObserveLifecycle() {
+            return true;
         }
     }
 

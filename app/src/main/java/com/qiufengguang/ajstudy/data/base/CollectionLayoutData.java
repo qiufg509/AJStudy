@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.base;
 
+import androidx.annotation.IntRange;
+
 import java.util.List;
 
 /**
@@ -9,23 +11,21 @@ import java.util.List;
  * @since 2026/1/29 12:20
  */
 public class CollectionLayoutData<T extends BaseCardBean> extends LayoutData<List<T>> {
-    public CollectionLayoutData(List<T> beans) {
+    public CollectionLayoutData(@IntRange int layoutId, List<T> beans) {
         super(beans);
-        prepareData(beans);
+        prepareData(layoutId, beans);
     }
 
-    public CollectionLayoutData(List<T> beans, String cardTitle) {
+    public CollectionLayoutData(@IntRange int layoutId, List<T> beans, String cardTitle) {
         super(beans, cardTitle);
-        prepareData(beans);
+        prepareData(layoutId, beans);
     }
 
-    private void prepareData(List<T> beans) {
+    private void prepareData(@IntRange int layoutId, List<T> beans) {
         if (beans.isEmpty()) {
             return;
         }
-        T t = beans.get(0);
-        setLayoutName(t.getLayoutName());
-        setLayoutId(t.getLayoutId());
+        setLayoutId(layoutId);
     }
 
     @Override

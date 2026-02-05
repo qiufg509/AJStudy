@@ -1,7 +1,6 @@
 package com.qiufengguang.ajstudy.card.banner;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -72,7 +71,7 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), BannerBean.LAYOUT_NAME)) {
+            || data.getLayoutId() != BannerCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

@@ -31,6 +31,10 @@ import java.util.Map;
  * @since 2026/1/29 19:18
  */
 public class NormalCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 6;
 
     private NormalCardBean bean;
 

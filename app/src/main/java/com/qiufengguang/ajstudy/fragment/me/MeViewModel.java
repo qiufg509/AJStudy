@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.data.SettingCardBean;
 import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
@@ -31,19 +32,19 @@ public class MeViewModel extends ViewModel {
         List<SettingCardBean> settingCardBeans1 = List.of(
             new SettingCardBean("配色", null, "color")
         );
-        CollectionLayoutData<SettingCardBean> settingData1 = LayoutDataFactory.createCollection(settingCardBeans1);
+        CollectionLayoutData<SettingCardBean> settingData1 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans1);
 
         List<SettingCardBean> settingCardBeans2 = List.of(
             new SettingCardBean("音效", true),
             new SettingCardBean("触觉反馈", true)
         );
-        CollectionLayoutData<SettingCardBean> settingData2 = LayoutDataFactory.createCollection(settingCardBeans2);
+        CollectionLayoutData<SettingCardBean> settingData2 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans2);
 
         List<SettingCardBean> settingCardBeans3 = List.of(
             new SettingCardBean("帮助与反馈", "", "help"),
             new SettingCardBean("关于", "版本号 1.0.0.1", "")
         );
-        CollectionLayoutData<SettingCardBean> settingData3 = LayoutDataFactory.createCollection(settingCardBeans3);
+        CollectionLayoutData<SettingCardBean> settingData3 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans3);
 
 
         List<LayoutData<?>> dataList = new ArrayList<>();

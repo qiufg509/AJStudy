@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.viewbinding.ViewBinding;
 
+import com.qiufengguang.ajstudy.global.Constant;
+
 import java.util.Map;
 
 /**
- * 创建ViewHolder工厂方法接口
+ * 创建卡片工厂方法接口
  *
  * @author qiufengguang
  * @since 2026/1/30 17:11
@@ -32,5 +34,16 @@ public interface CardCreator {
      *
      * @return 卡片占用大小集合（key为栅格数，value为占用大小）
      */
-    Map<Integer, Integer> getSpanSize();
+    default Map<Integer, Integer> getSpanSize() {
+        return Card.getSpanSizeMap(Constant.Pln.DEF_4);
+    }
+
+    /**
+     * 卡片是否需要监听 onResume 和 onPause（默认不需要）
+     *
+     * @return true需要 false不需要
+     */
+    default boolean needObserveLifecycle() {
+        return false;
+    }
 }

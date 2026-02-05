@@ -3,7 +3,6 @@ package com.qiufengguang.ajstudy.card.grid;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 import com.qiufengguang.ajstudy.fragment.second.SecondViewModel;
+import com.qiufengguang.ajstudy.card.base.GridDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -56,7 +56,9 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         card = new GridCard.Builder()
             .setRecyclerView(binding.recyclerGrid)
             .setTitleView(binding.tvTitle)
-            .setHorizontalSpacing(spacing)
+            .setSpacingBuilder(
+                new GridDecoration.Builder().horizontalSpacing(spacing)
+            )
             .setListener(this::onItemClickListener)
             .create();
         card.show();
@@ -65,7 +67,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), GridCardBean.LAYOUT_NAME)) {
+            || data.getLayoutId() != GridCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

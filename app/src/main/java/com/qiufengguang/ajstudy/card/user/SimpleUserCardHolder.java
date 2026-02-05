@@ -2,7 +2,6 @@ package com.qiufengguang.ajstudy.card.user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,7 +45,7 @@ public class SimpleUserCardHolder extends BaseViewHolder<CardSimpleUserBinding> 
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), User.LAYOUT_NAME)) {
+            || data.getLayoutId() != SimpleUserCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

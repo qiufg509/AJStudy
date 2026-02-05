@@ -10,11 +10,6 @@ import com.qiufengguang.ajstudy.global.Constant;
  * @since 2025/11/30 2:15
  */
 public class User extends BaseCardBean {
-
-    public static final String LAYOUT_NAME = "userCard";
-
-    public static final int LAYOUT_ID = 5;
-
     private String phone;
 
     private String password;
@@ -30,16 +25,6 @@ public class User extends BaseCardBean {
         this.phone = phone;
         this.password = password;
         this.timestamp = System.currentTimeMillis();
-    }
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return LAYOUT_ID;
     }
 
     public String getPhone() {

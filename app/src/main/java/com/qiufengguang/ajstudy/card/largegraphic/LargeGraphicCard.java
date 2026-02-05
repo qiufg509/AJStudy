@@ -23,7 +23,6 @@ import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 大图文卡
@@ -32,6 +31,11 @@ import java.util.Map;
  * @since 2026/1/24 23:31
  */
 public class LargeGraphicCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 4;
+
     private WeakReference<RecyclerView> recyclerViewRef;
 
     private WeakReference<TextView> titleViewRef;
@@ -40,11 +44,7 @@ public class LargeGraphicCard extends Card {
 
     private int spanCount;
 
-    private int horizontalSpacing;
-
-    private int verticalSpacing;
-
-    private boolean includeEdge;
+    private GridDecoration.Builder spacingBuilder;
 
     private OnItemClickListener<LargeGraphicCardBean> listener;
 
@@ -90,12 +90,13 @@ public class LargeGraphicCard extends Card {
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
-        if (decor == null) {
-            decor = new GridDecoration(spanCount,
-                horizontalSpacing, verticalSpacing, includeEdge);
+        if (spacingBuilder != null) {
+            if (decor == null) {
+                decor = spacingBuilder.build();
+            }
+            recyclerView.removeItemDecoration(decor);
+            recyclerView.addItemDecoration(decor);
         }
-        recyclerView.removeItemDecoration(decor);
-        recyclerView.addItemDecoration(decor);
     }
 
     public static class Creator implements CardCreator {
@@ -104,11 +105,6 @@ public class LargeGraphicCard extends Card {
             CardLargeGraphicBinding binding = CardLargeGraphicBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new LargeGraphicCardHolder(binding);
-        }
-
-        @Override
-        public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
         }
     }
 
@@ -119,13 +115,7 @@ public class LargeGraphicCard extends Card {
 
         private int spanCount;
 
-        private int horizontalSpacing;
-
-        private int verticalSpacing;
-
-        private int spacing;
-
-        private boolean includeEdge;
+        private GridDecoration.Builder spacingBuilder;
 
         private OnItemClickListener<LargeGraphicCardBean> listener;
 
@@ -163,46 +153,13 @@ public class LargeGraphicCard extends Card {
         }
 
         /**
-         * 设置格网卡片水平间距
+         * 设置间距Builder
          *
-         * @param horizontalSpacing 水平间距大小
+         * @param spacingBuilder GridDecoration.Builder
          * @return Builder
          */
-        public LargeGraphicCard.Builder setHorizontalSpacing(int horizontalSpacing) {
-            this.horizontalSpacing = horizontalSpacing;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片垂直间距
-         *
-         * @param verticalSpacing 垂直间距大小
-         * @return Builder
-         */
-        public LargeGraphicCard.Builder setVerticalSpacing(int verticalSpacing) {
-            this.verticalSpacing = verticalSpacing;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片间距
-         *
-         * @param spacing 间距大小
-         * @return Builder
-         */
-        public LargeGraphicCard.Builder setSpacing(int spacing) {
-            this.spacing = spacing;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片间距是否包含边距
-         *
-         * @param includeEdge 默认false不包含
-         * @return Builder
-         */
-        public LargeGraphicCard.Builder setIncludeEdge(boolean includeEdge) {
-            this.includeEdge = includeEdge;
+        public LargeGraphicCard.Builder setSpacingBuilder(GridDecoration.Builder spacingBuilder) {
+            this.spacingBuilder = spacingBuilder;
             return this;
         }
 
@@ -233,11 +190,10 @@ public class LargeGraphicCard extends Card {
                 wrapper.spanCount = column == Constant.Grid.COLUMN_DEFAULT ? Constant.Pln.DEF_4 :
                     (column == Constant.Grid.COLUMN_8 ? Constant.Pln.DEF_8 : Constant.Pln.DEF_12);
             }
-            wrapper.horizontalSpacing = this.horizontalSpacing == 0 && this.spacing != 0
-                ? this.spacing : this.horizontalSpacing;
-            wrapper.verticalSpacing = this.verticalSpacing == 0 && this.spacing != 0
-                ? this.spacing : this.verticalSpacing;
-            wrapper.includeEdge = this.includeEdge;
+            if (this.spacingBuilder != null) {
+                wrapper.spacingBuilder = spacingBuilder;
+                wrapper.spacingBuilder.setSpanCount(wrapper.spanCount);
+            }
             wrapper.listener = this.listener;
             return wrapper;
         }

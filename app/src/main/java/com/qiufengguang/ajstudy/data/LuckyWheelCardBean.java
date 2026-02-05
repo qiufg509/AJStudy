@@ -19,10 +19,6 @@ import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 public class LuckyWheelCardBean extends BaseCardBean {
     private static final String TAG = "LuckyWheelCardBean";
 
-    public static final String LAYOUT_NAME = "LuckyPan";
-
-    public static final int LAYOUT_ID = 8;
-
     @NonNull
     private final String content;
 
@@ -53,17 +49,6 @@ public class LuckyWheelCardBean extends BaseCardBean {
         this.content = content;
         this.imageUrl = imageUrl;
         setColor(color);
-    }
-
-
-    @Override
-    public String getLayoutName() {
-        return LAYOUT_NAME;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return LAYOUT_ID;
     }
 
     public @NonNull String getContent() {

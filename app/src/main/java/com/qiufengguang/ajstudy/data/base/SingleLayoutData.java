@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.base;
 
+import androidx.annotation.IntRange;
+
 /**
  * 包含单个对象的卡片数据
  *
@@ -7,19 +9,21 @@ package com.qiufengguang.ajstudy.data.base;
  * @since 2026/1/29 12:19
  */
 public class SingleLayoutData<T extends BaseCardBean> extends LayoutData<T> {
-    public SingleLayoutData(T bean) {
+    public SingleLayoutData(@IntRange int layoutId, T bean) {
         super(bean);
-        prepareData(bean);
+        prepareData(layoutId, bean);
     }
 
-    public SingleLayoutData(T bean, String cardTitle) {
+    public SingleLayoutData(@IntRange int layoutId, T bean, String cardTitle) {
         super(bean, cardTitle);
-        prepareData(bean);
+        prepareData(layoutId, bean);
     }
 
-    private void prepareData(T bean) {
-        setLayoutName(bean.getLayoutName());
-        setLayoutId(bean.getLayoutId());
+    private void prepareData(@IntRange int layoutId, T bean) {
+        if (bean == null) {
+            return;
+        }
+        setLayoutId(layoutId);
     }
 
 

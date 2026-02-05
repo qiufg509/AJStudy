@@ -1,13 +1,13 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
@@ -38,8 +38,8 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
         card = new LargeGraphicCard.Builder()
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
-            .setSpacing(spacing)
-            .setListener(LargeGraphicCardHolder::onItemClickListener)
+            .setSpacingBuilder(new GridDecoration.Builder().spacing(spacing))
+            .setListener(this::onItemClickListener)
             .create();
         card.show();
     }
@@ -47,7 +47,7 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), LargeGraphicCardBean.LAYOUT_NAME)) {
+            || data.getLayoutId() != LargeGraphicCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {
@@ -58,7 +58,7 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
         card.setData(beans, data.getCardTitle());
     }
 
-    private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {
+    private void onItemClickListener(Context context, LargeGraphicCardBean bean) {
         if (!(context instanceof AppCompatActivity)) {
             return;
         }

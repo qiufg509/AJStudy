@@ -42,7 +42,7 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), NormalCardBean.LAYOUT_NAME)) {
+            || data.getLayoutId() != NormalCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

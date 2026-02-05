@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.fragment.base;
 
-import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,10 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
-import com.qiufengguang.ajstudy.card.banner.BannerCardHolder;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.Card;
+import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
-import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 
 import java.lang.ref.WeakReference;
@@ -145,14 +144,7 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
         if (data == null) {
             return;
         }
-        String layoutName = layoutData.getLayoutName();
-        if (holder instanceof BannerCardHolder
-            && TextUtils.equals(layoutName, BannerBean.LAYOUT_NAME)) {
-            BannerCardHolder bannerCardHolder = (BannerCardHolder) holder;
-            bannerCardHolder.bind(layoutData, this.lifecycleOwner);
-        } else {
-            holder.bind(layoutData);
-        }
+        holder.bind(layoutData, this.lifecycleOwner);
     }
 
     @Override
@@ -199,7 +191,8 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
             if (layoutData == null || layoutData.getData() == null) {
                 continue;
             }
-            if (TextUtils.equals(layoutData.getLayoutName(), BannerBean.LAYOUT_NAME)) {
+            CardCreator creator = Card.getCreator(layoutData.getLayoutId());
+            if (creator != null && creator.needObserveLifecycle()) {
                 lifecycleCardPos.add(index);
             }
         }

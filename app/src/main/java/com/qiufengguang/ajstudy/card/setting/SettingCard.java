@@ -15,15 +15,14 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
-import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.SettingCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSettingBinding;
 import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.card.base.GridDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 设置卡片
@@ -32,6 +31,11 @@ import java.util.Map;
  * @since 2026/1/31 12:50
  */
 public class SettingCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 9;
+
     private WeakReference<RecyclerView> recyclerViewRef;
 
     private WeakReference<TextView> titleViewRef;
@@ -44,7 +48,9 @@ public class SettingCard extends Card {
 
     private int verticalSpacing;
 
-    private boolean includeEdge;
+    private int startSpacing;
+
+    private int endSpacing;
 
     private OnItemClickListener<SettingCardBean> listener;
 
@@ -92,8 +98,12 @@ public class SettingCard extends Card {
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
         if (decor == null) {
-            decor = new GridDecoration(spanCount,
-                horizontalSpacing, verticalSpacing, includeEdge);
+            decor = new GridDecoration.Builder(spanCount)
+                .startSpacing(startSpacing)
+                .endSpacing(endSpacing)
+                .horizontalSpacing(horizontalSpacing)
+                .verticalSpacing(verticalSpacing)
+                .build();
         }
         recyclerView.removeItemDecoration(decor);
         recyclerView.addItemDecoration(decor);
@@ -105,11 +115,6 @@ public class SettingCard extends Card {
             CardSettingBinding binding = CardSettingBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new SettingCardHolder(binding);
-        }
-
-        @Override
-        public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
         }
     }
 
@@ -124,9 +129,11 @@ public class SettingCard extends Card {
 
         private int verticalSpacing;
 
-        private int spacing;
+        private int startSpacing;
 
-        private boolean includeEdge;
+        private int endSpacing;
+
+        private int spacing;
 
         private OnItemClickListener<SettingCardBean> listener;
 
@@ -186,6 +193,28 @@ public class SettingCard extends Card {
         }
 
         /**
+         * 设置左侧间距
+         *
+         * @param startSpacing 左侧间距
+         * @return Builder
+         */
+        public SettingCard.Builder setStartSpacing(int startSpacing) {
+            this.startSpacing = startSpacing;
+            return this;
+        }
+
+        /**
+         * 设置右侧间距
+         *
+         * @param endSpacing 右侧间距
+         * @return Builder
+         */
+        public SettingCard.Builder setEndSpacing(int endSpacing) {
+            this.endSpacing = endSpacing;
+            return this;
+        }
+
+        /**
          * 设置卡片间距
          *
          * @param spacing 间距大小
@@ -193,17 +222,6 @@ public class SettingCard extends Card {
          */
         public SettingCard.Builder setSpacing(int spacing) {
             this.spacing = spacing;
-            return this;
-        }
-
-        /**
-         * 设置卡片间距是否包含边距
-         *
-         * @param includeEdge 默认false不包含
-         * @return Builder
-         */
-        public SettingCard.Builder setIncludeEdge(boolean includeEdge) {
-            this.includeEdge = includeEdge;
             return this;
         }
 
@@ -238,7 +256,8 @@ public class SettingCard extends Card {
                 ? this.spacing : this.horizontalSpacing;
             wrapper.verticalSpacing = this.verticalSpacing == 0 && this.spacing != 0
                 ? this.spacing : this.verticalSpacing;
-            wrapper.includeEdge = this.includeEdge;
+            wrapper.startSpacing = this.startSpacing;
+            wrapper.endSpacing = this.endSpacing;
             wrapper.listener = this.listener;
             return wrapper;
         }

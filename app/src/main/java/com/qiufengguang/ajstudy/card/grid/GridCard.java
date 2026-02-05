@@ -15,15 +15,14 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
-import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.card.base.GridDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 格网卡片
@@ -32,6 +31,10 @@ import java.util.Map;
  * @since 2025/12/28 18:50
  */
 public class GridCard extends Card {
+    /**
+     * 卡片唯一id
+     */
+    public static final int LAYOUT_ID = 2;
 
     private WeakReference<RecyclerView> recyclerViewRef;
 
@@ -41,11 +44,7 @@ public class GridCard extends Card {
 
     private int spanCount;
 
-    private int horizontalSpacing;
-
-    private int verticalSpacing;
-
-    private boolean includeEdge;
+    private GridDecoration.Builder spacingBuilder;
 
     private boolean wrapContent;
 
@@ -99,8 +98,7 @@ public class GridCard extends Card {
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
         if (decor == null) {
-            decor = new GridDecoration(spanCount,
-                horizontalSpacing, verticalSpacing, includeEdge);
+            decor = spacingBuilder.build();
         }
         recyclerView.removeItemDecoration(decor);
         recyclerView.addItemDecoration(decor);
@@ -113,11 +111,6 @@ public class GridCard extends Card {
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new GridViewHolder(binding);
         }
-
-        @Override
-        public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4);
-        }
     }
 
     public static class Builder {
@@ -127,13 +120,7 @@ public class GridCard extends Card {
 
         private int spanCount;
 
-        private int horizontalSpacing;
-
-        private int verticalSpacing;
-
-        private int spacing;
-
-        private boolean includeEdge;
+        private GridDecoration.Builder spacingBuilder;
 
         private boolean wrapContent;
 
@@ -173,46 +160,13 @@ public class GridCard extends Card {
         }
 
         /**
-         * 设置格网卡片水平间距
+         * 设置间距Builder
          *
-         * @param horizontalSpacing 水平间距大小
+         * @param builder GridDecoration.Builder
          * @return Builder
          */
-        public GridCard.Builder setHorizontalSpacing(int horizontalSpacing) {
-            this.horizontalSpacing = horizontalSpacing;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片垂直间距
-         *
-         * @param verticalSpacing 垂直间距大小
-         * @return Builder
-         */
-        public GridCard.Builder setVerticalSpacing(int verticalSpacing) {
-            this.verticalSpacing = verticalSpacing;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片间距
-         *
-         * @param spacing 间距大小
-         * @return Builder
-         */
-        public GridCard.Builder setSpacing(int spacing) {
-            this.spacing = spacing;
-            return this;
-        }
-
-        /**
-         * 设置格网卡片间距是否包含边距
-         *
-         * @param includeEdge 默认false不包含
-         * @return Builder
-         */
-        public GridCard.Builder setIncludeEdge(boolean includeEdge) {
-            this.includeEdge = includeEdge;
+        public GridCard.Builder setSpacingBuilder(GridDecoration.Builder builder) {
+            this.spacingBuilder = builder;
             return this;
         }
 
@@ -254,11 +208,10 @@ public class GridCard extends Card {
                 wrapper.spanCount = column == Constant.Grid.COLUMN_DEFAULT ? Constant.Pln.GRID_4 :
                     (column == Constant.Grid.COLUMN_8 ? Constant.Pln.GRID_8 : Constant.Pln.GRID_12);
             }
-            wrapper.horizontalSpacing = this.horizontalSpacing == 0 && this.spacing != 0
-                ? this.spacing : this.horizontalSpacing;
-            wrapper.verticalSpacing = this.verticalSpacing == 0 && this.spacing != 0
-                ? this.spacing : this.verticalSpacing;
-            wrapper.includeEdge = this.includeEdge;
+            if (this.spacingBuilder != null) {
+                wrapper.spacingBuilder = spacingBuilder;
+                wrapper.spacingBuilder.setSpanCount(wrapper.spanCount);
+            }
             wrapper.wrapContent = this.wrapContent;
             wrapper.listener = this.listener;
             return wrapper;

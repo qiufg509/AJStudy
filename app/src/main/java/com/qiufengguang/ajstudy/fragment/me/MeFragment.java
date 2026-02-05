@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
@@ -47,7 +48,7 @@ public class MeFragment extends BaseListFragment {
                     if (user == null) {
                         return;
                     }
-                    SingleLayoutData<User> layoutData = LayoutDataFactory.createSingle(user);
+                    SingleLayoutData<User> layoutData = LayoutDataFactory.createSingle(SimpleUserCard.LAYOUT_ID, user);
                     ArrayList<LayoutData<?>> dataList = new ArrayList<>();
                     dataList.add(layoutData);
                     baseListAdapter.addData(dataList);

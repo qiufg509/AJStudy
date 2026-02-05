@@ -66,7 +66,6 @@ public class LuckyWheel extends View {
     // 预分配对象，避免在onDraw中创建
     private final RectF drawRect = new RectF();
     private final RectF borderRect = new RectF();
-    private final RectF shadowRect = new RectF();
     private final Path textPath = new Path();
     private final RectF iconRect = new RectF();
     private final RectF centerBtnRect = new RectF();

@@ -3,7 +3,6 @@ package com.qiufengguang.ajstudy.card.setting;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,12 +36,12 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
         if (card != null) {
             return;
         }
-        int spacing = itemView.getResources().getDimensionPixelSize(
+        int horizontalSpacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
         card = new SettingCard.Builder()
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
-            .setHorizontalSpacing(spacing)
+            .setHorizontalSpacing(horizontalSpacing)
             .setListener(SettingCardHolder::onItemClickListener)
             .create();
         card.show();
@@ -51,7 +50,7 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || !TextUtils.equals(data.getLayoutName(), SettingCardBean.LAYOUT_NAME)) {
+            || data.getLayoutId() != SettingCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.card.base;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
@@ -36,6 +37,13 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
      * 绑定数据
      */
     public abstract void bind(LayoutData<?> data);
+
+    /**
+     * 绑定数据
+     */
+    public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+        this.bind(data);
+    }
 
     /**
      * 清理资源，防止内存泄漏
