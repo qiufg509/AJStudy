@@ -8,7 +8,6 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
         android:layout_marginBottom="@dimen/activity_vertical_margin_s"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
@@ -21,7 +20,6 @@
         android:id="@+id/recycler_lgc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
         android:layout_marginBottom="@dimen/activity_vertical_margin_m"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never" />

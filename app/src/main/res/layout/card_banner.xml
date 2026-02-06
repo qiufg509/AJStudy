@@ -2,7 +2,6 @@
 <com.qiufengguang.ajstudy.view.RoundedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/banner_horizontal_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin_m">
 
     <androidx.recyclerview.widget.RecyclerView

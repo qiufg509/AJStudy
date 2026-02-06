@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
     android:layout_marginBottom="@dimen/activity_vertical_margin_m"
     android:background="@drawable/card_background"
-    android:paddingHorizontal="@dimen/activity_vertical_margin_m"
-    android:paddingTop="@dimen/activity_vertical_margin_xs"
-    android:paddingBottom="@dimen/activity_vertical_margin_s">
+    android:padding="@dimen/activity_vertical_margin_s"
+    android:paddingHorizontal="@dimen/activity_vertical_margin_m">
 
     <TextView
         android:id="@+id/tv_title"
@@ -24,15 +22,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- 关键修改：将高度改为0dp，并添加宽高比约束 -->
     <com.qiufengguang.ajstudy.view.LuckyWheel
         android:id="@+id/lucky_wheel"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/activity_vertical_margin_s"
         app:centerBtn="@drawable/node"
         app:centerBtnSize="72dp"
         app:iconSize="40dp"
         app:isTowardCenter="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />

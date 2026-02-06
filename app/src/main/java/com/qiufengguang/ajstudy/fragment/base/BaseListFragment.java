@@ -31,6 +31,8 @@ public abstract class BaseListFragment extends Fragment {
 
     protected BaseListAdapter baseListAdapter;
 
+    private PageSpacingDecoration decor;
+
     public View onCreateView(
         @NonNull LayoutInflater inflater,
         ViewGroup container,
@@ -76,6 +78,8 @@ public abstract class BaseListFragment extends Fragment {
         baseBinding.recyclerContainer.setAdapter(null);
         baseBinding.recyclerContainer.setLayoutManager(null);
         baseBinding.recyclerContainer.clearOnScrollListeners();
+        baseBinding.recyclerContainer.removeItemDecoration(decor);
+        decor = null;
         baseBinding = null;
     }
 
@@ -113,6 +117,12 @@ public abstract class BaseListFragment extends Fragment {
             (config.hasNaviBar && config.overlayNaviBar) ? naviBarHeight : 0
         );
         baseBinding.recyclerContainer.setClipToPadding(!config.hasNaviBar || !config.overlayNaviBar);
+
+        if (decor == null) {
+            decor = new PageSpacingDecoration(requireContext());
+        }
+        baseBinding.recyclerContainer.removeItemDecoration(decor);
+        baseBinding.recyclerContainer.addItemDecoration(decor);
     }
 
     /**

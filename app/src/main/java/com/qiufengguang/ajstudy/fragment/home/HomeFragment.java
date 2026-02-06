@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.fragment.base.BaseListFragment;
+import com.qiufengguang.ajstudy.fragment.base.BaseGridFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 
 /**
@@ -13,7 +13,7 @@ import com.qiufengguang.ajstudy.fragment.base.PageConfig;
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class HomeFragment extends BaseListFragment {
+public class HomeFragment extends BaseGridFragment {
     @NonNull
     @Override
     protected PageConfig getPageConfig() {

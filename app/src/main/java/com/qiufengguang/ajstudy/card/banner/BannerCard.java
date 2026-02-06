@@ -181,6 +181,7 @@ public class BannerCard extends Card {
         }
 
         setupBanner(snapDistancePx);
+        setRootMargin();
     }
 
     /**
@@ -204,13 +205,11 @@ public class BannerCard extends Card {
         }
 
         setBannerRootRadius(recyclerBanner.getParent(), cornerRadius);
-        if (this.column != Constant.Grid.COLUMN_DEFAULT) {
-            if (decor == null) {
-                decor = new BannerDecoration(GAP, 0);
-            }
-            recyclerBanner.removeItemDecoration(decor);
-            recyclerBanner.addItemDecoration(decor);
+        if (decor == null) {
+            decor = new BannerDecoration(this.column == Constant.Grid.COLUMN_DEFAULT ? 0 : GAP);
         }
+        recyclerBanner.removeItemDecoration(decor);
+        recyclerBanner.addItemDecoration(decor);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerBanner.getContext(),
             LinearLayoutManager.HORIZONTAL, false);
@@ -238,6 +237,32 @@ public class BannerCard extends Card {
 
         // 处理Banner点击事件
         adapter.setOnBannerClickListener(clickListener);
+    }
+
+    /**
+     * 8/12栅格添加了左右GAP间距，需要设置 -GAP/2 补偿间距使卡片对齐
+     */
+    private void setRootMargin() {
+        if (recyclerBannerRef == null) {
+            return;
+        }
+        RecyclerView recyclerBanner = recyclerBannerRef.get();
+        if (recyclerBanner == null) {
+            return;
+        }
+        ViewParent parent = recyclerBanner.getParent();
+        if (!(parent instanceof View)) {
+            return;
+        }
+        View view = (View) parent;
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutParams;
+            int halfInterItemSpacing = column == Constant.Grid.COLUMN_DEFAULT ? 0 : GAP / 2;
+            params.leftMargin = -halfInterItemSpacing;
+            params.rightMargin = -halfInterItemSpacing;
+            view.setLayoutParams(params);
+        }
     }
 
     /**

@@ -17,14 +17,9 @@ public class BannerDecoration extends RecyclerView.ItemDecoration {
      * 水平间距
      */
     private final int horizontalSpacing;
-    /**
-     * 垂直间距
-     */
-    private final int verticalSpacing;
 
-    public BannerDecoration(int horizontalSpacing, int verticalSpacing) {
+    public BannerDecoration(int horizontalSpacing) {
         this.horizontalSpacing = horizontalSpacing / 2;
-        this.verticalSpacing = verticalSpacing / 2;
     }
 
     @Override
@@ -37,7 +32,7 @@ public class BannerDecoration extends RecyclerView.ItemDecoration {
         }
         outRect.left = horizontalSpacing;
         outRect.right = horizontalSpacing;
-        outRect.top = verticalSpacing;
-        outRect.bottom = verticalSpacing;
+        outRect.top = 0;
+        outRect.bottom = 0;
     }
 }
