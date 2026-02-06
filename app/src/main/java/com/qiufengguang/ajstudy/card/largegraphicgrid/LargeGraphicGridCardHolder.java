@@ -35,7 +35,7 @@ public class LargeGraphicGridCardHolder extends BaseViewHolder<CardLargeGraphicG
         card = new LargeGraphicGridCard.Builder()
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
-            .setSpacingBuilder(new GridDecoration.Builder().spacing(spacing))
+            .setSpacingBuilder(new GridDecoration.Builder().horizontalSpacing(spacing))
             .create();
         card.show();
     }
