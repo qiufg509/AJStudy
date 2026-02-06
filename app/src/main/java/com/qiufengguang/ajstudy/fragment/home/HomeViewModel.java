@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCard;
 import com.qiufengguang.ajstudy.card.largegraphicgrid.LargeGraphicGridCard;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
+import com.qiufengguang.ajstudy.data.ArticleCardBean;
 import com.qiufengguang.ajstudy.data.BannerBean;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
@@ -100,11 +102,21 @@ public class HomeViewModel extends ViewModel {
         );
         LayoutData<List<LuckyWheelCardBean>> wheelCardData = LayoutDataFactory.createCollection(LuckyWheelCard.LAYOUT_ID, wheelCardBeans, "今天吃什么？");
 
+        List<ArticleCardBean.Article> articles = List.of(
+            new ArticleCardBean.Article("流氓国家的回旋镖，击中了美国", "https://thumb.nfcmag.com/2025/06/12_0c95bf6296c1ae8249d003161b571e082822239e_w_500.jpg"),
+            new ArticleCardBean.Article("新的技术革命浪潮下，如何实施区域协调发展 ——专访浙江大学文科资深教授史晋川 姚远", "https://thumb.nfcmag.com/2026/02/06_1b5f88e6b5509f3880be1a4193236afc73b8c39f_w_500.jpg"),
+            new ArticleCardBean.Article("辛亥110年，未完成的革命", "https://thumb.nfcmag.com/2021/11/01_326231c0c7128748985a77705f16e4b9aaf5a0d6_w_500.jpg")
+        );
+        ArticleCardBean articleCardBean = new ArticleCardBean("南风窗", "https://www.nfcmag.cn/upload/2025/11/11/101136_533e04fa658b8474a3a5f011827952d2b016b13c.png", 1770340773000L, articles);
+        SingleLayoutData<ArticleCardBean> articleCardData = LayoutDataFactory.createSingle(ArticleCard.LAYOUT_ID, articleCardBean);
+
+
         List<LayoutData<?>> dataList = new ArrayList<>();
         dataList.add(bannerCardData);
         dataList.add(gridCardData);
         dataList.add(seriesCardData);
         dataList.add(wheelCardData);
+        dataList.add(articleCardData);
         dataList.add(graphicCardData);
         dataList.add(seriesCardData2);
         dataList.add(bannerCardData2);

@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.global;
 
+import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
@@ -29,5 +30,6 @@ public class CardRegistrar {
         Card.register(SimpleUserCard.LAYOUT_ID, new SimpleUserCard.Creator());
         Card.register(SettingCard.LAYOUT_ID, new SettingCard.Creator());
         Card.register(LargeGraphicCard.LAYOUT_ID, new LargeGraphicCard.Creator());
+        Card.register(ArticleCard.LAYOUT_ID, new ArticleCard.Creator());
     }
 }
