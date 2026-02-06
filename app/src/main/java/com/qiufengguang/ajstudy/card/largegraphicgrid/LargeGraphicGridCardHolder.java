@@ -1,16 +1,13 @@
 package com.qiufengguang.ajstudy.card.largegraphicgrid;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
+import com.qiufengguang.ajstudy.databinding.CardLargeGraphicGridBinding;
 
 import java.util.List;
 
@@ -20,11 +17,11 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/24 23:31
  */
-public class LargeGraphicGridCardHolder extends BaseViewHolder<CardLargeGraphicBinding> {
+public class LargeGraphicGridCardHolder extends BaseViewHolder<CardLargeGraphicGridBinding> {
 
     private LargeGraphicGridCard card;
 
-    public LargeGraphicGridCardHolder(@NonNull CardLargeGraphicBinding binding) {
+    public LargeGraphicGridCardHolder(@NonNull CardLargeGraphicGridBinding binding) {
         super(binding);
     }
 
@@ -39,7 +36,6 @@ public class LargeGraphicGridCardHolder extends BaseViewHolder<CardLargeGraphicB
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
             .setSpacingBuilder(new GridDecoration.Builder().spacing(spacing))
-            .setListener(this::onItemClickListener)
             .create();
         card.show();
     }
@@ -56,13 +52,6 @@ public class LargeGraphicGridCardHolder extends BaseViewHolder<CardLargeGraphicB
         @SuppressWarnings("unchecked")
         List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getData();
         card.setData(beans, data.getCardTitle());
-    }
-
-    private void onItemClickListener(Context context, LargeGraphicCardBean bean) {
-        if (!(context instanceof AppCompatActivity)) {
-            return;
-        }
-        AppCompatActivity activity = (AppCompatActivity) context;
     }
 
     @Override

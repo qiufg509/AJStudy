@@ -16,9 +16,8 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
-import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
-import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
+import com.qiufengguang.ajstudy.databinding.CardLargeGraphicGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
@@ -46,8 +45,6 @@ public class LargeGraphicGridCard extends Card {
     private int spanCount;
 
     private GridDecoration.Builder spacingBuilder;
-
-    private OnItemClickListener<LargeGraphicCardBean> listener;
 
     private GridDecoration decor;
 
@@ -89,7 +86,6 @@ public class LargeGraphicGridCard extends Card {
         if (adapter == null) {
             adapter = new LargeGraphicGridCardAdapter(null);
         }
-        adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
         if (spacingBuilder != null) {
             if (decor == null) {
@@ -103,7 +99,7 @@ public class LargeGraphicGridCard extends Card {
     public static class Creator implements CardCreator {
         @Override
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
-            CardLargeGraphicBinding binding = CardLargeGraphicBinding.inflate(
+            CardLargeGraphicGridBinding binding = CardLargeGraphicGridBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new LargeGraphicGridCardHolder(binding);
         }
@@ -117,8 +113,6 @@ public class LargeGraphicGridCard extends Card {
         private int spanCount;
 
         private GridDecoration.Builder spacingBuilder;
-
-        private OnItemClickListener<LargeGraphicCardBean> listener;
 
         /**
          * 设置卡片内容布局控件
@@ -164,18 +158,6 @@ public class LargeGraphicGridCard extends Card {
             return this;
         }
 
-        /**
-         * 设置卡片item点击事件
-         *
-         * @param listener {@link OnItemClickListener}
-         * @return Builder
-         */
-        public LargeGraphicGridCard.Builder setListener(
-            OnItemClickListener<LargeGraphicCardBean> listener) {
-            this.listener = listener;
-            return this;
-        }
-
         public LargeGraphicGridCard create() {
             if (this.recyclerView == null) {
                 throw new UnsupportedOperationException(
@@ -195,7 +177,6 @@ public class LargeGraphicGridCard extends Card {
                 wrapper.spacingBuilder = spacingBuilder;
                 wrapper.spacingBuilder.setSpanCount(wrapper.spanCount);
             }
-            wrapper.listener = this.listener;
             return wrapper;
         }
     }
@@ -217,7 +198,6 @@ public class LargeGraphicGridCard extends Card {
         }
         decor = null;
         if (adapter != null) {
-            adapter.setOnItemClickListener(null);
             adapter = null;
         }
     }
