@@ -13,10 +13,8 @@ import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.User;
 import com.qiufengguang.ajstudy.databinding.CardSimpleUserBinding;
-import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
-import java.util.Map;
 
 /**
  * 简单用户卡片
@@ -105,7 +103,7 @@ public class SimpleUserCard extends Card {
         private OnItemClickListener<User> listener;
 
         /**
-         * 简单用户卡片布局viewbinding
+         * 设置卡片布局viewbinding
          *
          * @param binding CardSimpleUserBinding
          * @ Builder

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.largegraphic;
+package com.qiufengguang.ajstudy.card.largegraphicgrid;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,12 +25,13 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * 大图文卡
+ * 大图文格网卡
+ * 包含多个大图文卡，内部处理栅格适配
  *
  * @author qiufengguang
  * @since 2026/1/24 23:31
  */
-public class LargeGraphicCard extends Card {
+public class LargeGraphicGridCard extends Card {
     /**
      * 卡片唯一id
      */
@@ -40,7 +41,7 @@ public class LargeGraphicCard extends Card {
 
     private WeakReference<TextView> titleViewRef;
 
-    private LargeGraphicCardAdapter adapter;
+    private LargeGraphicGridCardAdapter adapter;
 
     private int spanCount;
 
@@ -50,12 +51,12 @@ public class LargeGraphicCard extends Card {
 
     private GridDecoration decor;
 
-    private LargeGraphicCard() {
+    private LargeGraphicGridCard() {
     }
 
     public void setData(List<LargeGraphicCardBean> beans, String cardTitle) {
         if (adapter == null) {
-            adapter = new LargeGraphicCardAdapter(beans);
+            adapter = new LargeGraphicGridCardAdapter(beans);
         } else {
             adapter.setData(beans);
         }
@@ -86,7 +87,7 @@ public class LargeGraphicCard extends Card {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         if (adapter == null) {
-            adapter = new LargeGraphicCardAdapter(null);
+            adapter = new LargeGraphicGridCardAdapter(null);
         }
         adapter.setOnItemClickListener(listener);
         recyclerView.setAdapter(adapter);
@@ -104,7 +105,7 @@ public class LargeGraphicCard extends Card {
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             CardLargeGraphicBinding binding = CardLargeGraphicBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new LargeGraphicCardHolder(binding);
+            return new LargeGraphicGridCardHolder(binding);
         }
     }
 
@@ -120,34 +121,34 @@ public class LargeGraphicCard extends Card {
         private OnItemClickListener<LargeGraphicCardBean> listener;
 
         /**
-         * 设置格网卡片内容布局控件
+         * 设置卡片内容布局控件
          *
          * @param recyclerView RecyclerView
          * @return Builder
          */
-        public LargeGraphicCard.Builder setRecyclerView(RecyclerView recyclerView) {
+        public LargeGraphicGridCard.Builder setRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
             return this;
         }
 
         /**
-         * 设置格网卡片标题控件
+         * 设置卡片标题控件
          *
          * @param titleView TextView
          * @return Builder
          */
-        public LargeGraphicCard.Builder setTitleView(TextView titleView) {
+        public LargeGraphicGridCard.Builder setTitleView(TextView titleView) {
             this.titleView = titleView;
             return this;
         }
 
         /**
-         * 设置格网卡片列数
+         * 设置卡片列数
          *
          * @param spanCount 列数
          * @return Builder
          */
-        public LargeGraphicCard.Builder setSpanCount(int spanCount) {
+        public LargeGraphicGridCard.Builder setSpanCount(int spanCount) {
             this.spanCount = spanCount;
             return this;
         }
@@ -158,29 +159,29 @@ public class LargeGraphicCard extends Card {
          * @param spacingBuilder GridDecoration.Builder
          * @return Builder
          */
-        public LargeGraphicCard.Builder setSpacingBuilder(GridDecoration.Builder spacingBuilder) {
+        public LargeGraphicGridCard.Builder setSpacingBuilder(GridDecoration.Builder spacingBuilder) {
             this.spacingBuilder = spacingBuilder;
             return this;
         }
 
         /**
-         * 设置格网卡片item点击事件
+         * 设置卡片item点击事件
          *
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public LargeGraphicCard.Builder setListener(
+        public LargeGraphicGridCard.Builder setListener(
             OnItemClickListener<LargeGraphicCardBean> listener) {
             this.listener = listener;
             return this;
         }
 
-        public LargeGraphicCard create() {
+        public LargeGraphicGridCard create() {
             if (this.recyclerView == null) {
                 throw new UnsupportedOperationException(
                     "recyclerView is null, call setRecyclerView first.");
             }
-            LargeGraphicCard wrapper = new LargeGraphicCard();
+            LargeGraphicGridCard wrapper = new LargeGraphicGridCard();
             wrapper.recyclerViewRef = new WeakReference<>(this.recyclerView);
             wrapper.titleViewRef = new WeakReference<>(this.titleView);
             if (this.spanCount > 0) {

@@ -182,7 +182,7 @@ public class SettingCard extends Card {
         }
 
         /**
-         * 设置格片垂直间距
+         * 设置卡片垂直间距
          *
          * @param verticalSpacing 垂直间距大小
          * @return Builder

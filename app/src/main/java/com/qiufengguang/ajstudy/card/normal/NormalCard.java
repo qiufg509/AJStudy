@@ -135,7 +135,7 @@ public class NormalCard extends Card {
         private OnItemClickListener<NormalCardBean> listener;
 
         /**
-         * 设置系列卡片布局viewbinding
+         * 设置卡片布局viewbinding
          *
          * @param binding CardNormalBinding
          * @ Builder

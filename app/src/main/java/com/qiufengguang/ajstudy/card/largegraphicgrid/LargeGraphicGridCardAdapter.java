@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.largegraphic;
+package com.qiufengguang.ajstudy.card.largegraphicgrid;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,18 +22,18 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
- * 大图文卡适配器
+ * 大图文格网卡适配器
  *
  * @author qiufengguang
  * @since 2026/1/24 23:30
  */
-public class LargeGraphicCardAdapter extends RecyclerView.Adapter<LargeGraphicCardAdapter.LargeGraphicViewHolder> {
+public class LargeGraphicGridCardAdapter extends RecyclerView.Adapter<LargeGraphicGridCardAdapter.LargeGraphicViewHolder> {
 
     private List<LargeGraphicCardBean> beans;
 
     private OnItemClickListener<LargeGraphicCardBean> listener;
 
-    public LargeGraphicCardAdapter(@Nullable List<LargeGraphicCardBean> beans) {
+    public LargeGraphicGridCardAdapter(@Nullable List<LargeGraphicCardBean> beans) {
         this.beans = beans;
     }
 

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.largegraphic;
+package com.qiufengguang.ajstudy.card.largegraphicgrid;
 
 import android.content.Context;
 
@@ -15,16 +15,16 @@ import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
 import java.util.List;
 
 /**
- * 大图文卡的ViewHolder
+ * 大图文格网卡的ViewHolder
  *
  * @author qiufengguang
  * @since 2026/1/24 23:31
  */
-public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBinding> {
+public class LargeGraphicGridCardHolder extends BaseViewHolder<CardLargeGraphicBinding> {
 
-    private LargeGraphicCard card;
+    private LargeGraphicGridCard card;
 
-    public LargeGraphicCardHolder(@NonNull CardLargeGraphicBinding binding) {
+    public LargeGraphicGridCardHolder(@NonNull CardLargeGraphicBinding binding) {
         super(binding);
     }
 
@@ -35,7 +35,7 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
         }
         int spacing = itemView.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_s);
-        card = new LargeGraphicCard.Builder()
+        card = new LargeGraphicGridCard.Builder()
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
             .setSpacingBuilder(new GridDecoration.Builder().spacing(spacing))
@@ -47,7 +47,7 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || !data.isCollection()
-            || data.getLayoutId() != LargeGraphicCard.LAYOUT_ID) {
+            || data.getLayoutId() != LargeGraphicGridCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

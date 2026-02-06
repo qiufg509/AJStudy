@@ -184,7 +184,7 @@ public class SeriesCard extends Card {
         private OnItemClickListener<SeriesCardBean> listener;
 
         /**
-         * 设置系列卡片布局viewbinding
+         * 设置卡片布局viewbinding
          *
          * @param binding CardSeriesBinding
          * @ Builder
