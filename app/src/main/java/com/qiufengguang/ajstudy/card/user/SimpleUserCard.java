@@ -64,7 +64,7 @@ public class SimpleUserCard extends Card {
         }
 
         binding.getRoot().setOnClickListener(v -> {
-            if (listener != null && user == null) {
+            if (listener != null && user != null) {
                 listener.onItemClick(v.getContext(), user);
             }
         });

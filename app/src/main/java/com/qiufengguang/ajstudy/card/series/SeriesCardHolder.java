@@ -1,14 +1,19 @@
 package com.qiufengguang.ajstudy.card.series;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
+import com.qiufengguang.ajstudy.activity.second.SecondActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
+import com.qiufengguang.ajstudy.fragment.second.SecondFragment;
+import com.qiufengguang.ajstudy.global.Constant;
 
 import java.util.List;
 
@@ -21,6 +26,8 @@ import java.util.List;
 public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
 
     private SeriesCard card;
+
+    private String title;
 
     public SeriesCardHolder(@NonNull CardSeriesBinding binding) {
         super(binding);
@@ -47,16 +54,26 @@ public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
         if (card == null) {
             initCard();
         }
+        title = data.getCardTitle();
         @SuppressWarnings("unchecked")
         List<SeriesCardBean> beans = (List<SeriesCardBean>) data.getData();
         card.setData(beans, data.getCardTitle());
     }
 
     private void onItemClickListener(Context context, SeriesCardBean bean) {
-        if (!(context instanceof AppCompatActivity)) {
-            return;
+        Intent intent;
+        if (bean == null) {
+            intent = new Intent(context, SecondActivity.class);
+            Bundle args = new Bundle();
+            args.putString(SecondFragment.ARG_TITLE, title);
+            args.putString(SecondFragment.ARG_URI, title);
+            intent.putExtra(SecondActivity.ARGS_SECOND_PAGE_KEY, args);
+        } else {
+            intent = new Intent(context, MarkdownActivity.class);
+            intent.putExtra("title", "《春》");
+            intent.putExtra("filePath", Constant.Data.DETAIL_SPRING);
         }
-        AppCompatActivity activity = (AppCompatActivity) context;
+        context.startActivity(intent);
     }
 
     @Override

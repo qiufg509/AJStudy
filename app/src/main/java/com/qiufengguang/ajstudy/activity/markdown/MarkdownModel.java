@@ -41,7 +41,7 @@ public class MarkdownModel extends ViewModel {
             }
             String fileStr = FileUtil.readExternalFileToString(context, fileName);
             if (TextUtils.isEmpty(fileStr)) {
-                return;
+                fileStr = FileUtil.readAssetsToString(context, fileName);
             }
             liveData.postValue(fileStr);
         });

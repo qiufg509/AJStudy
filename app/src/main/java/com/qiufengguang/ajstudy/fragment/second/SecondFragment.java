@@ -11,6 +11,8 @@ import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 public class SecondFragment extends BaseListFragment {
     public static final String ARG_TITLE = "secondPageTitle";
 
+    public static final String ARG_URI = "secondPageUri";
+
     public static SecondFragment newInstance(Bundle args) {
         SecondFragment f = new SecondFragment();
         f.setArguments(args);
@@ -28,6 +30,12 @@ public class SecondFragment extends BaseListFragment {
         SecondViewModel viewModel = new ViewModelProvider(this).get(SecondViewModel.class);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), layoutData ->
             baseListAdapter.setData(layoutData));
+        Bundle arguments = getArguments();
+        if (arguments == null) {
+            return;
+        }
+        String uri = arguments.getString(ARG_URI);
+        viewModel.initData(uri);
     }
 
     @Override

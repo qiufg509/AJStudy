@@ -95,7 +95,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof GridCardTextHolder) {
             ((GridCardTextHolder) holder).bind(bean);
         } else {
-            ((GridCardImageHolder) holder).bind(bean);
+            ((GridCardImageHolder) holder).bind(bean, position);
         }
     }
 
@@ -139,6 +139,8 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         GridCardBean bean;
 
+        int position;
+
         public GridCardImageHolder(
             @NonNull ItemGridCardImageBinding binding,
             OnItemClickListener<GridCardBean> clickListener
@@ -149,13 +151,14 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 if (clickListener != null && bean != null
                     && bean.getIcon() != R.drawable.ic_checkmark) {
                     bean.setIcon(R.drawable.ic_checkmark);
-                    clickListener.onItemClick(v.getContext(), bean);
+                    clickListener.onItemClick(v.getContext(), this.position, bean);
                 }
             });
         }
 
-        public void bind(GridCardBean bean) {
+        public void bind(GridCardBean bean, int position) {
             this.bean = bean;
+            this.position = position;
             binding.getRoot().setBackgroundTintList(ColorStateList.valueOf(
                 ContextCompat.getColor(binding.getRoot().getContext(), bean.getBackgroundTint())));
 

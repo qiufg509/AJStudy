@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -23,7 +22,6 @@ import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
-import com.qiufengguang.ajstudy.global.GlobalApp;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -79,8 +77,12 @@ public class SeriesCard extends Card {
         fillItem(binding.ivCover4, binding.tvTitle4, binding.tvTag4, binding.tvCount4, binding.tvDuration4);
         fillItem(binding.ivCover5, binding.tvTitle5, binding.tvTag5, binding.tvCount5, binding.tvDuration5);
 
-        binding.tvMore.setOnClickListener(v ->
-            Toast.makeText(GlobalApp.getContext(), "查看更多", Toast.LENGTH_SHORT).show());
+        binding.tvMore.setOnClickListener(v -> {
+            if (listener == null) {
+                return;
+            }
+            listener.onItemClick(v.getContext(), null);
+        });
 
         binding.tvChange.setOnClickListener(v -> show());
     }

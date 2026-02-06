@@ -6,20 +6,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.main.MainActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.GridDecoration;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
-import com.qiufengguang.ajstudy.fragment.second.SecondViewModel;
-import com.qiufengguang.ajstudy.card.base.GridDecoration;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -32,18 +31,8 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
 
     private GridCard card;
 
-    private WeakReference<SecondViewModel> viewModelRef;
-
     public GridViewHolder(@NonNull CardGridBinding binding) {
         super(binding);
-        Context context = binding.getRoot().getContext();
-        if (!(context instanceof AppCompatActivity)) {
-            return;
-        }
-        AppCompatActivity activity = (AppCompatActivity) context;
-        SecondViewModel viewModel =
-            new ViewModelProvider(activity).get(SecondViewModel.class);
-        viewModelRef = new WeakReference<>(viewModel);
     }
 
     @Override
@@ -59,7 +48,17 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             .setSpacingBuilder(
                 new GridDecoration.Builder().horizontalSpacing(spacing)
             )
-            .setListener(this::onItemClickListener)
+            .setListener(new OnItemClickListener<>() {
+                @Override
+                public void onItemClick(Context context, GridCardBean data) {
+                    onItemClickListener(context, data);
+                }
+
+                @Override
+                public void onItemClick(Context context, int position, GridCardBean data) {
+                    onItemClickListener(context, position, data);
+                }
+            })
             .create();
         card.show();
     }
@@ -78,25 +77,27 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         card.setData(beans, data.getCardTitle());
     }
 
-    private void onItemClickListener(Context context, GridCardBean bean) {
+    private void onItemClickListener(Context context, int position, GridCardBean bean) {
         if (!(context instanceof AppCompatActivity)) {
             return;
         }
-        if (bean.getItemType() == GridCardBean.TYPE_IMAGE) {
-            if (viewModelRef == null) {
-                return;
-            }
-            SecondViewModel viewModel = viewModelRef.get();
-            if (viewModel == null) {
-                return;
-            }
-            viewModel.saveThemeIndex(bean);
+        if (bean.getItemType() != GridCardBean.TYPE_IMAGE) {
+            return;
+        }
+        ThemeUtils.setSelectedThemeIndex(position);
 
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.putExtra("restart_theme", true);
-            context.startActivity(intent);
-            ((AppCompatActivity) context).finish();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("restart_theme", true);
+        context.startActivity(intent);
+        ((AppCompatActivity) context).finish();
+    }
+
+    private void onItemClickListener(Context context, GridCardBean bean) {
+        if (bean.getItemType() != GridCardBean.TYPE_TEXT) {
+            return;
+        }
+        if (!(context instanceof AppCompatActivity)) {
             return;
         }
         AppCompatActivity activity = (AppCompatActivity) context;
@@ -112,10 +113,6 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         if (card != null) {
             card.release();
             card = null;
-        }
-        if (viewModelRef != null) {
-            viewModelRef.clear();
-            viewModelRef = null;
         }
         super.cleanup();
     }

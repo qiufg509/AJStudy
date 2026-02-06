@@ -1,14 +1,16 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 
 /**
  * 大图文卡的ViewHolder
@@ -53,10 +55,10 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
     }
 
     private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {
-        if (!(context instanceof AppCompatActivity)) {
-            return;
-        }
-        AppCompatActivity activity = (AppCompatActivity) context;
+        Intent intent = new Intent(context, MarkdownActivity.class);
+        intent.putExtra("title", "《春》");
+        intent.putExtra("filePath", Constant.Data.DETAIL_SPRING);
+        context.startActivity(intent);
     }
 
     @Override

@@ -1,13 +1,16 @@
 package com.qiufengguang.ajstudy.card.article;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.ArticleCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 
 /**
  * 文章卡片的ViewHolder
@@ -49,6 +52,10 @@ public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
     }
 
     private void onItemClickListener(Context context, ArticleCardBean bean) {
+        Intent intent = new Intent(context, MarkdownActivity.class);
+        intent.putExtra("title", "《春》");
+        intent.putExtra("filePath", Constant.Data.DETAIL_SPRING);
+        context.startActivity(intent);
     }
 
     @Override

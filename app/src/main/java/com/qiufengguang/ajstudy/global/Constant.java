@@ -72,6 +72,8 @@ public interface Constant {
         String DETAIL_HGDJ = "detail_page_hgdj.json";
         String DETAIL_SJZXD = "detail_page_sjzxd.json";
 
+        String DETAIL_SPRING = "朱自清《春》.md";
+
         /**
          * markdown文件读取目录
          */
