@@ -4,14 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="-6dp"
-    android:layout_marginTop="-8dp"
-    android:layout_marginEnd="-6dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="@dimen/activity_vertical_margin_s"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="@dimen/radius_m"
     app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
