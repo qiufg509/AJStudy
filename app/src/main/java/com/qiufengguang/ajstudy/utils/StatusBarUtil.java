@@ -3,10 +3,13 @@ package com.qiufengguang.ajstudy.utils;
 import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -125,6 +128,29 @@ public class StatusBarUtil {
             window.setStatusBarColor(color);
             lastStatusBarUpdateTime = currentTime;
         }
+    }
+
+    /**
+     * 适配标题栏，使其填充到状态栏（设置内边距+调整总高度）
+     *
+     * @param titleBar 标题栏根布局
+     * @return 适配后标题栏总高度
+     */
+    public static int adaptTitleBar(@NonNull View titleBar) {
+        int statusBarHeight = DisplayMetricsHelper.getStatusBarHeight(titleBar.getContext());
+        int titleBarHeight = DisplayMetricsHelper.getTitleBarHeight(titleBar.getContext());
+        titleBar.setPadding(
+            titleBar.getPaddingLeft(),
+            statusBarHeight,
+            titleBar.getPaddingRight(),
+            titleBar.getPaddingBottom()
+        );
+        // 设置titleBar高度为titleBarHeight + 状态栏高度
+        int totalHeight = titleBarHeight + statusBarHeight;
+        ViewGroup.LayoutParams toolbarParams = titleBar.getLayoutParams();
+        toolbarParams.height = totalHeight;
+        titleBar.setLayoutParams(toolbarParams);
+        return totalHeight;
     }
 
     @Nullable

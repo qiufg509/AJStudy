@@ -32,7 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin_l"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:textColor="@color/ajstudy_color_text_secondary" />
 
         </ScrollView>
 

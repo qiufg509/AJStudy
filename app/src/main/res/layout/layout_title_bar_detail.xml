@@ -36,6 +36,7 @@
             android:layout_marginHorizontal="48dp"
             android:ellipsize="marquee"
             android:maxLines="2"
+            android:textColor="@color/ajstudy_color_text_primary"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
         <!-- 右侧菜单按钮 -->

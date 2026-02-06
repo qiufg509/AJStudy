@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ActivityMarkdownBinding;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
+import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
 /**
  * Markdown文件展示页面
@@ -31,14 +28,11 @@ public class MarkdownActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         binding = ActivityMarkdownBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        StatusBarUtil.makeStatusBarTransparent(this);
+        StatusBarUtil.setLightStatusBar(this, true);
+        StatusBarUtil.adaptTitleBar(binding.titleBar.toolbar);
 
         ColorStateList tintList = ColorStateList.valueOf(ContextCompat.getColor(this,
             R.color.ajstudy_color_toolbar_icon));
