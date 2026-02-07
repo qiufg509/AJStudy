@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -22,7 +21,6 @@ import com.qiufengguang.ajstudy.dialog.manager.DialogsManager;
 import com.qiufengguang.ajstudy.fragment.comment.CommentFragment;
 import com.qiufengguang.ajstudy.fragment.introduction.IntroductionFragment;
 import com.qiufengguang.ajstudy.fragment.recommendation.RecommendationFragment;
-import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
@@ -71,21 +69,7 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        int statusBarHeight = DisplayMetricsHelper.getStatusBarHeight(this);
-        int titleBarHeight = DisplayMetricsHelper.getTitleBarHeight(this);
-
-        Toolbar toolbar = binding.titleBar.toolbar;
-        toolbar.setPadding(
-            toolbar.getPaddingLeft(),
-            statusBarHeight,
-            toolbar.getPaddingRight(),
-            toolbar.getPaddingBottom()
-        );
-        // 设置Toolbar高度为titleBarHeight + 状态栏高度
-        int totalHeight = titleBarHeight + statusBarHeight;
-        ViewGroup.LayoutParams toolbarParams = toolbar.getLayoutParams();
-        toolbarParams.height = totalHeight;
-        toolbar.setLayoutParams(toolbarParams);
+        int totalHeight = StatusBarUtil.adaptTitleBar(binding.titleBar.toolbar);
 
         ViewGroup.LayoutParams ivIconParams = binding.ivIcon.getLayoutParams();
         if (ivIconParams instanceof ViewGroup.MarginLayoutParams) {
@@ -97,7 +81,7 @@ public class DetailActivity extends AppCompatActivity {
         int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.item_icon_size_xl)
             + getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
         offsetChangedCallback = new DetailHeadOffsetChangedCallback(this,
-            toolbar,
+            binding.titleBar.toolbar,
             binding.titleBar.barBack,
             binding.titleBar.barShare,
             binding.titleBar.barTitle,

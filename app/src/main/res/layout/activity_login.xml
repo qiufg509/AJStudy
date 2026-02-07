@@ -7,27 +7,14 @@
     android:orientation="vertical"
     tools:context=".activity.login.LoginActivity">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
+    <com.qiufengguang.ajstudy.view.DynamicToolbar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/ajstudy_title_bar_height"
-        android:fitsSystemWindows="true"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin_xs"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- 左侧返回按钮 -->
-        <ImageButton
-            android:id="@+id/bar_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="start|center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/title_action_back_description"
-            android:scaleType="center"
-            android:src="@drawable/ic_btn_arrow_left"
-            app:tint="@color/ajstudy_color_toolbar_icon" />
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:mode="back_only" />
 
     <com.qiufengguang.ajstudy.view.BounceScrollView
         android:layout_width="match_parent"

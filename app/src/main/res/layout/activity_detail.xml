@@ -238,7 +238,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- 标题栏 -->
+            <!-- 标题栏，CollapsingToolbarLayout需要搭配ToolBar，不能使用DynamicToolbar（ConstraintLayout）替代 -->
             <include
                 android:id="@+id/title_bar"
                 layout="@layout/layout_title_bar_detail" />

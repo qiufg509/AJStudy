@@ -41,11 +41,8 @@ public class KnowHowFragment extends BaseGridFragment {
         // 绑定数据
         viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
             baseListAdapter.setData(viewModel.getPageData(0)));
-    }
 
-    @Override
-    protected String getTitle() {
-        return "应用列表";
+        setTitle("应用列表");
     }
 
     @Override

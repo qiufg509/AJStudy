@@ -5,10 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.qiufengguang.ajstudy.fragment.base.BaseListFragment;
+import com.qiufengguang.ajstudy.fragment.base.BaseGridFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
+import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
-public class SecondFragment extends BaseListFragment {
+public class SecondFragment extends BaseGridFragment {
     public static final String ARG_TITLE = "secondPageTitle";
 
     public static final String ARG_URI = "secondPageUri";
@@ -22,7 +23,10 @@ public class SecondFragment extends BaseListFragment {
     @NonNull
     @Override
     protected PageConfig getPageConfig() {
-        return new PageConfig.Builder().setHasNaviBar(false).create();
+        return new PageConfig.Builder()
+            .setHasNaviBar(false)
+            .setTitleBarMode(DynamicToolbar.Mode.BACK_TITLE)
+            .create();
     }
 
     @Override
@@ -34,16 +38,8 @@ public class SecondFragment extends BaseListFragment {
         if (arguments == null) {
             return;
         }
+        setTitle(arguments.getString(ARG_TITLE));
         String uri = arguments.getString(ARG_URI);
         viewModel.initData(uri);
-    }
-
-    @Override
-    protected String getTitle() {
-        Bundle arguments = getArguments();
-        if (arguments == null) {
-            return "";
-        }
-        return arguments.getString(ARG_TITLE);
     }
 }

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="DynamicToolbar">
+        <attr name="mode" format="enum">
+            <enum name="back_only" value="0" />
+            <enum name="title_only" value="1" />
+            <enum name="back_title" value="2" />
+            <enum name="back_title_share" value="3" />
+        </attr>
+    </declare-styleable>
     <declare-styleable name="RoundedFrameLayout">
         <attr name="corner_radius" format="dimension" />
     </declare-styleable>

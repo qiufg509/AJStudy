@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.fragment.base;
 
+import com.qiufengguang.ajstudy.view.DynamicToolbar;
+
 /**
  * 页面相关配置属性
  *
@@ -15,6 +17,8 @@ public class PageConfig {
 
     boolean overlayNaviBar;
 
+    DynamicToolbar.Mode mode = DynamicToolbar.Mode.TITLE_ONLY;
+
     private PageConfig() {
     }
 
@@ -26,6 +30,8 @@ public class PageConfig {
         boolean hasNaviBar = true;
 
         boolean overlayNaviBar;
+
+        DynamicToolbar.Mode titleBarMode = DynamicToolbar.Mode.TITLE_ONLY;
 
 
         /**
@@ -75,12 +81,24 @@ public class PageConfig {
             return this;
         }
 
+        /**
+         * 设置标题模式
+         *
+         * @param titleBarMode {@link DynamicToolbar.Mode}
+         * @return DynamicToolbar.Mode
+         */
+        public PageConfig.Builder setTitleBarMode(DynamicToolbar.Mode titleBarMode) {
+            this.titleBarMode = titleBarMode;
+            return this;
+        }
+
         public PageConfig create() {
             PageConfig config = new PageConfig();
             config.isDarkBackground = this.isDarkBackground;
             config.overlayTitleBar = this.overlayTitleBar;
             config.hasNaviBar = this.hasNaviBar;
             config.overlayNaviBar = this.overlayNaviBar;
+            config.mode = this.titleBarMode;
             return config;
         }
     }

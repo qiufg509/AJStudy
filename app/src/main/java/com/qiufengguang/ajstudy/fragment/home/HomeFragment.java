@@ -28,10 +28,6 @@ public class HomeFragment extends BaseGridFragment {
 
         viewModel.getLiveData().observe(getViewLifecycleOwner(),
             beans -> baseListAdapter.setData(beans));
-    }
-
-    @Override
-    protected String getTitle() {
-        return getString(R.string.bottom_nav_title_home);
+        setTitle(getString(R.string.bottom_nav_title_home));
     }
 }

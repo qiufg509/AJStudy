@@ -1,16 +1,11 @@
 package com.qiufengguang.ajstudy.activity.markdown;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.ImageViewCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ActivityMarkdownBinding;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
@@ -32,14 +27,9 @@ public class MarkdownActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         StatusBarUtil.makeStatusBarTransparent(this);
         StatusBarUtil.setLightStatusBar(this, true);
-        StatusBarUtil.adaptTitleBar(binding.titleBar.toolbar);
+        StatusBarUtil.adaptTitleBar(binding.titleBar);
 
-        ColorStateList tintList = ColorStateList.valueOf(ContextCompat.getColor(this,
-            R.color.ajstudy_color_toolbar_icon));
-        ImageViewCompat.setImageTintList(binding.titleBar.barBack, tintList);
-        binding.titleBar.barBack.setOnClickListener(v ->
-            getOnBackPressedDispatcher().onBackPressed());
-        binding.titleBar.barShare.setVisibility(View.GONE);
+        binding.titleBar.setOnBackClickListener(() -> getOnBackPressedDispatcher().onBackPressed());
 
         MarkdownModel viewModel = new ViewModelProvider(this).get(MarkdownModel.class);
         String filePath = getIntent().getStringExtra("filePath");
@@ -48,7 +38,7 @@ public class MarkdownActivity extends AppCompatActivity {
         }
         String title = getIntent().getStringExtra("title");
         if (!TextUtils.isEmpty(title)) {
-            binding.titleBar.barTitle.setText(title);
+            binding.titleBar.setTitle(title);
         }
 
         viewModel.getLiveData().observe(this, markdownContent ->

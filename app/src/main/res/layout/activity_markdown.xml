@@ -8,9 +8,14 @@
     tools:context=".activity.markdown.MarkdownActivity">
 
     <!-- 标题栏 -->
-    <include
+    <com.qiufengguang.ajstudy.view.DynamicToolbar
         android:id="@+id/title_bar"
-        layout="@layout/layout_title_bar_detail" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ajstudy_title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mode="back_title" />
 
     <com.qiufengguang.ajstudy.view.BounceScrollView
         android:layout_width="0dp"

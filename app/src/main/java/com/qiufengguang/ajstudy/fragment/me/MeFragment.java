@@ -57,11 +57,7 @@ public class MeFragment extends BaseListFragment {
         }
         viewModel.getLiveData().observe(getViewLifecycleOwner(),
             layoutData -> baseListAdapter.addData(layoutData));
-    }
 
-    @Override
-    protected String getTitle() {
-        return getString(R.string.bottom_nav_title_me);
+        setTitle(getString(R.string.bottom_nav_title_me));
     }
-
 }

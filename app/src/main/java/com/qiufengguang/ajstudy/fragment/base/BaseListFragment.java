@@ -16,6 +16,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.FragmentBaseBinding;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.view.DynamicToolbar;
 import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
 
 /**
@@ -51,7 +52,6 @@ public abstract class BaseListFragment extends Fragment {
         setupContent();
         onData();
         setupScrollListener();
-        setTitle();
     }
 
     @Override
@@ -83,7 +83,7 @@ public abstract class BaseListFragment extends Fragment {
     }
 
     private void setupLayout(PageConfig config) {
-        int totalHeight = StatusBarUtil.adaptTitleBar(baseBinding.titleBar.getRoot());
+        int totalHeight = StatusBarUtil.adaptTitleBar(baseBinding.titleBar);
 
         int naviBarHeight = DisplayMetricsHelper.getNavigationBarHeight(requireActivity());
 
@@ -108,6 +108,17 @@ public abstract class BaseListFragment extends Fragment {
         }
         baseBinding.recyclerContainer.removeItemDecoration(decor);
         baseBinding.recyclerContainer.addItemDecoration(decor);
+
+        setupToolbar(config.mode);
+    }
+
+    private void setupToolbar(DynamicToolbar.Mode mode) {
+        baseBinding.titleBar.setMode(mode);
+        if (mode == DynamicToolbar.Mode.BACK_TITLE ||
+            mode == DynamicToolbar.Mode.BACK_TITLE_SHARE) {
+            baseBinding.titleBar.setOnBackClickListener(() ->
+                requireActivity().getOnBackPressedDispatcher().onBackPressed());
+        }
     }
 
     /**
@@ -119,12 +130,13 @@ public abstract class BaseListFragment extends Fragment {
         baseBinding.recyclerContainer.setAdapter(baseListAdapter);
     }
 
-    private void setTitle() {
-        setTitle(getTitle());
-    }
-
+    /**
+     * 设置标题
+     *
+     * @param title 标题
+     */
     public void setTitle(String title) {
-        baseBinding.titleBar.barTitle.setText(title);
+        baseBinding.titleBar.setTitle(title);
     }
 
     private void setupScrollListener() {
@@ -210,12 +222,4 @@ public abstract class BaseListFragment extends Fragment {
      */
     public void onLoadMore(int page, int totalItemsCount) {
     }
-
-
-    /**
-     * 可返回null，待需要的时候再调用setTitle设置标题
-     *
-     * @return 标题
-     */
-    protected abstract String getTitle();
 }
