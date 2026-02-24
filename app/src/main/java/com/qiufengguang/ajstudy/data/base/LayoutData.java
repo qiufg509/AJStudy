@@ -9,7 +9,6 @@ import androidx.annotation.IntRange;
  * @since 2026/1/19 14:20
  */
 public abstract class LayoutData<T> {
-    public static final int LAYOUT_ID = 0;
 
     @IntRange
     private int layoutId;

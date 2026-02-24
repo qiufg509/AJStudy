@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.data.SettingCardBean;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
+import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,12 @@ public class MeViewModel extends ViewModel {
     }
 
     private void initData() {
+        List<SettingCardBean> settingCardBeans0 = List.of(
+            new SettingCardBean("我的学习", null, "study"),
+            new SettingCardBean("我的收藏", null, "collections")
+        );
+        CollectionLayoutData<SettingCardBean> settingData0 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans0);
+
         List<SettingCardBean> settingCardBeans1 = List.of(
             new SettingCardBean("配色", null, "color")
         );
@@ -47,8 +56,8 @@ public class MeViewModel extends ViewModel {
         );
         CollectionLayoutData<SettingCardBean> settingData3 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans3);
 
-
         List<LayoutData<?>> dataList = new ArrayList<>();
+        dataList.add(settingData0);
         dataList.add(settingData1);
         dataList.add(settingData2);
         dataList.add(settingData3);

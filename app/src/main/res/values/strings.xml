@@ -20,4 +20,5 @@
     <string name="install">安装</string>
     <string name="series_card_more">查看更多</string>
     <string name="series_card_change">换一换</string>
+    <string name="card_empty_tips">空空如也</string>
 </resources>

@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.viewbinding.ViewBinding;
 
-import com.qiufengguang.ajstudy.card.normal.NormalCard;
-import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 
 /**
  * 卡片ViewHolder工厂方法
@@ -21,7 +20,7 @@ public class ViewHolderFactory {
      * 创建ViewHolder
      *
      * @param parent         卡片父控件
-     * @param viewType       卡片id {@link BaseCardBean#LAYOUT_ID}
+     * @param viewType       卡片id {\\@link XxxCard#LAYOUT_ID}
      * @param lifecycleOwner LifecycleOwner
      * @return BaseViewHolder
      */
@@ -34,6 +33,6 @@ public class ViewHolderFactory {
         if (creator != null) {
             return creator.create(parent, lifecycleOwner);
         }
-        return new NormalCard.Creator().create(parent, lifecycleOwner);
+        return new EmptyCard.Creator().create(parent, lifecycleOwner);
     }
 }

@@ -2,11 +2,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="ajstudy_title_bar_height">48dp</dimen>
     <dimen name="ajstudy_bottom_navigation_height">56dp</dimen>
-    <dimen name="activity_horizontal_margin_xl">28dp</dimen>
+    <dimen name="activity_horizontal_margin_xl">32dp</dimen>
     <dimen name="activity_horizontal_margin_l">16dp</dimen>
     <dimen name="activity_horizontal_margin_m">12dp</dimen>
     <dimen name="activity_horizontal_margin_s">8dp</dimen>
     <dimen name="activity_horizontal_margin_xs">4dp</dimen>
+    <dimen name="activity_vertical_margin_xxl">64dp</dimen>
+    <dimen name="activity_vertical_margin_xl">32dp</dimen>
     <dimen name="activity_vertical_margin_l">16dp</dimen>
     <dimen name="activity_vertical_margin_m">12dp</dimen>
     <dimen name="activity_vertical_margin_s">8dp</dimen>

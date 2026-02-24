@@ -12,6 +12,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
+import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 
 import java.lang.ref.WeakReference;
@@ -102,7 +103,7 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
     public int getItemViewType(int position) {
         LayoutData<?> layoutData = dataList.get(position);
         if (layoutData == null) {
-            return -1;
+            return EmptyCard.LAYOUT_ID;
         }
         return layoutData.getLayoutId();
     }
