@@ -36,7 +36,8 @@ public class MeViewModel extends ViewModel {
 
         List<SettingCardBean> settingCardBeans2 = List.of(
             new SettingCardBean("音效", true),
-            new SettingCardBean("触觉反馈", true)
+            new SettingCardBean("触觉反馈", true),
+            new SettingCardBean("实验室", "", "lab")
         );
         CollectionLayoutData<SettingCardBean> settingData2 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans2);
 

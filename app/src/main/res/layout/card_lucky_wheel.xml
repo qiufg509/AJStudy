@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/card_height_default"
     android:layout_marginBottom="@dimen/activity_vertical_margin_m"
     android:background="@drawable/card_background"
     android:padding="@dimen/activity_vertical_margin_s"
