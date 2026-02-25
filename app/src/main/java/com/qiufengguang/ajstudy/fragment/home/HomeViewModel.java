@@ -11,8 +11,8 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
-import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCard;
-import com.qiufengguang.ajstudy.card.largegraphicgrid.LargeGraphicGridCard;
+import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
+import com.qiufengguang.ajstudy.card.graphiclgrid.GraphicLGridCard;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.data.ArticleCardBean;
@@ -101,8 +101,8 @@ public class HomeViewModel extends ViewModel {
         lgcBeans.add(new LargeGraphicCardBean("跟李子柒见证汉服魅力", "种草人生第一件汉服", "https://www.foodiesfeed.com/wp-content/uploads/2023/03/french-fries-detail.jpg"));
         lgcBeans.add(new LargeGraphicCardBean("从零开始学理财", "每天刷新，每天积累", "https://ts2.tc.mm.bing.net/th/id/OIP-C.HF1qwV9btnJwbj4SWnZqogHaE7?rs=1&pid=ImgDetMain&o=7&rm=3"));
         lgcBeans.add(new LargeGraphicCardBean("一粥一饭，来之不易", "珍惜每一口粮食", "https://plus.unsplash.com/premium_photo-1761839920135-4bf781de96e3?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
-        SingleLayoutData<LargeGraphicCardBean> graphicCardData = LayoutDataFactory.createSingle(LargeGraphicCard.LAYOUT_ID, graphicCardBean);
-        LayoutData<List<LargeGraphicCardBean>> lgcData = LayoutDataFactory.createCollection(LargeGraphicGridCard.LAYOUT_ID, lgcBeans, "时下热门");
+        SingleLayoutData<LargeGraphicCardBean> graphicCardData = LayoutDataFactory.createSingle(GraphicCardL.LAYOUT_ID, graphicCardBean);
+        LayoutData<List<LargeGraphicCardBean>> lgcData = LayoutDataFactory.createCollection(GraphicLGridCard.LAYOUT_ID, lgcBeans, "时下热门");
 
         List<LuckyWheelCardBean> wheelCardBeans = List.of(
             new LuckyWheelCardBean("炖猪脚", "https://ts2.tc.mm.bing.net/th/id/OIP-C.zNBQPxhzp8IBnvdl3K589AHaGd?rs=1&pid=ImgDetMain&o=7&rm=3", "#7B35D1"),

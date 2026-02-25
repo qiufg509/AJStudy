@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.largegraphicgrid;
+package com.qiufengguang.ajstudy.card.graphiclgrid;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,7 +17,7 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
-import com.qiufengguang.ajstudy.databinding.CardLargeGraphicGridBinding;
+import com.qiufengguang.ajstudy.databinding.CardGraphicLGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
@@ -30,7 +30,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/24 23:31
  */
-public class LargeGraphicGridCard extends Card {
+public class GraphicLGridCard extends Card {
     /**
      * 卡片唯一id
      */
@@ -40,7 +40,7 @@ public class LargeGraphicGridCard extends Card {
 
     private WeakReference<TextView> titleViewRef;
 
-    private LargeGraphicGridCardAdapter adapter;
+    private GraphicLGridCardAdapter adapter;
 
     private int spanCount;
 
@@ -48,12 +48,12 @@ public class LargeGraphicGridCard extends Card {
 
     private GridDecoration decor;
 
-    private LargeGraphicGridCard() {
+    private GraphicLGridCard() {
     }
 
     public void setData(List<LargeGraphicCardBean> beans, String cardTitle) {
         if (adapter == null) {
-            adapter = new LargeGraphicGridCardAdapter(beans);
+            adapter = new GraphicLGridCardAdapter(beans);
         } else {
             adapter.setData(beans);
         }
@@ -84,7 +84,7 @@ public class LargeGraphicGridCard extends Card {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         if (adapter == null) {
-            adapter = new LargeGraphicGridCardAdapter(null);
+            adapter = new GraphicLGridCardAdapter(null);
         }
         recyclerView.setAdapter(adapter);
         if (spacingBuilder != null) {
@@ -99,9 +99,9 @@ public class LargeGraphicGridCard extends Card {
     public static class Creator implements CardCreator {
         @Override
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
-            CardLargeGraphicGridBinding binding = CardLargeGraphicGridBinding.inflate(
+            CardGraphicLGridBinding binding = CardGraphicLGridBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new LargeGraphicGridCardHolder(binding);
+            return new GraphicLGridCardHolder(binding);
         }
     }
 
@@ -120,7 +120,7 @@ public class LargeGraphicGridCard extends Card {
          * @param recyclerView RecyclerView
          * @return Builder
          */
-        public LargeGraphicGridCard.Builder setRecyclerView(RecyclerView recyclerView) {
+        public GraphicLGridCard.Builder setRecyclerView(RecyclerView recyclerView) {
             this.recyclerView = recyclerView;
             return this;
         }
@@ -131,7 +131,7 @@ public class LargeGraphicGridCard extends Card {
          * @param titleView TextView
          * @return Builder
          */
-        public LargeGraphicGridCard.Builder setTitleView(TextView titleView) {
+        public GraphicLGridCard.Builder setTitleView(TextView titleView) {
             this.titleView = titleView;
             return this;
         }
@@ -142,7 +142,7 @@ public class LargeGraphicGridCard extends Card {
          * @param spanCount 列数
          * @return Builder
          */
-        public LargeGraphicGridCard.Builder setSpanCount(int spanCount) {
+        public GraphicLGridCard.Builder setSpanCount(int spanCount) {
             this.spanCount = spanCount;
             return this;
         }
@@ -153,17 +153,17 @@ public class LargeGraphicGridCard extends Card {
          * @param spacingBuilder GridDecoration.Builder
          * @return Builder
          */
-        public LargeGraphicGridCard.Builder setSpacingBuilder(GridDecoration.Builder spacingBuilder) {
+        public GraphicLGridCard.Builder setSpacingBuilder(GridDecoration.Builder spacingBuilder) {
             this.spacingBuilder = spacingBuilder;
             return this;
         }
 
-        public LargeGraphicGridCard create() {
+        public GraphicLGridCard create() {
             if (this.recyclerView == null) {
                 throw new UnsupportedOperationException(
                     "recyclerView is null, call setRecyclerView first.");
             }
-            LargeGraphicGridCard wrapper = new LargeGraphicGridCard();
+            GraphicLGridCard wrapper = new GraphicLGridCard();
             wrapper.recyclerViewRef = new WeakReference<>(this.recyclerView);
             wrapper.titleViewRef = new WeakReference<>(this.titleView);
             if (this.spanCount > 0) {

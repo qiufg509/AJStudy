@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.largegraphicgrid;
+package com.qiufengguang.ajstudy.card.graphiclgrid;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,12 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCard;
-import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCardHolder;
+import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
+import com.qiufengguang.ajstudy.card.graphicl.GraphicCardLHolder;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
-import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
+import com.qiufengguang.ajstudy.databinding.CardGraphicLBinding;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/24 23:30
  */
-public class LargeGraphicGridCardAdapter extends RecyclerView.Adapter<LargeGraphicCardHolder> {
+public class GraphicLGridCardAdapter extends RecyclerView.Adapter<GraphicCardLHolder> {
 
     private List<LargeGraphicCardBean> beans;
 
-    public LargeGraphicGridCardAdapter(@Nullable List<LargeGraphicCardBean> beans) {
+    public GraphicLGridCardAdapter(@Nullable List<LargeGraphicCardBean> beans) {
         this.beans = beans;
     }
 
@@ -52,17 +52,17 @@ public class LargeGraphicGridCardAdapter extends RecyclerView.Adapter<LargeGraph
 
     @NonNull
     @Override
-    public LargeGraphicCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardLargeGraphicBinding binding = CardLargeGraphicBinding.inflate(
+    public GraphicCardLHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        CardGraphicLBinding binding = CardGraphicLBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
-        return new LargeGraphicCardHolder(binding);
+        return new GraphicCardLHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LargeGraphicCardHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GraphicCardLHolder holder, int position) {
         LargeGraphicCardBean bean = beans.get(position);
         SingleLayoutData<LargeGraphicCardBean> layoutData =
-            LayoutDataFactory.createSingle(LargeGraphicCard.LAYOUT_ID, bean);
+            LayoutDataFactory.createSingle(GraphicCardL.LAYOUT_ID, bean);
         holder.bind(layoutData);
     }
 }

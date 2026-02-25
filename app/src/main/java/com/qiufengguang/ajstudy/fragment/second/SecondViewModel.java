@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
-import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCard;
+import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
@@ -123,7 +123,7 @@ public class SecondViewModel extends ViewModel {
                 .orElse(Collections.emptyList())
                 .stream()
                 .map(bean ->
-                    LayoutDataFactory.createSingle(LargeGraphicCard.LAYOUT_ID, bean))
+                    LayoutDataFactory.createSingle(GraphicCardL.LAYOUT_ID, bean))
                 .collect(Collectors.toList());
 
             liveData.postValue(dataList);
