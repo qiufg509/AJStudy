@@ -107,17 +107,16 @@ public class SettingCardAdapter extends RecyclerView.Adapter<SettingCardAdapter.
             }
             this.binding.getRoot().setOnClickListener(v -> {
                 if (clickListener != null && bean != null
-                    && !TextUtils.isEmpty(bean.getDestinationAction())) {
+                    && !TextUtils.isEmpty(bean.getUri())) {
                     clickListener.onItemClick(v.getContext(), bean);
                 }
             });
             binding.btnSwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> {
-                if (clickListener != null && bean != null
-                    && !TextUtils.isEmpty(bean.getDestinationAction())) {
-                    clickListener.onCheckChange(buttonView.getContext(), bean, isChecked);
-                }
-            });
+                    if (clickListener != null && bean != null) {
+                        clickListener.onCheckChange(buttonView.getContext(), bean, isChecked);
+                    }
+                });
         }
 
         public void bind(SettingCardBean bean, boolean isLastLine) {
@@ -135,7 +134,7 @@ public class SettingCardAdapter extends RecyclerView.Adapter<SettingCardAdapter.
             } else {
                 binding.tvContent.setText(bean.getContent());
             }
-            boolean clickable = !TextUtils.isEmpty(bean.getDestinationAction());
+            boolean clickable = !TextUtils.isEmpty(bean.getUri());
             if (clickable) {
                 binding.getRoot().setBackgroundResource(selectableItemBackground);
                 binding.tvContent.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, arrowDrawable, null);

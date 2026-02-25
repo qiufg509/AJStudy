@@ -116,7 +116,7 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
         int count = 0;
         for (int index = 0, sum = dataList.size(); index < sum; index++) {
             LayoutData<?> layoutData = dataList.get(index);
-            if (layoutData == null || layoutData.getData() == null) {
+            if (layoutData == null) {
                 continue;
             }
             count++;

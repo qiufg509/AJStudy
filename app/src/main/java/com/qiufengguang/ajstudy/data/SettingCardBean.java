@@ -13,8 +13,6 @@ public class SettingCardBean extends BaseCardBean {
 
     private String content;
 
-    private String destinationAction;
-
     private boolean isSwitchBtn;
 
     public SettingCardBean(String title, boolean isSwitchBtn) {
@@ -27,10 +25,10 @@ public class SettingCardBean extends BaseCardBean {
         this.content = content;
     }
 
-    public SettingCardBean(String title, String content, String destinationAction) {
+    public SettingCardBean(String title, String content, String uri) {
         this.title = title;
         this.content = content;
-        this.destinationAction = destinationAction;
+        setUri(uri);
     }
 
     public String getTitle() {
@@ -39,10 +37,6 @@ public class SettingCardBean extends BaseCardBean {
 
     public String getContent() {
         return content;
-    }
-
-    public String getDestinationAction() {
-        return destinationAction;
     }
 
     public boolean isSwitchBtn() {

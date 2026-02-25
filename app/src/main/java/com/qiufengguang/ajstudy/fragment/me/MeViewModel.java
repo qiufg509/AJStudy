@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.data.SettingCardBean;
-import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
+import com.qiufengguang.ajstudy.router.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,25 +33,25 @@ public class MeViewModel extends ViewModel {
 
     private void initData() {
         List<SettingCardBean> settingCardBeans0 = List.of(
-            new SettingCardBean("我的学习", null, "study"),
-            new SettingCardBean("我的收藏", null, "collections")
+            new SettingCardBean("我的学习", null, Router.URI.PAGE_STUDY_RECORD),
+            new SettingCardBean("我的收藏", null, Router.URI.PAGE_FAVORITES)
         );
         CollectionLayoutData<SettingCardBean> settingData0 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans0);
 
         List<SettingCardBean> settingCardBeans1 = List.of(
-            new SettingCardBean("配色", null, "color")
+            new SettingCardBean("配色", null, Router.URI.PAGE_COLOR_SCHEME)
         );
         CollectionLayoutData<SettingCardBean> settingData1 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans1);
 
         List<SettingCardBean> settingCardBeans2 = List.of(
             new SettingCardBean("音效", true),
             new SettingCardBean("触觉反馈", true),
-            new SettingCardBean("实验室", "", "lab")
+            new SettingCardBean("实验室", "", Router.URI.PAGE_LAB)
         );
         CollectionLayoutData<SettingCardBean> settingData2 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans2);
 
         List<SettingCardBean> settingCardBeans3 = List.of(
-            new SettingCardBean("帮助与反馈", "", "help"),
+            new SettingCardBean("帮助与反馈", "", Router.URI.PAGE_COLOR_SCHEME),
             new SettingCardBean("关于", "版本号 1.0.0.1", "")
         );
         CollectionLayoutData<SettingCardBean> settingData3 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans3);

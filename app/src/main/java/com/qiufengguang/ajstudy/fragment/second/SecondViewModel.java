@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.largegraphic.LargeGraphicCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
@@ -20,6 +21,7 @@ import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
+import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.router.Router;
@@ -94,6 +96,14 @@ public class SecondViewModel extends ViewModel {
                 fetchArticleListData();
             } else if (uri.startsWith(Router.URI.PAGE_COLOR_SCHEME)) {
                 fetchColorSchemeData();
+            } else if (uri.startsWith(Router.URI.PAGE_STUDY_RECORD)) {
+                fetchStudyRecord();
+            } else if (uri.startsWith(Router.URI.PAGE_FAVORITES)) {
+                fetchFavorites();
+            } else if (uri.startsWith(Router.URI.PAGE_LAB)) {
+                fetchLab();
+            } else if (uri.startsWith(Router.URI.PAGE_HELP_FEEDBACK)) {
+                fetchHelpFeedback();
             }
         }
 
@@ -181,7 +191,35 @@ public class SecondViewModel extends ViewModel {
             LayoutData<List<GridCardBean>> gridCardData = LayoutDataFactory.createCollection(GridCard.LAYOUT_ID, gridCardBeans, "主题色");
             List<LayoutData<?>> dataList = new ArrayList<>();
             dataList.add(gridCardData);
-            liveData.setValue(dataList);
+            liveData.postValue(dataList);
+        }
+
+        private void fetchStudyRecord() {
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            List<LayoutData<?>> dataList = new ArrayList<>();
+            dataList.add(emptyCardData);
+            liveData.postValue(dataList);
+        }
+
+        private void fetchFavorites() {
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            List<LayoutData<?>> dataList = new ArrayList<>();
+            dataList.add(emptyCardData);
+            liveData.postValue(dataList);
+        }
+
+        private void fetchLab() {
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            List<LayoutData<?>> dataList = new ArrayList<>();
+            dataList.add(emptyCardData);
+            liveData.postValue(dataList);
+        }
+
+        private void fetchHelpFeedback() {
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            List<LayoutData<?>> dataList = new ArrayList<>();
+            dataList.add(emptyCardData);
+            liveData.postValue(dataList);
         }
     }
 }

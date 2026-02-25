@@ -15,5 +15,13 @@ public interface Router {
         String PAGE_COLOR_SCHEME = "colorScheme";
 
         String PAGE_APP_LIST = "appList";
+
+        String PAGE_STUDY_RECORD = "studyRecord";
+
+        String PAGE_FAVORITES = "favorites";
+
+        String PAGE_LAB = "lab";
+
+        String PAGE_HELP_FEEDBACK = "helpFeedback";
     }
 }
