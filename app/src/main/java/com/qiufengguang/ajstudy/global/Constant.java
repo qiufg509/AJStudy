@@ -53,6 +53,10 @@ public interface Constant {
         int GRID_4 = 5;
         int GRID_8 = 8;
         int GRID_12 = 10;
+
+        int GRAPHIC_M_4 = 2;
+        int GRAPHIC_M_8 = 4;
+        int GRAPHIC_M_12 = 8;
     }
 
     /**

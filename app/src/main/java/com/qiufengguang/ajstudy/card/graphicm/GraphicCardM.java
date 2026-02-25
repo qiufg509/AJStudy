@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.graphicl;
+package com.qiufengguang.ajstudy.card.graphicm;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
-import com.qiufengguang.ajstudy.databinding.CardGraphicLBinding;
+import com.qiufengguang.ajstudy.databinding.CardGraphicMBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
@@ -29,16 +29,16 @@ import java.util.Map;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
- * 大尺寸图文卡
+ * 中尺寸图文卡
  *
  * @author qiufengguang
- * @since 2026/2/6 23:23
+ * @since 2026/2/25 20:37
  */
-public class GraphicCardL extends Card {
+public class GraphicCardM extends Card {
     /**
      * 卡片唯一id
      */
-    public static final int LAYOUT_ID = 7;
+    public static final int LAYOUT_ID = 11;
 
     private WeakReference<View> rootRef;
     private WeakReference<TextView> titleRef;
@@ -51,7 +51,7 @@ public class GraphicCardL extends Card {
 
     private RequestOptions requestOptions;
 
-    private GraphicCardL() {
+    private GraphicCardM() {
     }
 
     public void setData(LargeGraphicCardBean bean) {
@@ -117,14 +117,18 @@ public class GraphicCardL extends Card {
     public static class Creator implements CardCreator {
         @Override
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
-            CardGraphicLBinding binding = CardGraphicLBinding.inflate(
+            CardGraphicMBinding binding = CardGraphicMBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new GraphicCardLHolder(binding);
+            return new GraphicCardMHolder(binding);
         }
 
         @Override
         public Map<Integer, Integer> getSpanSize() {
-            return getSpanSizeMap(Constant.Pln.DEF_4, Constant.Pln.DEF_8, Constant.Pln.DEF_12);
+            return getSpanSizeMap(
+                Constant.Pln.GRAPHIC_M_4,
+                Constant.Pln.GRAPHIC_M_8,
+                Constant.Pln.GRAPHIC_M_12
+            );
         }
     }
 
@@ -142,7 +146,7 @@ public class GraphicCardL extends Card {
          * @param root View
          * @return Builder
          */
-        public GraphicCardL.Builder setRoot(View root) {
+        public GraphicCardM.Builder setRoot(View root) {
             this.root = root;
             return this;
         }
@@ -153,7 +157,7 @@ public class GraphicCardL extends Card {
          * @param tvTitle TextView
          * @return Builder
          */
-        public GraphicCardL.Builder setTvTitle(TextView tvTitle) {
+        public GraphicCardM.Builder setTvTitle(TextView tvTitle) {
             this.tvTitle = tvTitle;
             return this;
         }
@@ -164,7 +168,7 @@ public class GraphicCardL extends Card {
          * @param tvSubTitle TextView
          * @return Builder
          */
-        public GraphicCardL.Builder setTvSubTitle(TextView tvSubTitle) {
+        public GraphicCardM.Builder setTvSubTitle(TextView tvSubTitle) {
             this.tvSubTitle = tvSubTitle;
             return this;
         }
@@ -175,7 +179,7 @@ public class GraphicCardL extends Card {
          * @param ivPic ImageView
          * @return Builder
          */
-        public GraphicCardL.Builder setIvPic(ImageView ivPic) {
+        public GraphicCardM.Builder setIvPic(ImageView ivPic) {
             this.ivPic = ivPic;
             return this;
         }
@@ -187,18 +191,18 @@ public class GraphicCardL extends Card {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public GraphicCardL.Builder setListener(
+        public GraphicCardM.Builder setListener(
             OnItemClickListener<LargeGraphicCardBean> listener) {
             this.listener = listener;
             return this;
         }
 
-        public GraphicCardL create() {
+        public GraphicCardM create() {
             if (this.tvTitle == null) {
                 throw new UnsupportedOperationException(
                     "tvTitle is null, call setTvTitle first.");
             }
-            GraphicCardL wrapper = new GraphicCardL();
+            GraphicCardM wrapper = new GraphicCardM();
             if (this.root != null) {
                 wrapper.rootRef = new WeakReference<>(this.root);
             }

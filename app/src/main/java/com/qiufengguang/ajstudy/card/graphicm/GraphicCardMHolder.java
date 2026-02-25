@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.graphicl;
+package com.qiufengguang.ajstudy.card.graphicm;
 
 import android.content.Context;
 
@@ -7,20 +7,20 @@ import androidx.annotation.NonNull;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.databinding.CardGraphicLBinding;
+import com.qiufengguang.ajstudy.databinding.CardGraphicMBinding;
 import com.qiufengguang.ajstudy.router.AppNavigator;
 
 /**
- * 大尺寸图文卡的ViewHolder
+ * 中尺寸图文卡的ViewHolder
  *
  * @author qiufengguang
- * @since 2026/2/6 23:24
+ * @since 2026/2/25 20:38
  */
-public class GraphicCardLHolder extends BaseViewHolder<CardGraphicLBinding> {
+public class GraphicCardMHolder extends BaseViewHolder<CardGraphicMBinding> {
 
-    private GraphicCardL card;
+    private GraphicCardM card;
 
-    public GraphicCardLHolder(@NonNull CardGraphicLBinding binding) {
+    public GraphicCardMHolder(@NonNull CardGraphicMBinding binding) {
         super(binding);
     }
 
@@ -29,7 +29,7 @@ public class GraphicCardLHolder extends BaseViewHolder<CardGraphicLBinding> {
         if (card != null) {
             return;
         }
-        card = new GraphicCardL.Builder()
+        card = new GraphicCardM.Builder()
             .setRoot(binding.getRoot())
             .setTvTitle(binding.tvTitle)
             .setTvSubTitle(binding.tvSubtitle)
@@ -42,7 +42,7 @@ public class GraphicCardLHolder extends BaseViewHolder<CardGraphicLBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || data.isCollection()
-            || data.getLayoutId() != GraphicCardL.LAYOUT_ID) {
+            || data.getLayoutId() != GraphicCardM.LAYOUT_ID) {
             return;
         }
         if (card == null) {
