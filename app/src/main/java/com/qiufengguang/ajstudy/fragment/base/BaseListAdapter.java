@@ -103,7 +103,7 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
     public int getItemViewType(int position) {
         LayoutData<?> layoutData = dataList.get(position);
         if (layoutData == null) {
-            return EmptyCard.LAYOUT_ID;
+            return EmptyCard.LAYOUT_ID_2;
         }
         return layoutData.getLayoutId();
     }

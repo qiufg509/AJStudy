@@ -9,7 +9,8 @@ import androidx.lifecycle.LifecycleOwner;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
-import com.qiufengguang.ajstudy.databinding.CardEmptyBinding;
+import com.qiufengguang.ajstudy.databinding.CardEmpty1Binding;
+import com.qiufengguang.ajstudy.databinding.CardEmpty2Binding;
 
 /**
  * 空卡，无任何内容，无宽高
@@ -19,19 +20,33 @@ import com.qiufengguang.ajstudy.databinding.CardEmptyBinding;
  */
 public class EmptyCard extends Card {
     /**
-     * 卡片唯一id
+     * 卡片（高度自适应）id
      */
-    public static final int LAYOUT_ID = 0;
+    public static final int LAYOUT_ID_1 = -1;
+
+    /**
+     * 卡片（高度撑满）id
+     */
+    public static final int LAYOUT_ID_2 = 0;
 
     private EmptyCard() {
     }
 
-    public static class Creator implements CardCreator {
+    public static class WrapCreator implements CardCreator {
         @Override
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
-            CardEmptyBinding binding = CardEmptyBinding.inflate(
+            CardEmpty1Binding binding = CardEmpty1Binding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new EmptyCardHolder(binding);
+            return new EmptyCardWrapHolder(binding);
+        }
+    }
+
+    public static class FullCreator implements CardCreator {
+        @Override
+        public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
+            CardEmpty2Binding binding = CardEmpty2Binding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+            return new EmptyCardFullHolder(binding);
         }
     }
 

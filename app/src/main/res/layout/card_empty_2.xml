@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/activity_vertical_margin_l"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:paddingVertical="@dimen/activity_vertical_margin_xxl"
+        android:text="@string/card_empty_tips"
+        android:textColor="@color/ajstudy_color_text_tertiary"
+        android:textFontWeight="500"
+        android:textSize="16sp"
+        app:drawableTopCompat="@drawable/ic_nothing" />
+</FrameLayout>

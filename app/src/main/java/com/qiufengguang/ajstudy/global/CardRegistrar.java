@@ -35,7 +35,8 @@ public class CardRegistrar {
         Card.register(GraphicCardL.LAYOUT_ID, new GraphicCardL.Creator());
         Card.register(GraphicCardM.LAYOUT_ID, new GraphicCardM.Creator());
         Card.register(ArticleCard.LAYOUT_ID, new ArticleCard.Creator());
-        Card.register(EmptyCard.LAYOUT_ID, new EmptyCard.Creator());
+        Card.register(EmptyCard.LAYOUT_ID_1, new EmptyCard.WrapCreator());
+        Card.register(EmptyCard.LAYOUT_ID_2, new EmptyCard.FullCreator());
         Card.register(TitleCard.LAYOUT_ID, new TitleCard.Creator());
     }
 }

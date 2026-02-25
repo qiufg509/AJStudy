@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.base;
 
 import androidx.annotation.IntRange;
 
+import com.qiufengguang.ajstudy.card.empty.EmptyCard;
+
 /**
  * 包含单个对象的卡片数据
  *
@@ -25,7 +27,8 @@ public class SingleLayoutData<T extends BaseCardBean> extends LayoutData<T> {
     }
 
     private void prepareData(@IntRange int layoutId) {
-        if (layoutId < 0) {
+        if (layoutId < EmptyCard.LAYOUT_ID_1) {
+            setLayoutId(EmptyCard.LAYOUT_ID_2);
             return;
         }
         setLayoutId(layoutId);

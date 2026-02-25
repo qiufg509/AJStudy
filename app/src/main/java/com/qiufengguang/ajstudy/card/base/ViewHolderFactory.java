@@ -33,6 +33,6 @@ public class ViewHolderFactory {
         if (creator != null) {
             return creator.create(parent, lifecycleOwner);
         }
-        return new EmptyCard.Creator().create(parent, lifecycleOwner);
+        return new EmptyCard.WrapCreator().create(parent, lifecycleOwner);
     }
 }

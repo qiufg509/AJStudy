@@ -109,6 +109,8 @@ public class SecondViewModel extends ViewModel {
                 fetchLab();
             } else if (uri.startsWith(Router.URI.PAGE_HELP_FEEDBACK)) {
                 fetchHelpFeedback();
+            } else {
+                fetchEmptyData();
             }
         }
 
@@ -141,11 +143,13 @@ public class SecondViewModel extends ViewModel {
                 new TypeToken<List<NormalCardBean>>() {
                 }.getType());
             if (beans == null || beans.isEmpty()) {
+                fetchEmptyData();
                 return;
             }
             List<String> fileNames = FileUtil.getExternalFileName(
                 GlobalApp.getContext(), navigateTo);
             if (fileNames == null || fileNames.isEmpty()) {
+                fetchEmptyData();
                 return;
             }
             List<NormalCardBean> resultBeans = getNormalCardBeans(navigateTo, fileNames, beans);
@@ -200,7 +204,7 @@ public class SecondViewModel extends ViewModel {
         }
 
         private void fetchStudyRecord() {
-            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID_1, null);
             SingleLayoutData<?> titleCardData = LayoutDataFactory.createSingle(TitleCard.LAYOUT_ID, null, "你可能感兴趣~");
 
             List<LargeGraphicCardBean> lgcBeans = new ArrayList<>();
@@ -228,14 +232,14 @@ public class SecondViewModel extends ViewModel {
         }
 
         private void fetchFavorites() {
-            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID_2, null);
             List<LayoutData<?>> dataList = new ArrayList<>();
             dataList.add(emptyCardData);
             liveData.postValue(dataList);
         }
 
         private void fetchLab() {
-            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID_2, null);
             List<LayoutData<?>> dataList = new ArrayList<>();
             dataList.add(emptyCardData);
             liveData.postValue(dataList);
@@ -249,6 +253,13 @@ public class SecondViewModel extends ViewModel {
             CollectionLayoutData<SettingCardBean> settingData = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, beans);
             List<LayoutData<?>> dataList = new ArrayList<>();
             dataList.add(settingData);
+            liveData.postValue(dataList);
+        }
+
+        private void fetchEmptyData() {
+            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID_2, null);
+            List<LayoutData<?>> dataList = new ArrayList<>();
+            dataList.add(emptyCardData);
             liveData.postValue(dataList);
         }
     }

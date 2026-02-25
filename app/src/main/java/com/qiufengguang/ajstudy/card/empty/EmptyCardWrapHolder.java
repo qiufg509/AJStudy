@@ -4,19 +4,19 @@ import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.databinding.CardEmptyBinding;
+import com.qiufengguang.ajstudy.databinding.CardEmpty1Binding;
 
 /**
- * 空卡的ViewHolder
+ * 空卡（高度自适应）的ViewHolder
  *
  * @author qiufengguang
  * @since 2026/2/24 18:53
  */
-public class EmptyCardHolder extends BaseViewHolder<CardEmptyBinding> {
+public class EmptyCardWrapHolder extends BaseViewHolder<CardEmpty1Binding> {
 
     private EmptyCard card;
 
-    public EmptyCardHolder(@NonNull CardEmptyBinding binding) {
+    public EmptyCardWrapHolder(@NonNull CardEmpty1Binding binding) {
         super(binding);
     }
 
