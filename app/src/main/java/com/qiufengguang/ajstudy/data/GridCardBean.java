@@ -4,6 +4,7 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.router.Router;
 
 /**
  * 格网列表卡片数据
@@ -29,18 +30,19 @@ public class GridCardBean extends BaseCardBean {
 
     private @ColorRes int backgroundTint;
 
-    private String navigatePage;
+    private String navigateTo;
 
     public GridCardBean(int backgroundTint) {
         this.backgroundTint = backgroundTint;
         this.itemType = TYPE_IMAGE;
     }
 
-    public GridCardBean(String title, int icon, String navigatePage) {
+    public GridCardBean(String title, int icon, String navigateTo) {
         this.title = title;
         this.icon = icon;
-        this.navigatePage = navigatePage;
+        this.navigateTo = navigateTo;
         this.itemType = TYPE_TEXT;
+        setUri(Router.URI.PAGE_APP_LIST);
     }
 
     public String getTitle() {
@@ -59,8 +61,8 @@ public class GridCardBean extends BaseCardBean {
         return backgroundTint;
     }
 
-    public String getNavigatePage() {
-        return navigatePage;
+    public String getNavigateTo() {
+        return navigateTo;
     }
 
     public int getItemType() {

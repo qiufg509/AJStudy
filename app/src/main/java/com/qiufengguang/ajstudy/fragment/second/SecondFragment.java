@@ -7,12 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.fragment.base.BaseGridFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
+import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
 public class SecondFragment extends BaseGridFragment {
-    public static final String ARG_TITLE = "secondPageTitle";
-
-    public static final String ARG_URI = "secondPageUri";
+    public static final String ARG_NAVIGATE_TO = "navigateTo";
 
     public static SecondFragment newInstance(Bundle args) {
         SecondFragment f = new SecondFragment();
@@ -38,8 +37,9 @@ public class SecondFragment extends BaseGridFragment {
         if (arguments == null) {
             return;
         }
-        setTitle(arguments.getString(ARG_TITLE));
-        String uri = arguments.getString(ARG_URI);
-        viewModel.initData(uri);
+        setTitle(arguments.getString(Router.EXTRA_TITLE));
+        String uri = arguments.getString(Router.EXTRA_URI);
+        String navigateTo = arguments.getString(ARG_NAVIGATE_TO);
+        viewModel.initData(uri, navigateTo);
     }
 }

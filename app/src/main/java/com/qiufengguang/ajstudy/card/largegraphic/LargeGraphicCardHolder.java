@@ -1,16 +1,14 @@
 package com.qiufengguang.ajstudy.card.largegraphic;
 
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLargeGraphicBinding;
-import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.router.AppNavigator;
 
 /**
  * 大图文卡的ViewHolder
@@ -36,7 +34,7 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
             .setTvTitle(binding.tvTitle)
             .setTvSubTitle(binding.tvSubtitle)
             .setIvPic(binding.ivPic)
-            .setListener(LargeGraphicCardHolder::onItemClickListener)
+            .setListener(this::onItemClickListener)
             .create();
         card.show();
     }
@@ -54,11 +52,9 @@ public class LargeGraphicCardHolder extends BaseViewHolder<CardLargeGraphicBindi
         card.setData(bean);
     }
 
-    private static void onItemClickListener(Context context, LargeGraphicCardBean bean) {
-        Intent intent = new Intent(context, MarkdownActivity.class);
-        intent.putExtra("title", "《春》");
-        intent.putExtra("filePath", Constant.Data.DETAIL_SPRING);
-        context.startActivity(intent);
+    private void onItemClickListener(Context context, LargeGraphicCardBean bean) {
+        AppNavigator.getInstance().startArticleActivity(
+            context, bean.getUri(), bean.getTitle());
     }
 
     @Override

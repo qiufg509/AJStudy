@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.data;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.global.Constant;
 
 /**
  * 大图文卡片数据bean
@@ -18,6 +19,7 @@ public class LargeGraphicCardBean extends BaseCardBean {
         this.title = title;
         this.subtitle = subtitle;
         this.imageUrl = imageUrl;
+        setUri(Constant.Data.DETAIL_SPRING);
     }
 
     public String getTitle() {

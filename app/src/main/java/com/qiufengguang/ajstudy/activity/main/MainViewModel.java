@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.qiufengguang.ajstudy.router.AppNavigator;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 
 import java.util.concurrent.ExecutorService;
@@ -48,6 +49,7 @@ public class MainViewModel extends ViewModel {
         }
         sInitFuture = sExecutor.submit(() -> {
             try {
+                AppNavigator.init();
                 MarkwonHelper.initialize();
             } catch (Exception e) {
                 Log.w(TAG, "initThirdSdk error: " + e.getMessage());

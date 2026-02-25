@@ -19,6 +19,11 @@ public class SingleLayoutData<T extends BaseCardBean> extends LayoutData<T> {
         prepareData(layoutId, bean);
     }
 
+    public SingleLayoutData(@IntRange int layoutId, T bean, String cardTitle, String uri) {
+        super(bean, cardTitle, uri);
+        prepareData(layoutId, bean);
+    }
+
     private void prepareData(@IntRange int layoutId, T bean) {
         if (bean == null) {
             return;

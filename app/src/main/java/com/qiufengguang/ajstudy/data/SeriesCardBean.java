@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.data;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.global.Constant;
 
 /**
  * 系列卡片数据bean
@@ -64,5 +65,10 @@ public class SeriesCardBean extends BaseCardBean {
 
     public String getTotalDuration() {
         return totalDuration;
+    }
+
+    @Override
+    public String getUri() {
+        return Constant.Data.DETAIL_SPRING;
     }
 }

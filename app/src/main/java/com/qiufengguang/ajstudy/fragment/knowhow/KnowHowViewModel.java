@@ -43,9 +43,10 @@ public class KnowHowViewModel extends ViewModel {
 
     public KnowHowViewModel() {
         liveData = new MutableLiveData<>();
+        initData();
     }
 
-    public void initData(String course) {
+    public void initData() {
         handlerThread = new HandlerThread(TAG + "-Thread");
         if (!handlerThread.isAlive()) {
             handlerThread.start();
@@ -60,17 +61,6 @@ public class KnowHowViewModel extends ViewModel {
             if (beans == null || beans.isEmpty()) {
                 return;
             }
-            List<String> fileNames = FileUtil.getExternalFileName(
-                GlobalApp.getContext(), course);
-            if (fileNames != null && !fileNames.isEmpty()) {
-                int size = Math.min(fileNames.size(), beans.size());
-                for (int index = 0; index < size; index++) {
-                    NormalCardBean bean = beans.get(index);
-                    bean.setTitle(fileNames.get(index));
-                    bean.setTargetPage(course);
-                }
-            }
-
             List<LayoutData<?>> dataList = Optional.of(beans)
                 .orElse(Collections.emptyList())
                 .stream()

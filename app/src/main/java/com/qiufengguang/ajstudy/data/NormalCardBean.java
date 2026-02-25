@@ -19,7 +19,7 @@ public class NormalCardBean extends BaseCardBean {
     private String subtitle;
     private String brief;
 
-    private String targetPage;
+    private String navigateTo;
 
     public int getId() {
         return id;
@@ -61,11 +61,11 @@ public class NormalCardBean extends BaseCardBean {
         this.brief = brief;
     }
 
-    public String getTargetPage() {
-        return targetPage;
+    public String getNavigateTo() {
+        return navigateTo;
     }
 
-    public void setTargetPage(String targetPage) {
-        this.targetPage = targetPage;
+    public void setNavigateTo(String navigateTo) {
+        this.navigateTo = navigateTo;
     }
 }

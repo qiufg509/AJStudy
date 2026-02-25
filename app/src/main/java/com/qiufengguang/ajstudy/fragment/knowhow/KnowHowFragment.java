@@ -32,12 +32,6 @@ public class KnowHowFragment extends BaseGridFragment {
     public void onData() {
         viewModel = new ViewModelProvider(this).get(KnowHowViewModel.class);
 
-        Bundle args = getArguments();
-        String course = "";
-        if (args != null) {
-            course = args.getString("Course");
-        }
-        viewModel.initData(TextUtils.isEmpty(course) ? Constant.Data.DOCUMENT_STUDY_DIR : course);
         // 绑定数据
         viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
             baseListAdapter.setData(viewModel.getPageData(0)));

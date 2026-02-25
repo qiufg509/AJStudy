@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "uri": "detail_page_wx.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/0d40e120a1ff40acb35421f37c120fa0.webp",
     "title": "健康助手",
     "subtitle": "智能健康管理",
@@ -8,6 +9,7 @@
   },
   {
     "id": 2,
+    "uri": "detail_page_sjzxd.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/0d48e783df0342bd973e200eb57df224.webp",
     "title": "音乐世界",
     "subtitle": "海量音乐在线听",
@@ -15,6 +17,7 @@
   },
   {
     "id": 3,
+    "uri": "detail_page_hgdj.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/143847e24438405393ddf4a609c659a5.webp",
     "title": "视频播放器",
     "subtitle": "高清视频体验",
@@ -22,6 +25,7 @@
   },
   {
     "id": 4,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/2250b338b8a04339a65659ef53299fd2_1.webp",
     "title": "地图导航",
     "subtitle": "精准路线规划",
@@ -29,6 +33,7 @@
   },
   {
     "id": 5,
+    "uri": "detail_page_wx.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/260e670099534bb68ca46c79e3382fe3.webp",
     "title": "社交聊天",
     "subtitle": "随时联系好友",
@@ -36,6 +41,7 @@
   },
   {
     "id": 6,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/2accb142b3d44cf09c26aeaf1ed7c4c6.webp",
     "title": "新闻资讯",
     "subtitle": "热点时事速递",
@@ -43,6 +49,7 @@
   },
   {
     "id": 7,
+    "uri": "detail_page_hgdj.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/3b889df1cd0849ffac0f79dedec1254c.webp",
     "title": "天气预报",
     "subtitle": "精准气象服务",
@@ -50,6 +57,7 @@
   },
   {
     "id": 8,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/3b9072f421b14952bc683a62a361881d.webp",
     "title": "文件管理器",
     "subtitle": "高效文件管理",
@@ -57,6 +65,7 @@
   },
   {
     "id": 9,
+    "uri": "detail_page_wx.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/4018d8d467aa438ba5cd1a75625acf6b.webp",
     "title": "相机",
     "subtitle": "智能美颜拍照",
@@ -64,6 +73,7 @@
   },
   {
     "id": 10,
+    "uri": "detail_page_hgdj.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/40aba6af81b64b6598ce284d2c95e583.webp",
     "title": "图库",
     "subtitle": "照片智能管理",
@@ -71,6 +81,7 @@
   },
   {
     "id": 11,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/5788ddd487e245b39c32469e8d4e85c2.webp",
     "title": "日历",
     "subtitle": "日程规划助手",
@@ -78,6 +89,7 @@
   },
   {
     "id": 12,
+    "uri": "detail_page_sjzxd.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/57d985ec4c434d2bac6f82316e56966e.webp",
     "title": "时钟",
     "subtitle": "闹钟与计时器",
@@ -85,6 +97,7 @@
   },
   {
     "id": 13,
+    "uri": "detail_page_wx.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6059a30ed9784326a4419a8e6f18a8d0_11.webp",
     "title": "计算器",
     "subtitle": "科学计算工具",
@@ -92,6 +105,7 @@
   },
   {
     "id": 14,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6213d5f8d07f444a8c8ec00faf6c0f61.webp",
     "title": "备忘录",
     "subtitle": "随手记录灵感",
@@ -99,6 +113,7 @@
   },
   {
     "id": 15,
+    "uri": "detail_page_hgdj.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6ca7ed7c34224306b7c800034b8f9629.webp",
     "title": "电子邮件",
     "subtitle": "多账户邮件管理",
@@ -106,6 +121,7 @@
   },
   {
     "id": 16,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/6d67a98f96464d4aaec70edb5f0cd04d.webp",
     "title": "浏览器",
     "subtitle": "快速安全上网",
@@ -113,6 +129,7 @@
   },
   {
     "id": 17,
+    "uri": "detail_page_hgdj.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/7784fc4cbb264fbe81abda4170e289cf_8.webp",
     "title": "应用商店",
     "subtitle": "海量应用下载",
@@ -120,6 +137,7 @@
   },
   {
     "id": 18,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/791a54b41f7f41baa8c05e954f87a8f2.webp",
     "title": "游戏中心",
     "subtitle": "精品游戏推荐",
@@ -127,6 +145,7 @@
   },
   {
     "id": 19,
+    "uri": "detail_page_hgdj.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/7961053e5fe747edb9426a3f80eda8db.webp",
     "title": "设置",
     "subtitle": "系统配置管理",
@@ -134,6 +153,7 @@
   },
   {
     "id": 20,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/8936d855b61645238c38270bb2075555.webp",
     "title": "电话",
     "subtitle": "智能通讯",
@@ -141,6 +161,7 @@
   },
   {
     "id": 21,
+    "uri": "detail_page_sjzxd.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/8964d2fe4fc447978d22cd410e563361.webp",
     "title": "联系人",
     "subtitle": "通讯录管理",
@@ -148,6 +169,7 @@
   },
   {
     "id": 22,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/8fe92e765e2e45df832d08a35a70bc78.webp",
     "title": "短信",
     "subtitle": "即时消息",
@@ -155,6 +177,7 @@
   },
   {
     "id": 23,
+    "uri": "detail_page_sjzxd.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/98d115dfcc2347cca1e60c3b61cdce76.webp",
     "title": "相机滤镜",
     "subtitle": "创意照片编辑",
@@ -162,6 +185,7 @@
   },
   {
     "id": 24,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a146b52173084cca9a4c72914903be92.webp",
     "title": "翻译工具",
     "subtitle": "多语言互译",
@@ -169,6 +193,7 @@
   },
   {
     "id": 25,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a1b83b8ccb174fc29d9e1b760d16c626.webp",
     "title": "股票市场",
     "subtitle": "实时行情分析",
@@ -176,6 +201,7 @@
   },
   {
     "id": 26,
+    "uri": "detail_page_sjzxd.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a2d39f3581f34ac189f6948f6f1d8ad7.webp",
     "title": "健身追踪",
     "subtitle": "运动数据记录",
@@ -183,6 +209,7 @@
   },
   {
     "id": 27,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/a9103b0e617c47a4afb5f40e092a597b.webp",
     "title": "音乐识别",
     "subtitle": "听歌识曲",
@@ -190,6 +217,7 @@
   },
   {
     "id": 28,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/ae8d3f43d41d47d8a4f12d4ec86941f1.webp",
     "title": "语音助手",
     "subtitle": "智能语音交互",
@@ -197,6 +225,7 @@
   },
   {
     "id": 29,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b0a860e6f1a04dac9c16ba6001f3583c.webp",
     "title": "智能家居",
     "subtitle": "家电远程控制",
@@ -204,6 +233,7 @@
   },
   {
     "id": 30,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b27bb5797eba4701b7450391498f60cf.webp",
     "title": "打车软件",
     "subtitle": "便捷出行服务",
@@ -211,6 +241,7 @@
   },
   {
     "id": 31,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b2ebe0b8b2764d12a39691bcde666a45.webp",
     "title": "外卖订购",
     "subtitle": "美食快速送达",
@@ -218,6 +249,7 @@
   },
   {
     "id": 32,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b2f159d593564e25a62ac9e5f46a0994_1.webp",
     "title": "旅行规划",
     "subtitle": "智能行程安排",
@@ -225,6 +257,7 @@
   },
   {
     "id": 33,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b727a6e0df8c4ef5ae39ea7039d05be9_17.webp",
     "title": "笔记应用",
     "subtitle": "云端同步笔记",
@@ -232,6 +265,7 @@
   },
   {
     "id": 34,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b91765454fb44aaaa9c2ea45e6b74ed5.webp",
     "title": "PDF阅读器",
     "subtitle": "文档阅读工具",
@@ -239,6 +273,7 @@
   },
   {
     "id": 35,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b977fdfbf1264387beb18d8426f3b7e9.webp",
     "title": "扫描仪",
     "subtitle": "文档扫描识别",
@@ -246,6 +281,7 @@
   },
   {
     "id": 36,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/b9a96a8f4bbc488695333465fe77da86.webp",
     "title": "二维码生成器",
     "subtitle": "二维码创建扫描",
@@ -253,6 +289,7 @@
   },
   {
     "id": 37,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/c8c9e9d12fd9440c92b9bec3f41af522_2.webp",
     "title": "无线传输",
     "subtitle": "文件快速共享",
@@ -260,6 +297,7 @@
   },
   {
     "id": 38,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/d527b5207e4c48d59aaf3f176a2391f3_1.webp",
     "title": "系统清理",
     "subtitle": "手机优化加速",
@@ -267,6 +305,7 @@
   },
   {
     "id": 39,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/d9c214caa28c421aa4cb7392c7dfeba5.webp",
     "title": "电池管理",
     "subtitle": "电量优化助手",
@@ -274,6 +313,7 @@
   },
   {
     "id": 40,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/d9cac8963f444b31a576184be7e909dd.webp",
     "title": "安全中心",
     "subtitle": "手机安全防护",
@@ -281,6 +321,7 @@
   },
   {
     "id": 41,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/ee9a349896524834b29d980feddc31d0.webp",
     "title": "儿童模式",
     "subtitle": "亲子内容管理",
@@ -288,6 +329,7 @@
   },
   {
     "id": 42,
+    "uri": "detail_page_xhs.json",
     "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/fc88084336a541b39a85c00beaf14a83.webp",
     "title": "驾驶模式",
     "subtitle": "车载智能助手",

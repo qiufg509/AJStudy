@@ -1,17 +1,16 @@
 package com.qiufengguang.ajstudy.card.normal;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
-import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
+import com.qiufengguang.ajstudy.router.AppNavigator;
+import com.qiufengguang.ajstudy.router.Router;
 
 /**
  * 普通卡片的ViewHolder
@@ -53,20 +52,12 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
     }
 
     private void onItemClickListener(Context context, NormalCardBean bean) {
-        String titleStr = bean.getTitle();
-        String targetPage = bean.getTargetPage();
-        if (!TextUtils.isEmpty(targetPage) && !TextUtils.isEmpty(titleStr)) {
-            Intent intent = new Intent(context, MarkdownActivity.class);
-            String titleContent = titleStr.replaceAll("\\.(md|txt|json|xml)$", "");
-            intent.putExtra("title", titleContent);
-            intent.putExtra("filePath",
-                targetPage + "/" + titleStr);
-            context.startActivity(intent);
+        String uri = bean.getUri();
+        if (TextUtils.equals(Router.URI.PAGE_ARTICLE_LIST, uri)) {
+            AppNavigator.getInstance().startArticleActivity(context, bean.getNavigateTo(), bean.getTitle());
             return;
         }
-        Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra("detail_index", bean.getId());
-        context.startActivity(intent);
+        AppNavigator.getInstance().startDetailActivity(context, uri, bean.getTitle());
     }
 
     @Override

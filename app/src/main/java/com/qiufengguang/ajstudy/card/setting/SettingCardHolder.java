@@ -1,19 +1,15 @@
 package com.qiufengguang.ajstudy.card.setting;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.activity.second.SecondActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.SettingCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardSettingBinding;
-import com.qiufengguang.ajstudy.fragment.second.SecondFragment;
+import com.qiufengguang.ajstudy.router.AppNavigator;
 
 import java.util.List;
 
@@ -62,15 +58,7 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
     }
 
     private static void onItemClickListener(Context context, SettingCardBean bean) {
-        if (!(context instanceof AppCompatActivity)) {
-            return;
-        }
-        AppCompatActivity activity = (AppCompatActivity) context;
-        Intent intent = new Intent(activity, SecondActivity.class);
-        Bundle args = new Bundle();
-        args.putString(SecondFragment.ARG_TITLE, bean.getTitle());
-        intent.putExtra(SecondActivity.ARGS_SECOND_PAGE_KEY, args);
-        activity.startActivity(intent);
+        AppNavigator.getInstance().startSecondActivity(context, bean.getUri(), bean.getTitle());
     }
 
     @Override

@@ -21,6 +21,8 @@ import com.qiufengguang.ajstudy.data.LoginAction;
 import com.qiufengguang.ajstudy.databinding.ActivityMainBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
+import com.qiufengguang.ajstudy.router.AppNavigator;
+import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
-        if (intent.getBooleanExtra("restart_theme", false)) {
+        if (intent.getBooleanExtra(Router.EXTRA_RESTART, false)) {
             recreate();
         }
     }
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             binding.navView.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.ajstudy_window_background));
         }
-        navController.navigate(itemId);
+        AppNavigator.getInstance().navigateTo(navController, itemId);
         return true;
     }
 

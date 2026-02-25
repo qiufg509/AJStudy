@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.data;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.global.Constant;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ArticleCardBean extends BaseCardBean {
         this.avatar = avatar;
         this.publishTime = publishTime;
         this.articles = articles;
+        setUri(Constant.Data.DETAIL_SPRING);
     }
 
     public String getAuthor() {

@@ -9,6 +9,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.router.AppNavigator;
 
 import java.lang.ref.WeakReference;
 
@@ -48,6 +49,7 @@ public class MainPageBackPressedCallback extends OnBackPressedCallback {
             .setPopUpTo(R.id.navigation_home, false)
             .setLaunchSingleTop(true)
             .build();
-        navController.navigate(R.id.navigation_home, null, navOptions);
+        AppNavigator.getInstance().navigateTo(navController, R.id.navigation_home,
+            null, navOptions);
     }
 }

@@ -21,6 +21,11 @@ public class CollectionLayoutData<T extends BaseCardBean> extends LayoutData<Lis
         prepareData(layoutId, beans);
     }
 
+    public CollectionLayoutData(@IntRange int layoutId, List<T> beans, String cardTitle, String uri) {
+        super(beans, cardTitle, uri);
+        prepareData(layoutId, beans);
+    }
+
     private void prepareData(@IntRange int layoutId, List<T> beans) {
         if (beans.isEmpty()) {
             return;

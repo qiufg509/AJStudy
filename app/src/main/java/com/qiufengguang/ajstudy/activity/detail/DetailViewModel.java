@@ -14,7 +14,6 @@ import com.qiufengguang.ajstudy.data.DetailComment;
 import com.qiufengguang.ajstudy.data.DetailHead;
 import com.qiufengguang.ajstudy.data.DetailIntroduction;
 import com.qiufengguang.ajstudy.data.DetailRecommend;
-import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.FileSizeFormatter;
 import com.qiufengguang.ajstudy.utils.FileUtil;
@@ -99,33 +98,20 @@ public class DetailViewModel extends ViewModel {
         selectedTab.setValue(position);
     }
 
-    public void loadData(int detailIndex) {
+    public void loadData(String uri) {
         handlerThread = new HandlerThread(TAG + "-Thread");
         if (!handlerThread.isAlive()) {
             handlerThread.start();
         }
         Handler handler = new Handler(handlerThread.getLooper());
-        handler.post(new ParsePageDataTask(detailIndex));
+        handler.post(new ParsePageDataTask(uri));
     }
 
     private class ParsePageDataTask implements Runnable {
         private final String fileName;
 
-        public ParsePageDataTask(int index) {
-            switch (index % 4) {
-                case 1:
-                    fileName = Constant.Data.DETAIL_WX;
-                    break;
-                case 2:
-                    fileName = Constant.Data.DETAIL_SJZXD;
-                    break;
-                case 3:
-                    fileName = Constant.Data.DETAIL_HGDJ;
-                    break;
-                default:
-                    fileName = Constant.Data.DETAIL_XHS;
-                    break;
-            }
+        public ParsePageDataTask(String uri) {
+            this.fileName = uri;
         }
 
         @Override

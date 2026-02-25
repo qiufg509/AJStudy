@@ -21,6 +21,7 @@ import com.qiufengguang.ajstudy.dialog.manager.DialogsManager;
 import com.qiufengguang.ajstudy.fragment.comment.CommentFragment;
 import com.qiufengguang.ajstudy.fragment.introduction.IntroductionFragment;
 import com.qiufengguang.ajstudy.fragment.recommendation.RecommendationFragment;
+import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
@@ -55,8 +56,8 @@ public class DetailActivity extends AppCompatActivity {
         // 初始化ViewModel
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
 
-        int detailIndex = getIntent().getIntExtra("detail_index", 0);
-        viewModel.loadData(detailIndex);
+        String uri = getIntent().getStringExtra(Router.EXTRA_URI);
+        viewModel.loadData(uri);
         setupToolbar();
         setupViewPager();
         setupListeners();

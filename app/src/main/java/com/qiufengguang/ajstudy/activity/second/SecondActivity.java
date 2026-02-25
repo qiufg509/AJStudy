@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.fragment.second.SecondFragment;
+import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
 /**
@@ -15,7 +16,6 @@ import com.qiufengguang.ajstudy.utils.StatusBarUtil;
  * @since 2026/1/31 21:10
  */
 public class SecondActivity extends AppCompatActivity {
-    public static final String ARGS_SECOND_PAGE_KEY = "ARGS_SECOND_PAGE_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         StatusBarUtil.makeStatusBarTransparent(this);
         if (savedInstanceState == null) {
-            Bundle args = getIntent().getBundleExtra(ARGS_SECOND_PAGE_KEY);
+            Bundle args = getIntent().getBundleExtra(Router.EXTRA_SECOND_PAGE);
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, SecondFragment.newInstance(args))
                 .commitNow();

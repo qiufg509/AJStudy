@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.databinding.ActivityMarkdownBinding;
+import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 
@@ -32,11 +33,11 @@ public class MarkdownActivity extends AppCompatActivity {
         binding.titleBar.setOnBackClickListener(() -> getOnBackPressedDispatcher().onBackPressed());
 
         MarkdownModel viewModel = new ViewModelProvider(this).get(MarkdownModel.class);
-        String filePath = getIntent().getStringExtra("filePath");
+        String filePath = getIntent().getStringExtra(Router.EXTRA_URI);
         if (!TextUtils.isEmpty(filePath)) {
             viewModel.readLocalMarkdown(filePath);
         }
-        String title = getIntent().getStringExtra("title");
+        String title = getIntent().getStringExtra(Router.EXTRA_TITLE);
         if (!TextUtils.isEmpty(title)) {
             binding.titleBar.setTitle(title);
         }

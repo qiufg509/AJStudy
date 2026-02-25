@@ -1,22 +1,21 @@
 package com.qiufengguang.ajstudy.card.grid;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.activity.main.MainActivity;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
+import com.qiufengguang.ajstudy.fragment.second.SecondFragment;
+import com.qiufengguang.ajstudy.router.AppNavigator;
+import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.util.List;
@@ -86,10 +85,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         }
         ThemeUtils.setSelectedThemeIndex(position);
 
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("restart_theme", true);
-        context.startActivity(intent);
+        AppNavigator.getInstance().restart(context, Router.EXTRA_RESTART);
         ((AppCompatActivity) context).finish();
     }
 
@@ -97,15 +93,12 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         if (bean.getItemType() != GridCardBean.TYPE_TEXT) {
             return;
         }
-        if (!(context instanceof AppCompatActivity)) {
-            return;
-        }
-        AppCompatActivity activity = (AppCompatActivity) context;
-        NavController navController = Navigation.findNavController(activity,
-            R.id.nav_host_fragment_activity_main);
-        Bundle bundle = new Bundle();
-        bundle.putString("Course", bean.getNavigatePage());
-        navController.navigate(R.id.navigation_know_how, bundle);
+        Bundle args = new Bundle();
+        String uri = bean.getUri();
+        args.putString(Router.EXTRA_URI, uri);
+        args.putString(Router.EXTRA_TITLE, bean.getTitle());
+        args.putString(SecondFragment.ARG_NAVIGATE_TO, bean.getNavigateTo());
+        AppNavigator.getInstance().startSecondActivity(context, args);
     }
 
     @Override
