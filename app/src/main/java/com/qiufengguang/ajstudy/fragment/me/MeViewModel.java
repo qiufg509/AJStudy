@@ -51,8 +51,8 @@ public class MeViewModel extends ViewModel {
         CollectionLayoutData<SettingCardBean> settingData2 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans2);
 
         List<SettingCardBean> settingCardBeans3 = List.of(
-            new SettingCardBean("帮助与反馈", "", Router.URI.PAGE_COLOR_SCHEME),
-            new SettingCardBean("关于", "版本号 1.0.0.1", "")
+            new SettingCardBean("帮助与反馈", "", Router.URI.PAGE_HELP_FEEDBACK),
+            new SettingCardBean("关于", "版本号 1.0.0.1")
         );
         CollectionLayoutData<SettingCardBean> settingData3 = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingCardBeans3);
 

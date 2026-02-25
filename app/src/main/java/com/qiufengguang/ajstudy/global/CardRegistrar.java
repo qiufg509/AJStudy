@@ -12,6 +12,7 @@ import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
+import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 
 /**
@@ -35,5 +36,6 @@ public class CardRegistrar {
         Card.register(GraphicCardM.LAYOUT_ID, new GraphicCardM.Creator());
         Card.register(ArticleCard.LAYOUT_ID, new ArticleCard.Creator());
         Card.register(EmptyCard.LAYOUT_ID, new EmptyCard.Creator());
+        Card.register(TitleCard.LAYOUT_ID, new TitleCard.Creator());
     }
 }

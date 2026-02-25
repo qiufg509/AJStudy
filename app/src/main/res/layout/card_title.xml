@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin_s"
+    android:ellipsize="end"
+    android:fontFamily="sans-serif-medium"
+    android:lines="1"
+    android:textColor="@color/ajstudy_color_text_primary"
+    android:textFontWeight="600"
+    android:textSize="18sp" />

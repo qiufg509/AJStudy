@@ -42,6 +42,10 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
      * 绑定数据
      */
     public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+        Object object = data.getData();
+        if (object == null) {
+            return;
+        }
         this.bind(data);
     }
 

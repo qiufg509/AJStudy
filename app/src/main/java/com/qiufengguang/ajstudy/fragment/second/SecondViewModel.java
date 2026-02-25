@@ -17,9 +17,13 @@ import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
 import com.qiufengguang.ajstudy.card.graphicm.GraphicCardM;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
+import com.qiufengguang.ajstudy.card.setting.SettingCard;
+import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
 import com.qiufengguang.ajstudy.data.NormalCardBean;
+import com.qiufengguang.ajstudy.data.SettingCardBean;
+import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
@@ -197,6 +201,7 @@ public class SecondViewModel extends ViewModel {
 
         private void fetchStudyRecord() {
             SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            SingleLayoutData<?> titleCardData = LayoutDataFactory.createSingle(TitleCard.LAYOUT_ID, null, "你可能感兴趣~");
 
             List<LargeGraphicCardBean> lgcBeans = new ArrayList<>();
             lgcBeans.add(new LargeGraphicCardBean("1秒滑下坡的刺激", "冬天的 passion 来自滑雪", "https://plus.unsplash.com/premium_photo-1664438942504-cc05d2c80f38?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"));
@@ -217,6 +222,7 @@ public class SecondViewModel extends ViewModel {
                 .collect(Collectors.toList());
 
             dataList.add(0, emptyCardData);
+            dataList.add(1, titleCardData);
 
             liveData.postValue(dataList);
         }
@@ -236,9 +242,13 @@ public class SecondViewModel extends ViewModel {
         }
 
         private void fetchHelpFeedback() {
-            SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID, null);
+            List<SettingCardBean> beans = List.of(
+                new SettingCardBean("微信", "qiufengguang"),
+                new SettingCardBean("电子邮件", "qfguang@163.com")
+            );
+            CollectionLayoutData<SettingCardBean> settingData = LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, beans);
             List<LayoutData<?>> dataList = new ArrayList<>();
-            dataList.add(emptyCardData);
+            dataList.add(settingData);
             liveData.postValue(dataList);
         }
     }

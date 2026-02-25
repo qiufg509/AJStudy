@@ -141,10 +141,6 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
         if (layoutData == null) {
             return;
         }
-        Object data = layoutData.getData();
-        if (data == null) {
-            return;
-        }
         holder.bind(layoutData, this.lifecycleOwner);
     }
 

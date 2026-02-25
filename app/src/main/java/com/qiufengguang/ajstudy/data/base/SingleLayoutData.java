@@ -11,21 +11,21 @@ import androidx.annotation.IntRange;
 public class SingleLayoutData<T extends BaseCardBean> extends LayoutData<T> {
     public SingleLayoutData(@IntRange int layoutId, T bean) {
         super(bean);
-        prepareData(layoutId, bean);
+        prepareData(layoutId);
     }
 
     public SingleLayoutData(@IntRange int layoutId, T bean, String cardTitle) {
         super(bean, cardTitle);
-        prepareData(layoutId, bean);
+        prepareData(layoutId);
     }
 
     public SingleLayoutData(@IntRange int layoutId, T bean, String cardTitle, String uri) {
         super(bean, cardTitle, uri);
-        prepareData(layoutId, bean);
+        prepareData(layoutId);
     }
 
-    private void prepareData(@IntRange int layoutId, T bean) {
-        if (bean == null) {
+    private void prepareData(@IntRange int layoutId) {
+        if (layoutId < 0) {
             return;
         }
         setLayoutId(layoutId);
