@@ -15,11 +15,11 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
+import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
-import com.qiufengguang.ajstudy.card.base.GridDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -109,7 +109,9 @@ public class GridCard extends Card {
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             CardGridBinding binding = CardGridBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new GridViewHolder(binding);
+            GridViewHolder holder = new GridViewHolder(binding);
+            setFullSpanInStaggeredPage(holder);
+            return holder;
         }
     }
 

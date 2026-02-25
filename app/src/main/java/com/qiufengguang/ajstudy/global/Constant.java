@@ -68,20 +68,7 @@ public interface Constant {
          */
         String LIST_CONTENT_FILE = "know_how_list.json";
 
-        /**
-         * 详情页测试数据文件
-         */
-        String DETAIL_XHS = "detail_page_xhs.json";
-        String DETAIL_WX = "detail_page_wx.json";
-        String DETAIL_HGDJ = "detail_page_hgdj.json";
-        String DETAIL_SJZXD = "detail_page_sjzxd.json";
-
         String DETAIL_SPRING = "朱自清《春》.md";
-
-        /**
-         * markdown文件读取目录
-         */
-        String DOCUMENT_STUDY_DIR = "KotlinCourse";
     }
 
     /**

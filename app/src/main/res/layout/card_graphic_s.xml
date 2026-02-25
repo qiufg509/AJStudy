@@ -1,0 +1,76 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin_m"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/radius_m"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/activity_horizontal_margin_m"
+            android:adjustViewBounds="true"
+            android:scaleType="fitEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin_m"
+            android:layout_marginTop="@dimen/activity_horizontal_margin_m"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/ajstudy_color_text_primary"
+            android:textFontWeight="600"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin_m"
+            android:layout_marginTop="@dimen/activity_vertical_margin_xxs"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/ajstudy_color_text_secondary"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <android.widget.Button
+            android:id="@+id/btn_study"
+            android:layout_width="56dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_horizontal_margin_m"
+            android:layout_marginTop="@dimen/activity_vertical_margin_s"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin_m"
+            android:background="@drawable/card_graphic_s_btn_bg_selector"
+            android:lines="1"
+            android:padding="0dp"
+            android:text="去学习"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

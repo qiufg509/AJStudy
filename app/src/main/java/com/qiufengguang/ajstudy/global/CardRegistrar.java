@@ -7,6 +7,7 @@ import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
 import com.qiufengguang.ajstudy.card.graphiclgrid.GraphicLGridCard;
 import com.qiufengguang.ajstudy.card.graphicm.GraphicCardM;
+import com.qiufengguang.ajstudy.card.graphics.GraphicCardS;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
@@ -34,6 +35,7 @@ public class CardRegistrar {
         Card.register(SettingCard.LAYOUT_ID, new SettingCard.Creator());
         Card.register(GraphicCardL.LAYOUT_ID, new GraphicCardL.Creator());
         Card.register(GraphicCardM.LAYOUT_ID, new GraphicCardM.Creator());
+        Card.register(GraphicCardS.LAYOUT_ID, new GraphicCardS.Creator());
         Card.register(ArticleCard.LAYOUT_ID, new ArticleCard.Creator());
         Card.register(EmptyCard.LAYOUT_ID_1, new EmptyCard.WrapCreator());
         Card.register(EmptyCard.LAYOUT_ID_2, new EmptyCard.FullCreator());

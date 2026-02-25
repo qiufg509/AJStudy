@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.graphicm;
+package com.qiufengguang.ajstudy.card.graphics;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,34 +11,30 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
-import com.qiufengguang.ajstudy.databinding.CardGraphicMBinding;
+import com.qiufengguang.ajstudy.databinding.CardGraphicSBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 /**
- * 中尺寸图文卡
+ * 小尺寸图文卡
  *
  * @author qiufengguang
- * @since 2026/2/25 20:37
+ * @since 2026/2/26 0:12
  */
-public class GraphicCardM extends Card {
+public class GraphicCardS extends Card {
     /**
      * 卡片唯一id
      */
-    public static final int LAYOUT_ID = 11;
+    public static final int LAYOUT_ID = 13;
 
     private WeakReference<View> rootRef;
     private WeakReference<TextView> titleRef;
@@ -49,9 +45,7 @@ public class GraphicCardM extends Card {
 
     private OnItemClickListener<LargeGraphicCardBean> listener;
 
-    private RequestOptions requestOptions;
-
-    private GraphicCardM() {
+    private GraphicCardS() {
     }
 
     public void setData(LargeGraphicCardBean bean) {
@@ -96,17 +90,8 @@ public class GraphicCardM extends Card {
             return;
         }
         if (!TextUtils.isEmpty(bean.getImageUrl())) {
-            if (requestOptions == null) {
-                int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
-                this.requestOptions = new RequestOptions()
-                    .centerCrop()
-                    .error(R.drawable.placeholder_image_1_1)
-                    .transform(new CenterCrop(), new RoundedCornersTransformation(radius, 0,
-                        RoundedCornersTransformation.CornerType.TOP));
-            }
             Glide.with(imageView.getContext())
                 .load(bean.getImageUrl())
-                .apply(requestOptions)
                 .transition(DrawableTransitionOptions.withCrossFade(300))
                 .into(imageView);
         } else {
@@ -117,9 +102,9 @@ public class GraphicCardM extends Card {
     public static class Creator implements CardCreator {
         @Override
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
-            CardGraphicMBinding binding = CardGraphicMBinding.inflate(
+            CardGraphicSBinding binding = CardGraphicSBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new GraphicCardMHolder(binding);
+            return new GraphicCardSHolder(binding);
         }
 
         @Override
@@ -146,7 +131,7 @@ public class GraphicCardM extends Card {
          * @param root View
          * @return Builder
          */
-        public GraphicCardM.Builder setRoot(View root) {
+        public GraphicCardS.Builder setRoot(View root) {
             this.root = root;
             return this;
         }
@@ -157,7 +142,7 @@ public class GraphicCardM extends Card {
          * @param tvTitle TextView
          * @return Builder
          */
-        public GraphicCardM.Builder setTvTitle(TextView tvTitle) {
+        public GraphicCardS.Builder setTvTitle(TextView tvTitle) {
             this.tvTitle = tvTitle;
             return this;
         }
@@ -168,7 +153,7 @@ public class GraphicCardM extends Card {
          * @param tvSubTitle TextView
          * @return Builder
          */
-        public GraphicCardM.Builder setTvSubTitle(TextView tvSubTitle) {
+        public GraphicCardS.Builder setTvSubTitle(TextView tvSubTitle) {
             this.tvSubTitle = tvSubTitle;
             return this;
         }
@@ -179,7 +164,7 @@ public class GraphicCardM extends Card {
          * @param ivPic ImageView
          * @return Builder
          */
-        public GraphicCardM.Builder setIvPic(ImageView ivPic) {
+        public GraphicCardS.Builder setIvPic(ImageView ivPic) {
             this.ivPic = ivPic;
             return this;
         }
@@ -191,18 +176,18 @@ public class GraphicCardM extends Card {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public GraphicCardM.Builder setListener(
+        public GraphicCardS.Builder setListener(
             OnItemClickListener<LargeGraphicCardBean> listener) {
             this.listener = listener;
             return this;
         }
 
-        public GraphicCardM create() {
+        public GraphicCardS create() {
             if (this.tvTitle == null) {
                 throw new UnsupportedOperationException(
                     "tvTitle is null, call setTvTitle first.");
             }
-            GraphicCardM wrapper = new GraphicCardM();
+            GraphicCardS wrapper = new GraphicCardS();
             if (this.root != null) {
                 wrapper.rootRef = new WeakReference<>(this.root);
             }

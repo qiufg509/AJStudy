@@ -76,6 +76,7 @@ public abstract class BaseListFragment extends Fragment {
         baseListAdapter = null;
         baseBinding.recyclerContainer.setAdapter(null);
         baseBinding.recyclerContainer.setLayoutManager(null);
+        baseBinding.recyclerContainer.setItemAnimator(null);
         baseBinding.recyclerContainer.clearOnScrollListeners();
         baseBinding.recyclerContainer.removeItemDecoration(decor);
         decor = null;

@@ -4,6 +4,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewbinding.ViewBinding;
 
 import com.qiufengguang.ajstudy.global.Constant;
@@ -45,5 +46,18 @@ public interface CardCreator {
      */
     default boolean needObserveLifecycle() {
         return false;
+    }
+
+    /**
+     * 在瀑布流中占满整屏宽度
+     *
+     * @param holder BaseViewHolder
+     */
+    default void setFullSpanInStaggeredPage(BaseViewHolder<?> holder) {
+        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
+        if (params instanceof StaggeredGridLayoutManager.LayoutParams) {
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) params;
+            layoutParams.setFullSpan(true);
+        }
     }
 }

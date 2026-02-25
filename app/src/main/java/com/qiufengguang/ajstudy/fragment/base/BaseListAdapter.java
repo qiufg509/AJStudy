@@ -201,12 +201,13 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
      * @param recyclerView 页面列表RecyclerView
      */
     public void activeCardsIfVisible(RecyclerView recyclerView) {
-        if (recyclerView.getLayoutManager() == null) {
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (!(manager instanceof LinearLayoutManager)) {
             return;
         }
 
         // 获取当前可见位置范围
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
         int firstVisible = layoutManager.findFirstVisibleItemPosition();
         int lastVisible = layoutManager.findLastVisibleItemPosition();
 

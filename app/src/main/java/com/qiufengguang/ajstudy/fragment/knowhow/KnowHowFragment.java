@@ -1,15 +1,11 @@
 package com.qiufengguang.ajstudy.fragment.knowhow;
 
-import android.os.Bundle;
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.fragment.base.BaseGridFragment;
+import com.qiufengguang.ajstudy.fragment.base.BaseStaggeredFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
-import com.qiufengguang.ajstudy.global.Constant;
 
 import java.util.List;
 
@@ -19,7 +15,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class KnowHowFragment extends BaseGridFragment {
+public class KnowHowFragment extends BaseStaggeredFragment {
     private KnowHowViewModel viewModel;
 
     @NonNull
@@ -36,7 +32,7 @@ public class KnowHowFragment extends BaseGridFragment {
         viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
             baseListAdapter.setData(viewModel.getPageData(0)));
 
-        setTitle("应用列表");
+        setTitle("瀑布流列表");
     }
 
     @Override
