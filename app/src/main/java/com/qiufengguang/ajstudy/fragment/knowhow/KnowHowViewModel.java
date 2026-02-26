@@ -70,7 +70,7 @@ public class KnowHowViewModel extends ViewModel {
             LargeGraphicCardBean graphicCardBean1 = new LargeGraphicCardBean("天天领现金", "最高20元", "https://ts2.tc.mm.bing.net/th/id/OIP-C.-NxRwvTgS3CWh4yBPYMc7AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3");
             SingleLayoutData<LargeGraphicCardBean> layoutData1 = LayoutDataFactory.createSingle(GraphicCardS.LAYOUT_ID, graphicCardBean1);
 
-            LargeGraphicCardBean graphicCardBean2 = new LargeGraphicCardBean("是兄弟就来砍我", "再砍一刀就挂了", "https://ts2.tc.mm.bing.net/th/id/OIP-C.-NxRwvTgS3CWh4yBPYMc7AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3");
+            LargeGraphicCardBean graphicCardBean2 = new LargeGraphicCardBean("是兄弟就来砍我", "最后一刀", "https://ts4.tc.mm.bing.net/th/id/OIP-C.aSeaav6bSLAYYs4-6S0OQAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3");
             SingleLayoutData<LargeGraphicCardBean> layoutData2 = LayoutDataFactory.createSingle(GraphicCardS.LAYOUT_ID, graphicCardBean2);
 
 

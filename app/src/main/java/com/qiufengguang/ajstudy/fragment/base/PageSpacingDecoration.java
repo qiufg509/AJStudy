@@ -59,30 +59,10 @@ public class PageSpacingDecoration extends RecyclerView.ItemDecoration {
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             // 瀑布流页面 {@link com.qiufengguang.ajstudy.fragment.base.BaseStaggeredFragment}
-            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) layoutManager;
-            int spanCount = sglm.getSpanCount();
-
-            // 获取当前 item 的布局参数，确定它属于哪一列
-            StaggeredGridLayoutManager.LayoutParams lp = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
-            if (lp.isFullSpan()) {
-                outRect.set(edgeSpacing, 0, edgeSpacing, 0);
-                return;
-            }
-            int spanIndex = lp.getSpanIndex();
-            int halfSpacing = edgeSpacing / 4;
-            if (spanIndex == 0) {
-                // 第一列：左边缘保留左边距，右边分一半间距
-                outRect.left = edgeSpacing;
-                outRect.right = halfSpacing;
-            } else if (spanIndex == spanCount - 1) {
-                // 最后一列：左边分一半间距，右边缘保留右边距
-                outRect.left = halfSpacing;
-                outRect.right = edgeSpacing;
-            } else {
-                // 中间列：左右各分一半间距
-                outRect.left = halfSpacing;
-                outRect.right = halfSpacing;
-            }
+            // 结合 {@link BaseStaggeredFragment.setupContent} 左右补偿间距实现
+            int quarterSpacing = edgeSpacing / 4;
+            outRect.left = quarterSpacing;
+            outRect.right = quarterSpacing;
             outRect.top = 0;
             outRect.bottom = 0;
         } else {

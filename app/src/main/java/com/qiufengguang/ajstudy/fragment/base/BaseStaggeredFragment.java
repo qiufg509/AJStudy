@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.fragment.base;
 
+import android.view.ViewGroup;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -16,6 +18,14 @@ public abstract class BaseStaggeredFragment extends BaseListFragment {
 
     @Override
     protected void setupContent() {
+        // 补充左右间距
+        ViewGroup.LayoutParams layoutParams = baseBinding.recyclerContainer.getLayoutParams();
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutParams;
+            int spacing = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin_m);
+            params.setMargins(spacing, 0, spacing, 0);
+        }
+
         int columnCount = getResources().getInteger(R.integer.ajstudy_column_count);
         int spanCount;
         switch (columnCount) {
