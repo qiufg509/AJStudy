@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
-import com.qiufengguang.ajstudy.data.LuckyWheelCardBean;
+import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.databinding.CardLuckyWheelBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.view.LuckyWheel;

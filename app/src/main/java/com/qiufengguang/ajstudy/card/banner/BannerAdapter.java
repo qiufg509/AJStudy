@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.BannerBean;
+import com.qiufengguang.ajstudy.data.model.BannerBean;
 import com.qiufengguang.ajstudy.databinding.ItemHomeBannerBinding;
 
 import java.util.List;

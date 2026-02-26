@@ -16,7 +16,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.ArticleCardBean;
+import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.utils.TimeFormatter;

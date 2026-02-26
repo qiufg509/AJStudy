@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.data.DetailComment;
+import com.qiufengguang.ajstudy.data.model.DetailComment;
 import com.qiufengguang.ajstudy.databinding.ItemCommentBinding;
 
 import java.util.List;

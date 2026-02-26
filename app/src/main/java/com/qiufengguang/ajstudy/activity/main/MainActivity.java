@@ -17,7 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.activity.login.LoginActivity;
-import com.qiufengguang.ajstudy.data.LoginAction;
+import com.qiufengguang.ajstudy.data.model.LoginAction;
 import com.qiufengguang.ajstudy.databinding.ActivityMainBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;

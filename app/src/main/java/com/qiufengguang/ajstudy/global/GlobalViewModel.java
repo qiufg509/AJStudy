@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.qiufengguang.ajstudy.data.LoginAction;
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.LoginAction;
+import com.qiufengguang.ajstudy.data.model.User;
 
 /**
  * 全局ViewModel

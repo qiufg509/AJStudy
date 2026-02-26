@@ -5,7 +5,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.LuckyWheelCardBean;
+import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardLuckyWheelBinding;
 

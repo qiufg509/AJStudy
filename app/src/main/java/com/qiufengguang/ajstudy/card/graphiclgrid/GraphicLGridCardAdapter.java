@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardLHolder;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGraphicLBinding;
@@ -24,13 +24,13 @@ import java.util.List;
  */
 public class GraphicLGridCardAdapter extends RecyclerView.Adapter<GraphicCardLHolder> {
 
-    private List<LargeGraphicCardBean> beans;
+    private List<GraphicCardBean> beans;
 
-    public GraphicLGridCardAdapter(@Nullable List<LargeGraphicCardBean> beans) {
+    public GraphicLGridCardAdapter(@Nullable List<GraphicCardBean> beans) {
         this.beans = beans;
     }
 
-    public void setData(List<LargeGraphicCardBean> beans) {
+    public void setData(List<GraphicCardBean> beans) {
         if (beans == null || beans.isEmpty()) {
             this.beans = beans;
             notifyItemRangeRemoved(0, getItemCount());
@@ -60,8 +60,8 @@ public class GraphicLGridCardAdapter extends RecyclerView.Adapter<GraphicCardLHo
 
     @Override
     public void onBindViewHolder(@NonNull GraphicCardLHolder holder, int position) {
-        LargeGraphicCardBean bean = beans.get(position);
-        SingleLayoutData<LargeGraphicCardBean> layoutData =
+        GraphicCardBean bean = beans.get(position);
+        SingleLayoutData<GraphicCardBean> layoutData =
             LayoutDataFactory.createSingle(GraphicCardL.LAYOUT_ID, bean);
         holder.bind(layoutData);
     }

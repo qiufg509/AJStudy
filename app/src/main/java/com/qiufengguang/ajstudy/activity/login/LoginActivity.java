@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.qiufengguang.ajstudy.data.LoginAction;
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.LoginAction;
+import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.databinding.ActivityLoginBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;

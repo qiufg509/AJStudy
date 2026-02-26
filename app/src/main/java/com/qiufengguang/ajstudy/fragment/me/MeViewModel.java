@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
-import com.qiufengguang.ajstudy.data.SettingCardBean;
+import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;

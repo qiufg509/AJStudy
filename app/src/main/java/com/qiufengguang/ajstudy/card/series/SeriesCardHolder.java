@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.SeriesCardBean;
+import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 import com.qiufengguang.ajstudy.router.AppNavigator;

@@ -20,7 +20,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.SeriesCardBean;
+import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 
 import java.lang.ref.WeakReference;

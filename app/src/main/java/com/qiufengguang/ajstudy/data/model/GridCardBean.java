@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.data;
+package com.qiufengguang.ajstudy.data.model;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;

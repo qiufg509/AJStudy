@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.qiufengguang.ajstudy.data.LoginAction;
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.LoginAction;
+import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.network.LoginRepository;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;

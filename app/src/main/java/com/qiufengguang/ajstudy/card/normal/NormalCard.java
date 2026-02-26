@@ -17,7 +17,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.NormalCardBean;
+import com.qiufengguang.ajstudy.data.model.NormalCardBean;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 

@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.data;
+package com.qiufengguang.ajstudy.data.model;
 
 /**
  * 详情页-推荐子页面数据bean

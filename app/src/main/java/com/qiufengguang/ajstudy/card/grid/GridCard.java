@@ -17,7 +17,7 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 

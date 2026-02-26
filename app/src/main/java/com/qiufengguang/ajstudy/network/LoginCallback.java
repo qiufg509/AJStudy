@@ -1,6 +1,6 @@
 package com.qiufengguang.ajstudy.network;
 
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.User;
 
 /**
  * 登录操作回调

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.SettingCardBean;
+import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.databinding.ItemSettingBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 

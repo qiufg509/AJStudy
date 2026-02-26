@@ -9,11 +9,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.qiufengguang.ajstudy.data.DetailAppData;
-import com.qiufengguang.ajstudy.data.DetailComment;
-import com.qiufengguang.ajstudy.data.DetailHead;
-import com.qiufengguang.ajstudy.data.DetailIntroduction;
-import com.qiufengguang.ajstudy.data.DetailRecommend;
+import com.qiufengguang.ajstudy.data.model.DetailAppData;
+import com.qiufengguang.ajstudy.data.model.DetailComment;
+import com.qiufengguang.ajstudy.data.model.DetailHead;
+import com.qiufengguang.ajstudy.data.model.DetailIntroduction;
+import com.qiufengguang.ajstudy.data.model.DetailRecommend;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.utils.FileSizeFormatter;
 import com.qiufengguang.ajstudy.utils.FileUtil;

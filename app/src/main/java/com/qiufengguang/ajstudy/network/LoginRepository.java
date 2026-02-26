@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.TextUtils;
 
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 

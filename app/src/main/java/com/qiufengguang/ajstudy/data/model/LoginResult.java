@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.data;
+package com.qiufengguang.ajstudy.data.model;
 
 /**
  * 登录操作响应结果

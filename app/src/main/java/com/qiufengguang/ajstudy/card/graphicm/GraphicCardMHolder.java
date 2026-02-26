@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGraphicMBinding;
 import com.qiufengguang.ajstudy.router.AppNavigator;
@@ -48,11 +48,11 @@ public class GraphicCardMHolder extends BaseViewHolder<CardGraphicMBinding> {
         if (card == null) {
             initCard();
         }
-        LargeGraphicCardBean bean = (LargeGraphicCardBean) data.getData();
+        GraphicCardBean bean = (GraphicCardBean) data.getData();
         card.setData(bean);
     }
 
-    private void onItemClickListener(Context context, LargeGraphicCardBean bean) {
+    private void onItemClickListener(Context context, GraphicCardBean bean) {
         AppNavigator.getInstance().startArticleActivity(
             context, bean.getUri(), bean.getTitle());
     }

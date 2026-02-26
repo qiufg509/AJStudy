@@ -19,7 +19,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGraphicLBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 
@@ -45,16 +45,16 @@ public class GraphicCardL extends Card {
     private WeakReference<TextView> subTitleRef;
     private WeakReference<ImageView> picRef;
 
-    private LargeGraphicCardBean bean;
+    private GraphicCardBean bean;
 
-    private OnItemClickListener<LargeGraphicCardBean> listener;
+    private OnItemClickListener<GraphicCardBean> listener;
 
     private RequestOptions requestOptions;
 
     private GraphicCardL() {
     }
 
-    public void setData(LargeGraphicCardBean bean) {
+    public void setData(GraphicCardBean bean) {
         this.bean = bean;
         show();
     }
@@ -134,7 +134,7 @@ public class GraphicCardL extends Card {
         private TextView tvSubTitle;
         private ImageView ivPic;
 
-        private OnItemClickListener<LargeGraphicCardBean> listener;
+        private OnItemClickListener<GraphicCardBean> listener;
 
         /**
          * 设置大图文卡片根布局
@@ -188,7 +188,7 @@ public class GraphicCardL extends Card {
          * @return Builder
          */
         public GraphicCardL.Builder setListener(
-            OnItemClickListener<LargeGraphicCardBean> listener) {
+            OnItemClickListener<GraphicCardBean> listener) {
             this.listener = listener;
             return this;
         }

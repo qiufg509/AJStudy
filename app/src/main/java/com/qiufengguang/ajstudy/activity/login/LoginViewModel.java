@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.qiufengguang.ajstudy.data.LoginResult;
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.LoginResult;
+import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.network.LoginCallback;
 import com.qiufengguang.ajstudy.network.LoginRepository;
 

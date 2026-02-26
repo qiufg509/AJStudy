@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.BannerBean;
+import com.qiufengguang.ajstudy.data.model.BannerBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardBannerBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.data.DetailIntroduction;
+import com.qiufengguang.ajstudy.data.model.DetailIntroduction;
 import com.qiufengguang.ajstudy.databinding.ItemIntroductionAboutBinding;
 import com.qiufengguang.ajstudy.databinding.ItemIntroductionEditorRecoBinding;
 import com.qiufengguang.ajstudy.databinding.ItemIntroductionNormalBinding;

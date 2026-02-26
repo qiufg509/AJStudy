@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.activity.detail.DetailViewModel;
-import com.qiufengguang.ajstudy.data.DetailRecommend;
+import com.qiufengguang.ajstudy.data.model.DetailRecommend;
 import com.qiufengguang.ajstudy.databinding.FragmentRecommendationBinding;
 
 /**

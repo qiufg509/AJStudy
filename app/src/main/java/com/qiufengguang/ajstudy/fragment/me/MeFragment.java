@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
-import com.qiufengguang.ajstudy.data.User;
+import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;

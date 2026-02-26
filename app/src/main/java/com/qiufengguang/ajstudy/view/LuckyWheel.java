@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
-import com.qiufengguang.ajstudy.data.LuckyWheelCardBean;
+import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.ImageUtil;
 

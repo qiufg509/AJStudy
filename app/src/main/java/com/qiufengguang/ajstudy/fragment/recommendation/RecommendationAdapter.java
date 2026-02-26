@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.data.DetailRecommend;
+import com.qiufengguang.ajstudy.data.model.DetailRecommend;
 import com.qiufengguang.ajstudy.databinding.ItemRecommendationBinding;
 
 import java.util.List;

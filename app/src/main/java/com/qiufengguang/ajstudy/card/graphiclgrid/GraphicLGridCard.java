@@ -16,7 +16,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGraphicLGridBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 
@@ -51,7 +51,7 @@ public class GraphicLGridCard extends Card {
     private GraphicLGridCard() {
     }
 
-    public void setData(List<LargeGraphicCardBean> beans, String cardTitle) {
+    public void setData(List<GraphicCardBean> beans, String cardTitle) {
         if (adapter == null) {
             adapter = new GraphicLGridCardAdapter(beans);
         } else {

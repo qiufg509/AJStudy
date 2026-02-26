@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
-import com.qiufengguang.ajstudy.data.LargeGraphicCardBean;
+import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.databinding.CardGraphicLGridBinding;
 
@@ -50,7 +50,7 @@ public class GraphicLGridCardHolder extends BaseViewHolder<CardGraphicLGridBindi
             initCard();
         }
         @SuppressWarnings("unchecked")
-        List<LargeGraphicCardBean> beans = (List<LargeGraphicCardBean>) data.getData();
+        List<GraphicCardBean> beans = (List<GraphicCardBean>) data.getData();
         card.setData(beans, data.getCardTitle());
     }
 

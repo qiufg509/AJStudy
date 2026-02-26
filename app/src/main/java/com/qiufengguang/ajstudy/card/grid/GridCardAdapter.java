@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.GridCardBean;
+import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.ItemGridCardImageBinding;
 import com.qiufengguang.ajstudy.databinding.ItemGridCardTextBinding;
 
