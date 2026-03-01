@@ -6,7 +6,7 @@ import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
-import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import retrofit2.Call;
  * @since 2025/11/26 22:19
  */
 public abstract class BaseViewModel extends ViewModel {
-    protected Call<LayoutResponse> currentCall;
+    protected Call<RawRespData> currentCall;
 
     @Override
     protected void onCleared() {

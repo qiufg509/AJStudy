@@ -17,11 +17,11 @@ import java.util.List;
  * @author qiufengguang
  * @since 2026/1/19 14:03
  */
-public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
+public class GridCardHolder extends BaseViewHolder<CardGridBinding> {
 
     private GridCard card;
 
-    public GridViewHolder(@NonNull CardGridBinding binding) {
+    public GridCardHolder(@NonNull CardGridBinding binding) {
         super(binding);
     }
 

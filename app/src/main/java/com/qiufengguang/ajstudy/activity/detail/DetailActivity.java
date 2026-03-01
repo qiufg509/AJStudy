@@ -1,7 +1,9 @@
 package com.qiufengguang.ajstudy.activity.detail;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -18,14 +20,13 @@ import com.qiufengguang.ajstudy.databinding.ActivityDetailBinding;
 import com.qiufengguang.ajstudy.dialog.Dialog;
 import com.qiufengguang.ajstudy.dialog.manager.DialogWrapper;
 import com.qiufengguang.ajstudy.dialog.manager.DialogsManager;
-import com.qiufengguang.ajstudy.fragment.comment.CommentFragment;
-import com.qiufengguang.ajstudy.fragment.introduction.IntroductionFragment;
-import com.qiufengguang.ajstudy.fragment.recommendation.RecommendationFragment;
+import com.qiufengguang.ajstudy.fragment.subpage.SubPageFragment;
 import com.qiufengguang.ajstudy.router.Router;
+import com.qiufengguang.ajstudy.utils.FileSizeFormatter;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +44,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private DetailHeadOffsetChangedCallback offsetChangedCallback;
 
+    private DetailFragmentAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(ThemeUtils.getAppTheme());
@@ -56,8 +59,19 @@ public class DetailActivity extends AppCompatActivity {
         // 初始化ViewModel
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
 
-        String uri = getIntent().getStringExtra(Router.EXTRA_URI);
-        viewModel.loadData(uri);
+        String title = getIntent().getStringExtra(Router.EXTRA_TITLE);
+        if (!TextUtils.isEmpty(title)) {
+            binding.titleBar.barTitle.setText(title);
+        }
+        Bundle bundle = getIntent().getBundleExtra(Router.EXTRA_DATA);
+        if (bundle != null) {
+            String uri = bundle.getString(Router.EXTRA_URI);
+            if (TextUtils.equals(uri, Router.URI.PAGE_APP_DETAIL)) {
+                String directory = bundle.getString(Router.EXTRA_DIRECTORY);
+                viewModel.loadData(directory);
+            }
+        }
+
         setupToolbar();
         setupViewPager();
         setupListeners();
@@ -92,29 +106,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        // 创建Fragment列表
-        List<Fragment> fragments = Arrays.asList(
-            IntroductionFragment.newInstance(),
-            CommentFragment.newInstance(),
-            RecommendationFragment.newInstance()
-        );
-
-        // 创建Tab标题
-        List<String> tabTitles = java.util.Arrays.asList(
-            "介绍",
-            "评论 79",
-            "推荐"
-        );
+        // 创建默认子
+        List<Fragment> fragments = new ArrayList<>(1);
+        fragments.add(SubPageFragment.newInstance());
 
         // 设置ViewPager2适配器
-        DetailFragmentAdapter adapter = new DetailFragmentAdapter(this, fragments);
+        adapter = new DetailFragmentAdapter(this, fragments);
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
-
-        // 关联TabLayout和ViewPager2
-        new TabLayoutMediator(binding.tabLayout, binding.viewPager,
-            (tab, position) -> tab.setText(tabTitles.get(position))
-        ).attach();
     }
 
     private void setupListeners() {
@@ -196,12 +195,34 @@ public class DetailActivity extends AppCompatActivity {
                 return;
             }
             binding.tvStars.setText(detailAppData.getStars());
-            binding.tvScoredBy.setText(detailAppData.getScoredBy());
+            long scoredBy = detailAppData.getScoredBy();
+            long scoreDivide = scoredBy / 10000;
+            binding.tvScoredBy.setText(scoreDivide > 0 ? (scoreDivide + "万 人评论") : (scoredBy % 10000 + " 人评论"));
             binding.tvDownloads.setText(detailAppData.getDownloads());
+            binding.tvDownloadsSuffix.setText(getString(R.string.detail_download_suffix));
             binding.tvMinAge.setText(detailAppData.getMinAge());
             binding.tvGradeDesc.setText(detailAppData.getGradeInfo().getGradeDesc());
-            String fullSize = detailAppData.getFullSize();
+            String fullSize = FileSizeFormatter.format(detailAppData.getFullSize());
             binding.btnInstall.setText(String.format(Locale.getDefault(), "安装 (%s)", fullSize));
+        });
+
+        viewModel.getTabData().observe(this, tabData -> {
+            if (tabData == null || tabData.size() <= 1) {
+                binding.tabLayout.setVisibility(View.GONE);
+                return;
+            }
+            List<Fragment> fragments = new ArrayList<>(tabData.size());
+            for (int i = 1, sum = tabData.size(); i < sum; i++) {
+                Bundle args = new Bundle();
+                args.putString(Router.EXTRA_DATA, tabData.get(i).getDetailId());
+                fragments.add(SubPageFragment.newInstance(args));
+            }
+            adapter.addFragments(fragments);
+            // 关联TabLayout和ViewPager2
+            new TabLayoutMediator(binding.tabLayout, binding.viewPager,
+                (tab, position) -> tab.setText(tabData.get(position).getName())
+            ).attach();
+            binding.tabLayout.setVisibility(View.VISIBLE);
         });
     }
 

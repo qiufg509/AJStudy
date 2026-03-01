@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.repository.MeRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
@@ -34,8 +35,8 @@ public class MeViewModel extends BaseViewModel {
 
         currentCall = repository.fetchMeData(new OnDataLoadedCallback<>() {
             @Override
-            public void onSuccess(List<LayoutData<?>> data) {
-                liveData.postValue(data);
+            public void onSuccess(PageData data) {
+                liveData.postValue(data.getLayoutData());
             }
 
             @Override

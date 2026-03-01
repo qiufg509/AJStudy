@@ -2,15 +2,15 @@ package com.qiufengguang.ajstudy.data.model;
 
 import android.text.TextUtils;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+
 /**
- * 详情页-评论子页面数据bean
+ * 评论卡片数据bean
  *
  * @author qiufengguang
  * @since 2025/12/10 0:18
  */
-public class DetailComment {
-    public static final String LAYOUT_NAME = "pcscorecommentlistcard";
-
+public class CommentCardBean extends BaseCardBean {
     public static final int TYPE_LIKE = 1;
 
     public static final int TYPE_DEFAULT = 0;

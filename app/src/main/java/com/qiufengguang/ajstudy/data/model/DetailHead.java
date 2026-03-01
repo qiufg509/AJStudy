@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.model;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+
 import java.util.List;
 
 /**
@@ -8,8 +10,8 @@ import java.util.List;
  * @author qiufengguang
  * @since 2025/12/10 0:18
  */
-public class DetailHead {
-    public static final String LAYOUT_NAME = "detailheadcard";
+public class DetailHead extends BaseCardBean {
+    public static final int LAYOUT_ID = 100;
 
     String name;
 

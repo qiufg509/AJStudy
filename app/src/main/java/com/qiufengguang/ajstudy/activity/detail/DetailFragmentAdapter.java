@@ -15,11 +15,20 @@ import java.util.List;
  */
 public class DetailFragmentAdapter extends FragmentStateAdapter {
 
-    private final List<Fragment> fragments;
+    private List<Fragment> fragments;
 
     public DetailFragmentAdapter(@NonNull FragmentActivity fragmentActivity, List<Fragment> fragments) {
         super(fragmentActivity);
         this.fragments = fragments;
+    }
+
+    public void addFragments(List<Fragment> newFragments) {
+        if (this.fragments == null) {
+            this.fragments = newFragments;
+        } else {
+            this.fragments.addAll(newFragments);
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull

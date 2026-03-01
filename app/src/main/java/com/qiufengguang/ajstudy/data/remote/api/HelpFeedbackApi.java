@@ -1,6 +1,6 @@
 package com.qiufengguang.ajstudy.data.remote.api;
 
-import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.router.Router;
 
@@ -16,5 +16,5 @@ import retrofit2.http.POST;
  */
 public interface HelpFeedbackApi {
     @POST(Router.URI.PAGE_HELP_FEEDBACK)
-    Call<LayoutResponse> getHelpFeedbackData(@Body Request request);
+    Call<RawRespData> getHelpFeedbackData(@Body Request request);
 }

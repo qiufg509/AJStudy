@@ -58,32 +58,6 @@ public class DetailIntroduction {
     }
 
     public static class AboutApp {
-        private String tariffDesc;
-        private String version;
-        private String appIntro;
 
-        public String getTariffDesc() {
-            return tariffDesc;
-        }
-
-        public void setTariffDesc(String tariffDesc) {
-            this.tariffDesc = tariffDesc;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
-        public String getAppIntro() {
-            return appIntro;
-        }
-
-        public void setAppIntro(String appIntro) {
-            this.appIntro = appIntro;
-        }
     }
 }

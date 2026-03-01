@@ -1,15 +1,13 @@
 package com.qiufengguang.ajstudy.data.repository;
 
 import com.google.gson.Gson;
-import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
+import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.remote.api.HomeApi;
-import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
-
-import java.util.List;
 
 import retrofit2.Call;
 
@@ -42,9 +40,9 @@ public class HomeRepository {
         return instance;
     }
 
-    public Call<LayoutResponse> fetchHomeData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchHomeData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
-        Call<LayoutResponse> call = homeApi.getHomeData(request);
+        Call<RawRespData> call = homeApi.getHomeData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }

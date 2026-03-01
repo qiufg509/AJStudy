@@ -9,7 +9,7 @@ import com.qiufengguang.ajstudy.view.DynamicToolbar;
  * @since 2026/1/29 11:29
  */
 public class PageConfig {
-    boolean isDarkBackground;
+    StatusBarMode statusBarMode = StatusBarMode.DARK;
 
     boolean overlayTitleBar;
 
@@ -22,8 +22,14 @@ public class PageConfig {
     private PageConfig() {
     }
 
+    public enum StatusBarMode {
+        NONE,
+        LIGHT,
+        DARK
+    }
+
     public static class Builder {
-        boolean isDarkBackground;
+        StatusBarMode statusBarMode = StatusBarMode.DARK;
 
         boolean overlayTitleBar;
 
@@ -38,12 +44,13 @@ public class PageConfig {
          * 内容是否延伸到半透明底部导航栏下面是否为深色背景
          * 深色背景则设置浅色状态栏文字、icon
          * 浅色背景则设置深色状态栏文字、icon
+         * NONE不控制
          *
-         * @param darkBackground true深色 false浅色
+         * @param statusBarMode 状态栏颜色模式
          * @return Builder
          */
-        public PageConfig.Builder setDarkBackground(boolean darkBackground) {
-            isDarkBackground = darkBackground;
+        public PageConfig.Builder setStatusBarMode(StatusBarMode statusBarMode) {
+            this.statusBarMode = statusBarMode;
             return this;
         }
 
@@ -83,6 +90,7 @@ public class PageConfig {
 
         /**
          * 设置标题模式
+         * Mode.GONE 时 overlayTitleBar 无效
          *
          * @param titleBarMode {@link DynamicToolbar.Mode}
          * @return DynamicToolbar.Mode
@@ -94,7 +102,7 @@ public class PageConfig {
 
         public PageConfig create() {
             PageConfig config = new PageConfig();
-            config.isDarkBackground = this.isDarkBackground;
+            config.statusBarMode = this.statusBarMode;
             config.overlayTitleBar = this.overlayTitleBar;
             config.hasNaviBar = this.hasNaviBar;
             config.overlayNaviBar = this.overlayNaviBar;

@@ -1,6 +1,6 @@
 package com.qiufengguang.ajstudy.data.remote.api;
 
-import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.router.Router;
 
@@ -16,5 +16,5 @@ import retrofit2.http.POST;
  */
 public interface AppListApi {
     @POST(Router.URI.PAGE_APP_LIST)
-    Call<LayoutResponse> getAppListData(@Body Request request);
+    Call<RawRespData> getAppListData(@Body Request request);
 }

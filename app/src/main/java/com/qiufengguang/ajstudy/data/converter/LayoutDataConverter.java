@@ -5,8 +5,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.qiufengguang.ajstudy.card.about.AboutCard;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
+import com.qiufengguang.ajstudy.card.brief.BriefCard;
+import com.qiufengguang.ajstudy.card.comment.CommentCard;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
 import com.qiufengguang.ajstudy.card.graphiclgrid.GraphicLGridCard;
@@ -15,22 +18,35 @@ import com.qiufengguang.ajstudy.card.graphics.GraphicCardS;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
+import com.qiufengguang.ajstudy.card.recommend.RecommendCard;
+import com.qiufengguang.ajstudy.card.screenshot.ScreenshotCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
+import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
+import com.qiufengguang.ajstudy.data.base.PageData;
+import com.qiufengguang.ajstudy.data.model.AboutCardBean;
 import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.data.model.BannerBean;
+import com.qiufengguang.ajstudy.data.model.BriefCardBean;
+import com.qiufengguang.ajstudy.data.model.CommentCardBean;
+import com.qiufengguang.ajstudy.data.model.DetailAppData;
+import com.qiufengguang.ajstudy.data.model.DetailHead;
 import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.data.model.NormalCardBean;
+import com.qiufengguang.ajstudy.data.model.RecommendCardBean;
+import com.qiufengguang.ajstudy.data.model.ScreenshotCardBean;
 import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.model.SettingCardBean;
+import com.qiufengguang.ajstudy.data.model.TextCardBean;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.remote.dto.LayoutDataDTO;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -45,9 +61,16 @@ import java.util.List;
 public class LayoutDataConverter {
     private static final String TAG = "LayoutDataConverter";
 
-    public static List<LayoutData<?>> convert(Gson gson, List<LayoutDataDTO> dtoList) {
-        List<LayoutData<?>> result = new ArrayList<>();
-        for (LayoutDataDTO dto : dtoList) {
+    public static PageData convert(Gson gson, RawRespData rawRespData) {
+        PageData pageData = new PageData();
+        pageData.setCount(rawRespData.getCount());
+        pageData.setHasNextPage(rawRespData.getHasNextPage());
+        pageData.setName(rawRespData.getName());
+        pageData.setTotalPages(rawRespData.getTotalPages());
+        pageData.setTabs(rawRespData.getTabs());
+        pageData.setRtnCode(rawRespData.getRtnCode());
+        List<LayoutData<?>> dataList = new ArrayList<>();
+        for (LayoutDataDTO dto : rawRespData.getLayoutData()) {
             if (dto.getDataList() == null || dto.getDataList().isEmpty()) {
                 continue;
             }
@@ -55,12 +78,15 @@ public class LayoutDataConverter {
             String title = dto.getName();
             String detailId = dto.getDetailId();
 
-            LayoutData<?> layoutData = parseByLayoutId(gson, layoutId, dto.getDataList(), title, detailId);
+            LayoutData<?> layoutData = parseByLayoutId(
+                gson, layoutId, dto.getDataList(), title, detailId
+            );
             if (layoutData != null) {
-                result.add(layoutData);
+                dataList.add(layoutData);
             }
         }
-        return result;
+        pageData.setLayoutData(dataList);
+        return pageData;
     }
 
     @SuppressWarnings("DuplicateBranchesInSwitch")
@@ -130,6 +156,54 @@ public class LayoutDataConverter {
                     }.getType();
                     List<SettingCardBean> settingList = gson.fromJson(dataArray, settingType);
                     return LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingList);
+
+                case DetailHead.LAYOUT_ID:
+                    Type detailHeadType = new TypeToken<DetailHead>() {
+                    }.getType();
+                    DetailHead detailHead = gson.fromJson(dataArray.get(0), detailHeadType);
+                    return LayoutDataFactory.createSingle(DetailHead.LAYOUT_ID, detailHead);
+
+                case DetailAppData.LAYOUT_ID:
+                    Type detailAppDataType = new TypeToken<DetailAppData>() {
+                    }.getType();
+                    DetailAppData detailAppData = gson.fromJson(dataArray.get(0), detailAppDataType);
+                    return LayoutDataFactory.createSingle(DetailAppData.LAYOUT_ID, detailAppData);
+
+                case ScreenshotCard.LAYOUT_ID:
+                    Type screenshotType = new TypeToken<List<ScreenshotCardBean>>() {
+                    }.getType();
+                    List<ScreenshotCardBean> screenshotList = gson.fromJson(dataArray, screenshotType);
+                    return LayoutDataFactory.createCollection(ScreenshotCard.LAYOUT_ID, screenshotList);
+
+                case BriefCard.LAYOUT_ID:
+                    Type briefType = new TypeToken<BriefCardBean>() {
+                    }.getType();
+                    BriefCardBean briefCardBean = gson.fromJson(dataArray.get(0), briefType);
+                    return LayoutDataFactory.createSingle(BriefCard.LAYOUT_ID, briefCardBean);
+
+                case AboutCard.LAYOUT_ID:
+                    Type aboutType = new TypeToken<AboutCardBean>() {
+                    }.getType();
+                    AboutCardBean aboutCardBean = gson.fromJson(dataArray.get(0), aboutType);
+                    return LayoutDataFactory.createSingle(AboutCard.LAYOUT_ID, aboutCardBean);
+
+                case TextCard.LAYOUT_ID:
+                    Type textType = new TypeToken<TextCardBean>() {
+                    }.getType();
+                    TextCardBean textCardBean = gson.fromJson(dataArray.get(0), textType);
+                    return LayoutDataFactory.createSingle(TextCard.LAYOUT_ID, textCardBean);
+
+                case CommentCard.LAYOUT_ID:
+                    Type commentType = new TypeToken<CommentCardBean>() {
+                    }.getType();
+                    CommentCardBean commentCardBean = gson.fromJson(dataArray.get(0), commentType);
+                    return LayoutDataFactory.createSingle(CommentCard.LAYOUT_ID, commentCardBean);
+
+                case RecommendCard.LAYOUT_ID:
+                    Type recommendType = new TypeToken<RecommendCardBean>() {
+                    }.getType();
+                    RecommendCardBean recommendCardBean = gson.fromJson(dataArray.get(0), recommendType);
+                    return LayoutDataFactory.createSingle(RecommendCard.LAYOUT_ID, recommendCardBean);
 
                 case TitleCard.LAYOUT_ID:
                     return LayoutDataFactory.createSingle(layoutId, null, title, detailId);

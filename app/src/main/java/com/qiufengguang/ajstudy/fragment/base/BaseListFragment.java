@@ -46,7 +46,11 @@ public abstract class BaseListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         PageConfig config = getPageConfig();
-        StatusBarUtil.setLightStatusBar(requireActivity(), !config.isDarkBackground);
+        if (config.statusBarMode == PageConfig.StatusBarMode.LIGHT) {
+            StatusBarUtil.setLightStatusBar(requireActivity(), false);
+        } else if (config.statusBarMode == PageConfig.StatusBarMode.DARK) {
+            StatusBarUtil.setLightStatusBar(requireActivity(), true);
+        }
 
         setupLayout(config);
         setupContent();
@@ -110,7 +114,12 @@ public abstract class BaseListFragment extends Fragment {
         baseBinding.recyclerContainer.removeItemDecoration(decor);
         baseBinding.recyclerContainer.addItemDecoration(decor);
 
-        setupToolbar(config.mode);
+        if (config.mode != DynamicToolbar.Mode.GONE) {
+            baseBinding.titleBar.setVisibility(View.VISIBLE);
+            setupToolbar(config.mode);
+        } else {
+            baseBinding.titleBar.setVisibility(View.GONE);
+        }
     }
 
     private void setupToolbar(DynamicToolbar.Mode mode) {

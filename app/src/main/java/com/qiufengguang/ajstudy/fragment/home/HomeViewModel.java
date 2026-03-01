@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.repository.HomeRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
@@ -39,9 +40,9 @@ public class HomeViewModel extends BaseViewModel {
 
         currentCall = repository.fetchHomeData(new OnDataLoadedCallback<>() {
             @Override
-            public void onSuccess(List<LayoutData<?>> data) {
+            public void onSuccess(PageData data) {
                 loadingLiveData.postValue(false);
-                liveData.postValue(data);
+                liveData.postValue(data.getLayoutData());
             }
 
             @Override

@@ -5,11 +5,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.converter.LayoutDataConverter;
-import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
-
-import java.util.List;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,30 +19,30 @@ import retrofit2.Response;
  * @author qiufengguang
  * @since 2026/2/28 15:00
  */
-public class LayoutRespCallback implements Callback<LayoutResponse> {
+public class LayoutRespCallback implements Callback<RawRespData> {
     private static final String TAG = "LayoutRespCallback";
 
-    OnDataLoadedCallback<List<LayoutData<?>>> callback;
+    OnDataLoadedCallback<PageData> callback;
 
     private final Gson gson;
 
-    public LayoutRespCallback(Gson gson, OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public LayoutRespCallback(Gson gson, OnDataLoadedCallback<PageData> callback) {
         this.gson = gson;
         this.callback = callback;
     }
 
     @Override
     public void onResponse(
-        @NonNull Call<LayoutResponse> call,
-        @NonNull Response<LayoutResponse> response
+        @NonNull Call<RawRespData> call,
+        @NonNull Response<RawRespData> response
     ) {
         if (response.isSuccessful() && response.body() != null) {
-            LayoutResponse layoutResponse = response.body();
-            if (layoutResponse.isSuccess()) {
-                List<LayoutData<?>> layoutDataList = LayoutDataConverter.convert(gson, layoutResponse.getLayoutData());
-                callback.onSuccess(layoutDataList);
+            RawRespData rawRespData = response.body();
+            if (rawRespData.isSuccess()) {
+                PageData pageData = LayoutDataConverter.convert(gson, rawRespData);
+                callback.onSuccess(pageData);
             } else {
-                Log.e(TAG, "Server error code: " + layoutResponse.getRtnCode());
+                Log.e(TAG, "Server error code: " + rawRespData.getRtnCode());
                 callback.onFailure(new Exception("Server error"));
             }
         } else {
@@ -53,7 +51,7 @@ public class LayoutRespCallback implements Callback<LayoutResponse> {
     }
 
     @Override
-    public void onFailure(@NonNull Call<LayoutResponse> call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<RawRespData> call, @NonNull Throwable t) {
         callback.onFailure(t);
     }
 }

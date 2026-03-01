@@ -1,8 +1,11 @@
 package com.qiufengguang.ajstudy.global;
 
+import com.qiufengguang.ajstudy.card.about.AboutCard;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.base.Card;
+import com.qiufengguang.ajstudy.card.brief.BriefCard;
+import com.qiufengguang.ajstudy.card.comment.CommentCard;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
 import com.qiufengguang.ajstudy.card.graphiclgrid.GraphicLGridCard;
@@ -11,8 +14,11 @@ import com.qiufengguang.ajstudy.card.graphics.GraphicCardS;
 import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.card.normal.NormalCard;
+import com.qiufengguang.ajstudy.card.recommend.RecommendCard;
+import com.qiufengguang.ajstudy.card.screenshot.ScreenshotCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
+import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 
@@ -40,5 +46,11 @@ public class CardRegistrar {
         Card.register(EmptyCard.LAYOUT_ID_1, new EmptyCard.WrapCreator());
         Card.register(EmptyCard.LAYOUT_ID_2, new EmptyCard.FullCreator());
         Card.register(TitleCard.LAYOUT_ID, new TitleCard.Creator());
+        Card.register(AboutCard.LAYOUT_ID, new AboutCard.Creator());
+        Card.register(BriefCard.LAYOUT_ID, new BriefCard.Creator());
+        Card.register(ScreenshotCard.LAYOUT_ID, new ScreenshotCard.Creator());
+        Card.register(TextCard.LAYOUT_ID, new TextCard.Creator());
+        Card.register(RecommendCard.LAYOUT_ID, new RecommendCard.Creator());
+        Card.register(CommentCard.LAYOUT_ID, new CommentCard.Creator());
     }
 }

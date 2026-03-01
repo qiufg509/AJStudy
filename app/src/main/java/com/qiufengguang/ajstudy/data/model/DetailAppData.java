@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.model;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+
 import java.util.Locale;
 
 /**
@@ -8,12 +10,12 @@ import java.util.Locale;
  * @author qiufengguang
  * @since 2025/12/10 0:18
  */
-public class DetailAppData {
-    public static final String LAYOUT_NAME = "appdetaildatacard";
+public class DetailAppData extends BaseCardBean {
+    public static final int LAYOUT_ID = 101;
 
-    String fullSize;
+    long fullSize;
 
-    String scoredBy;
+    long scoredBy;
 
     String stars;
 
@@ -25,19 +27,19 @@ public class DetailAppData {
 
     GradeInfo gradeInfo;
 
-    public String getFullSize() {
+    public long getFullSize() {
         return fullSize;
     }
 
-    public void setFullSize(String fullSize) {
+    public void setFullSize(long fullSize) {
         this.fullSize = fullSize;
     }
 
-    public String getScoredBy() {
+    public long getScoredBy() {
         return scoredBy;
     }
 
-    public void setScoredBy(String scoredBy) {
+    public void setScoredBy(long scoredBy) {
         this.scoredBy = scoredBy;
     }
 

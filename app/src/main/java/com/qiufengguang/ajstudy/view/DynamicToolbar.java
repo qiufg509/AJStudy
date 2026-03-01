@@ -41,7 +41,11 @@ public class DynamicToolbar extends ConstraintLayout {
         /**
          * 返回+标题+分享
          */
-        BACK_TITLE_SHARE
+        BACK_TITLE_SHARE,
+        /**
+         * 标题控件隐藏
+         */
+        GONE
     }
 
     private LayoutTitleBarBaseBinding binding;

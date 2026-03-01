@@ -10,9 +10,13 @@ import com.google.gson.JsonArray;
  */
 public class LayoutDataDTO {
     private int layoutId;
+
     private String layoutName;
+
     private String name;
+
     private String subTitle;
+
     private JsonArray dataList;
 
     private String detailId;

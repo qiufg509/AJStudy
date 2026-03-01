@@ -3,7 +3,7 @@ package com.qiufengguang.ajstudy.data.repository;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.remote.api.AppListApi;
@@ -12,12 +12,10 @@ import com.qiufengguang.ajstudy.data.remote.api.FavoritesApi;
 import com.qiufengguang.ajstudy.data.remote.api.HelpFeedbackApi;
 import com.qiufengguang.ajstudy.data.remote.api.StudyRecordApi;
 import com.qiufengguang.ajstudy.data.remote.api.UserApi;
-import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
 import com.qiufengguang.ajstudy.router.Router;
-
-import java.util.List;
 
 import retrofit2.Call;
 
@@ -64,10 +62,10 @@ public class SecondaryRepository {
         return instance;
     }
 
-    public Call<LayoutResponse> fetchData(
+    public Call<RawRespData> fetchData(
         @NonNull String uri,
         String directory,
-        final OnDataLoadedCallback<List<LayoutData<?>>> callback
+        final OnDataLoadedCallback<PageData> callback
     ) {
         switch (uri) {
             case Router.URI.PAGE_APP_LIST:
@@ -87,44 +85,44 @@ public class SecondaryRepository {
         }
     }
 
-    public Call<LayoutResponse> fetchAppListData(String directory, final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchAppListData(String directory, final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request(directory);
-        Call<LayoutResponse> call = appListApi.getAppListData(request);
+        Call<RawRespData> call = appListApi.getAppListData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }
 
-    public Call<LayoutResponse> fetchArticleListData(String directory, final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchArticleListData(String directory, final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request(directory);
-        Call<LayoutResponse> call = articleListApi.getArticleListData(request);
+        Call<RawRespData> call = articleListApi.getArticleListData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }
 
-    public Call<LayoutResponse> fetchFavoritesData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchFavoritesData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
-        Call<LayoutResponse> call = favoritesApi.getFavoritesData(request);
+        Call<RawRespData> call = favoritesApi.getFavoritesData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }
 
-    public Call<LayoutResponse> fetchStudyRecordData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchStudyRecordData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
-        Call<LayoutResponse> call = studyRecordApi.getStudyRecordData(request);
+        Call<RawRespData> call = studyRecordApi.getStudyRecordData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }
 
-    public Call<LayoutResponse> fetchUserData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchUserData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
-        Call<LayoutResponse> call = userApi.getUserData(request);
+        Call<RawRespData> call = userApi.getUserData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }
 
-    public Call<LayoutResponse> fetchHelpFeedbackData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+    public Call<RawRespData> fetchHelpFeedbackData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
-        Call<LayoutResponse> call = helpFeedbackApi.getHelpFeedbackData(request);
+        Call<RawRespData> call = helpFeedbackApi.getHelpFeedbackData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }

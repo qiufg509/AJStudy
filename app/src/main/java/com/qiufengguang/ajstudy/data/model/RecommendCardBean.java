@@ -1,14 +1,14 @@
 package com.qiufengguang.ajstudy.data.model;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+
 /**
- * 详情页-推荐子页面数据bean
+ * 推荐卡片数据bean
  *
  * @author qiufengguang
  * @since 2025/12/12 15:47
  */
-public class DetailRecommend {
-    public static final String LAYOUT_NAME = "horizonhomecard";
-
+public class RecommendCardBean extends BaseCardBean {
     private String icon;
 
     private String name;

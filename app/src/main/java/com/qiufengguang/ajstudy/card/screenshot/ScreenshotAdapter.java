@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.fragment.introduction;
+package com.qiufengguang.ajstudy.card.screenshot;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -18,7 +18,7 @@ import com.qiufengguang.ajstudy.databinding.SubItemIntroductionScreenBinding;
 import java.util.List;
 
 /**
- * 详情-介绍子页面截图预览适配器
+ * 截图卡适配器
  *
  * @author qiufengguang
  * @since 2025/12/13 11:49
@@ -26,6 +26,10 @@ import java.util.List;
 public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.ScreenshotViewHolder> {
 
     private List<String> screenshotUrls;
+
+    public ScreenshotAdapter(List<String> screenshotUrls) {
+        this.screenshotUrls = screenshotUrls;
+    }
 
     public void updateData(List<String> screenshotUrls) {
         if (screenshotUrls == null || screenshotUrls.isEmpty()) {
