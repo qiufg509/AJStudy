@@ -49,7 +49,7 @@ public class LuckyWheelHolder extends BaseViewHolder<CardLuckyWheelBinding> {
         }
         @SuppressWarnings("unchecked")
         List<LuckyWheelCardBean> beans = (List<LuckyWheelCardBean>) data.getData();
-        card.setData(beans, data.getCardTitle());
+        card.setData(beans, data.getName());
     }
 
 

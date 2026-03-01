@@ -1,15 +1,12 @@
 package com.qiufengguang.ajstudy.card.setting;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSettingBinding;
-import com.qiufengguang.ajstudy.router.AppNavigator;
 
 import java.util.List;
 
@@ -38,7 +35,7 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
             .setHorizontalSpacing(horizontalSpacing)
-            .setListener(SettingCardHolder::onItemClickListener)
+            .setListener(this::onCommonClickListener)
             .create();
         card.show();
     }
@@ -54,11 +51,7 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
         }
         @SuppressWarnings("unchecked")
         List<SettingCardBean> beans = (List<SettingCardBean>) data.getData();
-        card.setData(beans, data.getCardTitle());
-    }
-
-    private static void onItemClickListener(Context context, SettingCardBean bean) {
-        AppNavigator.getInstance().startSecondActivity(context, bean.getUri(), bean.getTitle());
+        card.setData(beans, data.getName());
     }
 
     @Override

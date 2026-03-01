@@ -7,13 +7,23 @@ package com.qiufengguang.ajstudy.data.base;
  * @since 2026/1/19 14:20
  */
 public abstract class BaseCardBean {
-    private String uri;
+    private String title;
 
-    public String getUri() {
-        return uri;
+    private String detailId;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(String detailId) {
+        this.detailId = detailId;
     }
 }

@@ -9,12 +9,12 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- * HomeApi
+ * StudyRecordApi
  *
  * @author qiufengguang
- * @since 2026/2/28 14:49
+ * @since 2026/2/28 14:48
  */
-public interface HomeApi {
-    @POST(Router.URI.PAGE_HOME)
-    Call<LayoutResponse> getHomeData(@Body Request request);
+public interface StudyRecordApi {
+    @POST(Router.URI.PAGE_STUDY_RECORD)
+    Call<LayoutResponse> getStudyRecordData(@Body Request request);
 }

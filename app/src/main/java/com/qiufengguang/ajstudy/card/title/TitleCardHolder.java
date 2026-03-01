@@ -44,7 +44,7 @@ public class TitleCardHolder extends BaseViewHolder<CardTitleBinding> {
         if (card == null) {
             initCard();
         }
-        card.setData(data.getCardTitle());
+        card.setData(data.getName());
     }
 
     @Override

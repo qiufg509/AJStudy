@@ -23,7 +23,7 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         StatusBarUtil.makeStatusBarTransparent(this);
         if (savedInstanceState == null) {
-            Bundle args = getIntent().getBundleExtra(Router.EXTRA_SECOND_PAGE);
+            Bundle args = getIntent().getBundleExtra(Router.EXTRA_DATA);
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, SecondFragment.newInstance(args))
                 .commitNow();

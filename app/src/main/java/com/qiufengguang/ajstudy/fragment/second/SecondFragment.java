@@ -11,8 +11,6 @@ import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
 public class SecondFragment extends BaseGridFragment {
-    public static final String ARG_NAVIGATE_TO = "navigateTo";
-
     public static SecondFragment newInstance(Bundle args) {
         SecondFragment f = new SecondFragment();
         f.setArguments(args);
@@ -39,7 +37,7 @@ public class SecondFragment extends BaseGridFragment {
         }
         setTitle(arguments.getString(Router.EXTRA_TITLE));
         String uri = arguments.getString(Router.EXTRA_URI);
-        String navigateTo = arguments.getString(ARG_NAVIGATE_TO);
-        viewModel.initData(uri, navigateTo);
+        String directory = arguments.getString(Router.EXTRA_DIRECTORY);
+        viewModel.loadData(uri, directory);
     }
 }

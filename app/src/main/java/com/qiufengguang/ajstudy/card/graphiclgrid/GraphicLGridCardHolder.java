@@ -51,7 +51,7 @@ public class GraphicLGridCardHolder extends BaseViewHolder<CardGraphicLGridBindi
         }
         @SuppressWarnings("unchecked")
         List<GraphicCardBean> beans = (List<GraphicCardBean>) data.getData();
-        card.setData(beans, data.getCardTitle());
+        card.setData(beans, data.getName());
     }
 
     @Override

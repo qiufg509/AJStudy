@@ -199,7 +199,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
             // 设置点击事件
             this.binding.banner.setOnClickListener(v -> {
                 if (clickListener != null && bean != null) {
-                    clickListener.onItemClick(v.getContext(), currentRealPosition, bean);
+                    clickListener.onItemClick(v.getContext(), bean);
                 }
             });
         }

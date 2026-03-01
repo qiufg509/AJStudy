@@ -13,10 +13,9 @@ public abstract class LayoutData<T> {
     @IntRange
     private int layoutId;
 
+    private String name;
 
-    private String cardTitle;
-
-    private String uri;
+    private String detailId;
 
     protected final T data;
 
@@ -26,15 +25,15 @@ public abstract class LayoutData<T> {
         this.data = beans;
     }
 
-    public LayoutData(T beans, String cardTitle) {
+    public LayoutData(T beans, String name) {
         this.data = beans;
-        this.cardTitle = cardTitle;
+        this.name = name;
     }
 
-    public LayoutData(T beans, String cardTitle, String uri) {
+    public LayoutData(T beans, String name, String detailId) {
         this.data = beans;
-        this.cardTitle = cardTitle;
-        this.uri = uri;
+        this.name = name;
+        this.detailId = detailId;
     }
 
     @IntRange
@@ -50,12 +49,12 @@ public abstract class LayoutData<T> {
         return data;
     }
 
-    public String getCardTitle() {
-        return cardTitle;
+    public String getName() {
+        return name;
     }
 
-    public String getUri() {
-        return uri;
+    public String getDetailId() {
+        return detailId;
     }
 
     public String getExt() {

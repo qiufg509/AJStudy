@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -136,6 +137,46 @@ public final class AppNavigator {
         startActivity(context, intent, launcher);
     }
 
+    public void jumpTo(@NonNull Context context, String detailId, String title) {
+        if (TextUtils.isEmpty(detailId)) {
+            return;
+        }
+        String pageId;
+        String uri;
+        String directory = "";
+        int firstSlash = detailId.indexOf('/');
+        if (firstSlash == -1) {
+            Log.w(TAG, "jumpTo: Invalid format for detailId.");
+            return;
+        }
+        pageId = detailId.substring(0, firstSlash);
+        int secondSlash = detailId.indexOf('/', firstSlash + 1);
+        if (secondSlash == -1) {
+            uri = detailId.substring(firstSlash + 1);
+        } else {
+            uri = detailId.substring(firstSlash + 1, secondSlash);
+            directory = detailId.substring(secondSlash + 1);
+        }
+        Bundle args = new Bundle();
+        args.putString(Router.EXTRA_URI, uri);
+        args.putString(Router.EXTRA_TITLE, title);
+        args.putString(Router.EXTRA_DIRECTORY, directory);
+        switch (pageId) {
+            case Router.PAGE_ID.APP_DETAIL:
+                startDetailActivity(context, args);
+                break;
+            case Router.PAGE_ID.ARTICLE_DETAIL:
+                startArticleActivity(context, args);
+                break;
+            case Router.PAGE_ID.SECONDARY:
+                startSecondActivity(context, args);
+                break;
+            default:
+                Log.w(TAG, "jumpTo: The jump page pointed to by detailId does not exist.");
+                break;
+        }
+    }
+
     // ==================== 业务页面专用跳转方法 ====================
 
     /**
@@ -147,6 +188,18 @@ public final class AppNavigator {
      */
     public void startDetailActivity(@NonNull Context context, @NonNull String uri, String title) {
         startDetailActivity(context, uri, title, null);
+    }
+
+    /**
+     * 跳转详情页
+     *
+     * @param context 上下文
+     * @param args    参数Bundle
+     */
+    private void startDetailActivity(Context context, Bundle args) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(Router.EXTRA_DATA, args);
+        startActivity(context, intent, null);
     }
 
     /**
@@ -178,6 +231,18 @@ public final class AppNavigator {
      */
     public void startArticleActivity(@NonNull Context context, @NonNull String uri, String title) {
         startArticleActivity(context, uri, title, null);
+    }
+
+    /**
+     * 跳转文章页
+     *
+     * @param context 上下文
+     * @param args    参数Bundle
+     */
+    private void startArticleActivity(Context context, Bundle args) {
+        Intent intent = new Intent(context, MarkdownActivity.class);
+        intent.putExtra(Router.EXTRA_DATA, args);
+        startActivity(context, intent, null);
     }
 
     /**
@@ -223,7 +288,7 @@ public final class AppNavigator {
      */
     public void startSecondActivity(@NonNull Context context, Bundle args) {
         Intent intent = new Intent(context, SecondActivity.class);
-        intent.putExtra(Router.EXTRA_SECOND_PAGE, args);
+        intent.putExtra(Router.EXTRA_DATA, args);
         startActivity(context, intent, null);
     }
 
@@ -245,7 +310,7 @@ public final class AppNavigator {
         Bundle args = new Bundle();
         args.putString(Router.EXTRA_URI, uri);
         args.putString(Router.EXTRA_TITLE, title);
-        intent.putExtra(Router.EXTRA_SECOND_PAGE, args);
+        intent.putExtra(Router.EXTRA_DATA, args);
         startActivity(context, intent, launcher);
     }
 

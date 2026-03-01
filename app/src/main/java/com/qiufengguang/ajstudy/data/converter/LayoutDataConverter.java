@@ -23,8 +23,8 @@ import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.data.model.BannerBean;
-import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
+import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.data.model.NormalCardBean;
 import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
@@ -53,9 +53,9 @@ public class LayoutDataConverter {
             }
             int layoutId = dto.getLayoutId();
             String title = dto.getName();
-            String actionUrl = dto.getSubTitle();
+            String detailId = dto.getDetailId();
 
-            LayoutData<?> layoutData = parseByLayoutId(gson, layoutId, dto.getDataList(), title, actionUrl);
+            LayoutData<?> layoutData = parseByLayoutId(gson, layoutId, dto.getDataList(), title, detailId);
             if (layoutData != null) {
                 result.add(layoutData);
             }
@@ -69,7 +69,7 @@ public class LayoutDataConverter {
         int layoutId,
         JsonArray dataArray,
         String title,
-        String actionUrl
+        String detailId
     ) {
         try {
             switch (layoutId) {
@@ -89,7 +89,7 @@ public class LayoutDataConverter {
                     Type seriesType = new TypeToken<List<SeriesCardBean>>() {
                     }.getType();
                     List<SeriesCardBean> seriesList = gson.fromJson(dataArray, seriesType);
-                    return LayoutDataFactory.createCollection(layoutId, seriesList, title, actionUrl);
+                    return LayoutDataFactory.createCollection(layoutId, seriesList, title, detailId);
 
                 case LuckyWheelCard.LAYOUT_ID:
                     Type wheelType = new TypeToken<List<LuckyWheelCardBean>>() {
@@ -114,13 +114,13 @@ public class LayoutDataConverter {
                     return LayoutDataFactory.createCollection(layoutId, graphicGridList, title);
 
                 case NormalCard.LAYOUT_ID:
-                    Type normalType = new TypeToken<List<NormalCardBean>>() {
+                    Type normalType = new TypeToken<NormalCardBean>() {
                     }.getType();
-                    List<SeriesCardBean> normalList = gson.fromJson(dataArray, normalType);
-                    return LayoutDataFactory.createCollection(layoutId, normalList, title, actionUrl);
+                    NormalCardBean normalCardBean = gson.fromJson(dataArray.get(0), normalType);
+                    return LayoutDataFactory.createSingle(layoutId, normalCardBean, title, detailId);
 
                 case SimpleUserCard.LAYOUT_ID:
-                    Type userType = new TypeToken<List<User>>() {
+                    Type userType = new TypeToken<User>() {
                     }.getType();
                     User user = gson.fromJson(dataArray.get(0), userType);
                     return LayoutDataFactory.createSingle(layoutId, user);
@@ -132,7 +132,7 @@ public class LayoutDataConverter {
                     return LayoutDataFactory.createCollection(SettingCard.LAYOUT_ID, settingList);
 
                 case TitleCard.LAYOUT_ID:
-                    return LayoutDataFactory.createSingle(layoutId, null, title, actionUrl);
+                    return LayoutDataFactory.createSingle(layoutId, null, title, detailId);
 
                 case EmptyCard.LAYOUT_ID_1:
                 case EmptyCard.LAYOUT_ID_2:

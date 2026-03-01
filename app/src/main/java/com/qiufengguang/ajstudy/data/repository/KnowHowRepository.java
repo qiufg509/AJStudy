@@ -2,9 +2,9 @@ package com.qiufengguang.ajstudy.data.repository;
 
 import com.google.gson.Gson;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
-import com.qiufengguang.ajstudy.data.remote.api.HomeApi;
+import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.remote.api.KnowHowApi;
 import com.qiufengguang.ajstudy.data.remote.dto.LayoutResponse;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
@@ -14,37 +14,38 @@ import java.util.List;
 import retrofit2.Call;
 
 /**
- * 首页仓库层
+ * 知识页页仓库层
  *
  * @author qiufengguang
- * @since 2026/2/26 14:49
+ * @since 2026/2/28 15:12
  */
-public class HomeRepository {
-    private static volatile HomeRepository instance;
+public class KnowHowRepository {
+    private static volatile KnowHowRepository instance;
 
-    private final HomeApi homeApi;
+    private final KnowHowApi api;
 
     private final Gson gson;
 
-    private HomeRepository() {
-        homeApi = RetrofitClient.getHomeApi();
+    private KnowHowRepository() {
+        api = RetrofitClient.getKnowHowApi();
         gson = new Gson();
     }
 
-    public static HomeRepository getInstance() {
+    public static KnowHowRepository getInstance() {
         if (instance == null) {
-            synchronized (HomeRepository.class) {
+            synchronized (KnowHowRepository.class) {
                 if (instance == null) {
-                    instance = new HomeRepository();
+                    instance = new KnowHowRepository();
                 }
             }
         }
         return instance;
     }
 
-    public Call<LayoutResponse> fetchHomeData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
+
+    public Call<LayoutResponse> fetchKnowHowData(final OnDataLoadedCallback<List<LayoutData<?>>> callback) {
         Request request = new Request();
-        Call<LayoutResponse> call = homeApi.getHomeData(request);
+        Call<LayoutResponse> call = api.getKnowHowData(request);
         call.enqueue(new LayoutRespCallback(gson, callback));
         return call;
     }

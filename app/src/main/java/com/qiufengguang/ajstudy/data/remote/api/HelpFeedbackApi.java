@@ -9,12 +9,12 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- * HomeApi
+ * HelpFeedbackApi
  *
  * @author qiufengguang
- * @since 2026/2/28 14:49
+ * @since 2026/2/28 18:33
  */
-public interface HomeApi {
-    @POST(Router.URI.PAGE_HOME)
-    Call<LayoutResponse> getHomeData(@Body Request request);
+public interface HelpFeedbackApi {
+    @POST(Router.URI.PAGE_HELP_FEEDBACK)
+    Call<LayoutResponse> getHelpFeedbackData(@Body Request request);
 }

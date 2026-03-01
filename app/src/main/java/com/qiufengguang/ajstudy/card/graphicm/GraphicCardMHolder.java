@@ -1,14 +1,11 @@
 package com.qiufengguang.ajstudy.card.graphicm;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGraphicMBinding;
-import com.qiufengguang.ajstudy.router.AppNavigator;
 
 /**
  * 中尺寸图文卡的ViewHolder
@@ -34,7 +31,7 @@ public class GraphicCardMHolder extends BaseViewHolder<CardGraphicMBinding> {
             .setTvTitle(binding.tvTitle)
             .setTvSubTitle(binding.tvSubtitle)
             .setIvPic(binding.ivPic)
-            .setListener(this::onItemClickListener)
+            .setListener(this::onCommonClickListener)
             .create();
         card.show();
     }
@@ -50,11 +47,6 @@ public class GraphicCardMHolder extends BaseViewHolder<CardGraphicMBinding> {
         }
         GraphicCardBean bean = (GraphicCardBean) data.getData();
         card.setData(bean);
-    }
-
-    private void onItemClickListener(Context context, GraphicCardBean bean) {
-        AppNavigator.getInstance().startArticleActivity(
-            context, bean.getUri(), bean.getTitle());
     }
 
     @Override

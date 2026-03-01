@@ -1,11 +1,15 @@
 package com.qiufengguang.ajstudy.card.base;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.router.AppNavigator;
 
 /**
  * 卡片基类ViewHolder
@@ -47,6 +51,17 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
             return;
         }
         this.bind(data);
+    }
+
+    /**
+     * 通用点击事件
+     *
+     * @param context 上下文
+     * @param bean    BaseCardBean
+     */
+    protected void onCommonClickListener(Context context, BaseCardBean bean) {
+        AppNavigator.getInstance().jumpTo(
+            context, bean.getDetailId(), bean.getTitle());
     }
 
     /**

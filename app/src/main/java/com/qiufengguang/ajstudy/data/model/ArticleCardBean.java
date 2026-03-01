@@ -1,7 +1,6 @@
 package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
-import com.qiufengguang.ajstudy.global.Constant;
 
 import java.util.List;
 
@@ -20,46 +19,47 @@ public class ArticleCardBean extends BaseCardBean {
 
     private List<Article> articles;
 
-    public ArticleCardBean(String author, String avatar, long publishTime, List<Article> articles) {
-        this.author = author;
-        this.avatar = avatar;
-        this.publishTime = publishTime;
-        this.articles = articles;
-        setUri(Constant.Data.DETAIL_SPRING);
-    }
-
     public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getAvatar() {
         return avatar;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public long getPublishTime() {
         return publishTime;
+    }
+
+    public void setPublishTime(long publishTime) {
+        this.publishTime = publishTime;
     }
 
     public List<Article> getArticles() {
         return articles;
     }
 
-    public static class Article {
-        private String title;
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 
+    public static class Article extends BaseCardBean {
         private String imageUrl;
-
-        public Article(String title, String imageUrl) {
-            this.title = title;
-            this.imageUrl = imageUrl;
-        }
-
-        public String getTitle() {
-            return title;
-        }
 
         public String getImageUrl() {
             return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
     }
 }

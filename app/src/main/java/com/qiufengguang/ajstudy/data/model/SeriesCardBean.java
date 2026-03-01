@@ -1,7 +1,6 @@
 package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
-import com.qiufengguang.ajstudy.global.Constant;
 
 /**
  * 系列卡片数据bean
@@ -10,9 +9,7 @@ import com.qiufengguang.ajstudy.global.Constant;
  * @since 2026/1/25 15:44
  */
 public class SeriesCardBean extends BaseCardBean {
-    private final String title;
-
-    private final String imageUrl;
+    private String imageUrl;
 
     private String tag;
 
@@ -20,55 +17,35 @@ public class SeriesCardBean extends BaseCardBean {
 
     private String totalDuration;
 
-
-    public SeriesCardBean(String title, String imageUrl) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-    }
-
-    public SeriesCardBean(String title, String imageUrl, String tag) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.tag = tag;
-    }
-
-    public SeriesCardBean(String title, String imageUrl, String viewCount, String totalDuration) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.viewCount = viewCount;
-        this.totalDuration = totalDuration;
-    }
-
-    public SeriesCardBean(String title, String imageUrl, String tag, String viewCount, String totalDuration) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.tag = tag;
-        this.viewCount = viewCount;
-        this.totalDuration = totalDuration;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getTag() {
         return tag;
     }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     public String getViewCount() {
         return viewCount;
+    }
+
+    public void setViewCount(String viewCount) {
+        this.viewCount = viewCount;
     }
 
     public String getTotalDuration() {
         return totalDuration;
     }
 
-    @Override
-    public String getUri() {
-        return Constant.Data.DETAIL_SPRING;
+    public void setTotalDuration(String totalDuration) {
+        this.totalDuration = totalDuration;
     }
 }

@@ -14,56 +14,67 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_publisher_logo"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
-            android:contentDescription="@string/image_description"
-            android:src="@drawable/ic_avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/tv_publisher_name"
-            android:layout_width="0dp"
+        <!-- 顶部行容器（可点击） -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_user"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="12dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/iv_publisher_logo"
-            app:layout_constraintEnd_toStartOf="@id/tv_publish_time"
-            app:layout_constraintStart_toEndOf="@id/iv_publisher_logo"
-            app:layout_constraintTop_toTopOf="@id/iv_publisher_logo" />
-
-        <TextView
-            android:id="@+id/tv_publish_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:textColor="#999999"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/iv_publisher_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_publisher_logo" />
-
-        <FrameLayout
-            android:id="@+id/layout_featured_image"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_publisher_logo">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_hero_image"
+                android:id="@+id/iv_publisher_logo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginVertical="@dimen/activity_vertical_margin_s"
+                android:layout_marginStart="12dp"
+                android:contentDescription="@string/image_description"
+                android:src="@drawable/ic_avatar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_publisher_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_publish_time"
+                app:layout_constraintStart_toEndOf="@id/iv_publisher_logo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_publisher_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_publisher_logo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 特色图片区域（原FrameLayout，可直接点击） -->
+        <FrameLayout
+            android:id="@+id/layout_thumb_0"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_user">
+
+            <ImageView
+                android:id="@+id/iv_item_thumb_0"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/image_description"
@@ -72,7 +83,7 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/tv_hero_title"
+                android:id="@+id/tv_item_title_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -83,76 +94,98 @@
                 android:textStyle="bold" />
         </FrameLayout>
 
-        <ImageView
-            android:id="@+id/iv_item_thumb_1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
-            android:layout_marginEnd="12dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_image_1_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_featured_image"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-        <TextView
-            android:id="@+id/tv_item_title_1"
-            android:layout_width="0dp"
+        <!-- 第一缩略图行容器（可点击） -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_thumb_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:ellipsize="end"
-            android:lineSpacingExtra="4dp"
-            android:maxLines="2"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/iv_item_thumb_1"
-            app:layout_constraintEnd_toStartOf="@id/iv_item_thumb_1"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_item_thumb_1" />
+            app:layout_constraintTop_toBottomOf="@id/layout_thumb_0">
 
+            <ImageView
+                android:id="@+id/iv_item_thumb_1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginVertical="@dimen/activity_vertical_margin_s"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_image_1_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/tv_item_title_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:lineSpacingExtra="4dp"
+                android:maxLines="2"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_thumb_1"
+                app:layout_constraintEnd_toStartOf="@id/iv_item_thumb_1"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_item_thumb_1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 分割线 -->
         <View
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
             android:layout_marginEnd="12dp"
             android:background="#EEEEEE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_item_thumb_1" />
+            app:layout_constraintTop_toBottomOf="@id/layout_thumb_1" />
 
-        <ImageView
-            android:id="@+id/iv_item_thumb_2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
-            android:layout_marginEnd="12dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_image_1_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-        <TextView
-            android:id="@+id/tv_item_title_2"
-            android:layout_width="0dp"
+        <!-- 第二缩略图行容器（可点击） -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_thumb_2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/iv_item_thumb_2"
-            app:layout_constraintEnd_toStartOf="@id/iv_item_thumb_2"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_item_thumb_2" />
+            app:layout_constraintTop_toBottomOf="@id/divider">
+
+            <ImageView
+                android:id="@+id/iv_item_thumb_2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginVertical="@dimen/activity_vertical_margin_s"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_image_1_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/tv_item_title_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="#333333"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_thumb_2"
+                app:layout_constraintEnd_toStartOf="@id/iv_item_thumb_2"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_item_thumb_2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

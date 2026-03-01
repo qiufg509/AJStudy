@@ -1,6 +1,18 @@
 package com.qiufengguang.ajstudy.data.remote.service;
 
+import com.qiufengguang.ajstudy.data.remote.api.AppDetailApi;
+import com.qiufengguang.ajstudy.data.remote.api.AppListApi;
+import com.qiufengguang.ajstudy.data.remote.api.ArticleDetailApi;
+import com.qiufengguang.ajstudy.data.remote.api.ArticleListApi;
+import com.qiufengguang.ajstudy.data.remote.api.FavoritesApi;
+import com.qiufengguang.ajstudy.data.remote.api.HelpFeedbackApi;
 import com.qiufengguang.ajstudy.data.remote.api.HomeApi;
+import com.qiufengguang.ajstudy.data.remote.api.KnowHowApi;
+import com.qiufengguang.ajstudy.data.remote.api.MeApi;
+import com.qiufengguang.ajstudy.data.remote.api.StudyRecordApi;
+import com.qiufengguang.ajstudy.data.remote.api.UserApi;
+
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -30,5 +42,45 @@ public class RetrofitClient {
 
     public static HomeApi getHomeApi() {
         return getInstance().create(HomeApi.class);
+    }
+
+    public static KnowHowApi getKnowHowApi() {
+        return getInstance().create(KnowHowApi.class);
+    }
+
+    public static MeApi getMeApi() {
+        return getInstance().create(MeApi.class);
+    }
+
+    public static AppListApi getAppListApi() {
+        return getInstance().create(AppListApi.class);
+    }
+
+    public static ArticleListApi getArticleListApi() {
+        return getInstance().create(ArticleListApi.class);
+    }
+
+    public static AppDetailApi getAppDetailApi() {
+        return getInstance().create(AppDetailApi.class);
+    }
+
+    public static ArticleDetailApi getArticleDetailApi() {
+        return getInstance().create(ArticleDetailApi.class);
+    }
+
+    public static StudyRecordApi getStudyRecordApi() {
+        return getInstance().create(StudyRecordApi.class);
+    }
+
+    public static FavoritesApi getFavoritesApi() {
+        return getInstance().create(FavoritesApi.class);
+    }
+
+    public static UserApi getUserApi() {
+        return getInstance().create(UserApi.class);
+    }
+
+    public static HelpFeedbackApi getHelpFeedbackApi() {
+        return getInstance().create(HelpFeedbackApi.class);
     }
 }

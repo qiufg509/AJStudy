@@ -33,13 +33,17 @@ public class MarkdownActivity extends AppCompatActivity {
         binding.titleBar.setOnBackClickListener(() -> getOnBackPressedDispatcher().onBackPressed());
 
         MarkdownModel viewModel = new ViewModelProvider(this).get(MarkdownModel.class);
-        String filePath = getIntent().getStringExtra(Router.EXTRA_URI);
-        if (!TextUtils.isEmpty(filePath)) {
-            viewModel.readLocalMarkdown(filePath);
-        }
         String title = getIntent().getStringExtra(Router.EXTRA_TITLE);
         if (!TextUtils.isEmpty(title)) {
             binding.titleBar.setTitle(title);
+        }
+        Bundle bundle = getIntent().getBundleExtra(Router.EXTRA_DATA);
+        if (bundle != null) {
+            String uri = bundle.getString(Router.EXTRA_URI);
+            if (TextUtils.equals(uri, Router.URI.PAGE_ARTICLE_DETAIL)) {
+                String directory = bundle.getString(Router.EXTRA_DIRECTORY);
+                viewModel.loadData(directory);
+            }
         }
 
         viewModel.getLiveData().observe(this, markdownContent ->

@@ -1,7 +1,7 @@
 package com.qiufengguang.ajstudy.card.grid;
 
-import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,10 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.GridCardBean;
-import com.qiufengguang.ajstudy.databinding.ItemGridCardImageBinding;
 import com.qiufengguang.ajstudy.databinding.ItemGridCardTextBinding;
 
 import java.util.List;
@@ -24,9 +28,7 @@ import java.util.List;
  * @author qiufengguang
  * @since 2025/12/28 18:19
  */
-public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private int itemType = GridCardBean.TYPE_TEXT;
+public class GridCardAdapter extends RecyclerView.Adapter<GridCardAdapter.GridCardHolder> {
 
     private List<GridCardBean> beans;
 
@@ -34,31 +36,19 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public GridCardAdapter(@Nullable List<GridCardBean> beans) {
         this.beans = beans;
-        setItemType();
-    }
-
-    private void setItemType() {
-        if (beans == null || beans.isEmpty()) {
-            return;
-        }
-        GridCardBean bean = beans.get(0);
-        this.itemType = bean.getItemType();
     }
 
     public void setData(List<GridCardBean> beans) {
         if (beans == null || beans.isEmpty()) {
             this.beans = beans;
-            setItemType();
             notifyItemRangeRemoved(0, getItemCount());
             return;
         }
         if (this.beans == null || this.beans.isEmpty()) {
             this.beans = beans;
-            setItemType();
             notifyItemRangeInserted(0, getItemCount());
         } else {
             this.beans = beans;
-            setItemType();
             notifyItemRangeChanged(0, getItemCount());
         }
     }
@@ -67,36 +57,18 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.listener = listener;
     }
 
-    /**
-     * 获取ViewType，根据position判断
-     */
-    @Override
-    public int getItemViewType(int position) {
-        return itemType;
-    }
-
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == GridCardBean.TYPE_TEXT) {
-            ItemGridCardTextBinding binding = ItemGridCardTextBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
-            return new GridCardTextHolder(binding, listener);
-        } else {
-            ItemGridCardImageBinding binding = ItemGridCardImageBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
-            return new GridCardImageHolder(binding, listener);
-        }
+    public GridCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemGridCardTextBinding binding = ItemGridCardTextBinding.inflate(
+            LayoutInflater.from(parent.getContext()), parent, false);
+        return new GridCardHolder(binding, listener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GridCardHolder holder, int position) {
         GridCardBean bean = beans.get(position);
-        if (holder instanceof GridCardTextHolder) {
-            ((GridCardTextHolder) holder).bind(bean);
-        } else {
-            ((GridCardImageHolder) holder).bind(bean, position);
-        }
+        holder.bind(bean);
     }
 
     @Override
@@ -104,18 +76,22 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return beans == null ? 0 : beans.size();
     }
 
-    public static class GridCardTextHolder extends RecyclerView.ViewHolder {
+    public static class GridCardHolder extends RecyclerView.ViewHolder {
 
         ItemGridCardTextBinding binding;
 
         GridCardBean bean;
 
-        public GridCardTextHolder(
+        RequestOptions options;
+
+        public GridCardHolder(
             @NonNull ItemGridCardTextBinding binding,
             OnItemClickListener<GridCardBean> clickListener
         ) {
             super(binding.getRoot());
             this.binding = binding;
+            int iconSize = this.binding.getRoot().getResources().getDimensionPixelSize(R.dimen.item_icon_size_xs);
+            options = new RequestOptions().override(iconSize, iconSize).centerCrop();
             this.binding.getRoot().setOnClickListener(v -> {
                 if (clickListener != null && bean != null) {
                     clickListener.onItemClick(v.getContext(), bean);
@@ -126,46 +102,30 @@ public class GridCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void bind(GridCardBean bean) {
             this.bean = bean;
             binding.getRoot().setText(bean.getTitle());
-            Drawable drawable = ContextCompat.getDrawable(
-                this.binding.getRoot().getContext(), bean.getIcon());
-            binding.getRoot().setCompoundDrawablesRelativeWithIntrinsicBounds(
-                null, drawable, null, null);
-        }
-    }
+            if (!TextUtils.isEmpty(bean.getIcon())) {
+                Glide.with(binding.getRoot().getContext())
+                    .load(bean.getIcon())
+                    .apply(options)
+                    .placeholder(R.drawable.placeholder_icon_circle)
+                    .transition(DrawableTransitionOptions.withCrossFade(300))
+                    .into(new CustomTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            binding.getRoot().setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                null, resource, null, null);
+                        }
 
-    public static class GridCardImageHolder extends RecyclerView.ViewHolder {
-
-        ItemGridCardImageBinding binding;
-
-        GridCardBean bean;
-
-        int position;
-
-        public GridCardImageHolder(
-            @NonNull ItemGridCardImageBinding binding,
-            OnItemClickListener<GridCardBean> clickListener
-        ) {
-            super(binding.getRoot());
-            this.binding = binding;
-            this.binding.getRoot().setOnClickListener(v -> {
-                if (clickListener != null && bean != null
-                    && bean.getIcon() != R.drawable.ic_checkmark) {
-                    bean.setIcon(R.drawable.ic_checkmark);
-                    clickListener.onItemClick(v.getContext(), this.position, bean);
-                }
-            });
-        }
-
-        public void bind(GridCardBean bean, int position) {
-            this.bean = bean;
-            this.position = position;
-            binding.getRoot().setBackgroundTintList(ColorStateList.valueOf(
-                ContextCompat.getColor(binding.getRoot().getContext(), bean.getBackgroundTint())));
-
-            if (bean.getIcon() == 0) {
-                binding.getRoot().setImageDrawable(null);
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                            binding.getRoot().setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                null, placeholder, null, null);
+                        }
+                    });
             } else {
-                binding.getRoot().setImageResource(bean.getIcon());
+                Drawable drawable = ContextCompat.getDrawable(
+                    this.binding.getRoot().getContext(), R.drawable.placeholder_icon_circle);
+                binding.getRoot().setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, drawable, null, null);
             }
         }
     }

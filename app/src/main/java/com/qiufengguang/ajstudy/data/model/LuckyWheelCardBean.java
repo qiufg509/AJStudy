@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
@@ -19,64 +18,45 @@ import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 public class LuckyWheelCardBean extends BaseCardBean {
     private static final String TAG = "LuckyWheelCardBean";
 
-    @NonNull
-    private final String content;
+    private String content;
 
-    private int color;
+    private String color;
 
     private String imageUrl;
 
-    private @DrawableRes int iconId;
-
     private Bitmap bitmap;
 
-    public LuckyWheelCardBean(@NonNull String content) {
-        this.content = content;
-    }
-
-    public LuckyWheelCardBean(@NonNull String content, String color) {
-        this.content = content;
-        setColor(color);
-    }
-
-    public LuckyWheelCardBean(@NonNull String content, @DrawableRes int iconId, String color) {
-        this.content = content;
-        this.iconId = iconId;
-        setColor(color);
-    }
-
-    public LuckyWheelCardBean(@NonNull String content, String imageUrl, String color) {
-        this.content = content;
-        this.imageUrl = imageUrl;
-        setColor(color);
-    }
-
-    public @NonNull String getContent() {
+    @NonNull
+    public String getContent() {
         return content;
     }
 
-    public void setColor(String color) {
-        if (color == null || TextUtils.isEmpty(color)) {
-            return;
-        }
-        try {
-            this.color = Color.parseColor(color);
-        } catch (Exception e) {
-            Log.w(TAG, "setColor: Unknown color.");
-        }
+    public void setContent(@NonNull String content) {
+        this.content = content;
     }
 
     public int getColor() {
-        return color;
+        if (color == null || TextUtils.isEmpty(color)) {
+            return Color.BLUE;
+        }
+        try {
+            return Color.parseColor(color);
+        } catch (Exception e) {
+            Log.w(TAG, "setColor: Unknown color.");
+        }
+        return Color.BLUE;
     }
 
-    @DrawableRes
-    public int getIconId() {
-        return iconId;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Bitmap getBitmap() {

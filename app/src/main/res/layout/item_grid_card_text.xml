@@ -8,4 +8,4 @@
     android:paddingVertical="@dimen/activity_vertical_margin_xs"
     android:textColor="@color/ajstudy_color_text_primary"
     android:textSize="12sp"
-    app:drawableTopCompat="@drawable/ic_book_7" />
+    app:drawableTopCompat="@drawable/placeholder_icon_circle" />

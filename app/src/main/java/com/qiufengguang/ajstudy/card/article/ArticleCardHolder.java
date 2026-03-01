@@ -1,14 +1,11 @@
 package com.qiufengguang.ajstudy.card.article;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
-import com.qiufengguang.ajstudy.router.AppNavigator;
 
 /**
  * 文章卡片的ViewHolder
@@ -31,7 +28,7 @@ public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
         }
         card = new ArticleCard.Builder()
             .setBinding(binding)
-            .setListener(this::onItemClickListener)
+            .setListener(this::onCommonClickListener)
             .create();
         card.show();
     }
@@ -47,11 +44,6 @@ public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
         }
         ArticleCardBean bean = (ArticleCardBean) data.getData();
         card.setData(bean);
-    }
-
-    private void onItemClickListener(Context context, ArticleCardBean bean) {
-        AppNavigator.getInstance().startArticleActivity(
-            context, bean.getUri(), "《春》");
     }
 
     @Override

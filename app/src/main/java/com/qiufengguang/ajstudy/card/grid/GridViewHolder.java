@@ -1,22 +1,13 @@
 package com.qiufengguang.ajstudy.card.grid;
 
-import android.content.Context;
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.GridDecoration;
-import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
-import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.GridCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGridBinding;
-import com.qiufengguang.ajstudy.fragment.second.SecondFragment;
-import com.qiufengguang.ajstudy.router.AppNavigator;
-import com.qiufengguang.ajstudy.router.Router;
-import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.util.List;
 
@@ -47,17 +38,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
             .setSpacingBuilder(
                 new GridDecoration.Builder().horizontalSpacing(spacing)
             )
-            .setListener(new OnItemClickListener<>() {
-                @Override
-                public void onItemClick(Context context, GridCardBean data) {
-                    onItemClickListener(context, data);
-                }
-
-                @Override
-                public void onItemClick(Context context, int position, GridCardBean data) {
-                    onItemClickListener(context, position, data);
-                }
-            })
+            .setListener(this::onCommonClickListener)
             .create();
         card.show();
     }
@@ -73,32 +54,7 @@ public class GridViewHolder extends BaseViewHolder<CardGridBinding> {
         }
         @SuppressWarnings("unchecked")
         List<GridCardBean> beans = (List<GridCardBean>) data.getData();
-        card.setData(beans, data.getCardTitle());
-    }
-
-    private void onItemClickListener(Context context, int position, GridCardBean bean) {
-        if (!(context instanceof AppCompatActivity)) {
-            return;
-        }
-        if (bean.getItemType() != GridCardBean.TYPE_IMAGE) {
-            return;
-        }
-        ThemeUtils.setSelectedThemeIndex(position);
-
-        AppNavigator.getInstance().restart(context, Router.EXTRA_RESTART);
-        ((AppCompatActivity) context).finish();
-    }
-
-    private void onItemClickListener(Context context, GridCardBean bean) {
-        if (bean.getItemType() != GridCardBean.TYPE_TEXT) {
-            return;
-        }
-        Bundle args = new Bundle();
-        String uri = bean.getUri();
-        args.putString(Router.EXTRA_URI, uri);
-        args.putString(Router.EXTRA_TITLE, bean.getTitle());
-        args.putString(SecondFragment.ARG_NAVIGATE_TO, bean.getNavigateTo());
-        AppNavigator.getInstance().startSecondActivity(context, args);
+        card.setData(beans, data.getName());
     }
 
     @Override

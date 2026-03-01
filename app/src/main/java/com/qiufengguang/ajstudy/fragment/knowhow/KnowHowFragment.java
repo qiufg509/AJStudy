@@ -30,7 +30,7 @@ public class KnowHowFragment extends BaseStaggeredFragment {
 
         // 绑定数据
         viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
-            baseListAdapter.setData(viewModel.getPageData(0)));
+            baseListAdapter.setData(list));
 
         setTitle("瀑布流列表");
     }

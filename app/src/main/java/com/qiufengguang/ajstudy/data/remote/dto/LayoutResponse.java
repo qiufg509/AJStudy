@@ -4,15 +4,13 @@ package com.qiufengguang.ajstudy.data.remote.dto;
 import java.util.List;
 
 /**
- * 首页响应数据
+ * 布局响应数据
  *
  * @author qiufengguang
  * @since 2026/2/26 14:28
  */
-public class HomeResponse {
+public class LayoutResponse {
     private static final int CODE_SUCCESS = 0;
-
-    private boolean success;
 
     private List<LayoutDataDTO> layoutData;
 
@@ -20,10 +18,6 @@ public class HomeResponse {
 
     public boolean isSuccess() {
         return rtnCode == CODE_SUCCESS;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
     }
 
     public List<LayoutDataDTO> getLayoutData() {

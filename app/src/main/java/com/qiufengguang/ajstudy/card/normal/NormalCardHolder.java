@@ -1,16 +1,11 @@
 package com.qiufengguang.ajstudy.card.normal;
 
-import android.content.Context;
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.model.NormalCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.NormalCardBean;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
-import com.qiufengguang.ajstudy.router.AppNavigator;
-import com.qiufengguang.ajstudy.router.Router;
 
 /**
  * 普通卡片的ViewHolder
@@ -33,7 +28,7 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
         }
         card = new NormalCard.Builder()
             .setBinding(binding)
-            .setListener(this::onItemClickListener)
+            .setListener(this::onCommonClickListener)
             .create();
         card.show();
     }
@@ -49,15 +44,6 @@ public class NormalCardHolder extends BaseViewHolder<CardNormalBinding> {
         }
         NormalCardBean bean = (NormalCardBean) data.getData();
         card.setData(bean);
-    }
-
-    private void onItemClickListener(Context context, NormalCardBean bean) {
-        String uri = bean.getUri();
-        if (TextUtils.equals(Router.URI.PAGE_ARTICLE_LIST, uri)) {
-            AppNavigator.getInstance().startArticleActivity(context, bean.getNavigateTo(), bean.getTitle());
-            return;
-        }
-        AppNavigator.getInstance().startDetailActivity(context, uri, bean.getTitle());
     }
 
     @Override

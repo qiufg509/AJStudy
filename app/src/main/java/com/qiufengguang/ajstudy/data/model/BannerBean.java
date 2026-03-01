@@ -9,22 +9,8 @@ import com.qiufengguang.ajstudy.data.base.BaseCardBean;
  * @since 2025/12/19 15:41
  */
 public class BannerBean extends BaseCardBean {
-    String title;
 
     String imageUrl;
-
-    public BannerBean(String title, String imageUrl) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getImageUrl() {
         return imageUrl;

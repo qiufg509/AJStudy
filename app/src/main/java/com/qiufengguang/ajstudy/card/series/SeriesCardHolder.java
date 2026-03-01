@@ -5,8 +5,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 import com.qiufengguang.ajstudy.router.AppNavigator;
 
@@ -51,19 +51,18 @@ public class SeriesCardHolder extends BaseViewHolder<CardSeriesBinding> {
         if (card == null) {
             initCard();
         }
-        title = data.getCardTitle();
-        moreUri = data.getUri();
+        title = data.getName();
+        moreUri = data.getDetailId();
         @SuppressWarnings("unchecked")
         List<SeriesCardBean> beans = (List<SeriesCardBean>) data.getData();
-        card.setData(beans, data.getCardTitle());
+        card.setData(beans, data.getName());
     }
 
     private void onItemClickListener(Context context, SeriesCardBean bean) {
         if (bean == null) {
-            AppNavigator.getInstance().startSecondActivity(context, moreUri, title);
+            AppNavigator.getInstance().jumpTo(context, moreUri, title);
         } else {
-            AppNavigator.getInstance().startArticleActivity(
-                context, bean.getUri(), bean.getTitle());
+            onCommonClickListener(context, bean);
         }
     }
 

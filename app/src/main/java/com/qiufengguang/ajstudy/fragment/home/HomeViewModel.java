@@ -2,16 +2,13 @@ package com.qiufengguang.ajstudy.fragment.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
-import com.qiufengguang.ajstudy.data.remote.dto.HomeResponse;
 import com.qiufengguang.ajstudy.data.repository.HomeRepository;
+import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 
 import java.util.List;
-
-import retrofit2.Call;
 
 /**
  * 首页ViewModel
@@ -19,13 +16,12 @@ import retrofit2.Call;
  * @author qiufengguang
  * @since 2025/5/5 22:12
  */
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends BaseViewModel {
     private final MutableLiveData<List<LayoutData<?>>> liveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
 
     private final HomeRepository repository;
-    private Call<HomeResponse> currentCall;
 
     public HomeViewModel() {
         repository = HomeRepository.getInstance();
@@ -52,8 +48,8 @@ public class HomeViewModel extends ViewModel {
             public void onFailure(Throwable t) {
                 loadingLiveData.postValue(false);
                 errorLiveData.postValue(t.getMessage());
-                // 可根据业务需求保留旧数据或清空
-                liveData.postValue(null);
+                List<LayoutData<?>> dataList = fetchEmptyData();
+                liveData.postValue(dataList);
             }
         });
     }
@@ -72,13 +68,5 @@ public class HomeViewModel extends ViewModel {
 
     public void retry() {
         loadData();
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        if (currentCall != null && !currentCall.isCanceled()) {
-            currentCall.cancel();
-        }
     }
 }

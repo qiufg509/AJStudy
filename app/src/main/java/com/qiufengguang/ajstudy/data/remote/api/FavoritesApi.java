@@ -9,12 +9,12 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- * HomeApi
+ * FavoritesApi
  *
  * @author qiufengguang
  * @since 2026/2/28 14:49
  */
-public interface HomeApi {
-    @POST(Router.URI.PAGE_HOME)
-    Call<LayoutResponse> getHomeData(@Body Request request);
+public interface FavoritesApi {
+    @POST(Router.URI.PAGE_FAVORITES)
+    Call<LayoutResponse> getFavoritesData(@Body Request request);
 }

@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -22,6 +23,9 @@ import android.widget.OverScroller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
@@ -30,6 +34,7 @@ import com.qiufengguang.ajstudy.utils.ImageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 旋转转盘控件
@@ -163,7 +168,10 @@ public class LuckyWheel extends View {
         verPanRadius = 360 / size;
         diffRadius = verPanRadius / 2;
 
-        loadBitmaps();
+        loadBitmapsAsync(() -> {
+            requestLayout();
+            invalidate();
+        });
 
         // 重新绘制并请求重新布局
         requestLayout();
@@ -194,25 +202,6 @@ public class LuckyWheel extends View {
 
         int densityDpi = DisplayMetricsHelper.getDensityDpi(context);
         centerBitmap = ImageUtil.loadBitmap(context, densityDpi, resId, centerBtnSize);
-    }
-
-    private void loadBitmaps() {
-        if (beans == null || beans.isEmpty()) {
-            return;
-        }
-        int densityDpi = DisplayMetricsHelper.getDensityDpi(getContext());
-        for (LuckyWheelCardBean bean : beans) {
-            if (bean == null) {
-                continue;
-            }
-            if (bean.getIconId() == 0) {
-                bean.setBitmap(null);
-                continue;
-            }
-            Bitmap bitmap = ImageUtil.loadBitmap(getContext(),
-                densityDpi, bean.getIconId(), iconSize);
-            bean.setBitmap(bitmap);
-        }
     }
 
     @Override
@@ -926,5 +915,51 @@ public class LuckyWheel extends View {
 
     public void setAnimationEndListener(AnimationEndListener listener) {
         this.animationEndListener = listener;
+    }
+
+    private void loadBitmapsAsync(LoadBitmapsCallback callback) {
+        if (beans == null || beans.isEmpty()) {
+            if (callback != null) callback.onAllLoaded();
+            return;
+        }
+
+        // 使用原子计数器保证线程安全
+        AtomicInteger counter = new AtomicInteger(beans.size());
+
+        for (LuckyWheelCardBean bean : beans) {
+            if (bean == null || TextUtils.isEmpty(bean.getImageUrl())) {
+                if (counter.decrementAndGet() == 0) {
+                    callback.onAllLoaded();
+                }
+                continue;
+            }
+
+            Glide.with(getContext())
+                .asBitmap()
+                .load(bean.getImageUrl())
+                .override(iconSize, iconSize)
+                .centerCrop()
+                .into(new CustomTarget<Bitmap>(iconSize, iconSize) {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        bean.setBitmap(resource);
+                        if (counter.decrementAndGet() == 0) {
+                            callback.onAllLoaded();
+                        }
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                        bean.setBitmap(null);
+                        if (counter.decrementAndGet() == 0) {
+                            callback.onAllLoaded();
+                        }
+                    }
+                });
+        }
+    }
+
+    private interface LoadBitmapsCallback {
+        void onAllLoaded();
     }
 }

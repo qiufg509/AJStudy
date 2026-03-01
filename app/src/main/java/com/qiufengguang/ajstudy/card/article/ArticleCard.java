@@ -16,6 +16,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -41,7 +42,7 @@ public class ArticleCard extends Card {
 
     private WeakReference<CardArticleBinding> bindingRef;
 
-    private OnItemClickListener<ArticleCardBean> listener;
+    private OnItemClickListener<BaseCardBean> listener;
 
     private ArticleCard() {
     }
@@ -72,8 +73,8 @@ public class ArticleCard extends Card {
             return;
         }
         ArticleCardBean.Article article0 = articles.get(0);
-        loadImage(binding.ivHeroImage, R.drawable.placeholder_image_16_9, article0.getImageUrl());
-        binding.tvHeroTitle.setText(article0.getTitle());
+        loadImage(binding.ivItemThumb0, R.drawable.placeholder_image_16_9, article0.getImageUrl());
+        binding.tvItemTitle0.setText(article0.getTitle());
 
         if (articles.size() > 1) {
             ArticleCardBean.Article article1 = articles.get(1);
@@ -87,9 +88,24 @@ public class ArticleCard extends Card {
             binding.tvItemTitle2.setText(article2.getTitle());
         }
 
-        binding.getRoot().setOnClickListener(v -> {
+        binding.layoutUser.setOnClickListener(v -> {
             if (listener != null && bean != null) {
                 listener.onItemClick(v.getContext(), bean);
+            }
+        });
+        binding.layoutThumb0.setOnClickListener(v -> {
+            if (listener != null && !articles.isEmpty()) {
+                listener.onItemClick(v.getContext(), articles.get(0));
+            }
+        });
+        binding.layoutThumb1.setOnClickListener(v -> {
+            if (listener != null && articles.size() >= 2) {
+                listener.onItemClick(v.getContext(), articles.get(1));
+            }
+        });
+        binding.layoutThumb2.setOnClickListener(v -> {
+            if (listener != null && articles.size() >= 3) {
+                listener.onItemClick(v.getContext(), articles.get(2));
             }
         });
     }
@@ -140,7 +156,7 @@ public class ArticleCard extends Card {
     public static class Builder {
         private CardArticleBinding binding;
 
-        private OnItemClickListener<ArticleCardBean> listener;
+        private OnItemClickListener<BaseCardBean> listener;
 
         /**
          * 设置卡片布局viewbinding
@@ -159,7 +175,7 @@ public class ArticleCard extends Card {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public ArticleCard.Builder setListener(OnItemClickListener<ArticleCardBean> listener) {
+        public ArticleCard.Builder setListener(OnItemClickListener<BaseCardBean> listener) {
             this.listener = listener;
             return this;
         }

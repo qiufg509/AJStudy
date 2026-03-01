@@ -50,18 +50,6 @@ public interface Constant {
     }
 
     /**
-     * 本地测试数据
-     */
-    interface Data {
-        /**
-         * 知识点列表测试数据文件
-         */
-        String LIST_CONTENT_FILE = "know_how_list.json";
-
-        String DETAIL_SPRING = "朱自清《春》.md";
-    }
-
-    /**
      * SharedPreferences存储相关常量
      */
     interface Sp {

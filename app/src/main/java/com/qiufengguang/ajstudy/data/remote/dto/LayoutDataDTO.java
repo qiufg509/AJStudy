@@ -15,6 +15,8 @@ public class LayoutDataDTO {
     private String subTitle;
     private JsonArray dataList;
 
+    private String detailId;
+
     public int getLayoutId() {
         return layoutId;
     }
@@ -53,5 +55,13 @@ public class LayoutDataDTO {
 
     public void setDataList(JsonArray dataList) {
         this.dataList = dataList;
+    }
+
+    public String getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(String detailId) {
+        this.detailId = detailId;
     }
 }
