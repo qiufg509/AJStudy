@@ -4,15 +4,15 @@ import com.qiufengguang.ajstudy.data.remote.api.AppDetailApi;
 import com.qiufengguang.ajstudy.data.remote.api.AppListApi;
 import com.qiufengguang.ajstudy.data.remote.api.ArticleDetailApi;
 import com.qiufengguang.ajstudy.data.remote.api.ArticleListApi;
+import com.qiufengguang.ajstudy.data.remote.api.CommentApi;
 import com.qiufengguang.ajstudy.data.remote.api.FavoritesApi;
 import com.qiufengguang.ajstudy.data.remote.api.HelpFeedbackApi;
 import com.qiufengguang.ajstudy.data.remote.api.HomeApi;
 import com.qiufengguang.ajstudy.data.remote.api.KnowHowApi;
 import com.qiufengguang.ajstudy.data.remote.api.MeApi;
+import com.qiufengguang.ajstudy.data.remote.api.RecommendApi;
 import com.qiufengguang.ajstudy.data.remote.api.StudyRecordApi;
 import com.qiufengguang.ajstudy.data.remote.api.UserApi;
-
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -62,6 +62,14 @@ public class RetrofitClient {
 
     public static AppDetailApi getAppDetailApi() {
         return getInstance().create(AppDetailApi.class);
+    }
+
+    public static CommentApi getCommentApi() {
+        return getInstance().create(CommentApi.class);
+    }
+
+    public static RecommendApi getRecommendApi() {
+        return getInstance().create(RecommendApi.class);
     }
 
     public static ArticleDetailApi getArticleDetailApi() {

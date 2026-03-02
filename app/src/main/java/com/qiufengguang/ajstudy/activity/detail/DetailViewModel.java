@@ -11,11 +11,14 @@ import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.DetailAppData;
 import com.qiufengguang.ajstudy.data.model.DetailHead;
 import com.qiufengguang.ajstudy.data.model.TabData;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.repository.AppDetailRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * 详情页ViewModel
@@ -62,6 +65,10 @@ public class DetailViewModel extends BaseViewModel {
     private final MutableLiveData<Integer> selectedTab = new MutableLiveData<>(1);
 
     private final AppDetailRepository repository;
+
+    protected Call<RawRespData> commentCall;
+
+    protected Call<RawRespData> recommendCall;
 
     public DetailViewModel() {
         repository = AppDetailRepository.getInstance();
@@ -132,5 +139,54 @@ public class DetailViewModel extends BaseViewModel {
                 introduction.postValue(dataList);
             }
         });
+    }
+
+    public void loadCommentData(String directory) {
+        if (commentCall != null && !commentCall.isCanceled()) {
+            commentCall.cancel();
+        }
+
+        commentCall = repository.fetchCommentData(directory, new OnDataLoadedCallback<>() {
+            @Override
+            public void onSuccess(PageData data) {
+                comments.postValue(data.getLayoutData());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                List<LayoutData<?>> dataList = fetchEmptyData();
+                comments.postValue(dataList);
+            }
+        });
+    }
+
+    public void loadRecommendData(String directory) {
+        if (recommendCall != null && !recommendCall.isCanceled()) {
+            recommendCall.cancel();
+        }
+
+        recommendCall = repository.fetchRecommendData(directory, new OnDataLoadedCallback<>() {
+            @Override
+            public void onSuccess(PageData data) {
+                recommendations.postValue(data.getLayoutData());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                List<LayoutData<?>> dataList = fetchEmptyData();
+                recommendations.postValue(dataList);
+            }
+        });
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (commentCall != null && !commentCall.isCanceled()) {
+            commentCall.cancel();
+        }
+        if (recommendCall != null && !recommendCall.isCanceled()) {
+            recommendCall.cancel();
+        }
     }
 }

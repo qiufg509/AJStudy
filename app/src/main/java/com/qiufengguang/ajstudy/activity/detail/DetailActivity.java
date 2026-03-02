@@ -149,31 +149,6 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
-    private void showShareDialog() {
-        Dialog.Builder builder = new Dialog.Builder(this)
-            .setDialogView(R.layout.dialog_share_detail)
-            .setWindowBackgroundP(0.5f)
-            .setScreenWidthP(1.0f)
-            .setGravity(Gravity.BOTTOM)
-            .setCancelableOutSide(true)
-            .setAnimStyle(R.style.DialogAnimPushBottom)
-            .setBuildChildListener((dialog, parent, layoutRes) -> {
-                parent.findViewById(R.id.tv_share_wx).setOnClickListener(v1 -> {
-                    Toast.makeText(getApplicationContext(), "分享到微信", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                });
-                parent.findViewById(R.id.tv_share_zfb).setOnClickListener(v1 -> {
-                    Toast.makeText(getApplicationContext(), "分享到支付宝", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                });
-                parent.findViewById(R.id.tv_share_local).setOnClickListener(v1 -> {
-                    Toast.makeText(getApplicationContext(), "保存到本地", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                });
-            });
-        DialogsManager.getInstance().requestShow(new DialogWrapper(builder));
-    }
-
     private void observeData() {
         viewModel.getDetailHead().observe(this, detailHead -> {
             if (detailHead == null) {
@@ -214,8 +189,14 @@ public class DetailActivity extends AppCompatActivity {
             List<Fragment> fragments = new ArrayList<>(tabData.size());
             for (int i = 1, sum = tabData.size(); i < sum; i++) {
                 Bundle args = new Bundle();
-                args.putString(Router.EXTRA_DATA, tabData.get(i).getDetailId());
+                String detailId = tabData.get(i).getDetailId();
+                args.putString(Router.EXTRA_DATA, detailId);
                 fragments.add(SubPageFragment.newInstance(args));
+                if (!TextUtils.isEmpty(detailId) && detailId.contains("comment")) {
+                    viewModel.loadCommentData(detailId);
+                } else if (!TextUtils.isEmpty(detailId) && detailId.contains("recommend")) {
+                    viewModel.loadRecommendData(detailId);
+                }
             }
             adapter.addFragments(fragments);
             // 关联TabLayout和ViewPager2
@@ -234,5 +215,30 @@ public class DetailActivity extends AppCompatActivity {
             binding.appBarLayout.removeOnOffsetChangedListener(offsetChangedCallback);
         }
         binding = null;
+    }
+
+    private void showShareDialog() {
+        Dialog.Builder builder = new Dialog.Builder(this)
+            .setDialogView(R.layout.dialog_share_detail)
+            .setWindowBackgroundP(0.5f)
+            .setScreenWidthP(1.0f)
+            .setGravity(Gravity.BOTTOM)
+            .setCancelableOutSide(true)
+            .setAnimStyle(R.style.DialogAnimPushBottom)
+            .setBuildChildListener((dialog, parent, layoutRes) -> {
+                parent.findViewById(R.id.tv_share_wx).setOnClickListener(v1 -> {
+                    Toast.makeText(getApplicationContext(), "分享到微信", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                });
+                parent.findViewById(R.id.tv_share_zfb).setOnClickListener(v1 -> {
+                    Toast.makeText(getApplicationContext(), "分享到支付宝", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                });
+                parent.findViewById(R.id.tv_share_local).setOnClickListener(v1 -> {
+                    Toast.makeText(getApplicationContext(), "保存到本地", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                });
+            });
+        DialogsManager.getInstance().requestShow(new DialogWrapper(builder));
     }
 }

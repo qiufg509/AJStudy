@@ -25,6 +25,7 @@ import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.PageData;
@@ -50,7 +51,10 @@ import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 卡片数据转换器
@@ -78,15 +82,61 @@ public class LayoutDataConverter {
             String title = dto.getName();
             String detailId = dto.getDetailId();
 
-            LayoutData<?> layoutData = parseByLayoutId(
-                gson, layoutId, dto.getDataList(), title, detailId
-            );
-            if (layoutData != null) {
-                dataList.add(layoutData);
+            List<LayoutData<?>> layoutList = parseByLayoutId(gson, layoutId, dto.getDataList());
+            if (layoutList != null && !layoutList.isEmpty()) {
+                dataList.addAll(layoutList);
+            } else {
+                LayoutData<?> layoutData = parseByLayoutId(
+                    gson, layoutId, dto.getDataList(), title, detailId
+                );
+                if (layoutData != null) {
+                    dataList.add(layoutData);
+                }
             }
         }
         pageData.setLayoutData(dataList);
         return pageData;
+    }
+
+    @SuppressWarnings("DuplicateBranchesInSwitch")
+    private static List<LayoutData<?>> parseByLayoutId(
+        Gson gson,
+        int layoutId,
+        JsonArray dataArray
+    ) {
+        try {
+            List<BaseCardBean> beans;
+            switch (layoutId) {
+//                case NormalCard.LAYOUT_ID:
+//                    Type normalType = new TypeToken<NormalCardBean>() {
+//                    }.getType();
+//                    NormalCardBean normalCardBean = gson.fromJson(dataArray.get(0), normalType);
+//                    return LayoutDataFactory.createSingle(layoutId, normalCardBean, title, detailId);
+
+                case CommentCard.LAYOUT_ID:
+                    Type commentType = new TypeToken<List<CommentCardBean>>() {
+                    }.getType();
+                    beans = gson.fromJson(dataArray, commentType);
+                    break;
+                case RecommendCard.LAYOUT_ID:
+                    Type recommendType = new TypeToken<List<RecommendCardBean>>() {
+                    }.getType();
+                    beans = gson.fromJson(dataArray, recommendType);
+                    break;
+
+                default:
+                    return null;
+            }
+            return Optional.ofNullable(beans)
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(bean ->
+                    LayoutDataFactory.createSingle(layoutId, bean))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            Log.e(TAG, "Parse error for layoutId: " + layoutId, e);
+            return null;
+        }
     }
 
     @SuppressWarnings("DuplicateBranchesInSwitch")
@@ -170,10 +220,10 @@ public class LayoutDataConverter {
                     return LayoutDataFactory.createSingle(DetailAppData.LAYOUT_ID, detailAppData);
 
                 case ScreenshotCard.LAYOUT_ID:
-                    Type screenshotType = new TypeToken<List<ScreenshotCardBean>>() {
+                    Type screenshotType = new TypeToken<ScreenshotCardBean>() {
                     }.getType();
-                    List<ScreenshotCardBean> screenshotList = gson.fromJson(dataArray, screenshotType);
-                    return LayoutDataFactory.createCollection(ScreenshotCard.LAYOUT_ID, screenshotList);
+                    ScreenshotCardBean screenshotList = gson.fromJson(dataArray.get(0), screenshotType);
+                    return LayoutDataFactory.createSingle(ScreenshotCard.LAYOUT_ID, screenshotList);
 
                 case BriefCard.LAYOUT_ID:
                     Type briefType = new TypeToken<BriefCardBean>() {
@@ -185,25 +235,13 @@ public class LayoutDataConverter {
                     Type aboutType = new TypeToken<AboutCardBean>() {
                     }.getType();
                     AboutCardBean aboutCardBean = gson.fromJson(dataArray.get(0), aboutType);
-                    return LayoutDataFactory.createSingle(AboutCard.LAYOUT_ID, aboutCardBean);
+                    return LayoutDataFactory.createSingle(AboutCard.LAYOUT_ID, aboutCardBean, title);
 
                 case TextCard.LAYOUT_ID:
                     Type textType = new TypeToken<TextCardBean>() {
                     }.getType();
                     TextCardBean textCardBean = gson.fromJson(dataArray.get(0), textType);
-                    return LayoutDataFactory.createSingle(TextCard.LAYOUT_ID, textCardBean);
-
-                case CommentCard.LAYOUT_ID:
-                    Type commentType = new TypeToken<CommentCardBean>() {
-                    }.getType();
-                    CommentCardBean commentCardBean = gson.fromJson(dataArray.get(0), commentType);
-                    return LayoutDataFactory.createSingle(CommentCard.LAYOUT_ID, commentCardBean);
-
-                case RecommendCard.LAYOUT_ID:
-                    Type recommendType = new TypeToken<RecommendCardBean>() {
-                    }.getType();
-                    RecommendCardBean recommendCardBean = gson.fromJson(dataArray.get(0), recommendType);
-                    return LayoutDataFactory.createSingle(RecommendCard.LAYOUT_ID, recommendCardBean);
+                    return LayoutDataFactory.createSingle(TextCard.LAYOUT_ID, textCardBean, title);
 
                 case TitleCard.LAYOUT_ID:
                     return LayoutDataFactory.createSingle(layoutId, null, title, detailId);

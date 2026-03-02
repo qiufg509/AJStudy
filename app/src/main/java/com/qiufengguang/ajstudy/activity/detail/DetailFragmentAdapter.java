@@ -23,12 +23,14 @@ public class DetailFragmentAdapter extends FragmentStateAdapter {
     }
 
     public void addFragments(List<Fragment> newFragments) {
+        int positionStart = 0;
         if (this.fragments == null) {
             this.fragments = newFragments;
         } else {
+            positionStart = this.fragments.size();
             this.fragments.addAll(newFragments);
         }
-        notifyDataSetChanged();
+        notifyItemRangeInserted(positionStart, newFragments.size());
     }
 
     @NonNull

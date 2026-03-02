@@ -3,7 +3,6 @@ package com.qiufengguang.ajstudy.card.screenshot;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.card.grid.GridCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.model.ScreenshotCardBean;
 import com.qiufengguang.ajstudy.databinding.CardScreenshotBinding;
@@ -36,7 +35,7 @@ public class ScreenshotHolder extends BaseViewHolder<CardScreenshotBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || data.isCollection()
-            || data.getLayoutId() != GridCard.LAYOUT_ID) {
+            || data.getLayoutId() != ScreenshotCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {

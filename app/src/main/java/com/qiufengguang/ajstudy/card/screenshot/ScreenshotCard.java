@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
@@ -31,6 +32,8 @@ public class ScreenshotCard extends Card {
     private WeakReference<RecyclerView> recyclerViewRef;
 
     private ScreenshotAdapter adapter;
+
+    private ScreenshotDecoration decor;
 
     private ScreenshotCard() {
     }
@@ -57,6 +60,14 @@ public class ScreenshotCard extends Card {
             false
         );
         recyclerView.setLayoutManager(layoutManager);
+
+        if (decor == null) {
+            int spacing = recyclerView.getResources().getDimensionPixelSize(
+                R.dimen.activity_horizontal_margin_s);
+            decor = new ScreenshotDecoration(spacing);
+        }
+        recyclerView.removeItemDecoration(decor);
+        recyclerView.addItemDecoration(decor);
 
         // 优化RecyclerView性能
         recyclerView.setHasFixedSize(true);
@@ -113,10 +124,14 @@ public class ScreenshotCard extends Card {
             if (recyclerView != null) {
                 recyclerView.setAdapter(null);
                 recyclerView.setLayoutManager(null);
+                recyclerView.removeItemDecoration(decor);
+                recyclerViewRef.clear();
+
                 recyclerViewRef.clear();
             }
             recyclerViewRef = null;
         }
+        decor = null;
         if (adapter != null) {
             adapter = null;
         }

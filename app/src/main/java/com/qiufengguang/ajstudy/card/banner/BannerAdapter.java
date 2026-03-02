@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.card.banner;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,8 +89,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         // 计算真实位置
         int realPosition = getRealPosition(position);
         BannerBean item = bannerBeans.get(realPosition);
-
-        holder.bind(item, realPosition);
+        holder.bind(item);
 
         // 预加载相邻的图片
         preloadAdjacentImages(holder, position);
@@ -177,9 +177,6 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
         private BannerBean bean;
 
-        private int currentRealPosition;
-
-        // Glide配置选项
         private static final RequestOptions GLIDE_OPTIONS = new RequestOptions()
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.DATA)
@@ -204,9 +201,8 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
             });
         }
 
-        public void bind(BannerBean item, int realPosition) {
+        public void bind(BannerBean item) {
             this.bean = item;
-            this.currentRealPosition = realPosition;
             this.binding.ivBanner.setContentDescription(item.getTitle());
 
             // 启动图片加载
@@ -234,7 +230,8 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         public void clearGlideRequest() {
             // 清理Glide请求，避免内存泄漏
             try {
-                Glide.with(itemView.getContext()).clear(this.binding.ivBanner);
+                Context context = this.binding.ivBanner.getContext().getApplicationContext();
+                Glide.with(context).clear(this.binding.ivBanner);
             } catch (IllegalArgumentException e) {
                 // 忽略异常，Context可能已销毁
                 Log.w(TAG, "clearGlideRequest error.");

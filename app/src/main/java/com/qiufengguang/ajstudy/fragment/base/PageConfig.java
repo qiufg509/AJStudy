@@ -3,7 +3,7 @@ package com.qiufengguang.ajstudy.fragment.base;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
 /**
- * 页面相关配置属性
+ * 页面相关配置
  *
  * @author qiufengguang
  * @since 2026/1/29 11:29
@@ -17,7 +17,9 @@ public class PageConfig {
 
     boolean overlayNaviBar;
 
-    DynamicToolbar.Mode mode = DynamicToolbar.Mode.TITLE_ONLY;
+    DynamicToolbar.Mode titleBarMode = DynamicToolbar.Mode.TITLE_ONLY;
+
+    boolean enableBounce = true;
 
     private PageConfig() {
     }
@@ -39,6 +41,7 @@ public class PageConfig {
 
         DynamicToolbar.Mode titleBarMode = DynamicToolbar.Mode.TITLE_ONLY;
 
+        boolean enableBounce = true;
 
         /**
          * 内容是否延伸到半透明底部导航栏下面是否为深色背景
@@ -93,10 +96,21 @@ public class PageConfig {
          * Mode.GONE 时 overlayTitleBar 无效
          *
          * @param titleBarMode {@link DynamicToolbar.Mode}
-         * @return DynamicToolbar.Mode
+         * @return PageConfig.Builder
          */
         public PageConfig.Builder setTitleBarMode(DynamicToolbar.Mode titleBarMode) {
             this.titleBarMode = titleBarMode;
+            return this;
+        }
+
+        /**
+         * 设置是否开启页面回弹（默认可上拉回弹下拉回弹）
+         *
+         * @param enableBounce true开启 false关闭
+         * @return PageConfig.Builder
+         */
+        public PageConfig.Builder setEnablePageBounce(boolean enableBounce) {
+            this.enableBounce = enableBounce;
             return this;
         }
 
@@ -106,7 +120,8 @@ public class PageConfig {
             config.overlayTitleBar = this.overlayTitleBar;
             config.hasNaviBar = this.hasNaviBar;
             config.overlayNaviBar = this.overlayNaviBar;
-            config.mode = this.titleBarMode;
+            config.titleBarMode = this.titleBarMode;
+            config.enableBounce = this.enableBounce;
             return config;
         }
     }

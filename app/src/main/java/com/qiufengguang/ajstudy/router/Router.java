@@ -45,5 +45,9 @@ public interface Router {
         String PAGE_LAB = "lab";
 
         String PAGE_HELP_FEEDBACK = "helpFeedback";
+
+        String PAGE_RECOMMEND = "recommend";
+
+        String PAGE_COMMENT = "comment";
     }
 }

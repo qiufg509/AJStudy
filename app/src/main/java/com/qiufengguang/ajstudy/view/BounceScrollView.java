@@ -77,6 +77,15 @@ public class BounceScrollView extends FrameLayout {
      */
     private View mChildView;
 
+    /**
+     * 是否允许下拉回弹（顶部越界）
+     */
+    private boolean enablePullDownBounce = true;
+    /**
+     * 是否允许上拉回弹（底部越界）
+     */
+    private boolean enablePullUpBounce = true;
+
     public BounceScrollView(@NonNull Context context) {
         this(context, null);
     }
@@ -164,22 +173,20 @@ public class BounceScrollView extends FrameLayout {
      * 判断是否应该拦截触摸事件
      */
     private boolean shouldInterceptTouchEvent(float dy, boolean isMovingDown) {
-        // 如果子View可以滚动，检查是否已滚动到边界
         if (mChildView != null) {
             if (isMovingDown) {
-                // 向下移动，检查是否在顶部边界
-                if (isAtTopEdge()) {
+                // 向下移动，检查是否在顶部边界且允许下拉回弹
+                if (isAtTopEdge() && enablePullDownBounce) {
                     return true;
                 }
             } else {
-                // 向上移动，检查是否在底部边界
-                if (isAtBottomEdge()) {
+                // 向上移动，检查是否在底部边界且允许上拉回弹
+                if (isAtBottomEdge() && enablePullUpBounce) {
                     return true;
                 }
             }
         }
-
-        // 如果已经有越界滚动，应该拦截，默认不拦截，让子View处理
+        // 如果已有越界滚动，也应拦截
         return mCurrentOverScrollY != 0;
     }
 
@@ -240,22 +247,16 @@ public class BounceScrollView extends FrameLayout {
      * 处理越界滚动 - 修复方向问题
      */
     private void handleOverScroll(float deltaY) {
-        // 关键修复：明确方向判断
-        // deltaY > 0：手指向下移动（从屏幕上方向下滑动）
-        // deltaY < 0：手指向上移动（从屏幕下方向上滑动）
-
         if (deltaY > 0) {
             // 手指向下移动
-            if (isAtTopEdge()) {
-                // 在顶部边界，手指向下移动 => 顶部越界（内容被向下拉动）
+            if (isAtTopEdge() && enablePullDownBounce) {
                 float overScroll = deltaY * mOverScrollDamping;
                 mCurrentOverScrollY = Math.min(mMaxOverScroll, mCurrentOverScrollY + overScroll);
                 applyOverScroll();
             }
         } else {
             // 手指向上移动
-            if (isAtBottomEdge()) {
-                // 在底部边界，手指向上移动 => 底部越界（内容被向上拉动）
+            if (isAtBottomEdge() && enablePullUpBounce) {
                 float overScroll = deltaY * mOverScrollDamping;
                 mCurrentOverScrollY = Math.max(-mMaxOverScroll, mCurrentOverScrollY + overScroll);
                 applyOverScroll();
@@ -412,5 +413,31 @@ public class BounceScrollView extends FrameLayout {
      */
     public float getCurrentOverScroll() {
         return mCurrentOverScrollY;
+    }
+
+    /**
+     * 设置是否允许下拉回弹（顶部越界）
+     *
+     * @param enable boolean
+     */
+    public void setEnablePullDownBounce(boolean enable) {
+        enablePullDownBounce = enable;
+        // 如果禁用下拉回弹且当前存在下拉偏移（正数），立即回弹
+        if (!enable && mCurrentOverScrollY > 0) {
+            startBounceAnimation();
+        }
+    }
+
+    /**
+     * 设置是否允许上拉回弹（底部越界）
+     *
+     * @param enable boolean
+     */
+    public void setEnablePullUpBounce(boolean enable) {
+        enablePullUpBounce = enable;
+        // 如果禁用上拉回弹且当前存在上拉偏移（负数），立即回弹
+        if (!enable && mCurrentOverScrollY < 0) {
+            startBounceAnimation();
+        }
     }
 }

@@ -22,16 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 标题栏 -->
-    <com.qiufengguang.ajstudy.view.DynamicToolbar
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ajstudy_title_bar_height"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- 内容区域，在应用栏下方 -->
+    <!-- 内容区域 -->
     <com.qiufengguang.ajstudy.view.BounceScrollView
         android:id="@+id/bounce_container"
         android:layout_width="match_parent"
@@ -47,5 +38,14 @@
             android:layout_height="match_parent"
             android:scrollbars="none" />
     </com.qiufengguang.ajstudy.view.BounceScrollView>
+
+    <!-- 标题栏 -->
+    <com.qiufengguang.ajstudy.view.DynamicToolbar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ajstudy_title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

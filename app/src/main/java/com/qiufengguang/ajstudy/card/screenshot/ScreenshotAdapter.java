@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.databinding.SubItemIntroductionScreenBinding;
+import com.qiufengguang.ajstudy.databinding.ItemScreenshotBinding;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
     @NonNull
     @Override
     public ScreenshotViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        SubItemIntroductionScreenBinding binding = SubItemIntroductionScreenBinding.inflate(
+        ItemScreenshotBinding binding = ItemScreenshotBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
         return new ScreenshotViewHolder(binding);
     }
@@ -70,14 +70,14 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
     @Override
     public void onViewRecycled(@NonNull ScreenshotViewHolder holder) {
         super.onViewRecycled(holder);
-        Glide.with(holder.itemView.getContext()).clear(holder.itemView);
+        Glide.with(holder.itemView.getContext().getApplicationContext()).clear(holder.itemView);
     }
 
     public static class ScreenshotViewHolder extends RecyclerView.ViewHolder {
 
         private final RequestOptions requestOptions;
 
-        ScreenshotViewHolder(SubItemIntroductionScreenBinding binding) {
+        ScreenshotViewHolder(ItemScreenshotBinding binding) {
             super(binding.getRoot());
             int radius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
             requestOptions = new RequestOptions()

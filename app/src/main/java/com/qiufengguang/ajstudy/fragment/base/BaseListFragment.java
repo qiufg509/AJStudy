@@ -96,8 +96,12 @@ public abstract class BaseListFragment extends Fragment {
         ViewGroup.LayoutParams containerLayoutParams = baseBinding.bounceContainer.getLayoutParams();
         if (containerLayoutParams instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) containerLayoutParams;
-            layoutParams.topMargin = config.overlayTitleBar ? 0 : totalHeight;
-            layoutParams.bottomMargin = (config.hasNaviBar && !config.overlayNaviBar) ? naviBarHeight : 0;
+            layoutParams.topMargin =
+                (config.titleBarMode == DynamicToolbar.Mode.GONE || config.overlayTitleBar)
+                    ? 0 : totalHeight;
+            layoutParams.bottomMargin =
+                (config.hasNaviBar && !config.overlayNaviBar)
+                    ? naviBarHeight : 0;
             baseBinding.bounceContainer.setLayoutParams(layoutParams);
         }
         baseBinding.recyclerContainer.setPaddingRelative(
@@ -114,11 +118,16 @@ public abstract class BaseListFragment extends Fragment {
         baseBinding.recyclerContainer.removeItemDecoration(decor);
         baseBinding.recyclerContainer.addItemDecoration(decor);
 
-        if (config.mode != DynamicToolbar.Mode.GONE) {
+        if (config.titleBarMode != DynamicToolbar.Mode.GONE) {
             baseBinding.titleBar.setVisibility(View.VISIBLE);
-            setupToolbar(config.mode);
+            setupToolbar(config.titleBarMode);
         } else {
             baseBinding.titleBar.setVisibility(View.GONE);
+        }
+
+        if (!config.enableBounce) {
+            baseBinding.bounceContainer.setEnablePullDownBounce(false);
+            baseBinding.bounceContainer.setEnablePullUpBounce(false);
         }
     }
 

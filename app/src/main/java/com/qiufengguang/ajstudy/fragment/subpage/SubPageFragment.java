@@ -39,7 +39,11 @@ public class SubPageFragment extends BaseListFragment {
         return new PageConfig.Builder()
             .setStatusBarMode(PageConfig.StatusBarMode.NONE)
             .setHasNaviBar(false)
+            // 当前作为详情页子页面，底部让出导航栏高度避免与安装按钮重叠
+            .setHasNaviBar(true)
+            .setOverlayNaviBar(true)
             .setTitleBarMode(DynamicToolbar.Mode.GONE)
+            .setEnablePageBounce(false)
             .create();
     }
 
