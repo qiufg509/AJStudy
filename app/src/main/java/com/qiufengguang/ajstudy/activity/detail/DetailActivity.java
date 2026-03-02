@@ -86,21 +86,24 @@ public class DetailActivity extends AppCompatActivity {
 
         int totalHeight = StatusBarUtil.adaptTitleBar(binding.titleBar.toolbar);
 
+        // icon和titleBar的间距
+        int appIconTitleBarSpacing = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
         ViewGroup.LayoutParams ivIconParams = binding.ivIcon.getLayoutParams();
         if (ivIconParams instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams iconParams = (ViewGroup.MarginLayoutParams) ivIconParams;
-            iconParams.topMargin = totalHeight;
+            iconParams.topMargin = totalHeight + appIconTitleBarSpacing;
             binding.ivIcon.setLayoutParams(iconParams);
         }
 
-        int expectedScrollRange = getResources().getDimensionPixelSize(R.dimen.item_icon_size_xl)
-            + getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
+        int iconSize = getResources().getDimensionPixelSize(R.dimen.item_icon_size_xl);
+        // head和appInfo的间隙
+        int headInfoSpacing = getResources().getDimensionPixelSize(R.dimen.detail_head_info_spacing);
         offsetChangedCallback = new DetailHeadOffsetChangedCallback(this,
             binding.titleBar.toolbar,
             binding.titleBar.barBack,
             binding.titleBar.barShare,
             binding.titleBar.barTitle,
-            expectedScrollRange
+            appIconTitleBarSpacing + iconSize + headInfoSpacing
         );
         binding.appBarLayout.addOnOffsetChangedListener(offsetChangedCallback);
     }

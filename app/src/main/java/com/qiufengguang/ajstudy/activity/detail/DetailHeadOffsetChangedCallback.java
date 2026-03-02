@@ -24,8 +24,6 @@ import com.qiufengguang.ajstudy.utils.StatusBarUtil;
  * @since 2025/12/11 18:44
  */
 public class DetailHeadOffsetChangedCallback implements AppBarLayout.OnOffsetChangedListener {
-    private static final String TAG = "DetailHeadOffsetChangedCallback";
-
     private final ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
     /**

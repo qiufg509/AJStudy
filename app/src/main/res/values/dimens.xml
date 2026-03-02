@@ -23,6 +23,8 @@
     <dimen name="radius_m">12dp</dimen>
     <dimen name="radius_s">8dp</dimen>
     <dimen name="radius_xs">4dp</dimen>
+    <dimen name="detail_head_height">264dp</dimen>
+    <dimen name="detail_head_info_spacing">20dp</dimen>
     <dimen name="detail_info_divider_size">12dp</dimen>
     <dimen name="install_btn_width">64dp</dimen>
     <dimen name="install_btn_height">28dp</dimen>
