@@ -10,9 +10,15 @@ import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
-public class SecondFragment extends BaseGridFragment {
-    public static SecondFragment newInstance(Bundle args) {
-        SecondFragment f = new SecondFragment();
+/**
+ * 二级页（格网样式）
+ *
+ * @author qiufengguang
+ * @since 2026/3/4 2:17
+ */
+public class SecondGridFragment extends BaseGridFragment {
+    public static SecondGridFragment newInstance(Bundle args) {
+        SecondGridFragment f = new SecondGridFragment();
         f.setArguments(args);
         return f;
     }

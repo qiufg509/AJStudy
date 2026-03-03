@@ -168,7 +168,9 @@ public final class AppNavigator {
             case Router.PAGE_ID.ARTICLE_DETAIL:
                 startArticleActivity(context, args);
                 break;
-            case Router.PAGE_ID.SECONDARY:
+            case Router.PAGE_ID.SECOND_GRID:
+            case Router.PAGE_ID.SECOND_STAGGERED:
+                args.putString(Router.EXTRA_ID, pageId);
                 startSecondActivity(context, args);
                 break;
             default:

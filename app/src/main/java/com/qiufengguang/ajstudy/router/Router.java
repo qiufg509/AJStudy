@@ -1,7 +1,15 @@
 package com.qiufengguang.ajstudy.router;
 
+/**
+ * 页面路由参数
+ *
+ * @author qiufengguang
+ * @since 2026/3/4 2:30
+ */
 public interface Router {
     String EXTRA_TITLE = "pageTitle";
+
+    String EXTRA_ID = "pageId";
 
     String EXTRA_URI = "pageUri";
 
@@ -12,7 +20,9 @@ public interface Router {
     String EXTRA_DATA = "data";
 
     interface PAGE_ID {
-        String SECONDARY = "secondary";
+        String SECOND_GRID = "secondGrid";
+
+        String SECOND_STAGGERED = "secondStaggered";
 
         String APP_DETAIL = "appDetail";
 

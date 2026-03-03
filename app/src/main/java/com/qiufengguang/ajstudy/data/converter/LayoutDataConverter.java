@@ -75,7 +75,7 @@ public class LayoutDataConverter {
         pageData.setRtnCode(rawRespData.getRtnCode());
         List<LayoutData<?>> dataList = new ArrayList<>();
         for (LayoutDataDTO dto : rawRespData.getLayoutData()) {
-            if (dto.getDataList() == null || dto.getDataList().isEmpty()) {
+            if (dto.getDataList() == null) {
                 continue;
             }
             int layoutId = dto.getLayoutId();
@@ -107,12 +107,18 @@ public class LayoutDataConverter {
         try {
             List<BaseCardBean> beans;
             switch (layoutId) {
-//                case NormalCard.LAYOUT_ID:
-//                    Type normalType = new TypeToken<NormalCardBean>() {
-//                    }.getType();
-//                    NormalCardBean normalCardBean = gson.fromJson(dataArray.get(0), normalType);
-//                    return LayoutDataFactory.createSingle(layoutId, normalCardBean, title, detailId);
-
+                case NormalCard.LAYOUT_ID:
+                    Type normalType = new TypeToken<List<NormalCardBean>>() {
+                    }.getType();
+                    beans = gson.fromJson(dataArray, normalType);
+                    break;
+                case GraphicCardS.LAYOUT_ID:
+                case GraphicCardM.LAYOUT_ID:
+                case GraphicCardL.LAYOUT_ID:
+                    Type graphicType = new TypeToken<List<GraphicCardBean>>() {
+                    }.getType();
+                    beans = gson.fromJson(dataArray, graphicType);
+                    break;
                 case CommentCard.LAYOUT_ID:
                     Type commentType = new TypeToken<List<CommentCardBean>>() {
                     }.getType();
@@ -123,7 +129,6 @@ public class LayoutDataConverter {
                     }.getType();
                     beans = gson.fromJson(dataArray, recommendType);
                     break;
-
                 default:
                     return null;
             }
@@ -177,23 +182,11 @@ public class LayoutDataConverter {
                     ArticleCardBean articleBean = gson.fromJson(dataArray.get(0), ArticleCardBean.class);
                     return LayoutDataFactory.createSingle(layoutId, articleBean);
 
-                case GraphicCardL.LAYOUT_ID:
-                case GraphicCardM.LAYOUT_ID:
-                case GraphicCardS.LAYOUT_ID:
-                    GraphicCardBean graphicBean = gson.fromJson(dataArray.get(0), GraphicCardBean.class);
-                    return LayoutDataFactory.createSingle(layoutId, graphicBean);
-
                 case GraphicLGridCard.LAYOUT_ID:
                     Type graphicGridType = new TypeToken<List<GraphicCardBean>>() {
                     }.getType();
                     List<GraphicCardBean> graphicGridList = gson.fromJson(dataArray, graphicGridType);
                     return LayoutDataFactory.createCollection(layoutId, graphicGridList, title);
-
-                case NormalCard.LAYOUT_ID:
-                    Type normalType = new TypeToken<NormalCardBean>() {
-                    }.getType();
-                    NormalCardBean normalCardBean = gson.fromJson(dataArray.get(0), normalType);
-                    return LayoutDataFactory.createSingle(layoutId, normalCardBean, title, detailId);
 
                 case SimpleUserCard.LAYOUT_ID:
                     Type userType = new TypeToken<User>() {
