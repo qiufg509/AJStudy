@@ -24,6 +24,7 @@ import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
+import com.qiufengguang.ajstudy.card.topicheader.TopicHeaderCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
@@ -45,6 +46,7 @@ import com.qiufengguang.ajstudy.data.model.ScreenshotCardBean;
 import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.data.model.TextCardBean;
+import com.qiufengguang.ajstudy.data.model.TopicHeaderCardBean;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.remote.dto.LayoutDataDTO;
 import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
@@ -235,6 +237,12 @@ public class LayoutDataConverter {
                     }.getType();
                     TextCardBean textCardBean = gson.fromJson(dataArray.get(0), textType);
                     return LayoutDataFactory.createSingle(TextCard.LAYOUT_ID, textCardBean, title);
+
+                case TopicHeaderCard.LAYOUT_ID:
+                    Type topicHeaderType = new TypeToken<TopicHeaderCardBean>() {
+                    }.getType();
+                    TopicHeaderCardBean topicHeaderCardBean = gson.fromJson(dataArray.get(0), topicHeaderType);
+                    return LayoutDataFactory.createSingle(TopicHeaderCard.LAYOUT_ID, topicHeaderCardBean);
 
                 case TitleCard.LAYOUT_ID:
                     return LayoutDataFactory.createSingle(layoutId, null, title, detailId);

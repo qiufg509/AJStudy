@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.Card;
+import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.global.Constant;
 
 /**
@@ -41,6 +43,16 @@ public class PageSpacingDecoration extends RecyclerView.ItemDecoration {
         if (position == RecyclerView.NO_POSITION) {
             return;
         }
+        RecyclerView.Adapter<?> adapter = parent.getAdapter();
+        if (adapter != null) {
+            int itemViewType = adapter.getItemViewType(position);
+            CardCreator creator = Card.getCreator(itemViewType);
+            if (creator != null && creator.isFitToMargin()) {
+                outRect.set(0, 0, 0, 0);
+                return;
+            }
+        }
+
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             // 格网页面 {@link com.qiufengguang.ajstudy.fragment.base.BaseGridFragment}

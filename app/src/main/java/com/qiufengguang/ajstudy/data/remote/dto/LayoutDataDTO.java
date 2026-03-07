@@ -15,7 +15,7 @@ public class LayoutDataDTO {
 
     private String name;
 
-    private String subTitle;
+    private String subtitle;
 
     private JsonArray dataList;
 
@@ -45,12 +45,12 @@ public class LayoutDataDTO {
         this.name = name;
     }
 
-    public String getSubTitle() {
-        return subTitle;
+    public String getSubtitle() {
+        return subtitle;
     }
 
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 
     public JsonArray getDataList() {

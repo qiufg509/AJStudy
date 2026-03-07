@@ -157,31 +157,29 @@ public class BannerCard extends Card {
         if (recyclerBanner == null) {
             return;
         }
-        Resources resources = recyclerBanner.getResources();
-        float horizontalMargin = resources.getDimension(R.dimen.banner_horizontal_margin);
-        int screenWidth = DisplayMetricsHelper.getScreenWidth(recyclerBanner.getContext());
-        float bannerWidth = screenWidth - horizontalMargin * 2;
-        int snapDistancePx;
+        int perLineNumber;
         switch (column) {
             case Constant.Grid.COLUMN_8:
-                this.itemWidth = (int) (bannerWidth - GAP * Constant.Pln.DEF_8) / Constant.Pln.DEF_8;
-                this.itemHeight = (int) ((bannerWidth - GAP * Constant.Pln.DEF_8) / Constant.Pln.DEF_8 * itemRatio);
-                snapDistancePx = (this.itemWidth + GAP) / 2;
+                perLineNumber = Constant.Pln.DEF_8;
                 break;
             case Constant.Grid.COLUMN_12:
-                this.itemWidth = (int) (bannerWidth - GAP * Constant.Pln.DEF_12) / Constant.Pln.DEF_12;
-                this.itemHeight = (int) ((bannerWidth - GAP * Constant.Pln.DEF_12) / Constant.Pln.DEF_12 * itemRatio);
-                snapDistancePx = (this.itemWidth + GAP) / 2;
+                perLineNumber = Constant.Pln.DEF_12;
                 break;
             default:
-                this.itemWidth = (int) bannerWidth;
-                this.itemHeight = (int) (bannerWidth * itemRatio);
-                snapDistancePx = this.itemWidth / 2;
+                perLineNumber = Constant.Pln.DEF_4;
                 break;
         }
+        int horizontalMargin = recyclerBanner.getResources().getDimensionPixelSize(
+            R.dimen.activity_horizontal_margin_l);
+        int screenWidth = DisplayMetricsHelper.getScreenWidth(recyclerBanner.getContext());
+        float bannerWidth = screenWidth - horizontalMargin * 2;
+        this.itemWidth = (int) (bannerWidth - GAP * (perLineNumber - 1)) / perLineNumber;
+        this.itemHeight = (int) (this.itemWidth * itemRatio);
 
+        int snapDistancePx = (column == Constant.Grid.COLUMN_DEFAULT ?
+            this.itemWidth : (this.itemWidth + GAP)) / 2;
         setupBanner(snapDistancePx);
-        setRootMargin();
+        setRootMargin(horizontalMargin);
     }
 
     /**
@@ -242,7 +240,7 @@ public class BannerCard extends Card {
     /**
      * 8/12栅格添加了左右GAP间距，需要设置 -GAP/2 补偿间距使卡片对齐
      */
-    private void setRootMargin() {
+    private void setRootMargin(int horizontalMargin) {
         if (recyclerBannerRef == null) {
             return;
         }
@@ -258,9 +256,10 @@ public class BannerCard extends Card {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutParams;
-            int halfInterItemSpacing = column == Constant.Grid.COLUMN_DEFAULT ? 0 : GAP / 2;
-            params.leftMargin = -halfInterItemSpacing;
-            params.rightMargin = -halfInterItemSpacing;
+            int margin = column == Constant.Grid.COLUMN_DEFAULT
+                ? horizontalMargin : (horizontalMargin - GAP / 2);
+            params.leftMargin = margin;
+            params.rightMargin = margin;
             view.setLayoutParams(params);
         }
     }
@@ -564,6 +563,11 @@ public class BannerCard extends Card {
             CardBannerBinding binding = CardBannerBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new BannerCardHolder(binding, lifecycleOwner);
+        }
+
+        @Override
+        public boolean isFitToMargin() {
+            return true;
         }
 
         @Override

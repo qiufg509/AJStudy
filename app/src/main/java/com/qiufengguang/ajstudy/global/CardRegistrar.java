@@ -20,6 +20,7 @@ import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
+import com.qiufengguang.ajstudy.card.topicheader.TopicHeaderCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 
 /**
@@ -52,5 +53,6 @@ public class CardRegistrar {
         Card.register(TextCard.LAYOUT_ID, new TextCard.Creator());
         Card.register(RecommendCard.LAYOUT_ID, new RecommendCard.Creator());
         Card.register(CommentCard.LAYOUT_ID, new CommentCard.Creator());
+        Card.register(TopicHeaderCard.LAYOUT_ID, new TopicHeaderCard.Creator());
     }
 }

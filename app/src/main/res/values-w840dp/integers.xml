@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="ajstudy_column_count">12</integer>
-    <dimen name="banner_horizontal_margin">@dimen/activity_horizontal_margin_m</dimen>
 </resources>
