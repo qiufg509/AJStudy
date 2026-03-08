@@ -37,6 +37,14 @@ public class SecondGridFragment extends BaseGridFragment {
         SecondViewModel viewModel = new ViewModelProvider(this).get(SecondViewModel.class);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), layoutData ->
             baseListAdapter.setData(layoutData));
+        viewModel.getTitleData().observe(getViewLifecycleOwner(), overlayTitleBar -> {
+            PageConfig config = getPageConfig();
+            if (!overlayTitleBar) {
+                return;
+            }
+            config.setOverlayTitleBar(true);
+            setupLayout(config);
+        });
         Bundle arguments = getArguments();
         if (arguments == null) {
             return;

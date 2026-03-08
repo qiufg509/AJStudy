@@ -68,7 +68,7 @@
         <FrameLayout
             android:id="@+id/layout_thumb_0"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/card_height_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_user">

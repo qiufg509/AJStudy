@@ -24,6 +24,10 @@ public class PageConfig {
     private PageConfig() {
     }
 
+    public void setOverlayTitleBar(boolean overlayTitleBar) {
+        this.overlayTitleBar = overlayTitleBar;
+    }
+
     public enum StatusBarMode {
         NONE,
         LIGHT,

@@ -12,8 +12,8 @@
     </item>
 
     <item
-        android:width="200dp"
-        android:height="200dp"
+        android:width="@dimen/card_height_image"
+        android:height="@dimen/card_height_image"
         android:drawable="@drawable/ic_placeholder"
         android:gravity="center" />
 

@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class SecondViewModel extends BaseViewModel {
     private final MutableLiveData<List<LayoutData<?>>> liveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> titleData = new MutableLiveData<>();
 
     private final SecondaryRepository repository;
 
@@ -50,6 +51,10 @@ public class SecondViewModel extends BaseViewModel {
             @Override
             public void onSuccess(PageData data) {
                 liveData.postValue(data.getLayoutData());
+                // 可扩展更多标题样式配置
+                if (TextUtils.equals(data.getTitleType(), "back_title_gradient")) {
+                    titleData.postValue(true);
+                }
             }
 
             @Override
@@ -66,5 +71,9 @@ public class SecondViewModel extends BaseViewModel {
 
     public LiveData<List<LayoutData<?>>> getLiveData() {
         return liveData;
+    }
+
+    public LiveData<Boolean> getTitleData() {
+        return titleData;
     }
 }

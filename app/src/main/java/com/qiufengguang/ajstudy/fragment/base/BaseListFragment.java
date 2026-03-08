@@ -87,7 +87,7 @@ public abstract class BaseListFragment extends Fragment {
         baseBinding = null;
     }
 
-    private void setupLayout(PageConfig config) {
+    protected void setupLayout(PageConfig config) {
         int totalHeight = StatusBarUtil.adaptTitleBar(baseBinding.titleBar);
 
         int naviBarHeight = DisplayMetricsHelper.getNavigationBarHeight(requireActivity());
@@ -128,6 +128,12 @@ public abstract class BaseListFragment extends Fragment {
         if (!config.enableBounce) {
             baseBinding.bounceContainer.setEnablePullDownBounce(false);
             baseBinding.bounceContainer.setEnablePullUpBounce(false);
+        }
+        if (config.titleBarMode != DynamicToolbar.Mode.GONE && config.overlayTitleBar) {
+            int endThreshold = getResources().getDimensionPixelSize(R.dimen.card_height_image);
+            TitleBarScrollListener listener = new TitleBarScrollListener(
+                baseBinding.titleBar, endThreshold - totalHeight);
+            baseBinding.recyclerContainer.addOnScrollListener(listener);
         }
     }
 

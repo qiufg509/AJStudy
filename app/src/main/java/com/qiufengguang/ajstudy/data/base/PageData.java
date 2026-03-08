@@ -23,6 +23,8 @@ public class PageData {
 
     private String name;
 
+    private String titleType;
+
     private int totalPages;
 
     private int rtnCode;
@@ -66,6 +68,14 @@ public class PageData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTitleType() {
+        return titleType;
+    }
+
+    public void setTitleType(String titleType) {
+        this.titleType = titleType;
     }
 
     public int getTotalPages() {

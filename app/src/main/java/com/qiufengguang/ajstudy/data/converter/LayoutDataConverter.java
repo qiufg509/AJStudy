@@ -72,6 +72,7 @@ public class LayoutDataConverter {
         pageData.setCount(rawRespData.getCount());
         pageData.setHasNextPage(rawRespData.getHasNextPage());
         pageData.setName(rawRespData.getName());
+        pageData.setTitleType(rawRespData.getTitleType());
         pageData.setTotalPages(rawRespData.getTotalPages());
         pageData.setTabs(rawRespData.getTabs());
         pageData.setRtnCode(rawRespData.getRtnCode());
