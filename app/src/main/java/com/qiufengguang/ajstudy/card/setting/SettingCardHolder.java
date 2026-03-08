@@ -1,12 +1,17 @@
 package com.qiufengguang.ajstudy.card.setting;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.databinding.CardSettingBinding;
+import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import java.util.List;
 
@@ -35,7 +40,20 @@ public class SettingCardHolder extends BaseViewHolder<CardSettingBinding> {
             .setRecyclerView(binding.recyclerLgc)
             .setTitleView(binding.tvTitle)
             .setHorizontalSpacing(horizontalSpacing)
-            .setListener(this::onCommonClickListener)
+            .setListener(new OnItemClickListener<>() {
+                @Override
+                public void onItemClick(Context context, SettingCardBean data) {
+                    onCommonClickListener(context, data);
+                }
+
+                @Override
+                public void onCheckChange(Context context, SettingCardBean data, boolean isChecked) {
+                    if (data.getId() != 4) {
+                        return;
+                    }
+                    SpUtils.getInstance().putBoolean(Constant.Sp.KEY_TICK_SOUND, isChecked);
+                }
+            })
             .create();
         card.show();
     }

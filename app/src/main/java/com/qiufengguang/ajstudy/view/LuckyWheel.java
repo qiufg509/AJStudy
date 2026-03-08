@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,8 +13,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,9 +33,12 @@ import com.bumptech.glide.request.transition.Transition;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
+import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.ImageUtil;
+import com.qiufengguang.ajstudy.utils.SpUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,6 +50,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 2026/2/4 0:03
  */
 public class LuckyWheel extends View {
+    private static final String TAG = "LuckyWheel";
+
     private static final int DEFAULT_COLOR_DARK = 0xFF8584;
 
     private static final int DEFAULT_COLOR_LIGHT = 0xFE6869;
@@ -109,6 +118,16 @@ public class LuckyWheel extends View {
 
     private boolean isFlingFinishedCallbackFired = true;
 
+    private static SoundPool soundPool;
+
+    private static int tickSoundId;
+
+    private static boolean soundPoolInitialized = false;
+
+    private boolean enableTickSound = false;
+
+    private int lastPlayedSectorIndex = -1;
+
     public LuckyWheel(Context context) {
         this(context, null);
     }
@@ -151,6 +170,9 @@ public class LuckyWheel extends View {
 
         // 设置硬件加速下的阴影支持
         setLayerType(LAYER_TYPE_SOFTWARE, null);
+
+        enableTickSound = SpUtils.getInstance().getBoolean(Constant.Sp.KEY_TICK_SOUND, false);
+        initSoundPool(context.getApplicationContext());
     }
 
     public void setBeans(List<LuckyWheelCardBean> beans) {
@@ -176,6 +198,8 @@ public class LuckyWheel extends View {
         // 重新绘制并请求重新布局
         requestLayout();
         invalidate();
+
+        lastPlayedSectorIndex = -1;
     }
 
     private void initPaints() {
@@ -603,6 +627,7 @@ public class LuckyWheel extends View {
             if (initAngle != newAngle) {
                 initAngle = newAngle;
                 invalidate();
+                checkAndPlayTick();
             }
         });
 
@@ -753,6 +778,7 @@ public class LuckyWheel extends View {
         if (initAngle != rotation) {
             initAngle = rotation;
             invalidate();
+            checkAndPlayTick();
         }
     }
 
@@ -766,6 +792,7 @@ public class LuckyWheel extends View {
             if (initAngle != rotation) {
                 initAngle = rotation;
                 invalidate();
+                checkAndPlayTick();
             }
 
             // 继续滚动
@@ -956,6 +983,64 @@ public class LuckyWheel extends View {
                         }
                     }
                 });
+        }
+    }
+
+    private static void initSoundPool(Context context) {
+        if (soundPoolInitialized) {
+            return;
+        }
+        synchronized (LuckyWheel.class) {
+            if (soundPoolInitialized) {
+                return;
+            }
+            AssetFileDescriptor afd = null;
+            try {
+                AudioAttributes attributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+                soundPool = new SoundPool.Builder()
+                    // 同时最多播放一个，避免重叠
+                    .setMaxStreams(1)
+                    .setAudioAttributes(attributes)
+                    .build();
+
+                afd = context.getAssets().openFd(Constant.LUCK_WHEEL_TICK_FILE);
+                tickSoundId = soundPool.load(afd, 1);
+                soundPoolInitialized = true;
+            } catch (IOException e) {
+                tickSoundId = 0;
+            } finally {
+                if (afd != null) {
+                    try {
+                        afd.close();
+                    } catch (IOException e) {
+                        Log.w(TAG, "initSoundPool: ", e);
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkAndPlayTick() {
+        if (!enableTickSound || beans == null || beans.isEmpty()) {
+            return;
+        }
+
+        // 当前顶部指针指向的扇区索引
+        int currentSector = queryPosition();
+        if (lastPlayedSectorIndex == -1) {
+            // 第一次记录，不播放
+            lastPlayedSectorIndex = currentSector;
+            return;
+        }
+
+        if (lastPlayedSectorIndex != currentSector) {
+            if (soundPool != null && tickSoundId != 0) {
+                soundPool.play(tickSoundId, 1.0f, 1.0f, 1, 0, 1.0f);
+            }
+            lastPlayedSectorIndex = currentSector;
         }
     }
 

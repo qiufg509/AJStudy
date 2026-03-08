@@ -9,9 +9,21 @@ import com.qiufengguang.ajstudy.data.base.BaseCardBean;
  * @since 2026/1/31 11:59
  */
 public class SettingCardBean extends BaseCardBean {
+    private int id;
+
     private String content;
 
     private boolean isSwitch;
+
+    private boolean isChecked;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getContent() {
         return content;
@@ -27,5 +39,13 @@ public class SettingCardBean extends BaseCardBean {
 
     public void setSwitch(boolean aSwitch) {
         isSwitch = aSwitch;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

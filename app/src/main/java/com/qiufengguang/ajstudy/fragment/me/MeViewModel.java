@@ -3,11 +3,15 @@ package com.qiufengguang.ajstudy.fragment.me;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.data.repository.MeRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
+import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import java.util.List;
 
@@ -36,7 +40,9 @@ public class MeViewModel extends BaseViewModel {
         currentCall = repository.fetchMeData(new OnDataLoadedCallback<>() {
             @Override
             public void onSuccess(PageData data) {
-                liveData.postValue(data.getLayoutData());
+                List<LayoutData<?>> dataList = data.getLayoutData();
+                fillLocalData(dataList);
+                liveData.postValue(dataList);
             }
 
             @Override
@@ -45,6 +51,29 @@ public class MeViewModel extends BaseViewModel {
                 liveData.postValue(dataList);
             }
         });
+    }
+
+    private void fillLocalData(List<LayoutData<?>> dataList) {
+        if (dataList == null || dataList.isEmpty()) {
+            return;
+        }
+        for (LayoutData<?> layoutData : dataList) {
+            if (layoutData.getLayoutId() != SettingCard.LAYOUT_ID) {
+                continue;
+            }
+            @SuppressWarnings("unchecked")
+            List<SettingCardBean> cardBeans = (List<SettingCardBean>) layoutData.getData();
+            if (cardBeans == null || cardBeans.isEmpty()) {
+                continue;
+            }
+            for (SettingCardBean cardBean : cardBeans) {
+                if (cardBean.getId() != 4) {
+                    continue;
+                }
+                boolean isChecked = SpUtils.getInstance().getBoolean(Constant.Sp.KEY_TICK_SOUND, false);
+                cardBean.setChecked(isChecked);
+            }
+        }
     }
 
     public LiveData<List<LayoutData<?>>> getLiveData() {

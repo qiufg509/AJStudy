@@ -13,6 +13,11 @@ public interface Constant {
     long TOKEN_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000L;
 
     /**
+     * 幸运转盘播放的声音文件
+     */
+    String LUCK_WHEEL_TICK_FILE = "sounds/tick.wav";
+
+    /**
      * 栅格定义
      */
     interface Grid {
@@ -58,5 +63,7 @@ public interface Constant {
         String PREF_USER = "user_prefs";
 
         String KEY_THEME_INDEX = "theme_index";
+
+        String KEY_TICK_SOUND = "enableTickSound";
     }
 }

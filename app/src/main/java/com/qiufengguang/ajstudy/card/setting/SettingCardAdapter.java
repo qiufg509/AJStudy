@@ -124,6 +124,7 @@ public class SettingCardAdapter extends RecyclerView.Adapter<SettingCardAdapter.
             binding.tvTitle.setText(bean.getTitle());
             binding.divider.setVisibility(isLastLine ? View.GONE : View.VISIBLE);
             if (bean.isSwitch()) {
+                binding.btnSwitch.setChecked(bean.isChecked());
                 binding.btnSwitch.setVisibility(View.VISIBLE);
                 binding.tvContent.setVisibility(View.GONE);
                 return;
