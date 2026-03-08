@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.network;
+package com.qiufengguang.ajstudy.data.repository;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.data.callback.LoginCallback;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import java.util.Map;

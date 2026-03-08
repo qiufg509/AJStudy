@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.data.model.LoginResult;
 import com.qiufengguang.ajstudy.data.model.User;
-import com.qiufengguang.ajstudy.network.LoginCallback;
-import com.qiufengguang.ajstudy.network.LoginRepository;
+import com.qiufengguang.ajstudy.data.callback.LoginCallback;
+import com.qiufengguang.ajstudy.data.repository.LoginRepository;
 
 /**
  * 登录页面ViewModel

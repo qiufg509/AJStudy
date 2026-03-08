@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.network;
+package com.qiufengguang.ajstudy.data.callback;
 
 import com.qiufengguang.ajstudy.data.model.User;
 
