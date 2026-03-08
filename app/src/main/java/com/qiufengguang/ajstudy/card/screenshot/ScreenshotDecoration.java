@@ -14,31 +14,41 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class ScreenshotDecoration extends RecyclerView.ItemDecoration {
     /**
-     * 水平间距
+     * item水平间距
      */
-    private final int horizontalSpacing;
+    private final int halfSpacing;
 
-    public ScreenshotDecoration(int horizontalSpacing) {
-        this.horizontalSpacing = horizontalSpacing / 2;
+    /**
+     * 卡片水平间距
+     */
+    private final int margin;
+
+    public ScreenshotDecoration(int margin, int spacing) {
+        this.margin = margin;
+        this.halfSpacing = spacing / 2;
     }
 
     @Override
-    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, RecyclerView parent,
-                               @NonNull RecyclerView.State state) {
+    public void getItemOffsets(
+        @NonNull Rect outRect,
+        @NonNull View view,
+        RecyclerView parent,
+        @NonNull RecyclerView.State state
+    ) {
         int position = parent.getChildAdapterPosition(view);
         long itemCount = state.getItemCount();
         if (position == RecyclerView.NO_POSITION || itemCount <= 0) {
             return;
         }
         if (position == 0) {
-            outRect.left = 0;
-            outRect.right = horizontalSpacing / 2;
+            outRect.left = margin;
+            outRect.right = halfSpacing / 2;
         } else if (position == itemCount - 1) {
-            outRect.left = horizontalSpacing / 2;
-            outRect.right = 0;
+            outRect.left = halfSpacing / 2;
+            outRect.right = margin;
         } else {
-            outRect.left = horizontalSpacing / 2;
-            outRect.right = horizontalSpacing / 2;
+            outRect.left = halfSpacing / 2;
+            outRect.right = halfSpacing / 2;
         }
         outRect.top = 0;
         outRect.bottom = 0;

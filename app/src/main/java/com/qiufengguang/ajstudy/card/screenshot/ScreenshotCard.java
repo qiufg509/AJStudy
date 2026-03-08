@@ -62,9 +62,11 @@ public class ScreenshotCard extends Card {
         recyclerView.setLayoutManager(layoutManager);
 
         if (decor == null) {
+            int margin = recyclerView.getResources().getDimensionPixelSize(
+                R.dimen.activity_horizontal_margin_l);
             int spacing = recyclerView.getResources().getDimensionPixelSize(
                 R.dimen.activity_horizontal_margin_s);
-            decor = new ScreenshotDecoration(spacing);
+            decor = new ScreenshotDecoration(margin, spacing);
         }
         recyclerView.removeItemDecoration(decor);
         recyclerView.addItemDecoration(decor);
@@ -86,6 +88,11 @@ public class ScreenshotCard extends Card {
             ScreenshotHolder holder = new ScreenshotHolder(binding);
             setFullSpanInStaggeredPage(holder);
             return holder;
+        }
+
+        @Override
+        public boolean isFitToMargin() {
+            return true;
         }
     }
 

@@ -22,6 +22,7 @@
         <activity
             android:name=".activity.main.MainActivity"
             android:exported="true"
+            android:launchMode="singleInstancePerTask"
             android:theme="@style/Theme.Splash.Blue">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,12 +63,15 @@
             android:name=".activity.detail.DetailActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.AJStudy.Blue" />
         <activity
             android:name=".activity.markdown.MarkdownActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.second.SecondActivity"
+            android:launchMode="standard"
             android:exported="false" />
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->
         <meta-data
