@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 设置卡片数据
  *
@@ -70,5 +72,25 @@ public class SettingCardBean extends BaseCardBean {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        SettingCardBean that = (SettingCardBean) o;
+        return id == that.id
+            && isSwitch == that.isSwitch
+            && isChecked == that.isChecked
+            && Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, content, isSwitch, isChecked);
     }
 }

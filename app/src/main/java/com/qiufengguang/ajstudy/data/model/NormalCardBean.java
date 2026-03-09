@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 普通卡片数据bean
  *
@@ -44,5 +46,25 @@ public class NormalCardBean extends BaseCardBean {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        NormalCardBean that = (NormalCardBean) o;
+        return id == that.id
+            && Objects.equals(icon, that.icon)
+            && Objects.equals(subtitle, that.subtitle)
+            && Objects.equals(brief, that.brief);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, icon, subtitle, brief);
     }
 }

@@ -1,16 +1,18 @@
 package com.qiufengguang.ajstudy.fragment.base;
 
+import android.os.Bundle;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewbinding.ViewBinding;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
-import com.qiufengguang.ajstudy.card.base.Card;
-import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
@@ -18,28 +20,26 @@ import com.qiufengguang.ajstudy.data.base.LayoutData;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 /**
- * 首页适配器
+ * 页面适配器（使用 ListAdapter 实现高效增量更新）
  *
  * @author qiufengguang
  * @since 2026/1/19 15:26
  */
-public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
+public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?>> {
+    /**
+     * 页面数据差异化更新回调
+     */
+    private static final DiffUtil.ItemCallback<LayoutData<?>> DIFF_CALLBACK = new DiffItemCallback();
 
     private final LifecycleOwner lifecycleOwner;
 
-    private List<LayoutData<?>> dataList;
-
     /**
-     * 存储所有监听生命周期的卡片的位置
-     */
-    private final List<Integer> lifecycleCardPos = new ArrayList<>();
-
-    /**
-     * 存储所有需要监听 onResume 和 onPause 方法的 ViewHolder 引用
+     * 存储所有需要监听 onResume 和 onPause 方法的 ViewHolder 弱引用
      */
     private final Set<WeakReference<BaseViewHolder<?>>> lifecycleHolderRefs = new HashSet<>();
 
@@ -49,6 +49,7 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
     private final Set<WeakReference<BaseViewHolder<?>>> viewHolderRefs = new HashSet<>();
 
     public BaseListAdapter(LifecycleOwner lifecycleOwner) {
+        super(DIFF_CALLBACK);
         this.lifecycleOwner = lifecycleOwner;
     }
 
@@ -58,42 +59,42 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
      * @param dataList 页面数据
      */
     public void setData(List<LayoutData<?>> dataList) {
-        if (dataList == null || dataList.isEmpty()) {
-            this.dataList = dataList;
-            pauseAllCards();
-            notifyItemRangeRemoved(0, getItemCount());
-            return;
-        }
-        if (this.dataList == null || this.dataList.isEmpty()) {
-            this.dataList = dataList;
-            findAllLifecycleCardPositions();
-            notifyItemRangeInserted(0, getItemCount());
-        } else {
-            this.dataList = dataList;
-            findAllLifecycleCardPositions();
-            notifyItemRangeChanged(0, getItemCount());
-        }
+        // 暂停当前所有生命周期卡片（旧 holder 将很快被回收）
+        pauseAllCards();
+        // 过滤掉 null 元素，避免后续处理异常
+        List<LayoutData<?>> filtered = filterNull(dataList);
+        submitList(filtered);
     }
 
     /**
      * 加载更多数据
      *
-     * @param dataList 页面数据
+     * @param newData 页面数据
      */
-    public void addData(List<LayoutData<?>> dataList) {
-        if (dataList == null || dataList.isEmpty()) {
+    public void addData(List<LayoutData<?>> newData) {
+        if (newData == null || newData.isEmpty()) {
             return;
         }
-        int positionStart;
-        int itemCount = dataList.size();
-        if (this.dataList == null) {
-            positionStart = 0;
-            this.dataList = dataList;
-        } else {
-            positionStart = this.dataList.size();
-            this.dataList.addAll(dataList);
+        List<LayoutData<?>> filtered = filterNull(newData);
+        List<LayoutData<?>> currentList = new ArrayList<>(getCurrentList());
+        currentList.addAll(filtered);
+        submitList(currentList);
+    }
+
+    /**
+     * 过滤掉列表中的 null 元素
+     */
+    private List<LayoutData<?>> filterNull(List<LayoutData<?>> list) {
+        if (list == null) {
+            return null;
         }
-        notifyItemRangeInserted(positionStart, itemCount);
+        List<LayoutData<?>> result = new ArrayList<>(list.size());
+        for (LayoutData<?> item : list) {
+            if (item != null) {
+                result.add(item);
+            }
+        }
+        return result;
     }
 
     /**
@@ -101,27 +102,8 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
      */
     @Override
     public int getItemViewType(int position) {
-        LayoutData<?> layoutData = dataList.get(position);
-        if (layoutData == null) {
-            return EmptyCard.LAYOUT_ID_2;
-        }
-        return layoutData.getLayoutId();
-    }
-
-    @Override
-    public int getItemCount() {
-        if (dataList == null || dataList.isEmpty()) {
-            return 0;
-        }
-        int count = 0;
-        for (int index = 0, sum = dataList.size(); index < sum; index++) {
-            LayoutData<?> layoutData = dataList.get(index);
-            if (layoutData == null) {
-                continue;
-            }
-            count++;
-        }
-        return count;
+        LayoutData<?> layoutData = getItem(position);
+        return layoutData != null ? layoutData.getLayoutId() : EmptyCard.LAYOUT_ID_2;
     }
 
     @NonNull
@@ -137,25 +119,20 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position) {
-        LayoutData<?> layoutData = dataList.get(position);
-        if (layoutData == null) {
-            return;
+        LayoutData<?> layoutData = getItem(position);
+        if (layoutData != null) {
+            holder.bind(layoutData, lifecycleOwner);
         }
-        holder.bind(layoutData, this.lifecycleOwner);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position, @NonNull List<Object> payloads) {
         if (payloads.isEmpty()) {
-            // 如果没有payload，执行完整的绑定
             super.onBindViewHolder(holder, position, payloads);
         } else {
-            // 根据payload的内容，只更新特定的视图
-            for (Object payload : payloads) {
-                if (payload instanceof LayoutData) {
-                    holder.update((LayoutData<?>) payload);
-                }
-            }
+            // 通常只有一个 payload
+            Bundle diff = (Bundle) payloads.get(0);
+            holder.update(diff);
         }
     }
 
@@ -179,53 +156,50 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
     }
 
     /**
-     * 查找所有监听生命周期的卡片的位置
-     */
-    private void findAllLifecycleCardPositions() {
-        lifecycleCardPos.clear();
-        for (int index = 0; index < dataList.size(); index++) {
-            LayoutData<?> layoutData = dataList.get(index);
-            if (layoutData == null || layoutData.getData() == null) {
-                continue;
-            }
-            CardCreator creator = Card.getCreator(layoutData.getLayoutId());
-            if (creator != null && creator.needObserveLifecycle()) {
-                lifecycleCardPos.add(index);
-            }
-        }
-    }
-
-    /**
      * 激活可见范围内所有的监听生命周期的卡片，不可见则暂停
      *
      * @param recyclerView 页面列表RecyclerView
      */
     public void activeCardsIfVisible(RecyclerView recyclerView) {
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if (!(manager instanceof LinearLayoutManager)) {
+        if (manager == null) {
             return;
         }
 
-        // 获取当前可见位置范围
-        LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
-        int firstVisible = layoutManager.findFirstVisibleItemPosition();
-        int lastVisible = layoutManager.findLastVisibleItemPosition();
+        int firstVisible, lastVisible;
+        if (manager instanceof LinearLayoutManager) {
+            // GridLayoutManager 也是 LinearLayoutManager 的子类
+            LinearLayoutManager llm = (LinearLayoutManager) manager;
+            firstVisible = llm.findFirstVisibleItemPosition();
+            lastVisible = llm.findLastVisibleItemPosition();
+        } else if (manager instanceof StaggeredGridLayoutManager) {
+            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) manager;
+            int[] first = sglm.findFirstVisibleItemPositions(null);
+            int[] last = sglm.findLastVisibleItemPositions(null);
+            firstVisible = min(first);
+            lastVisible = max(last);
+        } else {
+            // 不支持的 LayoutManager
+            return;
+        }
 
-        // 遍历所有lifecycleCard位置，恢复可见的lifecycleCard
-        for (int cardIndex : lifecycleCardPos) {
-            if (cardIndex < firstVisible || cardIndex > lastVisible) {
+        // 遍历所有生命周期 holder，根据最新位置调用 onResume/onPause
+        Iterator<WeakReference<BaseViewHolder<?>>> iterator = lifecycleHolderRefs.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<BaseViewHolder<?>> ref = iterator.next();
+            BaseViewHolder<?> holder = ref.get();
+            if (holder == null) {
+                iterator.remove();
                 continue;
             }
-            for (WeakReference<BaseViewHolder<?>> ref : lifecycleHolderRefs) {
-                BaseViewHolder<?> holder = ref.get();
-                if (holder == null) {
-                    continue;
-                }
-                if (holder.getBindingAdapterPosition() == cardIndex) {
-                    holder.onResume();
-                } else {
-                    holder.onPause();
-                }
+            int pos = holder.getBindingAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION) {
+                continue;
+            }
+            if (pos >= firstVisible && pos <= lastVisible) {
+                holder.onResume();
+            } else {
+                holder.onPause();
             }
         }
     }
@@ -234,23 +208,27 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
      * 暂停所有监听生命周期的卡片
      */
     public void pauseAllCards() {
-        for (WeakReference<BaseViewHolder<?>> ref : lifecycleHolderRefs) {
+        Iterator<WeakReference<BaseViewHolder<?>>> iterator = lifecycleHolderRefs.iterator();
+        while (iterator.hasNext()) {
+            WeakReference<BaseViewHolder<?>> ref = iterator.next();
             BaseViewHolder<?> holder = ref.get();
-            if (holder != null) {
+            if (holder == null) {
+                iterator.remove();
+            } else {
                 holder.onPause();
             }
         }
     }
 
     /**
-     * 清理所有 ViewHolder 的资源
+     * 释放所有资源
      */
     public void releaseAllResources() {
-        // 清理所有BannerViewHolder引用
+        // 暂停并清理生命周期 holder
+        pauseAllCards();
         lifecycleHolderRefs.clear();
-        lifecycleCardPos.clear();
 
-        // 清理所有 BaseViewHolder
+        // 清理所有 ViewHolder 资源
         for (WeakReference<BaseViewHolder<?>> ref : viewHolderRefs) {
             BaseViewHolder<?> holder = ref.get();
             if (holder != null) {
@@ -258,8 +236,21 @@ public class BaseListAdapter extends RecyclerView.Adapter<BaseViewHolder<?>> {
             }
         }
         viewHolderRefs.clear();
+    }
 
-        // 清理其他资源
-        dataList = null;
+    private int min(int[] arr) {
+        int min = Integer.MAX_VALUE;
+        for (int v : arr) {
+            min = Math.min(min, v);
+        }
+        return min;
+    }
+
+    private int max(int[] arr) {
+        int max = Integer.MIN_VALUE;
+        for (int v : arr) {
+            max = Math.max(max, v);
+        }
+        return max;
     }
 }

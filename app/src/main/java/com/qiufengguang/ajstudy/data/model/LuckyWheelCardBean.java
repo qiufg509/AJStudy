@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 幸运转盘卡片数据bean
  *
@@ -65,5 +67,25 @@ public class LuckyWheelCardBean extends BaseCardBean {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        LuckyWheelCardBean that = (LuckyWheelCardBean) o;
+        return Objects.equals(content, that.content)
+            && Objects.equals(color, that.color)
+            && Objects.equals(imageUrl, that.imageUrl)
+            && Objects.equals(bitmap, that.bitmap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), content, color, imageUrl, bitmap);
     }
 }

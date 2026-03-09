@@ -3,6 +3,8 @@ package com.qiufengguang.ajstudy.data.model;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.global.Constant;
 
+import java.util.Objects;
+
 /**
  * 用户bean
  *
@@ -77,5 +79,25 @@ public class User extends BaseCardBean {
             return phone;
         }
         return phone.substring(0, 3) + "****" + phone.substring(7);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        User user = (User) o;
+        return rememberPwd == user.rememberPwd
+            && timestamp == user.timestamp
+            && Objects.equals(phone, user.phone)
+            && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), phone, password, rememberPwd, timestamp);
     }
 }

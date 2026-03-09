@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.base;
 
+import java.util.Objects;
+
 /**
  * 卡片数据基类Bean
  *
@@ -25,5 +27,25 @@ public abstract class BaseCardBean {
 
     public void setDetailId(String detailId) {
         this.detailId = detailId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BaseCardBean that = (BaseCardBean) o;
+        if (!Objects.equals(title, that.title)) {
+            return false;
+        }
+        return Objects.equals(detailId, that.detailId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, detailId);
     }
 }

@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 格网列表卡片数据
  *
@@ -17,5 +19,22 @@ public class GridCardBean extends BaseCardBean {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        GridCardBean that = (GridCardBean) o;
+        return Objects.equals(icon, that.icon);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), icon);
     }
 }

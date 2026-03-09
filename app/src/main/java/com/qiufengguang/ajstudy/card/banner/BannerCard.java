@@ -569,11 +569,6 @@ public class BannerCard extends Card {
         public boolean isFitToMargin() {
             return true;
         }
-
-        @Override
-        public boolean needObserveLifecycle() {
-            return true;
-        }
     }
 
     public static class Builder {

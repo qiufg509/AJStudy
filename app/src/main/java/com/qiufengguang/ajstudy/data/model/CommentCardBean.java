@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 评论卡片数据bean
  *
@@ -104,5 +106,29 @@ public class CommentCardBean extends BaseCardBean {
 
     public void setLikeType(int likeType) {
         this.likeType = likeType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        CommentCardBean that = (CommentCardBean) o;
+        return Float.compare(stars, that.stars) == 0
+            && likes == that.likes
+            && dislikes == that.dislikes
+            && likeType == that.likeType
+            && Objects.equals(avatar, that.avatar)
+            && Objects.equals(commentInfo, that.commentInfo)
+            && Objects.equals(commentTime, that.commentTime)
+            && Objects.equals(nickName, that.nickName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), avatar, commentInfo, commentTime, nickName, stars, likes, dislikes, likeType);
     }
 }

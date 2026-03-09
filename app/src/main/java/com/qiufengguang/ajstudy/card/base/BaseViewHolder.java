@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.card.base;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -99,8 +100,8 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
     /**
      * 更新卡片
      *
-     * @param data 卡片数据
+     * @param bundle 具体变更的数据
      */
-    public void update(LayoutData<?> data) {
+    public void update(Bundle bundle) {
     }
 }

@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.base;
 
 import androidx.annotation.IntRange;
 
+import java.util.Objects;
+
 /**
  * 整个卡片数据Bean
  *
@@ -66,4 +68,34 @@ public abstract class LayoutData<T> {
     }
 
     public abstract boolean isCollection();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        LayoutData<?> that = (LayoutData<?>) o;
+        if (layoutId != that.layoutId) {
+            return false;
+        }
+        if (!Objects.equals(name, that.name)) {
+            return false;
+        }
+        if (!Objects.equals(detailId, that.detailId)) {
+            return false;
+        }
+        if (!Objects.equals(ext, that.ext)) {
+            return false;
+        }
+        return Objects.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(layoutId, name, detailId, ext, data);
+    }
 }

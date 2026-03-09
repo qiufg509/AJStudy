@@ -8,6 +8,8 @@ import androidx.annotation.ColorInt;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 专题头卡数据
  *
@@ -64,5 +66,25 @@ public class TopicHeaderCardBean extends BaseCardBean {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        TopicHeaderCardBean that = (TopicHeaderCardBean) o;
+        return Objects.equals(subtitle, that.subtitle)
+            && Objects.equals(iconUrl, that.iconUrl)
+            && Objects.equals(background, that.background)
+            && Objects.equals(brief, that.brief);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subtitle, iconUrl, background, brief);
     }
 }

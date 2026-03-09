@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 系列卡片数据bean
  *
@@ -47,5 +49,25 @@ public class SeriesCardBean extends BaseCardBean {
 
     public void setTotalDuration(String totalDuration) {
         this.totalDuration = totalDuration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        SeriesCardBean that = (SeriesCardBean) o;
+        return Objects.equals(imageUrl, that.imageUrl)
+            && Objects.equals(tag, that.tag)
+            && Objects.equals(viewCount, that.viewCount)
+            && Objects.equals(totalDuration, that.totalDuration);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), imageUrl, tag, viewCount, totalDuration);
     }
 }

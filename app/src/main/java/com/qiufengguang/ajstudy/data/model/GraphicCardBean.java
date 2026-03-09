@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 图文卡片数据bean
  *
@@ -27,5 +29,22 @@ public class GraphicCardBean extends BaseCardBean {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        GraphicCardBean that = (GraphicCardBean) o;
+        return Objects.equals(subtitle, that.subtitle) && Objects.equals(imageUrl, that.imageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subtitle, imageUrl);
     }
 }

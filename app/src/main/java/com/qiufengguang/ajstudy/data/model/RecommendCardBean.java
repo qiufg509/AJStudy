@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 推荐卡片数据bean
  *
@@ -57,5 +59,26 @@ public class RecommendCardBean extends BaseCardBean {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        RecommendCardBean that = (RecommendCardBean) o;
+        return Float.compare(stars, that.stars) == 0
+            && Objects.equals(icon, that.icon)
+            && Objects.equals(name, that.name)
+            && Objects.equals(memo, that.memo)
+            && Objects.equals(score, that.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), icon, name, memo, stars, score);
     }
 }

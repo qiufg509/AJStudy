@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.data.model;
 
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
+import java.util.Objects;
+
 /**
  * 详情页关于卡片数据
  *
@@ -35,5 +37,24 @@ public class AboutCardBean extends BaseCardBean {
 
     public void setAppIntro(String appIntro) {
         this.appIntro = appIntro;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        AboutCardBean that = (AboutCardBean) o;
+        return Objects.equals(tariffDesc, that.tariffDesc)
+            && Objects.equals(version, that.version)
+            && Objects.equals(appIntro, that.appIntro);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tariffDesc, version, appIntro);
     }
 }

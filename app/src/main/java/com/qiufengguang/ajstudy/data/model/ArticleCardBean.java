@@ -3,6 +3,7 @@ package com.qiufengguang.ajstudy.data.model;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 文章卡数据bean
@@ -61,5 +62,42 @@ public class ArticleCardBean extends BaseCardBean {
         public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            if (!super.equals(o)) {
+                return false;
+            }
+            Article article = (Article) o;
+            return Objects.equals(imageUrl, article.imageUrl);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), imageUrl);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        ArticleCardBean that = (ArticleCardBean) o;
+        return publishTime == that.publishTime
+            && Objects.equals(author, that.author)
+            && Objects.equals(avatar, that.avatar)
+            && Objects.equals(articles, that.articles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), author, avatar, publishTime, articles);
     }
 }
