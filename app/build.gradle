@@ -2,26 +2,71 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// 读取签名配置文件
+def keystorePropertiesFile = rootProject.file("D:/华为云盘/软件/keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace 'com.qiufengguang.ajstudy'
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId "com.qiufengguang.ajstudy"
         minSdk 29
         targetSdk 36
         versionCode 10000001
-        versionName '1.0.0.1'
+        versionName "1.0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // 只保留中英文资源
+        resConfigs "zh", "en"
+    }
+
+    // 签名配置
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            // 启用混淆
+            minifyEnabled true
+            // 启用资源缩减（会自动移除未使用的资源，需与 minifyEnabled 配合）
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // 使用 release 签名
+            signingConfig signingConfigs.release
+
+            // 自定义输出文件名（在变体构建完成后修改）
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def buildType = variant.buildType.name
+                    def versionName = variant.versionName
+                    def date = new Date().format("yyyyMMddHHmm")
+                    outputFileName = "AJStudy_${versionName}_${date}_${buildType}.apk"
+                }
+            }
+        }
+        debug {
+            // debug 包不需要签名和混淆，但可以保留自定义文件名
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def buildType = variant.buildType.name
+                    def versionName = variant.versionName
+                    def date = new Date().format("yyyyMMddHHmm")
+                    outputFileName = "AJStudy_${versionName}_${date}_${buildType}.apk"
+                }
+            }
         }
     }
     compileOptions {

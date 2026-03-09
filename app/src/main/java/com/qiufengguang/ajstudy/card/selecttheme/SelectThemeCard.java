@@ -32,7 +32,7 @@ public class SelectThemeCard extends Card {
     /**
      * 卡片唯一id
      */
-    public static final int LAYOUT_ID = 21;
+    public static final int LAYOUT_ID = 22;
 
     private SelectThemeCardBean bean;
 
