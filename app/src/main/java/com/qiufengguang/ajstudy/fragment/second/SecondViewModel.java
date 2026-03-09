@@ -5,18 +5,25 @@ import android.text.TextUtils;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.selecttheme.SelectThemeCard;
 import com.qiufengguang.ajstudy.card.serverip.ServerIpCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.model.SelectThemeCardBean;
 import com.qiufengguang.ajstudy.data.repository.SecondaryRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 import com.qiufengguang.ajstudy.router.Router;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 二级页ViewModel
@@ -48,7 +55,7 @@ public class SecondViewModel extends BaseViewModel {
             return;
         }
         if (TextUtils.equals(uri, Router.URI.PAGE_COLOR_SCHEME)) {
-            List<LayoutData<?>> dataList = fetchEmptyData();
+            List<LayoutData<?>> dataList = fetchColorSchemeData();
             liveData.setValue(dataList);
             return;
         }
@@ -87,5 +94,31 @@ public class SecondViewModel extends BaseViewModel {
         List<LayoutData<?>> dataList = new ArrayList<>();
         dataList.add(serverIpCardData);
         return dataList;
+    }
+
+    private List<LayoutData<?>> fetchColorSchemeData() {
+        int themeIndex = ThemeUtils.getSelectedThemeIndex();
+        List<SelectThemeCardBean> cardBeans = List.of(
+            new SelectThemeCardBean(0, "番茄红", R.color.ajstudy_primary_red),
+            new SelectThemeCardBean(1, "科技蓝", R.color.ajstudy_primary_blue),
+            new SelectThemeCardBean(2, "成功绿", R.color.ajstudy_primary_green),
+            new SelectThemeCardBean(3, "暖橙", R.color.ajstudy_primary_orange),
+            new SelectThemeCardBean(4, "亮粉", R.color.ajstudy_primary_pink),
+            new SelectThemeCardBean(5, "近黑", R.color.ajstudy_primary_black),
+            new SelectThemeCardBean(6, "琥珀黄", R.color.ajstudy_primary_amber),
+            new SelectThemeCardBean(7, "深蓝紫", R.color.ajstudy_primary_indigo),
+            new SelectThemeCardBean(8, "浅黄绿", R.color.ajstudy_primary_lime),
+            new SelectThemeCardBean(9, "主紫", R.color.ajstudy_primary_purple)
+        );
+        return Optional.of(cardBeans)
+            .orElse(Collections.emptyList())
+            .stream()
+            .map(bean -> {
+                if (bean.getThemeIndex() == themeIndex) {
+                    bean.setSelected(true);
+                }
+                return LayoutDataFactory.createSingle(SelectThemeCard.LAYOUT_ID, bean);
+            })
+            .collect(Collectors.toList());
     }
 }
