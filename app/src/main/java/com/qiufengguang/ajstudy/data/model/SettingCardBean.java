@@ -17,6 +17,29 @@ public class SettingCardBean extends BaseCardBean {
 
     private boolean isChecked;
 
+    public SettingCardBean() {
+    }
+
+    public SettingCardBean(int id, String title, String detailId) {
+        this.id = id;
+        setTitle(title);
+        setDetailId(detailId);
+    }
+
+    public SettingCardBean(int id, String title, boolean isSwitch, boolean isChecked) {
+        this.id = id;
+        setTitle(title);
+        this.isSwitch = isSwitch;
+        this.isChecked = isChecked;
+    }
+
+    public SettingCardBean(int id, String title, String content, String detailId) {
+        this.id = id;
+        setTitle(title);
+        setDetailId(detailId);
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }

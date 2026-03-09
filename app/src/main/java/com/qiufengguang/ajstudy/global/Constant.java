@@ -67,5 +67,7 @@ public interface Constant {
         String KEY_SERVER_IP = "serverIp";
 
         String KEY_TICK_SOUND = "enableTickSound";
+
+        String KEY_HAPTIC = "enableHaptic";
     }
 }
