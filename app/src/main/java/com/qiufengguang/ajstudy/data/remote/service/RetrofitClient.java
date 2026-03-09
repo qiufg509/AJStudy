@@ -1,5 +1,9 @@
 package com.qiufengguang.ajstudy.data.remote.service;
 
+import android.content.Context;
+import android.text.TextUtils;
+
+import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.data.remote.api.AppDetailApi;
 import com.qiufengguang.ajstudy.data.remote.api.AppListApi;
 import com.qiufengguang.ajstudy.data.remote.api.ArticleDetailApi;
@@ -13,6 +17,9 @@ import com.qiufengguang.ajstudy.data.remote.api.MeApi;
 import com.qiufengguang.ajstudy.data.remote.api.RecommendApi;
 import com.qiufengguang.ajstudy.data.remote.api.StudyRecordApi;
 import com.qiufengguang.ajstudy.data.remote.api.UserApi;
+import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.global.GlobalApp;
+import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -25,14 +32,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @since 2026/2/26 14:14
  */
 public class RetrofitClient {
-    private static final String BASE_URL = "http://127.0.0.1:8080/";
+    private static final String SERVER_IP = "127.0.0.1";
     private static Retrofit retrofit;
 
     public static Retrofit getInstance() {
+        String serverIp = SpUtils.getInstance().getString(Constant.Sp.KEY_SERVER_IP, "");
+        Context context = GlobalApp.getContext();
+        String baseUrl;
+        String ip = TextUtils.isEmpty(serverIp) ? SERVER_IP : serverIp;
+        if (context == null) {
+            baseUrl = String.format("http://%s:8080/", ip);
+        } else {
+            baseUrl = context.getString(R.string.base_url, ip);
+        }
         if (retrofit == null) {
             OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
             retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .client(clientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

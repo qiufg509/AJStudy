@@ -64,6 +64,8 @@ public interface Constant {
 
         String KEY_THEME_INDEX = "theme_index";
 
+        String KEY_SERVER_IP = "serverIp";
+
         String KEY_TICK_SOUND = "enableTickSound";
     }
 }

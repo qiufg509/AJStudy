@@ -5,13 +5,17 @@ import android.text.TextUtils;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.qiufengguang.ajstudy.card.serverip.ServerIpCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.PageData;
+import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.repository.SecondaryRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 import com.qiufengguang.ajstudy.router.Router;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,11 +44,12 @@ public class SecondViewModel extends BaseViewModel {
             return;
         }
         if (TextUtils.equals(uri, Router.URI.PAGE_LAB)) {
-            fetchEmptyData();
+            liveData.setValue(fetchLabData());
             return;
         }
         if (TextUtils.equals(uri, Router.URI.PAGE_COLOR_SCHEME)) {
-            fetchEmptyData();
+            List<LayoutData<?>> dataList = fetchEmptyData();
+            liveData.setValue(dataList);
             return;
         }
         currentCall = repository.fetchData(uri, directory, new OnDataLoadedCallback<>() {
@@ -75,5 +80,12 @@ public class SecondViewModel extends BaseViewModel {
 
     public LiveData<Boolean> getTitleData() {
         return titleData;
+    }
+
+    private List<LayoutData<?>> fetchLabData() {
+        SingleLayoutData<?> serverIpCardData = LayoutDataFactory.createSingle(ServerIpCard.LAYOUT_ID, null);
+        List<LayoutData<?>> dataList = new ArrayList<>();
+        dataList.add(serverIpCardData);
+        return dataList;
     }
 }

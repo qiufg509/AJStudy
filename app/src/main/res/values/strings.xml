@@ -20,4 +20,8 @@
     <string name="series_card_more">查看更多</string>
     <string name="series_card_change">换一换</string>
     <string name="card_empty_tips">空空如也</string>
+    <string name="server_ip_card_title">服务器地址配置</string>
+    <string name="server_ip_card_hint">例：192.168.1.1</string>
+    <string name="server_ip_card_btn_tip">保存配置</string>
+    <string name="base_url">http://%s:8080/</string>
 </resources>

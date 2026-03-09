@@ -2,48 +2,57 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/card_height_default"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/activity_vertical_margin_m"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="@dimen/radius_m"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="false">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/activity_vertical_margin_m"
         android:paddingVertical="@dimen/activity_vertical_margin_s">
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin_s"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:lines="1"
+            android:text="@string/server_ip_card_title"
             android:textColor="@color/ajstudy_color_text_primary"
             android:textFontWeight="600"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- 关键修改：将高度改为0dp，并添加宽高比约束 -->
-        <com.qiufengguang.ajstudy.view.LuckyWheel
-            android:id="@+id/lucky_wheel"
+        <EditText
+            android:id="@+id/et_server_ip"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin_s"
-            app:centerBtn="@drawable/node"
-            app:centerBtnSize="72dp"
-            app:iconSize="40dp"
-            app:isTowardCenter="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin_m"
+            android:autofillHints="ipAddress"
+            android:hint="@string/server_ip_card_hint"
+            android:inputType="textUri"
+            android:lines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
+        <Button
+            android:id="@+id/btn_save_config"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin_xl"
+            android:layout_marginTop="@dimen/activity_vertical_margin_m"
+            android:text="@string/server_ip_card_btn_tip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_server_ip" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

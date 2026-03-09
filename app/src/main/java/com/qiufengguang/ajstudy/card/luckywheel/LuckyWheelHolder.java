@@ -33,7 +33,7 @@ public class LuckyWheelHolder extends BaseViewHolder<CardLuckyWheelBinding> {
         card = new LuckyWheelCard.Builder()
             .setBinding(binding)
             .setListener((context, bean) ->
-                Toast.makeText(context, bean.getContent(), Toast.LENGTH_SHORT).show())
+                Toast.makeText(context.getApplicationContext(), bean.getContent(), Toast.LENGTH_SHORT).show())
             .create();
         card.show();
     }

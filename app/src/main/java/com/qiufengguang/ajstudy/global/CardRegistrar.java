@@ -17,6 +17,7 @@ import com.qiufengguang.ajstudy.card.normal.NormalCard;
 import com.qiufengguang.ajstudy.card.recommend.RecommendCard;
 import com.qiufengguang.ajstudy.card.screenshot.ScreenshotCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
+import com.qiufengguang.ajstudy.card.serverip.ServerIpCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
 import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
@@ -54,5 +55,6 @@ public class CardRegistrar {
         Card.register(RecommendCard.LAYOUT_ID, new RecommendCard.Creator());
         Card.register(CommentCard.LAYOUT_ID, new CommentCard.Creator());
         Card.register(TopicHeaderCard.LAYOUT_ID, new TopicHeaderCard.Creator());
+        Card.register(ServerIpCard.LAYOUT_ID, new ServerIpCard.Creator());
     }
 }
