@@ -21,7 +21,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.OverScroller;
 
 import androidx.annotation.NonNull;
@@ -619,7 +619,7 @@ public class LuckyWheel extends View {
         int desRotate = increaseDegree + initAngle;
 
         ValueAnimator animator = ValueAnimator.ofInt(initAngle, desRotate);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(time);
         animator.addUpdateListener(animation -> {
             int updateValue = (int) animation.getAnimatedValue();
