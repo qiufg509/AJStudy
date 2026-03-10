@@ -12,7 +12,6 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
@@ -107,7 +106,6 @@ public class GraphicCardM extends Card {
             Glide.with(imageView.getContext())
                 .load(bean.getImageUrl())
                 .apply(requestOptions)
-                .transition(DrawableTransitionOptions.withCrossFade(300))
                 .into(imageView);
         } else {
             imageView.setImageResource(R.drawable.placeholder_image_1_1_m);

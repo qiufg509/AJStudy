@@ -53,6 +53,7 @@
                     android:layout_height="@dimen/item_icon_size_xl"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_l"
                     android:layout_marginTop="84dp"
+                    android:src="@drawable/placeholder_icon_l"
                     android:contentDescription="@string/image_description"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -116,7 +117,7 @@
                     app:barrierDirection="bottom"
                     app:constraint_referenced_ids="iv_icon,tv_label" />
 
-                <ImageView
+                <View
                     android:id="@+id/info_divider"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_info_divider_size"

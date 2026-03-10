@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
@@ -92,7 +91,6 @@ public class GraphicCardS extends Card {
         if (!TextUtils.isEmpty(bean.getImageUrl())) {
             Glide.with(imageView.getContext())
                 .load(bean.getImageUrl())
-                .transition(DrawableTransitionOptions.withCrossFade(300))
                 .into(imageView);
         } else {
             imageView.setImageResource(R.drawable.placeholder_image_1_1);

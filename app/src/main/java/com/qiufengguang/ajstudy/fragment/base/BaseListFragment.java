@@ -209,7 +209,7 @@ public abstract class BaseListFragment extends Fragment {
     }
 
     /**
-     * 设置页面背景图，不设置或者入参0则默认背景色R.color.ajstudy_window_background
+     * 设置页面背景图，入参0则默认背景色R.color.ajstudy_window_background
      *
      * @param resId 图片资源
      */

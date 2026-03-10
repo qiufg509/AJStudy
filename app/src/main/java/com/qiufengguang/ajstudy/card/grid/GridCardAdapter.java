@@ -11,14 +11,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.GridCardBean;
-import com.qiufengguang.ajstudy.databinding.ItemGridCardTextBinding;
+import com.qiufengguang.ajstudy.databinding.ItemGridCardBinding;
 
 import java.util.List;
 
@@ -60,7 +59,7 @@ public class GridCardAdapter extends RecyclerView.Adapter<GridCardAdapter.GridCa
     @NonNull
     @Override
     public GridCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemGridCardTextBinding binding = ItemGridCardTextBinding.inflate(
+        ItemGridCardBinding binding = ItemGridCardBinding.inflate(
             LayoutInflater.from(parent.getContext()), parent, false);
         return new GridCardHolder(binding, listener);
     }
@@ -78,14 +77,14 @@ public class GridCardAdapter extends RecyclerView.Adapter<GridCardAdapter.GridCa
 
     public static class GridCardHolder extends RecyclerView.ViewHolder {
 
-        ItemGridCardTextBinding binding;
+        ItemGridCardBinding binding;
 
         GridCardBean bean;
 
         RequestOptions options;
 
         public GridCardHolder(
-            @NonNull ItemGridCardTextBinding binding,
+            @NonNull ItemGridCardBinding binding,
             OnItemClickListener<GridCardBean> clickListener
         ) {
             super(binding.getRoot());
@@ -107,7 +106,6 @@ public class GridCardAdapter extends RecyclerView.Adapter<GridCardAdapter.GridCa
                     .load(bean.getIcon())
                     .apply(options)
                     .placeholder(R.drawable.placeholder_icon_circle)
-                    .transition(DrawableTransitionOptions.withCrossFade(300))
                     .into(new CustomTarget<Drawable>() {
                         @Override
                         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
