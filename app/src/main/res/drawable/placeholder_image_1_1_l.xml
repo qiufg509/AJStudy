@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:width="@dimen/card_height_image_200"
-        android:height="80dp">
+        android:width="240dp"
+        android:height="240dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/ajstudy_placeholder_bg_color" />
-            <corners android:radius="@dimen/radius_l" />
+            <corners
+                android:topLeftRadius="@dimen/radius_l"
+                android:topRightRadius="@dimen/radius_l" />
         </shape>
     </item>
 
     <item
-        android:width="64dp"
-        android:height="64dp"
+        android:width="@dimen/card_height_image_100"
+        android:height="@dimen/card_height_image_100"
         android:drawable="@drawable/ic_placeholder"
         android:gravity="center" />
 

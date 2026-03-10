@@ -100,7 +100,7 @@ public class SeriesCard extends Card {
             int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_m);
             this.requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_image_20_8)
+                .placeholder(R.drawable.placeholder_image_20_8)
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
         SeriesCardBean bean = getIncrementData();

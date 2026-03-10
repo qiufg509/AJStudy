@@ -32,5 +32,6 @@
     <dimen name="banner_indicator_size">8dp</dimen>
     <dimen name="bounce_max_overscroll">150dp</dimen>
     <dimen name="card_height_default">400dp</dimen>
-    <dimen name="card_height_image">200dp</dimen>
+    <dimen name="card_height_image_200">200dp</dimen>
+    <dimen name="card_height_image_100">100dp</dimen>
 </resources>

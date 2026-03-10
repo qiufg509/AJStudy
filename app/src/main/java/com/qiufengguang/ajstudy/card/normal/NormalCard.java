@@ -68,7 +68,7 @@ public class NormalCard extends Card {
             int radius = binding.getRoot().getResources().getDimensionPixelSize(R.dimen.radius_l);
             this.requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_icon_l)
+                .placeholder(R.drawable.placeholder_icon_l)
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
         if (!TextUtils.isEmpty(bean.getIcon())) {

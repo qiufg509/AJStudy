@@ -130,7 +130,7 @@ public abstract class BaseListFragment extends Fragment {
             baseBinding.bounceContainer.setEnablePullUpBounce(false);
         }
         if (config.titleBarMode != DynamicToolbar.Mode.GONE && config.overlayTitleBar) {
-            int endThreshold = getResources().getDimensionPixelSize(R.dimen.card_height_image);
+            int endThreshold = getResources().getDimensionPixelSize(R.dimen.card_height_image_200);
             TitleBarScrollListener listener = new TitleBarScrollListener(
                 baseBinding.titleBar, endThreshold - totalHeight);
             baseBinding.recyclerContainer.addOnScrollListener(listener);

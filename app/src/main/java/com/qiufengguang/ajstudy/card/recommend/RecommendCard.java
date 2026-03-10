@@ -74,7 +74,7 @@ public class RecommendCard extends Card {
             int radius = binding.getRoot().getResources().getDimensionPixelSize(R.dimen.radius_m);
             this.requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_icon_m)
+                .placeholder(R.drawable.placeholder_icon_m)
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
         if (!TextUtils.isEmpty(bean.getIcon())) {

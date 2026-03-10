@@ -100,7 +100,7 @@ public class GraphicCardL extends Card {
                 int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
                 this.requestOptions = new RequestOptions()
                     .centerCrop()
-                    .error(R.drawable.placeholder_image_1_1)
+                    .placeholder(R.drawable.placeholder_image_1_1_l)
                     .transform(new CenterCrop(), new RoundedCornersTransformation(radius, 0,
                         RoundedCornersTransformation.CornerType.TOP));
             }
@@ -110,7 +110,7 @@ public class GraphicCardL extends Card {
                 .transition(DrawableTransitionOptions.withCrossFade(300))
                 .into(imageView);
         } else {
-            imageView.setImageResource(R.drawable.placeholder_image_1_1);
+            imageView.setImageResource(R.drawable.placeholder_image_1_1_l);
         }
     }
 

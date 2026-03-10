@@ -30,7 +30,10 @@ public class ServerIpCard extends Card {
     public static final int LAYOUT_ID = 21;
 
     private static final String IPV4_REGEX =
-        "^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$";
+        "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+            + "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+            + "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+            + "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
     private static final Pattern IPV4_PATTERN = Pattern.compile(IPV4_REGEX);
 
     private WeakReference<CardServerIpBinding> bindingRef;
@@ -49,12 +52,12 @@ public class ServerIpCard extends Card {
         }
         binding.etServerIp.setText(ip);
         binding.btnSaveConfig.setOnClickListener(v -> {
-            String serverIp = binding.etServerIp.getText().toString();
-            if (ip == null || ip.trim().isEmpty()) {
+            String serverIp = binding.etServerIp.getText().toString().trim();
+            if (serverIp.isEmpty()) {
                 Toast.makeText(v.getContext().getApplicationContext(), "请输入有效的ip", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (!IPV4_PATTERN.matcher(ip.trim()).matches()) {
+            if (!IPV4_PATTERN.matcher(serverIp).matches()) {
                 Toast.makeText(v.getContext().getApplicationContext(), "请输入有效的ip", Toast.LENGTH_SHORT).show();
                 return;
             }

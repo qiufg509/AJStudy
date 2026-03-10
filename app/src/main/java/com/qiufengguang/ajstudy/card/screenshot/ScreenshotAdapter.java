@@ -82,7 +82,7 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
             int radius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
             requestOptions = new RequestOptions()
                 .centerCrop()
-                .error(R.drawable.placeholder_image_9_16)
+                .placeholder(R.drawable.placeholder_image_9_16)
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
 
