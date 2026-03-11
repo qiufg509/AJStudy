@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.card.about.AboutCard;
+import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.brief.BriefCard;
@@ -31,6 +32,7 @@ import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.model.AboutCardBean;
+import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.data.model.TopicMultiCardBean;
 import com.qiufengguang.ajstudy.data.model.BannerBean;
 import com.qiufengguang.ajstudy.data.model.BriefCardBean;
@@ -131,6 +133,11 @@ public class LayoutDataConverter {
                     Type recommendType = new TypeToken<List<RecommendCardBean>>() {
                     }.getType();
                     beans = gson.fromJson(dataArray, recommendType);
+                    break;
+                case ArticleCard.LAYOUT_ID:
+                    Type articleType = new TypeToken<List<ArticleCardBean>>() {
+                    }.getType();
+                    beans = gson.fromJson(dataArray, articleType);
                     break;
                 default:
                     return null;

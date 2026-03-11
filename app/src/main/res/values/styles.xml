@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--详情页截图原件-->
-    <style name="ScreenshotItemCorners">
+    <!--圆角样式-->
+    <style name="ShapeRoundedL">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/radius_l</item>
+    </style>
+    <style name="ShapeRoundedXS">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_xs</item>
     </style>
     <!-- 底部导航栏样式 -->
     <style name="BottomNavStyles" parent="Widget.MaterialComponents.BottomNavigationView">

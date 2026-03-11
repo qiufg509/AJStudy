@@ -5,4 +5,4 @@
     android:layout_height="@dimen/screenshot_item_height"
     android:adjustViewBounds="true"
     android:scaleType="centerCrop"
-    app:shapeAppearanceOverlay="@style/ScreenshotItemCorners" />
+    app:shapeAppearanceOverlay="@style/ShapeRoundedL" />
