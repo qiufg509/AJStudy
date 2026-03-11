@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 文章卡数据bean
+ * 多主题聚合卡片数据bean
  *
  * @author qiufengguang
  * @since 2026/2/7 0:34
  */
-public class ArticleCardBean extends BaseCardBean {
+public class TopicMultiCardBean extends BaseCardBean {
     private String author;
 
     private String avatar;
@@ -89,7 +89,7 @@ public class ArticleCardBean extends BaseCardBean {
         if (!super.equals(o)) {
             return false;
         }
-        ArticleCardBean that = (ArticleCardBean) o;
+        TopicMultiCardBean that = (TopicMultiCardBean) o;
         return publishTime == that.publishTime
             && Objects.equals(author, that.author)
             && Objects.equals(avatar, that.avatar)

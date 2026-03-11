@@ -1,4 +1,4 @@
-package com.qiufengguang.ajstudy.card.article;
+package com.qiufengguang.ajstudy.card.topicmulti;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,8 +16,8 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
-import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
-import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
+import com.qiufengguang.ajstudy.data.model.TopicMultiCardBean;
+import com.qiufengguang.ajstudy.databinding.CardTopicMultiBinding;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.utils.TimeFormatter;
 
@@ -26,27 +26,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 文章卡片
+ * 多主题聚合卡片
  *
  * @author qiufengguang
  * @since 2026/2/7 0:43
  */
-public class ArticleCard extends Card {
+public class TopicMultiCard extends Card {
     /**
      * 卡片唯一id
      */
     public static final int LAYOUT_ID = 10;
 
-    private ArticleCardBean bean;
+    private TopicMultiCardBean bean;
 
-    private WeakReference<CardArticleBinding> bindingRef;
+    private WeakReference<CardTopicMultiBinding> bindingRef;
 
     private OnItemClickListener<BaseCardBean> listener;
 
-    private ArticleCard() {
+    private TopicMultiCard() {
     }
 
-    public void setData(ArticleCardBean bean) {
+    public void setData(TopicMultiCardBean bean) {
         this.bean = bean;
         this.show();
     }
@@ -58,7 +58,7 @@ public class ArticleCard extends Card {
         if (bindingRef == null) {
             return;
         }
-        CardArticleBinding binding = bindingRef.get();
+        CardTopicMultiBinding binding = bindingRef.get();
         if (binding == null) {
             return;
         }
@@ -67,22 +67,22 @@ public class ArticleCard extends Card {
         binding.tvPublisherName.setText(bean.getAuthor());
         binding.tvPublishTime.setText(TimeFormatter.formatTimeAgo(bean.getPublishTime()));
 
-        List<ArticleCardBean.Article> articles = bean.getArticles();
+        List<TopicMultiCardBean.Article> articles = bean.getArticles();
         if (articles == null || articles.isEmpty()) {
             return;
         }
-        ArticleCardBean.Article article0 = articles.get(0);
+        TopicMultiCardBean.Article article0 = articles.get(0);
         loadImage(binding.ivItemThumb0, R.drawable.placeholder_image_16_9, article0.getImageUrl());
         binding.tvItemTitle0.setText(article0.getTitle());
 
         if (articles.size() > 1) {
-            ArticleCardBean.Article article1 = articles.get(1);
+            TopicMultiCardBean.Article article1 = articles.get(1);
             loadImage(binding.ivItemThumb1, R.drawable.placeholder_image_1_1, article1.getImageUrl());
             binding.tvItemTitle1.setText(article1.getTitle());
         }
 
         if (articles.size() > 2) {
-            ArticleCardBean.Article article2 = articles.get(2);
+            TopicMultiCardBean.Article article2 = articles.get(2);
             loadImage(binding.ivItemThumb2, R.drawable.placeholder_image_1_1, article2.getImageUrl());
             binding.tvItemTitle2.setText(article2.getTitle());
         }
@@ -126,7 +126,7 @@ public class ArticleCard extends Card {
      */
     public void release() {
         if (bindingRef != null) {
-            CardArticleBinding binding = bindingRef.get();
+            CardTopicMultiBinding binding = bindingRef.get();
             if (binding != null) {
                 binding.getRoot().setOnClickListener(null);
                 bindingRef.clear();
@@ -140,9 +140,9 @@ public class ArticleCard extends Card {
     public static class Creator implements CardCreator {
         @Override
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
-            CardArticleBinding binding = CardArticleBinding.inflate(
+            CardTopicMultiBinding binding = CardTopicMultiBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            return new ArticleCardHolder(binding);
+            return new TopicMultiCardCardHolder(binding);
         }
 
         @Override
@@ -152,17 +152,17 @@ public class ArticleCard extends Card {
     }
 
     public static class Builder {
-        private CardArticleBinding binding;
+        private CardTopicMultiBinding binding;
 
         private OnItemClickListener<BaseCardBean> listener;
 
         /**
          * 设置卡片布局viewbinding
          *
-         * @param binding CardArticleBinding
+         * @param binding CardTopicMultiBinding
          * @ Builder
          */
-        public ArticleCard.Builder setBinding(CardArticleBinding binding) {
+        public TopicMultiCard.Builder setBinding(CardTopicMultiBinding binding) {
             this.binding = binding;
             return this;
         }
@@ -173,17 +173,17 @@ public class ArticleCard extends Card {
          * @param listener {@link OnItemClickListener}
          * @return Builder
          */
-        public ArticleCard.Builder setListener(OnItemClickListener<BaseCardBean> listener) {
+        public TopicMultiCard.Builder setListener(OnItemClickListener<BaseCardBean> listener) {
             this.listener = listener;
             return this;
         }
 
-        public ArticleCard create() {
+        public TopicMultiCard create() {
             if (this.binding == null) {
                 throw new UnsupportedOperationException(
                     "binding is null, call setBinding first.");
             }
-            ArticleCard wrapper = new ArticleCard();
+            TopicMultiCard wrapper = new TopicMultiCard();
             wrapper.bindingRef = new WeakReference<>(binding);
             wrapper.listener = this.listener;
             return wrapper;

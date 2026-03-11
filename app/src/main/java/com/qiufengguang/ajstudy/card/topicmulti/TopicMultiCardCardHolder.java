@@ -1,23 +1,23 @@
-package com.qiufengguang.ajstudy.card.article;
+package com.qiufengguang.ajstudy.card.topicmulti;
 
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
-import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
+import com.qiufengguang.ajstudy.data.model.TopicMultiCardBean;
+import com.qiufengguang.ajstudy.databinding.CardTopicMultiBinding;
 
 /**
- * 文章卡片的ViewHolder
+ * 多主题聚合卡片的ViewHolder
  *
  * @author qiufengguang
  * @since 2026/2/7 0:42
  */
-public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
+public class TopicMultiCardCardHolder extends BaseViewHolder<CardTopicMultiBinding> {
 
-    private ArticleCard card;
+    private TopicMultiCard card;
 
-    public ArticleCardHolder(@NonNull CardArticleBinding binding) {
+    public TopicMultiCardCardHolder(@NonNull CardTopicMultiBinding binding) {
         super(binding);
     }
 
@@ -26,7 +26,7 @@ public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
         if (card != null) {
             return;
         }
-        card = new ArticleCard.Builder()
+        card = new TopicMultiCard.Builder()
             .setBinding(binding)
             .setListener(this::onCommonClickListener)
             .create();
@@ -36,13 +36,13 @@ public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
     @Override
     public void bind(LayoutData<?> data) {
         if (data == null || data.getData() == null || data.isCollection()
-            || data.getLayoutId() != ArticleCard.LAYOUT_ID) {
+            || data.getLayoutId() != TopicMultiCard.LAYOUT_ID) {
             return;
         }
         if (card == null) {
             initCard();
         }
-        ArticleCardBean bean = (ArticleCardBean) data.getData();
+        TopicMultiCardBean bean = (TopicMultiCardBean) data.getData();
         card.setData(bean);
     }
 

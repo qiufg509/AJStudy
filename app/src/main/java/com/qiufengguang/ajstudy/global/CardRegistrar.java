@@ -1,7 +1,7 @@
 package com.qiufengguang.ajstudy.global;
 
 import com.qiufengguang.ajstudy.card.about.AboutCard;
-import com.qiufengguang.ajstudy.card.article.ArticleCard;
+import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.brief.BriefCard;
@@ -45,7 +45,7 @@ public class CardRegistrar {
         Card.register(GraphicCardL.LAYOUT_ID, new GraphicCardL.Creator());
         Card.register(GraphicCardM.LAYOUT_ID, new GraphicCardM.Creator());
         Card.register(GraphicCardS.LAYOUT_ID, new GraphicCardS.Creator());
-        Card.register(ArticleCard.LAYOUT_ID, new ArticleCard.Creator());
+        Card.register(TopicMultiCard.LAYOUT_ID, new TopicMultiCard.Creator());
         Card.register(EmptyCard.LAYOUT_ID_1, new EmptyCard.WrapCreator());
         Card.register(EmptyCard.LAYOUT_ID_2, new EmptyCard.FullCreator());
         Card.register(TitleCard.LAYOUT_ID, new TitleCard.Creator());

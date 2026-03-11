@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.card.about.AboutCard;
-import com.qiufengguang.ajstudy.card.article.ArticleCard;
+import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.brief.BriefCard;
 import com.qiufengguang.ajstudy.card.comment.CommentCard;
@@ -31,7 +31,7 @@ import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.model.AboutCardBean;
-import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
+import com.qiufengguang.ajstudy.data.model.TopicMultiCardBean;
 import com.qiufengguang.ajstudy.data.model.BannerBean;
 import com.qiufengguang.ajstudy.data.model.BriefCardBean;
 import com.qiufengguang.ajstudy.data.model.CommentCardBean;
@@ -181,8 +181,8 @@ public class LayoutDataConverter {
                     List<LuckyWheelCardBean> wheelList = gson.fromJson(dataArray, wheelType);
                     return LayoutDataFactory.createCollection(layoutId, wheelList, title);
 
-                case ArticleCard.LAYOUT_ID:
-                    ArticleCardBean articleBean = gson.fromJson(dataArray.get(0), ArticleCardBean.class);
+                case TopicMultiCard.LAYOUT_ID:
+                    TopicMultiCardBean articleBean = gson.fromJson(dataArray.get(0), TopicMultiCardBean.class);
                     return LayoutDataFactory.createSingle(layoutId, articleBean);
 
                 case GraphicLGridCard.LAYOUT_ID:
