@@ -14,8 +14,10 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
+import com.qiufengguang.ajstudy.global.Constant;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 
 /**
  * 文章卡片
@@ -83,6 +85,10 @@ public class ArticleCard extends Card {
             CardArticleBinding binding = CardArticleBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
             return new ArticleCardHolder(binding);
+        }
+
+        public Map<Integer, Integer> getSpanSize() {
+            return getSpanSizeMap(Constant.Pln.DEF_4, Constant.Pln.DEF_8, Constant.Pln.DEF_12);
         }
     }
 
