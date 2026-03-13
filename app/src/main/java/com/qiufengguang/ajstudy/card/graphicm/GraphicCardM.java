@@ -121,7 +121,7 @@ public class GraphicCardM extends Card {
         }
 
         @Override
-        public Map<Integer, Integer> getSpanSize() {
+        public Map<Integer, Integer> getSpanSizeInGridPage() {
             return getSpanSizeMap(
                 Constant.Pln.GRAPHIC_M_4,
                 Constant.Pln.GRAPHIC_M_8,

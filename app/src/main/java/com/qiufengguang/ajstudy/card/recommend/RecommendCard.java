@@ -125,7 +125,7 @@ public class RecommendCard extends Card {
         }
 
         @Override
-        public Map<Integer, Integer> getSpanSize() {
+        public Map<Integer, Integer> getSpanSizeInGridPage() {
             return getSpanSizeMap(Constant.Pln.DEF_4, Constant.Pln.DEF_8, Constant.Pln.DEF_12);
         }
     }

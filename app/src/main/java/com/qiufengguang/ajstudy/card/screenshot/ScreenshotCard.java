@@ -85,9 +85,12 @@ public class ScreenshotCard extends Card {
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             CardScreenshotBinding binding = CardScreenshotBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            ScreenshotHolder holder = new ScreenshotHolder(binding);
-            setFullSpanInStaggeredPage(holder);
-            return holder;
+            return new ScreenshotHolder(binding);
+        }
+
+        @Override
+        public boolean isFullSpanInStaggeredPage() {
+            return true;
         }
 
         @Override

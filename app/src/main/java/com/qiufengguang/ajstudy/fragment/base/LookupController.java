@@ -45,7 +45,7 @@ public class LookupController extends GridLayoutManager.SpanSizeLookup {
         if (creator == null) {
             return DEFAULT_COLUMNS;
         }
-        Map<Integer, Integer> map = creator.getSpanSize();
+        Map<Integer, Integer> map = creator.getSpanSizeInGridPage();
         if (map == null || map.isEmpty()) {
             return DEFAULT_COLUMNS;
         }

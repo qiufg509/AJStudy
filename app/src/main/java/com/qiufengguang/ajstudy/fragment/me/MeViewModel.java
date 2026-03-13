@@ -27,6 +27,7 @@ import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -92,6 +93,7 @@ public class MeViewModel extends BaseViewModel {
             @Override
             public void onFailure(Throwable t) {
                 Log.w(TAG, "loadServerData: ", t);
+                serverData.postValue(Collections.emptyList());
             }
         });
     }
@@ -140,6 +142,10 @@ public class MeViewModel extends BaseViewModel {
     }
 
     private void combine() {
+        List<LayoutData<?>> serverList = serverData.getValue();
+        if (serverList == null) {
+            return;
+        }
         List<LayoutData<?>> combined = new ArrayList<>();
         if (userLiveData != null) {
             User user = userLiveData.getValue();
@@ -149,8 +155,7 @@ public class MeViewModel extends BaseViewModel {
                 combined.add(userCard);
             }
         }
-        List<LayoutData<?>> serverList = serverData.getValue();
-        if (serverList != null && !serverList.isEmpty()) {
+        if (!serverList.isEmpty()) {
             combined.addAll(serverList);
         }
 

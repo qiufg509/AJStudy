@@ -96,9 +96,12 @@ public class TopicHeaderCard extends Card {
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             CardTopicHeaderBinding binding = CardTopicHeaderBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            TopicHeaderCardHolder holder = new TopicHeaderCardHolder(binding);
-            setFullSpanInStaggeredPage(holder);
-            return holder;
+            return new TopicHeaderCardHolder(binding);
+        }
+
+        @Override
+        public boolean isFullSpanInStaggeredPage() {
+            return true;
         }
 
         @Override

@@ -4,7 +4,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewbinding.ViewBinding;
 
 import com.qiufengguang.ajstudy.fragment.base.BaseListFragment;
@@ -33,12 +32,21 @@ public interface CardCreator {
     );
 
     /**
-     * 4/8/12栅格下卡片占用大小
+     * 格网页面BaseGridFragment（4/8/12栅格）下卡片宽度占用大小，默认占满整屏宽度
      *
      * @return 卡片占用大小集合（key为栅格数，value为占用大小）
      */
-    default Map<Integer, Integer> getSpanSize() {
+    default Map<Integer, Integer> getSpanSizeInGridPage() {
         return Card.getSpanSizeMap(Constant.Pln.DEF_4);
+    }
+
+    /**
+     * 是否在瀑布流页面BaseStaggeredFragment中占满整屏宽度，默认false
+     *
+     * @return true卡片宽度占满整屏宽度 false卡片宽度按页面栅格化自动适配（4栅格2个、8栅格4个、12栅格8个）
+     */
+    default boolean isFullSpanInStaggeredPage() {
+        return false;
     }
 
     /**
@@ -52,18 +60,5 @@ public interface CardCreator {
      */
     default boolean isFitToMargin() {
         return false;
-    }
-
-    /**
-     * 在瀑布流中占满整屏宽度
-     *
-     * @param holder BaseViewHolder
-     */
-    default void setFullSpanInStaggeredPage(BaseViewHolder<?> holder) {
-        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-        if (params instanceof StaggeredGridLayoutManager.LayoutParams) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) params;
-            layoutParams.setFullSpan(true);
-        }
     }
 }

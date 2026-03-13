@@ -46,9 +46,12 @@ public class EmptyCard extends Card {
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             CardEmpty2Binding binding = CardEmpty2Binding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            EmptyCardFullHolder holder = new EmptyCardFullHolder(binding);
-            setFullSpanInStaggeredPage(holder);
-            return holder;
+            return new EmptyCardFullHolder(binding);
+        }
+
+        @Override
+        public boolean isFullSpanInStaggeredPage() {
+            return true;
         }
     }
 

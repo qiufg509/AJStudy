@@ -109,9 +109,12 @@ public class GridCard extends Card {
         public BaseViewHolder<?> create(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             CardGridBinding binding = CardGridBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-            GridCardHolder holder = new GridCardHolder(binding);
-            setFullSpanInStaggeredPage(holder);
-            return holder;
+            return new GridCardHolder(binding);
+        }
+
+        @Override
+        public boolean isFullSpanInStaggeredPage() {
+            return true;
         }
     }
 
