@@ -52,6 +52,7 @@ public class LayoutRespCallback implements Callback<RawRespData> {
 
     @Override
     public void onFailure(@NonNull Call<RawRespData> call, @NonNull Throwable t) {
+        Log.w(TAG, "onFailure: ", t);
         callback.onFailure(t);
     }
 }

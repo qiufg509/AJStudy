@@ -32,7 +32,7 @@ public class ViewHolderFactory {
     ) {
         CardCreator creator = Card.getCreator(viewType);
         if (creator == null) {
-            creator = new EmptyCard.WrapCreator();
+            creator = new EmptyCard.Creator();
         }
         BaseViewHolder<? extends ViewBinding> holder = creator.create(parent, lifecycleOwner);
         if (creator.isFullSpanInStaggeredPage() && holder != null) {

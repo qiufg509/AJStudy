@@ -1,5 +1,7 @@
 package com.qiufengguang.ajstudy.data.callback;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
@@ -16,6 +18,8 @@ import retrofit2.Response;
  * @since 2026/2/28 16:17
  */
 public class BodyRespCallback implements Callback<ResponseBody> {
+    private static final String TAG = "BodyRespCallback";
+
     OnDataLoadedCallback<String> callback;
 
     public BodyRespCallback(OnDataLoadedCallback<String> callback) {
@@ -39,6 +43,7 @@ public class BodyRespCallback implements Callback<ResponseBody> {
 
     @Override
     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+        Log.w(TAG, "onFailure: ", t);
         callback.onFailure(t);
     }
 }

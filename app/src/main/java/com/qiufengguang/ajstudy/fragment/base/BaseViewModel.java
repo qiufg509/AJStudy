@@ -2,10 +2,12 @@ package com.qiufengguang.ajstudy.fragment.base;
 
 import androidx.lifecycle.ViewModel;
 
-import com.qiufengguang.ajstudy.card.empty.EmptyCard;
+import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
+import com.qiufengguang.ajstudy.data.model.State;
+import com.qiufengguang.ajstudy.data.model.StateCardBean;
 import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 
 import java.util.ArrayList;
@@ -30,10 +32,17 @@ public abstract class BaseViewModel extends ViewModel {
         }
     }
 
-    protected List<LayoutData<?>> fetchEmptyData() {
-        SingleLayoutData<?> emptyCardData = LayoutDataFactory.createSingle(EmptyCard.LAYOUT_ID_2, null);
-        List<LayoutData<?>> dataList = new ArrayList<>();
-        dataList.add(emptyCardData);
+    /**
+     * 获取页面状态数据
+     *
+     * @param state 页面状态{@link State}
+     * @return List<LayoutData<?>>
+     */
+    protected List<LayoutData<?>> fetchStateData(State state) {
+        SingleLayoutData<StateCardBean> stateCardData = LayoutDataFactory.createSingle(
+            StateCard.LAYOUT_ID, new StateCardBean(state));
+        List<LayoutData<?>> dataList = new ArrayList<>(1);
+        dataList.add(stateCardData);
         return dataList;
     }
 }

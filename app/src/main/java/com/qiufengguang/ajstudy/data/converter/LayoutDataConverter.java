@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.qiufengguang.ajstudy.card.about.AboutCard;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
-import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.brief.BriefCard;
 import com.qiufengguang.ajstudy.card.comment.CommentCard;
@@ -23,17 +22,19 @@ import com.qiufengguang.ajstudy.card.recommend.RecommendCard;
 import com.qiufengguang.ajstudy.card.screenshot.ScreenshotCard;
 import com.qiufengguang.ajstudy.card.series.SeriesCard;
 import com.qiufengguang.ajstudy.card.setting.SettingCard;
+import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.card.topicheader.TopicHeaderCard;
+import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.PageData;
+import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.data.model.AboutCardBean;
 import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
-import com.qiufengguang.ajstudy.data.model.TopicMultiCardBean;
 import com.qiufengguang.ajstudy.data.model.BannerBean;
 import com.qiufengguang.ajstudy.data.model.BriefCardBean;
 import com.qiufengguang.ajstudy.data.model.CommentCardBean;
@@ -47,8 +48,11 @@ import com.qiufengguang.ajstudy.data.model.RecommendCardBean;
 import com.qiufengguang.ajstudy.data.model.ScreenshotCardBean;
 import com.qiufengguang.ajstudy.data.model.SeriesCardBean;
 import com.qiufengguang.ajstudy.data.model.SettingCardBean;
+import com.qiufengguang.ajstudy.data.model.State;
+import com.qiufengguang.ajstudy.data.model.StateCardBean;
 import com.qiufengguang.ajstudy.data.model.TextCardBean;
 import com.qiufengguang.ajstudy.data.model.TopicHeaderCardBean;
+import com.qiufengguang.ajstudy.data.model.TopicMultiCardBean;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.remote.dto.LayoutDataDTO;
 import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
@@ -98,6 +102,11 @@ public class LayoutDataConverter {
                     dataList.add(layoutData);
                 }
             }
+        }
+        if (dataList.isEmpty()) {
+            SingleLayoutData<StateCardBean> stateCardData = LayoutDataFactory.createSingle(
+                StateCard.LAYOUT_ID, new StateCardBean(State.EMPTY));
+            dataList.add(stateCardData);
         }
         pageData.setLayoutData(dataList);
         return pageData;
@@ -255,8 +264,7 @@ public class LayoutDataConverter {
                 case TitleCard.LAYOUT_ID:
                     return LayoutDataFactory.createSingle(layoutId, null, title, detailId);
 
-                case EmptyCard.LAYOUT_ID_1:
-                case EmptyCard.LAYOUT_ID_2:
+                case EmptyCard.LAYOUT_ID:
                     return LayoutDataFactory.createSingle(layoutId, null);
 
                 default:

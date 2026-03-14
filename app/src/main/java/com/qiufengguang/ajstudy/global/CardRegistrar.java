@@ -2,6 +2,7 @@ package com.qiufengguang.ajstudy.global;
 
 import com.qiufengguang.ajstudy.card.about.AboutCard;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
+import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.base.Card;
@@ -35,6 +36,7 @@ import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 public class CardRegistrar {
 
     public static void initialize() {
+        Card.register(StateCard.LAYOUT_ID, new StateCard.Creator());
         Card.register(BannerCard.LAYOUT_ID, new BannerCard.Creator());
         Card.register(GridCard.LAYOUT_ID, new GridCard.Creator());
         Card.register(LuckyWheelCard.LAYOUT_ID, new LuckyWheelCard.Creator());
@@ -48,8 +50,7 @@ public class CardRegistrar {
         Card.register(GraphicCardS.LAYOUT_ID, new GraphicCardS.Creator());
         Card.register(ArticleCard.LAYOUT_ID, new ArticleCard.Creator());
         Card.register(TopicMultiCard.LAYOUT_ID, new TopicMultiCard.Creator());
-        Card.register(EmptyCard.LAYOUT_ID_1, new EmptyCard.WrapCreator());
-        Card.register(EmptyCard.LAYOUT_ID_2, new EmptyCard.FullCreator());
+        Card.register(EmptyCard.LAYOUT_ID, new EmptyCard.Creator());
         Card.register(TitleCard.LAYOUT_ID, new TitleCard.Creator());
         Card.register(AboutCard.LAYOUT_ID, new AboutCard.Creator());
         Card.register(BriefCard.LAYOUT_ID, new BriefCard.Creator());

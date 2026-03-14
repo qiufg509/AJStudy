@@ -14,7 +14,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
-import com.qiufengguang.ajstudy.card.empty.EmptyCard;
+import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 
 import java.lang.ref.WeakReference;
@@ -103,7 +103,7 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
     @Override
     public int getItemViewType(int position) {
         LayoutData<?> layoutData = getItem(position);
-        return layoutData != null ? layoutData.getLayoutId() : EmptyCard.LAYOUT_ID_2;
+        return layoutData != null ? layoutData.getLayoutId() : StateCard.LAYOUT_ID;
     }
 
     @NonNull

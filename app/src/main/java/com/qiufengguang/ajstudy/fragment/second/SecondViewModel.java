@@ -14,6 +14,7 @@ import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.SelectThemeCardBean;
+import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.repository.SecondaryRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 import com.qiufengguang.ajstudy.router.Router;
@@ -46,7 +47,7 @@ public class SecondViewModel extends BaseViewModel {
             currentCall.cancel();
         }
         if (TextUtils.isEmpty(uri)) {
-            List<LayoutData<?>> dataList = fetchEmptyData();
+            List<LayoutData<?>> dataList = fetchStateData(State.EMPTY);
             liveData.setValue(dataList);
             return;
         }
@@ -71,12 +72,12 @@ public class SecondViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(Throwable t) {
-                List<LayoutData<?>> dataList = fetchEmptyData();
+                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
                 liveData.postValue(dataList);
             }
         });
         if (currentCall == null) {
-            List<LayoutData<?>> dataList = fetchEmptyData();
+            List<LayoutData<?>> dataList = fetchStateData(State.EMPTY);
             liveData.setValue(dataList);
         }
     }

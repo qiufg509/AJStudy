@@ -112,6 +112,8 @@ dependencies {
     implementation libs.retrofit
     // Retrofit Gson 转换器（利用项目已有的 Gson）
     implementation libs.converter.gson
+    // Lottie 动画
+    implementation libs.lottie
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

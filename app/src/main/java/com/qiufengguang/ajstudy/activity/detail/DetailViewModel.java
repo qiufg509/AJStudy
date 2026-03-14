@@ -1,7 +1,5 @@
 package com.qiufengguang.ajstudy.activity.detail;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,6 +8,7 @@ import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.DetailAppData;
 import com.qiufengguang.ajstudy.data.model.DetailHead;
+import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.model.TabData;
 import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.repository.AppDetailRepository;
@@ -134,8 +133,7 @@ public class DetailViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.w(TAG, "fetchAppDetailData fail.", t);
-                List<LayoutData<?>> dataList = fetchEmptyData();
+                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
                 introduction.postValue(dataList);
             }
         });
@@ -154,7 +152,7 @@ public class DetailViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(Throwable t) {
-                List<LayoutData<?>> dataList = fetchEmptyData();
+                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
                 comments.postValue(dataList);
             }
         });
@@ -173,7 +171,7 @@ public class DetailViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(Throwable t) {
-                List<LayoutData<?>> dataList = fetchEmptyData();
+                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
                 recommendations.postValue(dataList);
             }
         });

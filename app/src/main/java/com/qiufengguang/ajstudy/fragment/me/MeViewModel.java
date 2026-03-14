@@ -18,6 +18,7 @@ import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.SettingCardBean;
+import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.repository.MeRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
@@ -166,7 +167,7 @@ public class MeViewModel extends BaseViewModel {
         if (!combined.isEmpty()) {
             mergedListLiveData.setValue(combined);
         } else {
-            List<LayoutData<?>> dataList = fetchEmptyData();
+            List<LayoutData<?>> dataList = fetchStateData(State.EMPTY);
             mergedListLiveData.postValue(dataList);
         }
     }

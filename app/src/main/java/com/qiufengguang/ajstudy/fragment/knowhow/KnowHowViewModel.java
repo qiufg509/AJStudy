@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.repository.KnowHowRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 
@@ -48,7 +49,7 @@ public class KnowHowViewModel extends BaseViewModel {
 
             @Override
             public void onFailure(Throwable t) {
-                List<LayoutData<?>> dataList = fetchEmptyData();
+                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
                 liveData.postValue(dataList);
             }
         });

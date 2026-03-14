@@ -13,11 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.state.StateCard;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
+import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
+import com.qiufengguang.ajstudy.data.model.State;
+import com.qiufengguang.ajstudy.data.model.StateCardBean;
 import com.qiufengguang.ajstudy.databinding.FragmentBaseBinding;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 列表页基类Fragment
@@ -54,6 +63,7 @@ public abstract class BaseListFragment extends Fragment {
 
         setupLayout(config);
         setupContent();
+        showPageState(State.LOADING);
         onData();
         setupScrollListener();
     }
@@ -222,6 +232,21 @@ public abstract class BaseListFragment extends Fragment {
             baseBinding.getRoot().setBackground(null);
             baseBinding.backgroundImage.setImageResource(resId);
             baseBinding.backgroundImage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 设置页面状态
+     *
+     * @param state 状态{@link State}
+     */
+    public void showPageState(State state) {
+        if (baseListAdapter != null && state != null) {
+            SingleLayoutData<StateCardBean> stateCardData = LayoutDataFactory.createSingle(
+                StateCard.LAYOUT_ID, new StateCardBean(state));
+            List<LayoutData<?>> dataList = new ArrayList<>(1);
+            dataList.add(stateCardData);
+            baseListAdapter.setData(dataList);
         }
     }
 
