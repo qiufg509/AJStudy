@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewbinding.ViewBinding;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
 import com.qiufengguang.ajstudy.card.state.StateCard;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 
 import java.lang.ref.WeakReference;
@@ -37,6 +39,8 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
     private static final DiffUtil.ItemCallback<LayoutData<?>> DIFF_CALLBACK = new DiffItemCallback();
 
     private final LifecycleOwner lifecycleOwner;
+
+    private OnItemClickListener<BaseCardBean> listener;
 
     /**
      * 存储所有需要监听 onResume 和 onPause 方法的 ViewHolder 弱引用
@@ -97,6 +101,10 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
         return result;
     }
 
+    public void setListener(OnItemClickListener<BaseCardBean> listener) {
+        this.listener = listener;
+    }
+
     /**
      * 获取ViewType，根据position判断
      */
@@ -121,7 +129,7 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
     public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position) {
         LayoutData<?> layoutData = getItem(position);
         if (layoutData != null) {
-            holder.bind(layoutData, lifecycleOwner);
+            holder.bind(layoutData, lifecycleOwner, listener);
         }
     }
 

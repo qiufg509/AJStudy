@@ -14,6 +14,8 @@ import com.qiufengguang.ajstudy.fragment.base.PageConfig;
  * @since 2025/5/5 22:12
  */
 public class HomeFragment extends BaseGridFragment {
+    private HomeViewModel viewModel;
+
     @NonNull
     @Override
     protected PageConfig getPageConfig() {
@@ -22,12 +24,16 @@ public class HomeFragment extends BaseGridFragment {
 
     @Override
     public void onData() {
-        HomeViewModel viewModel =
-            new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         setPageBackground(R.drawable.home_page_bg);
 
         viewModel.getLiveData().observe(getViewLifecycleOwner(),
             beans -> baseListAdapter.setData(beans));
         setTitle(getString(R.string.bottom_nav_title_home));
+    }
+
+    @Override
+    public void retry() {
+        viewModel.retry();
     }
 }

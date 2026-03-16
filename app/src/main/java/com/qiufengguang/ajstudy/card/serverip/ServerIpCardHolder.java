@@ -34,19 +34,16 @@ public class ServerIpCardHolder extends BaseViewHolder<CardServerIpBinding> {
     }
 
     @Override
-    public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+    public boolean bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
         if (data == null || data.isCollection() || data.getLayoutId() != ServerIpCard.LAYOUT_ID) {
-            return;
+            return false;
         }
         if (card == null) {
             initCard();
         }
         String serverIp = SpUtils.getInstance().getString(Constant.Sp.KEY_SERVER_IP, "");
         card.setData(serverIp);
-    }
-
-    @Override
-    public void bind(LayoutData<?> data) {
+        return true;
     }
 
     @Override

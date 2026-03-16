@@ -14,6 +14,7 @@ import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.model.StateCardBean;
 import com.qiufengguang.ajstudy.databinding.CardStateBinding;
@@ -36,7 +37,7 @@ public class StateCard extends Card {
 
     private WeakReference<CardStateBinding> bindingRef;
 
-    private OnItemClickListener<StateCardBean> listener;
+    private OnItemClickListener<BaseCardBean> listener;
 
     private StateCard() {
     }
@@ -44,6 +45,27 @@ public class StateCard extends Card {
     public void setData(StateCardBean bean) {
         this.bean = bean;
         this.show();
+    }
+
+    public void update(State state) {
+        if (this.bean == null) {
+            this.bean = new StateCardBean(state);
+        } else {
+            if (this.bean.getState() == state) {
+                return;
+            }
+            this.bean.setState(state);
+        }
+        show();
+    }
+
+    /**
+     * 设置卡片item点击事件
+     *
+     * @param listener {@link OnItemClickListener}
+     */
+    public void setListener(OnItemClickListener<BaseCardBean> listener) {
+        this.listener = listener;
     }
 
     public void show() {
@@ -59,6 +81,7 @@ public class StateCard extends Card {
         }
 
 
+        binding.animationView.cancelAnimation();
         int rawRes = getAnimationRes(bean.getState());
         binding.animationView.setAnimation(rawRes);
         binding.animationView.setRepeatCount(LottieDrawable.INFINITE);
@@ -144,7 +167,7 @@ public class StateCard extends Card {
     public static class Builder {
         private CardStateBinding binding;
 
-        private OnItemClickListener<StateCardBean> listener;
+        private OnItemClickListener<BaseCardBean> listener;
 
         /**
          * 设置卡片布局viewbinding
@@ -164,7 +187,7 @@ public class StateCard extends Card {
          * @return Builder
          */
         public StateCard.Builder setListener(
-            OnItemClickListener<StateCardBean> listener) {
+            OnItemClickListener<BaseCardBean> listener) {
             this.listener = listener;
             return this;
         }

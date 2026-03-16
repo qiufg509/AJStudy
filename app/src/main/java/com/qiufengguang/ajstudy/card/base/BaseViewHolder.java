@@ -41,12 +41,34 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
     /**
      * 绑定数据
      */
-    public abstract void bind(LayoutData<?> data);
+    public void bind(LayoutData<?> data) {
+    }
 
     /**
      * 绑定数据
      */
-    public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+    public boolean bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+        return false;
+    }
+
+    /**
+     * 绑定数据
+     */
+    public boolean bind(LayoutData<?> data, OnItemClickListener<BaseCardBean> listener) {
+        return false;
+    }
+
+    /**
+     * 绑定数据
+     */
+    public final void bind(
+        LayoutData<?> data,
+        LifecycleOwner lifecycleOwner,
+        OnItemClickListener<BaseCardBean> listener
+    ) {
+        if (bind(data, lifecycleOwner) || bind(data, listener)) {
+            return;
+        }
         Object object = data.getData();
         if (object == null) {
             return;

@@ -46,10 +46,13 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
     }
 
     @Override
-    public void bind(LayoutData<?> data) {
+    public boolean bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+        if (this.lifecycleOwnerRef == null || this.lifecycleOwnerRef.isEnqueued()) {
+            this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
+        }
         if (data == null || data.getData() == null || !data.isCollection()
             || data.getLayoutId() != BannerCard.LAYOUT_ID) {
-            return;
+            return false;
         }
         if (card == null) {
             initCard();
@@ -59,13 +62,7 @@ public class BannerCardHolder extends BaseViewHolder<CardBannerBinding>
         card.setBannerBeans(beans);
 
         checkAndResumeBanner();
-    }
-
-    public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
-        if (this.lifecycleOwnerRef == null || this.lifecycleOwnerRef.isEnqueued()) {
-            this.lifecycleOwnerRef = new WeakReference<>(lifecycleOwner);
-        }
-        this.bind(data);
+        return true;
     }
 
     private void observeLifecycle() {

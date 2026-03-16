@@ -69,6 +69,15 @@ public class KnowHowViewModel extends BaseViewModel {
         return new ArrayList<>(value.subList(fromIndex, toIndex));
     }
 
+    /**
+     * 重试
+     */
+    public void retry() {
+        List<LayoutData<?>> dataList = fetchStateData(State.LOADING);
+        liveData.setValue(dataList);
+        loadData();
+    }
+
     public LiveData<List<LayoutData<?>>> getLiveData() {
         return liveData;
     }

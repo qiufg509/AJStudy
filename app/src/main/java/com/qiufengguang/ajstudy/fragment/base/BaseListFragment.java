@@ -87,6 +87,7 @@ public abstract class BaseListFragment extends Fragment {
         super.onDestroyView();
         // 释放所有资源
         baseListAdapter.releaseAllResources();
+        baseListAdapter.setListener(null);
         baseListAdapter = null;
         baseBinding.recyclerContainer.setAdapter(null);
         baseBinding.recyclerContainer.setLayoutManager(null);
@@ -216,6 +217,7 @@ public abstract class BaseListFragment extends Fragment {
         };
 
         baseBinding.recyclerContainer.addOnScrollListener(scrollListener);
+        baseListAdapter.setListener((context, data) -> retry());
     }
 
     /**
@@ -271,5 +273,11 @@ public abstract class BaseListFragment extends Fragment {
      * @param totalItemsCount item数量
      */
     public void onLoadMore(int page, int totalItemsCount) {
+    }
+
+    /**
+     * 重试
+     */
+    public void retry() {
     }
 }

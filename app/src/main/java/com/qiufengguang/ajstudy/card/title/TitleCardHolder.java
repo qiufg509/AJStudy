@@ -33,18 +33,15 @@ public class TitleCardHolder extends BaseViewHolder<CardTitleBinding> {
     }
 
     @Override
-    public void bind(LayoutData<?> data) {
-    }
-
-    @Override
-    public void bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+    public boolean bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
         if (data == null || data.isCollection() || data.getLayoutId() != TitleCard.LAYOUT_ID) {
-            return;
+            return false;
         }
         if (card == null) {
             initCard();
         }
         card.setData(data.getName());
+        return true;
     }
 
     @Override

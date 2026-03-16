@@ -41,4 +41,9 @@ public class KnowHowFragment extends BaseStaggeredFragment {
         List<LayoutData<?>> pageData = viewModel.getPageData(page);
         baseListAdapter.addData(pageData);
     }
+
+    @Override
+    public void retry() {
+        viewModel.retry();
+    }
 }
