@@ -12,6 +12,7 @@ import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.ArticleCardBean;
 import com.qiufengguang.ajstudy.databinding.CardArticleBinding;
 import com.qiufengguang.ajstudy.global.Constant;
@@ -34,6 +35,8 @@ public class ArticleCard extends Card {
     private ArticleCardBean bean;
 
     private WeakReference<CardArticleBinding> bindingRef;
+
+    private OnItemClickListener<ArticleCardBean> listener;
 
     private ArticleCard() {
     }
@@ -65,6 +68,11 @@ public class ArticleCard extends Card {
         } else {
             binding.ivCover.setImageResource(R.drawable.placeholder_image_9_16);
         }
+        binding.getRoot().setOnClickListener(v -> {
+            if (listener != null && bean != null) {
+                listener.onItemClick(v.getContext(), bean);
+            }
+        });
     }
 
     /**
@@ -95,6 +103,8 @@ public class ArticleCard extends Card {
     public static class Builder {
         private CardArticleBinding binding;
 
+        private OnItemClickListener<ArticleCardBean> listener;
+
         /**
          * 设置卡片布局viewbinding
          *
@@ -106,6 +116,17 @@ public class ArticleCard extends Card {
             return this;
         }
 
+        /**
+         * 设置点击监听
+         *
+         * @param listener {@link OnItemClickListener}
+         * @return Builder
+         */
+        public ArticleCard.Builder setListener(OnItemClickListener<ArticleCardBean> listener) {
+            this.listener = listener;
+            return this;
+        }
+
         public ArticleCard create() {
             if (this.binding == null) {
                 throw new UnsupportedOperationException(
@@ -113,6 +134,7 @@ public class ArticleCard extends Card {
             }
             ArticleCard wrapper = new ArticleCard();
             wrapper.bindingRef = new WeakReference<>(binding);
+            wrapper.listener = this.listener;
             return wrapper;
         }
     }

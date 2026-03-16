@@ -28,6 +28,7 @@ public class ArticleCardHolder extends BaseViewHolder<CardArticleBinding> {
         }
         card = new ArticleCard.Builder()
             .setBinding(binding)
+            .setListener(this::onCommonClickListener)
             .create();
         card.show();
     }
