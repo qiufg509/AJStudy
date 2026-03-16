@@ -17,8 +17,8 @@ android {
         applicationId "com.qiufengguang.ajstudy"
         minSdk 29
         targetSdk 36
-        versionCode 10000001
-        versionName "1.0.0.1"
+        versionCode 10000100
+        versionName "1.0.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
