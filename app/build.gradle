@@ -115,6 +115,9 @@ dependencies {
     // Lottie 动画
     implementation libs.lottie
 
+    // 仅在 debug 构建类型中启用 LeakCanary
+    debugImplementation libs.leakcanary
+
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
