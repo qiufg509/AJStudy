@@ -84,6 +84,12 @@ public class MarkdownActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if (stateCard != null) {
+            stateCard.release();
+        }
+        if (binding != null) {
+            binding.bounceContainer.removeAllViews();
+        }
         super.onDestroy();
         binding = null;
     }
