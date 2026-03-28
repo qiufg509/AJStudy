@@ -26,6 +26,7 @@ import com.qiufengguang.ajstudy.card.text.TextCard;
 import com.qiufengguang.ajstudy.card.title.TitleCard;
 import com.qiufengguang.ajstudy.card.topicheader.TopicHeaderCard;
 import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
+import com.qiufengguang.ajstudy.card.welcome.AiWelcomeCard;
 
 /**
  * 卡片注册器
@@ -61,5 +62,6 @@ public class CardRegistrar {
         Card.register(TopicHeaderCard.LAYOUT_ID, new TopicHeaderCard.Creator());
         Card.register(ServerIpCard.LAYOUT_ID, new ServerIpCard.Creator());
         Card.register(SelectThemeCard.LAYOUT_ID, new SelectThemeCard.Creator());
+        Card.register(AiWelcomeCard.LAYOUT_ID, new AiWelcomeCard.Creator());
     }
 }

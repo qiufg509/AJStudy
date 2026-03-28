@@ -4,7 +4,12 @@ import com.qiufengguang.ajstudy.data.model.ChatMessage;
 
 import java.util.List;
 
-// ChatCompletionRequest.java
+/**
+ * Ai对话请求体
+ *
+ * @author qiufengguang
+ * @since 2026/3/28 18:20
+ */
 public class ChatCompletionRequest {
     private String model = "deepseek-chat";
     private List<ChatMessage> messages;

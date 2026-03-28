@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_s"
+        app:layout_constraintBottom_toTopOf="@id/tv_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_goneMarginBottom="0dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:text="@string/ai_welcome_name"
+        android:textColor="@color/ajstudy_color_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/animation_view" />
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:text="@string/ai_welcome_tip"
+        android:textColor="@color/ajstudy_color_text_tertiary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/ai_welcome_title"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_message_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tip" />
+
+    <TextView
+        android:id="@+id/tv_message_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:background="@drawable/ai_welcome_msg_bg"
+        android:padding="@dimen/activity_horizontal_margin_s"
+        android:text="@string/ai_welcome_message_first"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_message_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_message_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:background="@drawable/ai_welcome_msg_bg"
+        android:padding="@dimen/activity_horizontal_margin_s"
+        android:text="@string/ai_welcome_secondary"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_message_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_message_1" />
+
+    <TextView
+        android:id="@+id/tv_message_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_m"
+        android:background="@drawable/ai_welcome_msg_bg"
+        android:padding="@dimen/activity_horizontal_margin_s"
+        android:text="@string/ai_welcome_tertiary"
+        android:textColor="@color/ajstudy_color_text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_message_2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

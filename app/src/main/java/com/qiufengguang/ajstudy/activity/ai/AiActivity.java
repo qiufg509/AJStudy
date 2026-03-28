@@ -17,6 +17,12 @@ import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.view.OnToolBarListener;
 
+/**
+ * Ai对话页面
+ *
+ * @author qiufengguang
+ * @since 2026/3/28 18:20
+ */
 public class AiActivity extends AppCompatActivity {
     private ActivityAiBinding binding;
 

@@ -13,6 +13,12 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
+/**
+ * Ai对话消息仓库
+ *
+ * @author qiufengguang
+ * @since 2026/3/28 18:20
+ */
 public class ChatRepository {
     private static volatile ChatRepository instance;
 

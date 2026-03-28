@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.card.state.StateCard;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
@@ -222,7 +224,7 @@ public abstract class BaseListFragment extends Fragment {
         };
 
         baseBinding.recyclerContainer.addOnScrollListener(scrollListener);
-        baseListAdapter.setListener((context, data) -> retry());
+        baseListAdapter.setListener(getListener());
     }
 
     /**
@@ -284,5 +286,15 @@ public abstract class BaseListFragment extends Fragment {
      * 重试
      */
     public void retry() {
+    }
+
+    /**
+     * 卡片点击回调监听（默认点击重试，可复写扩展功能）
+     * 卡片CardHolder复写bind(LayoutData<?> data, OnItemClickListener<BaseCardBean> listener)
+     *
+     * @return OnItemClickListener
+     */
+    public OnItemClickListener<BaseCardBean> getListener() {
+        return (context, data) -> retry();
     }
 }

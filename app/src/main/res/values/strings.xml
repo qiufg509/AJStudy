@@ -28,4 +28,10 @@
     <string name="base_url">http://%s:8080/</string>
     <string name="ai_send">发送</string>
     <string name="ai_hint">输入消息...</string>
+    <string name="ai_welcome_name">AI Learning</string>
+    <string name="ai_welcome_tip">学习遇到问题，随时找我答疑</string>
+    <string name="ai_welcome_title">你可能想问：</string>
+    <string name="ai_welcome_message_first">鸿蒙相关的生命周期都有哪些?</string>
+    <string name="ai_welcome_secondary">协程底层如何实现线程切换？</string>
+    <string name="ai_welcome_tertiary">资源文件夹中 sw 和 w 有什么区别（如layout-sw600dp和layout-w600dp）？</string>
 </resources>

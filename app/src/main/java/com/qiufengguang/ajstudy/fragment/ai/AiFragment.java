@@ -8,18 +8,23 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.activity.ai.AiActivity;
+import com.qiufengguang.ajstudy.activity.ai.AiViewModel;
+import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
+import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.data.model.ChatMessage;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.fragment.base.BaseListFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
 /**
- * 二级页（格网样式）
+ * Ai对话列表页面
  *
  * @author qiufengguang
- * @since 2026/3/4 2:17
+ * @since 2026/3/28 18:20
  */
 public class AiFragment extends BaseListFragment {
+    private AiViewModel viewModel;
 
     public static AiFragment newInstance(Bundle args) {
         AiFragment f = new AiFragment();
@@ -56,8 +61,20 @@ public class AiFragment extends BaseListFragment {
     }
 
     @Override
+    public OnItemClickListener<BaseCardBean> getListener() {
+        return (context, data) -> {
+            if (!(data instanceof ChatMessage)) {
+                return;
+            }
+            ChatMessage message = (ChatMessage) data;
+            viewModel.sendMessage(message.getContent());
+        };
+    }
+
+    @Override
     public void onData() {
-        AiViewModel viewModel = new ViewModelProvider(this).get(AiViewModel.class);
+        setTitle("新对话");
+        viewModel = new ViewModelProvider(requireActivity()).get(AiViewModel.class);
         viewModel.getLiveData().observe(getViewLifecycleOwner(), layoutData ->
             baseListAdapter.setData(layoutData));
     }
