@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.LayoutTitleBarBaseBinding;
+import com.qiufengguang.ajstudy.router.AppNavigator;
 
 /**
  * 标题控件
@@ -27,13 +27,17 @@ public class DynamicToolbar extends ConstraintLayout {
      */
     public enum Mode {
         /**
-         * 仅返回按钮
+         * 标题 + AI按钮
          */
-        BACK_ONLY,
+        TITLE_AI,
         /**
          * 仅标题
          */
         TITLE_ONLY,
+        /**
+         * 仅返回按钮
+         */
+        BACK_ONLY,
         /**
          * 返回+标题
          */
@@ -42,6 +46,10 @@ public class DynamicToolbar extends ConstraintLayout {
          * 返回+标题+分享
          */
         BACK_TITLE_SHARE,
+        /**
+         * 菜单 + 标题 + 关闭
+         */
+        MENU_TITLE_CLOSE,
         /**
          * 标题控件隐藏
          */
@@ -54,8 +62,7 @@ public class DynamicToolbar extends ConstraintLayout {
     private Mode currentMode;
 
     // 点击监听器
-    private OnBackClickListener onBackClickListener;
-    private OnShareClickListener onShareClickListener;
+    private OnToolBarListener listener;
 
     // 内容区域边距（4dp）
     private int contentPadding;
@@ -63,13 +70,8 @@ public class DynamicToolbar extends ConstraintLayout {
     // 计算出的实际边距
     private int totalMargin;
 
-    public interface OnBackClickListener {
-        void onBackClick();
-    }
-
-    public interface OnShareClickListener {
-        void onShareClick();
-    }
+    // 记录窗口是否可见
+    private boolean isWindowVisible = false;
 
     public DynamicToolbar(@NonNull Context context) {
         super(context);
@@ -99,16 +101,27 @@ public class DynamicToolbar extends ConstraintLayout {
 
         // 设置默认点击事件
         binding.barBack.setOnClickListener(v -> {
-            if (onBackClickListener != null) {
-                onBackClickListener.onBackClick();
+            if (listener != null) {
+                listener.onBackClick();
             }
         });
-
         binding.barShare.setOnClickListener(v -> {
-            if (onShareClickListener != null) {
-                onShareClickListener.onShareClick();
+            if (listener != null) {
+                listener.onShareClick();
             }
         });
+        binding.barMenu.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onMenuClick();
+            }
+        });
+        binding.barClose.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onCloseClick();
+            }
+        });
+        binding.barAi.setOnClickListener(v ->
+            AppNavigator.getInstance().startAiActivity(v.getContext()));
 
         if (attrs != null) {
             try (TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DynamicToolbar)) {
@@ -147,6 +160,30 @@ public class DynamicToolbar extends ConstraintLayout {
         titleParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         titleParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         binding.barTitle.setLayoutParams(titleParams);
+
+        // 菜单按钮约束
+        ConstraintLayout.LayoutParams menuParams = (ConstraintLayout.LayoutParams) binding.barMenu.getLayoutParams();
+        menuParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        menuParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        menuParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        menuParams.setMarginStart(contentPadding);
+        binding.barMenu.setLayoutParams(menuParams);
+
+        // 关闭按钮约束
+        ConstraintLayout.LayoutParams newParams = (ConstraintLayout.LayoutParams) binding.barClose.getLayoutParams();
+        newParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        newParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        newParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        newParams.setMarginEnd(contentPadding);
+        binding.barClose.setLayoutParams(newParams);
+
+        // AI按钮约束
+        ConstraintLayout.LayoutParams aiParams = (ConstraintLayout.LayoutParams) binding.barAi.getLayoutParams();
+        aiParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        aiParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        aiParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        aiParams.setMarginEnd(contentPadding);
+        binding.barAi.setLayoutParams(aiParams);
     }
 
     /**
@@ -174,17 +211,23 @@ public class DynamicToolbar extends ConstraintLayout {
      */
     private void applyMode() {
         switch (currentMode) {
-            case BACK_ONLY:
-                applyBackOnlyMode();
+            case TITLE_AI:
+                applyTitleAiMode();
                 break;
             case TITLE_ONLY:
                 applyTitleOnlyMode();
+                break;
+            case BACK_ONLY:
+                applyBackOnlyMode();
                 break;
             case BACK_TITLE:
                 applyBackTitleMode();
                 break;
             case BACK_TITLE_SHARE:
                 applyBackTitleShareMode();
+                break;
+            case MENU_TITLE_CLOSE:
+                applyMenuTitleCloseMode();
                 break;
         }
     }
@@ -194,9 +237,13 @@ public class DynamicToolbar extends ConstraintLayout {
      */
     private void applyBackOnlyMode() {
         // 设置按钮可见性
+        binding.barMenu.setVisibility(GONE);
+        binding.barClose.setVisibility(GONE);
         binding.barBack.setVisibility(VISIBLE);
         binding.barTitle.setVisibility(GONE);
         binding.barShare.setVisibility(GONE);
+        binding.barAi.cancelAnimation();
+        binding.barAi.setVisibility(GONE);
 
         // 在仅返回按钮模式下，保持返回按钮在左侧
         // 不需要额外设置，因为setupInitialConstraints已经设置好了
@@ -207,9 +254,13 @@ public class DynamicToolbar extends ConstraintLayout {
      */
     private void applyTitleOnlyMode() {
         // 设置按钮可见性
+        binding.barMenu.setVisibility(GONE);
+        binding.barClose.setVisibility(GONE);
         binding.barBack.setVisibility(GONE);
         binding.barTitle.setVisibility(VISIBLE);
         binding.barShare.setVisibility(GONE);
+        binding.barAi.cancelAnimation();
+        binding.barAi.setVisibility(GONE);
 
         // 更新标题约束：距离父布局两边都有totalMargin
         updateTitleConstraints(
@@ -225,9 +276,13 @@ public class DynamicToolbar extends ConstraintLayout {
      */
     private void applyBackTitleMode() {
         // 设置按钮可见性
+        binding.barMenu.setVisibility(GONE);
+        binding.barClose.setVisibility(GONE);
         binding.barBack.setVisibility(VISIBLE);
         binding.barTitle.setVisibility(VISIBLE);
         binding.barShare.setVisibility(GONE);
+        binding.barAi.cancelAnimation();
+        binding.barAi.setVisibility(GONE);
 
         // 更新标题约束：左侧连接到返回按钮，右侧有totalMargin
         updateTitleConstraints(
@@ -239,20 +294,68 @@ public class DynamicToolbar extends ConstraintLayout {
     }
 
     /**
-     * 返回+标题+分享模式 - 修复短标题靠右问题
+     * 返回+标题+分享模式
      */
     private void applyBackTitleShareMode() {
         // 设置按钮可见性
+        binding.barMenu.setVisibility(GONE);
+        binding.barClose.setVisibility(GONE);
         binding.barBack.setVisibility(VISIBLE);
         binding.barTitle.setVisibility(VISIBLE);
         binding.barShare.setVisibility(VISIBLE);
+        binding.barAi.cancelAnimation();
+        binding.barAi.setVisibility(GONE);
 
         // 更新标题约束：左侧连接到返回按钮，右侧连接到分享按钮
         // 添加水平偏斜（bias）为0，确保标题默认靠左对齐
         updateTitleConstraintsWithBias(
             R.id.bar_back,
-            R.id.bar_share
-            // 水平偏斜为0，表示靠左
+            R.id.bar_share,
+            0.0f
+        );
+    }
+
+    /**
+     * 菜单+标题+关闭模式
+     */
+    private void applyMenuTitleCloseMode() {
+        binding.barBack.setVisibility(GONE);
+        binding.barShare.setVisibility(GONE);
+        binding.barMenu.setVisibility(VISIBLE);
+        binding.barClose.setVisibility(VISIBLE);
+        binding.barTitle.setVisibility(VISIBLE);
+        binding.barAi.cancelAnimation();
+        binding.barAi.setVisibility(GONE);
+
+        // 更新标题约束：左侧连接到菜单，右侧连接到新增，水平居中
+        updateTitleConstraintsWithBias(
+            R.id.bar_menu,      // startToEnd
+            R.id.bar_close,       // endToStart
+            0.5f                // 水平居中
+        );
+    }
+
+    /**
+     * 标题+AI模式
+     */
+    private void applyTitleAiMode() {
+        binding.barBack.setVisibility(GONE);
+        binding.barShare.setVisibility(GONE);
+        binding.barMenu.setVisibility(GONE);
+        binding.barClose.setVisibility(GONE);
+        binding.barTitle.setVisibility(VISIBLE);
+        binding.barAi.setVisibility(VISIBLE);
+        if (isWindowVisible) {
+            binding.barAi.playAnimation();
+        } else {
+            binding.barAi.cancelAnimation();
+        }
+
+        updateTitleConstraints(
+            ConstraintLayout.LayoutParams.PARENT_ID,
+            R.id.bar_ai,
+            totalMargin,
+            0
         );
     }
 
@@ -305,7 +408,7 @@ public class DynamicToolbar extends ConstraintLayout {
     /**
      * 更新标题的约束条件（带水平偏斜版本）
      */
-    private void updateTitleConstraintsWithBias(int startViewId, int endViewId) {
+    private void updateTitleConstraintsWithBias(int startViewId, int endViewId, float bias) {
         // 如果标题不可见，不需要更新约束
         if (binding.barTitle.getVisibility() != VISIBLE) {
             return;
@@ -338,7 +441,7 @@ public class DynamicToolbar extends ConstraintLayout {
         params.setMarginEnd(0);
 
         // 设置水平偏斜（0.0=靠左，0.5=居中，1.0=靠右）
-        params.horizontalBias = (float) 0.0;
+        params.horizontalBias = bias;
 
         binding.barTitle.setLayoutParams(params);
     }
@@ -368,104 +471,12 @@ public class DynamicToolbar extends ConstraintLayout {
     }
 
     /**
-     * 设置返回按钮监听器
+     * 设置按钮监听器
+     *
+     * @param listener OnToolBarListener
      */
-    public void setOnBackClickListener(OnBackClickListener listener) {
-        this.onBackClickListener = listener;
-    }
-
-    /**
-     * 设置分享按钮监听器
-     */
-    public void setOnShareClickListener(OnShareClickListener listener) {
-        this.onShareClickListener = listener;
-    }
-
-    /**
-     * 设置返回按钮可见性（手动控制）
-     */
-    public void setBackButtonVisible(boolean visible) {
-        binding.barBack.setVisibility(visible ? VISIBLE : GONE);
-        binding.barTitle.setVisibility(VISIBLE); // 确保标题可见
-        updateConstraintsForCurrentMode();
-    }
-
-    /**
-     * 设置分享按钮可见性（手动控制）
-     */
-    public void setShareButtonVisible(boolean visible) {
-        binding.barShare.setVisibility(visible ? VISIBLE : GONE);
-        binding.barTitle.setVisibility(VISIBLE); // 确保标题可见
-        updateConstraintsForCurrentMode();
-    }
-
-    /**
-     * 设置标题可见性（手动控制）
-     */
-    public void setTitleVisible(boolean visible) {
-        binding.barTitle.setVisibility(visible ? VISIBLE : GONE);
-        updateConstraintsForCurrentMode();
-    }
-
-    /**
-     * 根据当前按钮可见性更新约束
-     */
-    private void updateConstraintsForCurrentMode() {
-        boolean backVisible = binding.barBack.getVisibility() == VISIBLE;
-        boolean titleVisible = binding.barTitle.getVisibility() == VISIBLE;
-        boolean shareVisible = binding.barShare.getVisibility() == VISIBLE;
-
-        // 如果标题不可见，不需要更新标题约束
-        if (!titleVisible) {
-            return;
-        }
-
-        if (!backVisible && !shareVisible) {
-            // 没有按钮，仅标题
-            updateTitleConstraints(
-                ConstraintLayout.LayoutParams.PARENT_ID,
-                ConstraintLayout.LayoutParams.PARENT_ID,
-                totalMargin,
-                totalMargin
-            );
-        } else if (backVisible && !shareVisible) {
-            // 只有返回按钮
-            updateTitleConstraints(
-                R.id.bar_back,
-                ConstraintLayout.LayoutParams.PARENT_ID,
-                0,
-                totalMargin
-            );
-        } else if (!backVisible) {
-            // 只有分享按钮
-            updateTitleConstraints(
-                ConstraintLayout.LayoutParams.PARENT_ID,
-                R.id.bar_share,
-                totalMargin,
-                0
-            );
-        } else {
-            // 两个按钮都有 - 使用带偏斜的版本，标题靠左
-            updateTitleConstraintsWithBias(
-                R.id.bar_back,
-                R.id.bar_share
-                // 靠左对齐
-            );
-        }
-    }
-
-    /**
-     * 获取返回按钮
-     */
-    public ImageButton getBackButton() {
-        return binding.barBack;
-    }
-
-    /**
-     * 获取分享按钮
-     */
-    public ImageButton getShareButton() {
-        return binding.barShare;
+    public void setListener(OnToolBarListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -473,5 +484,26 @@ public class DynamicToolbar extends ConstraintLayout {
      */
     public TextView getTitleView() {
         return binding.barTitle;
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        isWindowVisible = (visibility == VISIBLE);
+        if (currentMode == Mode.TITLE_AI) {
+            if (isWindowVisible) {
+                binding.barAi.playAnimation();
+            } else {
+                binding.barAi.cancelAnimation();
+            }
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        if (binding != null) {
+            binding.barAi.cancelAnimation();
+        }
+        super.onDetachedFromWindow();
     }
 }

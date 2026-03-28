@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <path
+        android:fillColor="#E5F9EF00"
+        android:pathData="M623.8,631.1m-228.4,0a228.4,228.4 0,1 0,456.8 0,228.4 228.4,0 1,0 -456.8,0Z" />
+
+    <path
+        android:fillColor="@color/ajstudy_color_toolbar_icon"
+        android:pathData="M509.4,154.9a357.1,357.1 0,1 0,0 714.2,357.1 357.1,0 0,0 0,-714.2zM67,512c0,-244.4 198.1,-442.5 442.5,-442.5 244.4,0 442.5,198.1 442.5,442.5 0,244.4 -198.1,442.5 -442.5,442.5 -244.4,0 -442.5,-198.1 -442.5,-442.5zM355.5,356.9a38.4,38.4 0,0 1,54.3 0l100.9,100.7 100.9,-100.7a38.4,38.4 0,1 1,54.3 54.3l-100.8,100.6 100.8,100.6a38.4,38.4 0,0 1,-54.3 54.4l-100.9,-100.7 -100.9,100.7a38.4,38.4 0,0 1,-54.3 -54.4l100.8,-100.6 -100.8,-100.6a38.4,38.4 0,0 1,-0 -54.3z" />
+
+</vector>

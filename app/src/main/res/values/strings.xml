@@ -7,6 +7,8 @@
     <string name="title_action_back_description">返回</string>
     <string name="title_action_share_description">分享</string>
     <string name="title_action_close_description">关闭</string>
+    <string name="title_action_menu_description">菜单</string>
+    <string name="title_action_ai_description">AI助手</string>
     <string name="detail_download_suffix">次安装</string>
     <string name="login_phone">手机号</string>
     <string name="login_pwd">密码</string>
@@ -24,4 +26,6 @@
     <string name="server_ip_card_hint">例：192.168.1.1</string>
     <string name="server_ip_card_btn_tip">保存配置</string>
     <string name="base_url">http://%s:8080/</string>
+    <string name="ai_send">发送</string>
+    <string name="ai_hint">输入消息...</string>
 </resources>

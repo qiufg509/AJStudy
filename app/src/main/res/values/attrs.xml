@@ -2,10 +2,13 @@
 <resources>
     <declare-styleable name="DynamicToolbar">
         <attr name="mode" format="enum">
-            <enum name="back_only" value="0" />
+            <enum name="title_ai" value="0" />
             <enum name="title_only" value="1" />
-            <enum name="back_title" value="2" />
-            <enum name="back_title_share" value="3" />
+            <enum name="back_only" value="2" />
+            <enum name="back_title" value="3" />
+            <enum name="back_title_share" value="4" />
+            <enum name="menu_title_close" value="5" />
+            <enum name="gone" value="6" />
         </attr>
     </declare-styleable>
     <declare-styleable name="RoundedFrameLayout">

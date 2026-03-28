@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 
+import com.qiufengguang.ajstudy.activity.ai.AiActivity;
 import com.qiufengguang.ajstudy.activity.detail.DetailActivity;
 import com.qiufengguang.ajstudy.activity.main.MainActivity;
 import com.qiufengguang.ajstudy.activity.markdown.MarkdownActivity;
@@ -316,6 +317,15 @@ public final class AppNavigator {
         startActivity(context, intent, launcher);
     }
 
+    /**
+     * 跳转AI页
+     *
+     * @param context 上下文
+     */
+    public void startAiActivity(Context context) {
+        Intent intent = new Intent(context, AiActivity.class);
+        startActivity(context, intent, null);
+    }
 
     // ==================== 重启 ====================
 

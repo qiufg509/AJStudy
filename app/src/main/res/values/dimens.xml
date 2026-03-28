@@ -19,6 +19,7 @@
     <dimen name="item_icon_size_m">56dp</dimen>
     <dimen name="item_icon_size_s">48dp</dimen>
     <dimen name="item_icon_size_xs">40dp</dimen>
+    <dimen name="radius_xl">24dp</dimen>
     <dimen name="radius_l">16dp</dimen>
     <dimen name="radius_m">12dp</dimen>
     <dimen name="radius_s">8dp</dimen>

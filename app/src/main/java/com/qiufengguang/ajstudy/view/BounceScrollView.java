@@ -86,6 +86,8 @@ public class BounceScrollView extends FrameLayout {
      */
     private boolean enablePullUpBounce = true;
 
+    private OnTouchEventListener mTouchEventListener;
+
     public BounceScrollView(@NonNull Context context) {
         this(context, null);
     }
@@ -125,6 +127,15 @@ public class BounceScrollView extends FrameLayout {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // 仅在 ACTION_DOWN 时回调，避免频繁调用
+        if (ev.getAction() == MotionEvent.ACTION_DOWN && mTouchEventListener != null) {
+            mTouchEventListener.onTouchEvent(ev);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         // 如果正在回弹动画中，拦截所有触摸事件
         if (mTouchState == TOUCH_STATE_BOUNCING) {
@@ -151,7 +162,7 @@ public class BounceScrollView extends FrameLayout {
                 // 如果垂直移动距离大于阈值，且大于水平移动，则拦截
                 if (dy > mTouchSlop && dy > dx) {
                     // 检查是否应该拦截（在边界或者子View已滚动到边界）
-                    if (shouldInterceptTouchEvent(dy, y - mInitialTouchY > 0)) {
+                    if (shouldInterceptTouchEvent(y - mInitialTouchY > 0)) {
                         mIsBeingDragged = true;
                         mLastTouchX = x;
                         mLastTouchY = y;
@@ -172,7 +183,7 @@ public class BounceScrollView extends FrameLayout {
     /**
      * 判断是否应该拦截触摸事件
      */
-    private boolean shouldInterceptTouchEvent(float dy, boolean isMovingDown) {
+    private boolean shouldInterceptTouchEvent(boolean isMovingDown) {
         if (mChildView != null) {
             if (isMovingDown) {
                 // 向下移动，检查是否在顶部边界且允许下拉回弹
@@ -439,5 +450,18 @@ public class BounceScrollView extends FrameLayout {
         if (!enable && mCurrentOverScrollY < 0) {
             startBounceAnimation();
         }
+    }
+
+    /**
+     * 设置触摸回调监听
+     *
+     * @param listener OnTouchEventListener
+     */
+    public void setOnTouchEventListener(OnTouchEventListener listener) {
+        mTouchEventListener = listener;
+    }
+
+    public interface OnTouchEventListener {
+        void onTouchEvent(MotionEvent event);
     }
 }

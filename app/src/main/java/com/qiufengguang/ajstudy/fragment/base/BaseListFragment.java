@@ -24,6 +24,7 @@ import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 import com.qiufengguang.ajstudy.view.EndlessRecyclerViewScrollListener;
+import com.qiufengguang.ajstudy.view.OnToolBarListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,8 +153,12 @@ public abstract class BaseListFragment extends Fragment {
         baseBinding.titleBar.setMode(mode);
         if (mode == DynamicToolbar.Mode.BACK_TITLE ||
             mode == DynamicToolbar.Mode.BACK_TITLE_SHARE) {
-            baseBinding.titleBar.setOnBackClickListener(() ->
-                requireActivity().getOnBackPressedDispatcher().onBackPressed());
+            baseBinding.titleBar.setListener(new OnToolBarListener() {
+                @Override
+                public void onBackClick() {
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                }
+            });
         }
     }
 

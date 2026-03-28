@@ -59,5 +59,7 @@ public interface Router {
         String PAGE_RECOMMEND = "recommend";
 
         String PAGE_COMMENT = "comment";
+
+        String DEEPSEEK_CHAT = "v1/chat/completions";
     }
 }

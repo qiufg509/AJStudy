@@ -3,10 +3,10 @@ plugins {
 }
 
 // 读取签名配置文件
-def keystorePropertiesFile = rootProject.file("D:/华为云盘/软件/keystore.properties")
-def keystoreProperties = new Properties()
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+def propertiesFile = rootProject.file("D:/华为云盘/软件/keystore.properties")
+def properties = new Properties()
+if (propertiesFile.exists()) {
+    properties.load(new FileInputStream(propertiesFile))
 }
 
 android {
@@ -29,10 +29,10 @@ android {
     // 签名配置
     signingConfigs {
         release {
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
+            storeFile file(properties['storeFile'])
+            storePassword properties['storePassword']
+            keyAlias properties['keyAlias']
+            keyPassword properties['keyPassword']
         }
     }
 
@@ -43,6 +43,7 @@ android {
             // 启用资源缩减（会自动移除未使用的资源，需与 minifyEnabled 配合）
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "DEEPSEEK_API_KEY", "\"${properties['DEEPSEEK_API_KEY']}\""
 
             // 使用 release 签名
             signingConfig signingConfigs.release
@@ -58,6 +59,7 @@ android {
             }
         }
         debug {
+            buildConfigField "String", "DEEPSEEK_API_KEY", "\"${properties['DEEPSEEK_API_KEY']}\""
             // debug 包不需要签名和混淆，但可以保留自定义文件名
             applicationVariants.all { variant ->
                 variant.outputs.all {
@@ -75,6 +77,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 

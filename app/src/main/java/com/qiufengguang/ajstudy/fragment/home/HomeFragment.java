@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.fragment.base.BaseGridFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
+import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
 /**
  * 首页Fragment
@@ -19,7 +20,9 @@ public class HomeFragment extends BaseGridFragment {
     @NonNull
     @Override
     protected PageConfig getPageConfig() {
-        return new PageConfig.Builder().create();
+        return new PageConfig.Builder()
+            .setTitleBarMode(DynamicToolbar.Mode.TITLE_AI)
+            .create();
     }
 
     @Override

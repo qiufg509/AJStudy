@@ -19,6 +19,7 @@ import com.qiufengguang.ajstudy.databinding.ActivityLoginBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 import com.qiufengguang.ajstudy.global.GlobalViewModel;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
+import com.qiufengguang.ajstudy.view.OnToolBarListener;
 
 /**
  * 登录页面
@@ -68,7 +69,12 @@ public class LoginActivity extends AppCompatActivity {
 
         // 登录按钮点击
         binding.btnLogin.setOnClickListener(v -> attemptLogin());
-        binding.titleBar.setOnBackClickListener(() -> getOnBackPressedDispatcher().onBackPressed());
+        binding.titleBar.setListener(new OnToolBarListener() {
+            @Override
+            public void onBackClick() {
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
 
         // 其他登录方式
         binding.tvOtherLogin.setOnClickListener(v -> {

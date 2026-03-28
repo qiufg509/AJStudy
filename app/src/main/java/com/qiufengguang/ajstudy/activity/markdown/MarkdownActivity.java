@@ -14,6 +14,7 @@ import com.qiufengguang.ajstudy.databinding.CardStateBinding;
 import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.view.OnToolBarListener;
 
 /**
  * Markdown文件展示页面
@@ -45,7 +46,12 @@ public class MarkdownActivity extends AppCompatActivity {
             .setListener((context, data) -> loadData())
             .create();
 
-        binding.titleBar.setOnBackClickListener(() -> getOnBackPressedDispatcher().onBackPressed());
+        binding.titleBar.setListener(new OnToolBarListener() {
+            @Override
+            public void onBackClick() {
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
 
         viewModel = new ViewModelProvider(this).get(MarkdownModel.class);
         String title = getIntent().getStringExtra(Router.EXTRA_TITLE);
