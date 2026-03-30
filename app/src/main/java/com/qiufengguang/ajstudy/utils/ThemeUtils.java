@@ -88,6 +88,22 @@ public class ThemeUtils {
     };
 
     /**
+     * AI对话页主题
+     */
+    private static final int[] CHAT_THEME = {
+        R.style.Theme_Chat_Red,
+        R.style.Theme_Chat_Blue,
+        R.style.Theme_Chat_Green,
+        R.style.Theme_Chat_Orange,
+        R.style.Theme_Chat_Pink,
+        R.style.Theme_Chat_Black,
+        R.style.Theme_Chat_Amber,
+        R.style.Theme_Chat_Indigo,
+        R.style.Theme_Chat_Lime,
+        R.style.Theme_Chat_Purple
+    };
+
+    /**
      * 默认主题色-下标1蓝色
      */
     public static final int THEME_INDEX_DEFAULT = 1;
@@ -132,6 +148,13 @@ public class ThemeUtils {
         return APP_THEME[selectedIndex];
     }
 
+    public static @StyleRes int getChatTheme() {
+        int selectedIndex = SpUtils.getInstance().getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);
+        if (selectedIndex >= CHAT_THEME.length || selectedIndex < 0) {
+            return CHAT_THEME[THEME_INDEX_DEFAULT];
+        }
+        return CHAT_THEME[selectedIndex];
+    }
 
     public static int getSelectedThemeIndex() {
         int selectedIndex = SpUtils.getInstance().getInt(Constant.Sp.KEY_THEME_INDEX, THEME_INDEX_DEFAULT);

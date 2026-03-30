@@ -1,16 +1,16 @@
 package com.qiufengguang.ajstudy.data.repository;
 
-import com.qiufengguang.ajstudy.data.callback.BodyRespCallback;
+import com.qiufengguang.ajstudy.data.callback.DsRespCallback;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.ChatMessage;
 import com.qiufengguang.ajstudy.data.remote.api.DeepSeekApi;
 import com.qiufengguang.ajstudy.data.remote.dto.ChatCompletionRequest;
+import com.qiufengguang.ajstudy.data.remote.dto.DsRespData;
 import com.qiufengguang.ajstudy.data.remote.service.DeepSeekClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 /**
@@ -39,12 +39,15 @@ public class ChatRepository {
         return instance;
     }
 
-    public Call<ResponseBody> sendMessage(String msg, final OnDataLoadedCallback<String> callback) {
+    public Call<DsRespData> sendMessage(
+        ChatMessage message,
+        final OnDataLoadedCallback<ChatMessage> callback
+    ) {
         List<ChatMessage> messages = new ArrayList<>();
-        messages.add(new ChatMessage("user", msg));
+        messages.add(message);
         ChatCompletionRequest request = new ChatCompletionRequest(messages);
-        Call<ResponseBody> call = api.chatCompletion(request);
-        call.enqueue(new BodyRespCallback(callback));
+        Call<DsRespData> call = api.chatCompletion(request);
+        call.enqueue(new DsRespCallback(callback));
         return call;
     }
 }

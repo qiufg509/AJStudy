@@ -67,15 +67,18 @@
         <activity
             android:name=".activity.markdown.MarkdownActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AJStudy.Blue" />
         <activity
             android:name=".activity.second.SecondActivity"
             android:exported="false"
-            android:launchMode="standard" />
+            android:launchMode="standard"
+            android:theme="@style/Theme.AJStudy.Blue" />
         <activity
             android:name=".activity.ai.AiActivity"
             android:exported="false"
             android:launchMode="singleTask"
+            android:theme="@style/Theme.Chat.Blue"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- 添加网络安全配置（可选，用于更安全的网络请求） -->

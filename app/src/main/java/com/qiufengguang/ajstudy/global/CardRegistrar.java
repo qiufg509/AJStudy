@@ -2,6 +2,8 @@ package com.qiufengguang.ajstudy.global;
 
 import com.qiufengguang.ajstudy.card.about.AboutCard;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
+import com.qiufengguang.ajstudy.card.chat.AiMessageCard;
+import com.qiufengguang.ajstudy.card.chat.UserMessageCard;
 import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.card.topicmulti.TopicMultiCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
@@ -63,5 +65,7 @@ public class CardRegistrar {
         Card.register(ServerIpCard.LAYOUT_ID, new ServerIpCard.Creator());
         Card.register(SelectThemeCard.LAYOUT_ID, new SelectThemeCard.Creator());
         Card.register(AiWelcomeCard.LAYOUT_ID, new AiWelcomeCard.Creator());
+        Card.register(UserMessageCard.LAYOUT_ID, new UserMessageCard.Creator());
+        Card.register(AiMessageCard.LAYOUT_ID, new AiMessageCard.Creator());
     }
 }

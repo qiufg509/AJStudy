@@ -14,6 +14,7 @@ import com.qiufengguang.ajstudy.databinding.CardStateBinding;
 import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 import com.qiufengguang.ajstudy.view.OnToolBarListener;
 
 /**
@@ -32,6 +33,7 @@ public class MarkdownActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ThemeUtils.getAppTheme());
         super.onCreate(savedInstanceState);
         binding = ActivityMarkdownBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

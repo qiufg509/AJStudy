@@ -11,11 +11,14 @@ import com.qiufengguang.ajstudy.activity.ai.AiActivity;
 import com.qiufengguang.ajstudy.activity.ai.AiViewModel;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
+import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.model.ChatMessage;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.fragment.base.BaseListFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
+
+import java.util.Collections;
 
 /**
  * Ai对话列表页面
@@ -67,15 +70,20 @@ public class AiFragment extends BaseListFragment {
                 return;
             }
             ChatMessage message = (ChatMessage) data;
-            viewModel.sendMessage(message.getContent());
+            viewModel.sendMessage(message);
         };
     }
 
     @Override
     public void onData() {
-        setTitle("新对话");
         viewModel = new ViewModelProvider(requireActivity()).get(AiViewModel.class);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), layoutData ->
-            baseListAdapter.setData(layoutData));
+        viewModel.getLiveData().observe(getViewLifecycleOwner(), layoutData -> {
+            if (layoutData.size() <= 1) {
+                baseListAdapter.setData(layoutData);
+            } else {
+                LayoutData<?> lastItem = layoutData.get(layoutData.size() - 1);
+                baseListAdapter.addData(Collections.singletonList(lastItem));
+            }
+        });
     }
 }

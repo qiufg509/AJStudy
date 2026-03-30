@@ -61,6 +61,13 @@
         <item name="android:excludeFromRecents">true</item>
     </style>
 
+    <style name="Theme.Chat.Red" parent="Theme.AJStudy.Red">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
     <!--蓝色主题-->
     <style name="Theme.AJStudy.Blue" parent="Theme.AJStudy">
         <item name="colorPrimary">@color/ajstudy_primary_blue</item>
@@ -94,6 +101,13 @@
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <style name="Theme.Chat.Blue" parent="Theme.AJStudy.Blue">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <!--绿色主题-->
@@ -131,6 +145,13 @@
         <item name="android:excludeFromRecents">true</item>
     </style>
 
+    <style name="Theme.Chat.Green" parent="Theme.AJStudy.Green">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
     <!--橙色主题-->
     <style name="Theme.AJStudy.Orange" parent="Theme.AJStudy">
         <item name="colorPrimary">@color/ajstudy_primary_orange</item>
@@ -164,6 +185,13 @@
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <style name="Theme.Chat.Orange" parent="Theme.AJStudy.Orange">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <!--粉色主题-->
@@ -201,6 +229,13 @@
         <item name="android:excludeFromRecents">true</item>
     </style>
 
+    <style name="Theme.Chat.Pink" parent="Theme.AJStudy.Pink">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
     <!--黑色主题-->
     <style name="Theme.AJStudy.Black" parent="Theme.AJStudy">
         <item name="colorPrimary">@color/ajstudy_primary_black</item>
@@ -234,6 +269,13 @@
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <style name="Theme.Chat.Black" parent="Theme.AJStudy.Black">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <!--琥珀色主题-->
@@ -271,6 +313,13 @@
         <item name="android:excludeFromRecents">true</item>
     </style>
 
+    <style name="Theme.Chat.Amber" parent="Theme.AJStudy.Amber">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
     <!--靛蓝色主题-->
     <style name="Theme.AJStudy.Indigo" parent="Theme.AJStudy">
         <item name="colorPrimary">@color/ajstudy_primary_indigo</item>
@@ -304,6 +353,13 @@
         <item name="android:windowLightStatusBar">?android:isLightTheme</item>
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
+    </style>
+
+    <style name="Theme.Chat.Indigo" parent="Theme.AJStudy.Indigo">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <!--酸橙色主题-->
@@ -341,6 +397,13 @@
         <item name="android:excludeFromRecents">true</item>
     </style>
 
+    <style name="Theme.Chat.Lime" parent="Theme.AJStudy.Lime">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
     <!--紫色主题-->
     <style name="Theme.AJStudy.Purple" parent="Theme.AJStudy">
         <item name="colorPrimary">@color/ajstudy_primary_purple</item>
@@ -375,4 +438,12 @@
         <!--手机最近任务中排除（安全属性）-->
         <item name="android:excludeFromRecents">true</item>
     </style>
+
+    <style name="Theme.Chat.Purple" parent="Theme.AJStudy.Purple">
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
 </resources>

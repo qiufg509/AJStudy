@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.data.remote.api;
 
 import com.qiufengguang.ajstudy.data.remote.dto.ChatCompletionRequest;
+import com.qiufengguang.ajstudy.data.remote.dto.DsRespData;
 import com.qiufengguang.ajstudy.router.Router;
 
 import okhttp3.ResponseBody;
@@ -25,7 +26,7 @@ public interface DeepSeekApi {
      */
     @POST(Router.URI.DEEPSEEK_CHAT)
     @Headers("Content-Type: application/json")
-    Call<ResponseBody> chatCompletion(@Body ChatCompletionRequest request);
+    Call<DsRespData> chatCompletion(@Body ChatCompletionRequest request);
 
     /**
      * 流式

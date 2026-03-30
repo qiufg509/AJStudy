@@ -58,7 +58,6 @@ public class SecondStaggeredFragment extends BaseStaggeredFragment {
             return;
         }
         showPageState(State.LOADING);
-        setTitle(arguments.getString(Router.EXTRA_TITLE));
         String uri = arguments.getString(Router.EXTRA_URI);
         String directory = arguments.getString(Router.EXTRA_DIRECTORY);
         viewModel.loadData(uri, directory);

@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_input_send"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/activity_horizontal_margin_m"
-    android:layout_marginTop="@dimen/activity_vertical_margin_s"
     android:layout_marginBottom="@dimen/activity_horizontal_margin_m"
-    app:cardBackgroundColor="@android:color/white"
+    app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="@dimen/radius_xl"
     app:cardElevation="2dp"
+    app:cardUseCompatPadding="false"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:strokeColor="@android:color/darker_gray"
-    app:strokeWidth="1dp">
+    app:layout_constraintStart_toStartOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/ai_input_send_bg"
         android:paddingStart="@dimen/activity_horizontal_margin_l"
         android:paddingEnd="0dp">
 
@@ -30,7 +29,7 @@
             android:autofillHints=""
             android:background="@null"
             android:hint="@string/ai_hint"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:maxLines="5"
             android:paddingVertical="@dimen/activity_vertical_margin_s"
             android:textSize="16sp"
@@ -47,10 +46,12 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin_m"
             android:contentDescription="@string/ai_send"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_btn_send"
+            android:tint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/et_message" />
+            app:layout_constraintStart_toEndOf="@id/et_message"
+            app:srcCompat="@drawable/ic_btn_send"
+            app:tint="@null" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

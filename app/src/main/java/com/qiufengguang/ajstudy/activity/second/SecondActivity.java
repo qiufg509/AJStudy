@@ -12,6 +12,7 @@ import com.qiufengguang.ajstudy.fragment.second.SecondGridFragment;
 import com.qiufengguang.ajstudy.fragment.second.SecondStaggeredFragment;
 import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
+import com.qiufengguang.ajstudy.utils.ThemeUtils;
 
 /**
  * 二级页面
@@ -23,6 +24,7 @@ public class SecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ThemeUtils.getAppTheme());
         super.onCreate(savedInstanceState);
         ActivitySecondBinding binding = ActivitySecondBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
