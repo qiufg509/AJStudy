@@ -161,6 +161,8 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
         super.onViewRecycled(holder);
         // 当 ViewHolder 被回收时，清理其资源
         holder.cleanup();
+        // 及时从生命周期集合中移除，防止无用弱引用堆积
+        removeLifecycleRef(holder);
     }
 
     /**
@@ -224,6 +226,21 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
                 iterator.remove();
             } else {
                 holder.onPause();
+            }
+        }
+    }
+
+    /**
+     * 清理指定ViewHolder
+     *
+     * @param holder BaseViewHolder
+     */
+    private void removeLifecycleRef(BaseViewHolder<?> holder) {
+        Iterator<WeakReference<BaseViewHolder<?>>> it = lifecycleHolderRefs.iterator();
+        while (it.hasNext()) {
+            if (it.next().get() == holder) {
+                it.remove();
+                break;
             }
         }
     }

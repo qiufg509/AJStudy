@@ -63,10 +63,10 @@ public class ArticleCard extends Card {
         if (!TextUtils.isEmpty(bean.getAuthor())) {
             Glide.with(binding.getRoot().getContext())
                 .load(bean.getImageUrl())
-                .placeholder(R.drawable.placeholder_image_9_16)
+                .placeholder(R.drawable.placeholder_image_16_9)
                 .into(binding.ivCover);
         } else {
-            binding.ivCover.setImageResource(R.drawable.placeholder_image_9_16);
+            binding.ivCover.setImageResource(R.drawable.placeholder_image_16_9);
         }
         binding.getRoot().setOnClickListener(v -> {
             if (listener != null && bean != null) {

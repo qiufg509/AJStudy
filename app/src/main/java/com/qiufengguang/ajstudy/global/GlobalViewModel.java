@@ -30,8 +30,16 @@ public class GlobalViewModel extends ViewModel {
         return userLiveData;
     }
 
+    /**
+     * 设置当前用户
+     * [性能专家优化]：自动识别线程环境，支持后台线程调用
+     */
     public void setCurrentUser(User user) {
-        userLiveData.setValue(user);
+        if (Thread.currentThread() == android.os.Looper.getMainLooper().getThread()) {
+            userLiveData.setValue(user);
+        } else {
+            userLiveData.postValue(user);
+        }
     }
 
     public User getCurrentUser() {
@@ -42,8 +50,16 @@ public class GlobalViewModel extends ViewModel {
         return loginLiveData;
     }
 
+    /**
+     * 设置登录动作
+     * [性能专家优化]：自动识别线程环境，支持后台线程调用
+     */
     public void setLoginAction(LoginAction action) {
-        loginLiveData.setValue(action);
+        if (Thread.currentThread() == android.os.Looper.getMainLooper().getThread()) {
+            loginLiveData.setValue(action);
+        } else {
+            loginLiveData.postValue(action);
+        }
     }
 
     public void resetLoginAction() {
@@ -54,7 +70,7 @@ public class GlobalViewModel extends ViewModel {
         action.setOriginalPage("");
         action.setDestinationAction("");
         action.setDestinationId(-1);
-        loginLiveData.setValue(action);
+        setLoginAction(action);
     }
 
     public LoginAction getLoginAction() {
@@ -71,7 +87,11 @@ public class GlobalViewModel extends ViewModel {
     }
 
     public void setNetworkAvailable(boolean available) {
-        isNetworkAvailable.setValue(available);
+        if (Thread.currentThread() == android.os.Looper.getMainLooper().getThread()) {
+            isNetworkAvailable.setValue(available);
+        } else {
+            isNetworkAvailable.postValue(available);
+        }
     }
 
     public boolean isNetworkAvailable() {

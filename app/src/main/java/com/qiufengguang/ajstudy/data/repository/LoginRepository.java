@@ -1,72 +1,57 @@
 package com.qiufengguang.ajstudy.data.repository;
 
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.text.TextUtils;
 
+import com.qiufengguang.ajstudy.data.callback.LoginCallback;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.global.Constant;
-import com.qiufengguang.ajstudy.data.callback.LoginCallback;
+import com.qiufengguang.ajstudy.utils.AppExecutors;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import java.util.Map;
 
 /**
  * 登录操作
+ * [性能专家重构]：移除私有线程池，改用全局 AppExecutors，修复 SpUtils 兼容性问题。
  *
  * @author qiufengguang
  * @since 2025/11/30 2:15
  */
 public class LoginRepository {
 
-    private HandlerThread thread;
-
     public void login(String phone, String password, LoginCallback callback) {
-        if (thread == null) {
-            thread = new HandlerThread("Handler-Login");
-        }
-        if (!thread.isAlive()) {
-            thread.start();
-        }
-        Handler handler = new Handler(thread.getLooper());
-        // 模拟网络请求
-        handler.post(() -> {
+        // [性能重构]：利用全局动态线程池执行模拟耗时任务，避免私造 HandlerThread
+        AppExecutors.getInstance().execute(() -> {
             try {
                 Thread.sleep(1500); // 模拟网络延迟
 
                 // 模拟登录逻辑
                 if ("123456".equals(password)) {
                     User user = new User(phone, password);
-                    callback.onSuccess(user);
+                    // 模拟返回成功
+                    AppExecutors.getInstance().mainThread().execute(() -> callback.onSuccess(user));
                 } else {
-                    callback.onError("密码错误");
+                    AppExecutors.getInstance().mainThread().execute(() -> callback.onError("密码错误"));
                 }
             } catch (InterruptedException e) {
-                callback.onError("网络连接失败");
+                AppExecutors.getInstance().mainThread().execute(() -> callback.onError("网络连接失败"));
             }
-        });
+        }, null);
     }
 
     public void saveUserInfo(User user) {
-        SpUtils.getInstance().commitBatch(Constant.Sp.PREF_USER, (editor, cache, spName) -> {
-            // 保存sp同时更新内存缓存
-            String phone = user.getPhone();
-            if (!TextUtils.isEmpty(phone)) {
-                editor.putString("phone", phone);
-                cache.put(spName + "phone", phone);
-            }
-            String password = user.getPassword();
-            if (!TextUtils.isEmpty(password)) {
-                editor.putString("password", password);
-                cache.put(spName + "password", password);
-            }
-            boolean rememberPwd = user.isRememberPwd();
-            editor.putBoolean("rememberPwd", rememberPwd);
-            cache.put(spName + "rememberPwd", rememberPwd);
-            long timestamp = user.getTimestamp();
-            editor.putLong("timestamp", timestamp);
-            cache.put(spName + "timestamp", timestamp);
-        });
+        // [性能专家修复]：修复 SpUtils API 变更导致的编译错误，直接使用原生的链式 apply()
+        String phone = user.getPhone();
+        String password = user.getPassword();
+        boolean rememberPwd = user.isRememberPwd();
+        long timestamp = user.getTimestamp();
+
+        SpUtils.getInstance().getSp(Constant.Sp.PREF_USER).edit()
+            .putString("phone", TextUtils.isEmpty(phone) ? "" : phone)
+            .putString("password", TextUtils.isEmpty(password) ? "" : password)
+            .putBoolean("rememberPwd", rememberPwd)
+            .putLong("timestamp", timestamp)
+            .apply();
     }
 
     public User getSavedUser() {
@@ -95,9 +80,6 @@ public class LoginRepository {
     }
 
     public void release() {
-        if (thread != null) {
-            thread.quitSafely();
-            thread = null;
-        }
+        // [性能重构]：已移除私有线程，此处不再需要手动关闭
     }
 }

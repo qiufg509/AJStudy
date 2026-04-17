@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.card.base;
 
+import com.qiufengguang.ajstudy.global.CardRegistrar;
 import com.qiufengguang.ajstudy.global.Constant;
 
 import java.util.Map;
@@ -7,9 +8,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 卡片基类
+ * [性能专家重构]：支持按需动态注册 Creator，降低启动负载
  *
  * @author qiufengguang
- * @since 2026/1/30 18:30
  */
 public abstract class Card {
 
@@ -28,35 +29,25 @@ public abstract class Card {
         CREATOR.put(layoutId, creator);
     }
 
-
     /**
-     * 获取卡片占用列数配置
+     * 获取创建器
+     * [性能重构点]：如果当前未注册，则触发 CardRegistrar 进行局部按需注册
      *
-     * @param pln 显示的列数
-     * @return 列数配置
+     * @param layoutId 卡片id
+     * @return ViewHolderCreator
      */
-    public static Map<Integer, Integer> getSpanSizeMap(int pln) {
-        return getSpanSizeMap(pln, pln, pln);
+    public static CardCreator getCreator(int layoutId) {
+        CardCreator creator = CREATOR.get(layoutId);
+        if (creator == null) {
+            // 按需延迟加载
+            CardRegistrar.registerOnDemand(layoutId);
+            creator = CREATOR.get(layoutId);
+        }
+        return creator;
     }
 
     /**
      * 获取卡片占用列数配置
-     *
-     * @param pln4 4栅格显示的列数
-     * @param pln8 8/12栅格时显示的列数
-     * @return 列数配置
-     */
-    public static Map<Integer, Integer> getSpanSizeMap(int pln4, int pln8) {
-        return getSpanSizeMap(pln4, pln8, pln8);
-    }
-
-    /**
-     * 获取卡片占用列数配置
-     *
-     * @param pln4  4栅格显示的列数
-     * @param pln8  8栅格时显示的列数
-     * @param pln12 12栅格时显示的列数
-     * @return 列数配置
      */
     public static Map<Integer, Integer> getSpanSizeMap(int pln4, int pln8, int pln12) {
         return Map.of(
@@ -66,13 +57,11 @@ public abstract class Card {
         );
     }
 
-    /**
-     * 获取创建器
-     *
-     * @param layoutId 卡片id
-     * @return ViewHolderCreator
-     */
-    public static CardCreator getCreator(int layoutId) {
-        return CREATOR.get(layoutId);
+    public static Map<Integer, Integer> getSpanSizeMap(int pln) {
+        return getSpanSizeMap(pln, pln, pln);
+    }
+
+    public static Map<Integer, Integer> getSpanSizeMap(int pln4, int pln8) {
+        return getSpanSizeMap(pln4, pln8, pln8);
     }
 }

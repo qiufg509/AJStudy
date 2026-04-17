@@ -1,17 +1,8 @@
 package com.qiufengguang.ajstudy.activity.main;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.qiufengguang.ajstudy.router.AppNavigator;
-import com.qiufengguang.ajstudy.utils.MarkwonHelper;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * 主页面ViewModel
@@ -24,12 +15,8 @@ public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> liveData = new MutableLiveData<>();
 
-    private ExecutorService sExecutor;
-
-    private static Future<?> sInitFuture;
-
     public MainViewModel() {
-        initThirdSdk();
+        // [性能重构]：移除此处不稳定的初始化逻辑，已迁移至 GlobalApp 统一调度
     }
 
     public LiveData<Integer> getLiveData() {
@@ -40,32 +27,8 @@ public class MainViewModel extends ViewModel {
         liveData.setValue(itemId);
     }
 
-    /**
-     * 三方sdk初始化
-     */
-    private void initThirdSdk() {
-        if (sExecutor == null) {
-            sExecutor = Executors.newSingleThreadExecutor();
-        }
-        sInitFuture = sExecutor.submit(() -> {
-            try {
-                AppNavigator.init();
-                MarkwonHelper.initialize();
-            } catch (Exception e) {
-                Log.w(TAG, "initThirdSdk error: " + e.getMessage());
-            }
-        });
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (sInitFuture != null && !sInitFuture.isDone()) {
-            sInitFuture.cancel(true);
-        }
-        if (sExecutor != null) {
-            sExecutor.shutdownNow();
-            sExecutor = null;
-        }
     }
 }

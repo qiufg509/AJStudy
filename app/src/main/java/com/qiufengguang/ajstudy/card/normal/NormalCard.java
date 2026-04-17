@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
@@ -19,12 +16,14 @@ import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.NormalCardBean;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
 import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
 /**
  * 普通卡片
+ * [性能专家重构]：复用全局 ImageUtils 配置，消除内存抖动
  *
  * @author qiufengguang
  * @since 2026/1/29 19:18
@@ -40,8 +39,6 @@ public class NormalCard extends Card {
     private WeakReference<CardNormalBinding> bindingRef;
 
     private OnItemClickListener<NormalCardBean> listener;
-
-    private RequestOptions requestOptions;
 
     private NormalCard() {
     }
@@ -63,17 +60,10 @@ public class NormalCard extends Card {
             return;
         }
 
-        if (this.requestOptions == null) {
-            int radius = binding.getRoot().getResources().getDimensionPixelSize(R.dimen.radius_l);
-            this.requestOptions = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.placeholder_icon_l)
-                .transform(new CenterCrop(), new RoundedCorners(radius));
-        }
         if (!TextUtils.isEmpty(bean.getIcon())) {
             Glide.with(binding.ivIcon.getContext())
                 .load(bean.getIcon())
-                .apply(requestOptions)
+                .apply(ImageUtils.getOptionsL()) // ✅ [性能重构]：使用全局复用配置
                 .into(binding.ivIcon);
         } else {
             binding.ivIcon.setImageResource(R.drawable.placeholder_icon_l);
@@ -109,7 +99,6 @@ public class NormalCard extends Card {
             bindingRef = null;
         }
         bean = null;
-        requestOptions = null;
         listener = null;
     }
 
@@ -166,4 +155,3 @@ public class NormalCard extends Card {
         }
     }
 }
-

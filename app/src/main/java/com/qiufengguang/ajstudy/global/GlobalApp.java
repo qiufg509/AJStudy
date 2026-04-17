@@ -11,11 +11,11 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.qiufengguang.ajstudy.data.model.LoginAction;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.repository.LoginRepository;
+import com.qiufengguang.ajstudy.router.AppNavigator;
+import com.qiufengguang.ajstudy.utils.AppExecutors;
+import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 import com.qiufengguang.ajstudy.utils.ThemeUtils;
-
-import java.lang.ref.WeakReference;
-import java.util.Objects;
 
 /**
  * 全局application
@@ -28,7 +28,7 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
 
     private ViewModelProvider viewModelProvider;
 
-    private static WeakReference<Context> contextReference;
+    private static GlobalApp sInstance;
 
     @NonNull
     @Override
@@ -38,23 +38,29 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
 
     @Override
     public void onCreate() {
+        sInstance = this;
         setTheme(ThemeUtils.getSplashTheme());
         super.onCreate();
-        contextReference = new WeakReference<>(this.getApplicationContext());
         // 初始化全局配置
         initializeApp();
     }
 
+    /**
+     * 获取全局上下文
+     * [性能专家提示]：此 Context 为 Application 级别，适用于 SDK 初始化、数据持久化等非 UI 任务。
+     *
+     * @return Application Context
+     */
     public static Context getContext() {
-        return Objects.isNull(contextReference) ? null : contextReference.get();
+        return sInstance;
     }
 
     @Override
     public void onTerminate() {
         viewModelStore.clear();
-        contextReference.clear();
         SpUtils.getInstance().shutdown();
         viewModelProvider = null;
+        sInstance = null;
         super.onTerminate();
     }
 
@@ -71,22 +77,34 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
     }
 
     private void initializeApp() {
-        SpUtils.init(this);
+        // 1. 同步初始化：轻量级且必须在 UI 绘制前准备好的组件
         CardRegistrar.initialize();
 
-        // 从 SharedPreferences 或其他存储检查登录状态
-        LoginRepository userRepository = new LoginRepository();
-        User savedUser = userRepository.getSavedUser();
-        if (savedUser == null) {
-            return;
-        }
-        GlobalViewModel globalViewModel = getGlobalViewModel();
-        LoginAction action = new LoginAction(true);
-        if (savedUser.isInvalid()) {
-            userRepository.saveUserInfo(savedUser);
-            action.setLoggedIn(false);
-        }
-        globalViewModel.setLoginAction(action);
-        globalViewModel.setCurrentUser(savedUser);
+        // 2. 异步初始化调度 [性能专家重构]：利用 LiveData.postValue 彻底打平线程嵌套
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            // SDK 预热
+            AppNavigator.init();
+            MarkwonHelper.initialize();
+
+            // 用户状态恢复
+            LoginRepository userRepository = new LoginRepository();
+            User savedUser = userRepository.getSavedUser();
+
+            if (savedUser != null) {
+                final boolean isInvalid = savedUser.isInvalid();
+                if (isInvalid) {
+                    userRepository.saveUserInfo(savedUser);
+                }
+
+                // [性能重构点]：直接在 diskIO 线程调用，内部自动切换 postValue，消除 mainThread 嵌套
+                GlobalViewModel globalViewModel = getGlobalViewModel();
+                LoginAction action = new LoginAction(true);
+                if (isInvalid) {
+                    action.setLoggedIn(false);
+                }
+                globalViewModel.setLoginAction(action);
+                globalViewModel.setCurrentUser(savedUser);
+            }
+        });
     }
 }

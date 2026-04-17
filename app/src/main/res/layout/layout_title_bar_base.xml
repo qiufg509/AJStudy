@@ -90,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/no_internet_connection"
+        app:lottie_rawRes="@raw/ai_logo"
         tools:visibility="visible" />
 
 </merge>

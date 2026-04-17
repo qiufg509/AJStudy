@@ -19,92 +19,159 @@ import com.qiufengguang.ajstudy.data.remote.api.StudyRecordApi;
 import com.qiufengguang.ajstudy.data.remote.api.UserApi;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
+import com.qiufengguang.ajstudy.utils.AppExecutors;
+import com.qiufengguang.ajstudy.utils.JsonUtils;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.ConnectionPool;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Retrofit 客户端
+ * [性能专家重构]：Api 代理缓存、OkHttp 连接池复用、Gson 实例复用
  *
  * @author qiufengguang
- * @since 2026/2/26 14:14
  */
 public class RetrofitClient {
-    private static final String SERVER_IP = "127.0.0.1";
-    private static Retrofit retrofit;
+    private static final String DEFAULT_SERVER_IP = "127.0.0.1";
+    private static volatile Retrofit sRetrofit;
+    private static volatile OkHttpClient sOkHttpClient;
+    private static final Map<Class<?>, Object> API_CACHE = new ConcurrentHashMap<>();
 
-    public static Retrofit getInstance() {
-        String serverIp = SpUtils.getInstance().getString(Constant.Sp.KEY_SERVER_IP, "");
-        Context context = GlobalApp.getContext();
-        String baseUrl;
-        String ip = TextUtils.isEmpty(serverIp) ? SERVER_IP : serverIp;
-        if (context == null) {
-            baseUrl = String.format("http://%s:8080/", ip);
-        } else {
-            baseUrl = context.getString(R.string.base_url, ip);
+    private static Retrofit getRetrofit() {
+        if (sRetrofit == null) {
+            synchronized (RetrofitClient.class) {
+                if (sRetrofit == null) {
+                    sRetrofit = createRetrofit();
+                }
+            }
         }
-        if (retrofit == null) {
-            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-            retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(clientBuilder.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        }
-        return retrofit;
+        return sRetrofit;
     }
 
+    private static Retrofit createRetrofit() {
+        String serverIp = SpUtils.getInstance().getString(Constant.Sp.KEY_SERVER_IP, "");
+        Context context = GlobalApp.getContext();
+        String ip = TextUtils.isEmpty(serverIp) ? DEFAULT_SERVER_IP : serverIp;
+        String baseUrl = context != null ? context.getString(R.string.base_url, ip)
+            : String.format("http://%s:8080/", ip);
+
+        return new Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(getOkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create(JsonUtils.getGson())) // [性能重构]：复用全局单例 Gson
+            .build();
+    }
+
+    private static OkHttpClient getOkHttpClient() {
+        if (sOkHttpClient == null) {
+            synchronized (RetrofitClient.class) {
+                if (sOkHttpClient == null) {
+                    // [性能重构]：配置高性能线程池与连接池
+                    Dispatcher dispatcher = new Dispatcher(AppExecutors.getInstance().networkIO());
+                    dispatcher.setMaxRequests(64);
+                    dispatcher.setMaxRequestsPerHost(16);
+
+                    sOkHttpClient = new OkHttpClient.Builder()
+                        .dispatcher(dispatcher)
+                        .connectionPool(new ConnectionPool(
+                            5, 5, TimeUnit.MINUTES))
+                        .connectTimeout(15, TimeUnit.SECONDS)
+                        .readTimeout(15, TimeUnit.SECONDS)
+                        .writeTimeout(15, TimeUnit.SECONDS)
+                        .build();
+                }
+            }
+        }
+        return sOkHttpClient;
+    }
+
+    /**
+     * 获取 API 实例（带高性能缓存）
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T getApi(Class<T> service) {
+        Object api = API_CACHE.get(service);
+        if (api == null) {
+            synchronized (API_CACHE) {
+                api = API_CACHE.get(service);
+                if (api == null) {
+                    api = getRetrofit().create(service);
+                    API_CACHE.put(service, api);
+                }
+            }
+        }
+        return (T) api;
+    }
+
+    // ==================== 业务 API 入口 ====================
+
     public static HomeApi getHomeApi() {
-        return getInstance().create(HomeApi.class);
+        return getApi(HomeApi.class);
     }
 
     public static KnowHowApi getKnowHowApi() {
-        return getInstance().create(KnowHowApi.class);
+        return getApi(KnowHowApi.class);
     }
 
     public static MeApi getMeApi() {
-        return getInstance().create(MeApi.class);
+        return getApi(MeApi.class);
     }
 
     public static AppListApi getAppListApi() {
-        return getInstance().create(AppListApi.class);
+        return getApi(AppListApi.class);
     }
 
     public static ArticleListApi getArticleListApi() {
-        return getInstance().create(ArticleListApi.class);
+        return getApi(ArticleListApi.class);
     }
 
     public static AppDetailApi getAppDetailApi() {
-        return getInstance().create(AppDetailApi.class);
+        return getApi(AppDetailApi.class);
     }
 
     public static CommentApi getCommentApi() {
-        return getInstance().create(CommentApi.class);
+        return getApi(CommentApi.class);
     }
 
     public static RecommendApi getRecommendApi() {
-        return getInstance().create(RecommendApi.class);
+        return getApi(RecommendApi.class);
     }
 
     public static ArticleDetailApi getArticleDetailApi() {
-        return getInstance().create(ArticleDetailApi.class);
+        return getApi(ArticleDetailApi.class);
     }
 
     public static StudyRecordApi getStudyRecordApi() {
-        return getInstance().create(StudyRecordApi.class);
+        return getApi(StudyRecordApi.class);
     }
 
     public static FavoritesApi getFavoritesApi() {
-        return getInstance().create(FavoritesApi.class);
+        return getApi(FavoritesApi.class);
     }
 
     public static UserApi getUserApi() {
-        return getInstance().create(UserApi.class);
+        return getApi(UserApi.class);
     }
 
     public static HelpFeedbackApi getHelpFeedbackApi() {
-        return getInstance().create(HelpFeedbackApi.class);
+        return getApi(HelpFeedbackApi.class);
+    }
+
+    /**
+     * 重置客户端（用于 IP 切换场景）
+     */
+    public static void reset() {
+        synchronized (RetrofitClient.class) {
+            sRetrofit = null;
+            API_CACHE.clear();
+        }
     }
 }

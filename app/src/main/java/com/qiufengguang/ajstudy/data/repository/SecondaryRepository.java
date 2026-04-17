@@ -2,7 +2,6 @@ package com.qiufengguang.ajstudy.data.repository;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.Gson;
 import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
 import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
@@ -16,11 +15,13 @@ import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
 import com.qiufengguang.ajstudy.router.Router;
+import com.qiufengguang.ajstudy.utils.JsonUtils;
 
 import retrofit2.Call;
 
 /**
  * 二级页仓库层
+ * [性能专家重构]：复用全局单例 Gson，移除冗余实例创建
  *
  * @author qiufengguang
  * @since 2026/2/28 15:15
@@ -39,8 +40,6 @@ public class SecondaryRepository {
     private final UserApi userApi;
     private final HelpFeedbackApi helpFeedbackApi;
 
-    private final Gson gson;
-
     private SecondaryRepository() {
         appListApi = RetrofitClient.getAppListApi();
         articleListApi = RetrofitClient.getArticleListApi();
@@ -48,7 +47,6 @@ public class SecondaryRepository {
         studyRecordApi = RetrofitClient.getStudyRecordApi();
         userApi = RetrofitClient.getUserApi();
         helpFeedbackApi = RetrofitClient.getHelpFeedbackApi();
-        gson = new Gson();
     }
 
     public static SecondaryRepository getInstance() {
@@ -88,42 +86,43 @@ public class SecondaryRepository {
     public Call<RawRespData> fetchAppListData(String directory, final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request(directory);
         Call<RawRespData> call = appListApi.getAppListData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
+        // [性能重构]：使用 JsonUtils 获取全局单例 Gson
+        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
         return call;
     }
 
     public Call<RawRespData> fetchArticleListData(String directory, final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request(directory);
         Call<RawRespData> call = articleListApi.getArticleListData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
+        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
         return call;
     }
 
     public Call<RawRespData> fetchFavoritesData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
         Call<RawRespData> call = favoritesApi.getFavoritesData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
+        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
         return call;
     }
 
     public Call<RawRespData> fetchStudyRecordData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
         Call<RawRespData> call = studyRecordApi.getStudyRecordData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
+        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
         return call;
     }
 
     public Call<RawRespData> fetchUserData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
         Call<RawRespData> call = userApi.getUserData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
+        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
         return call;
     }
 
     public Call<RawRespData> fetchHelpFeedbackData(final OnDataLoadedCallback<PageData> callback) {
         Request request = new Request();
         Call<RawRespData> call = helpFeedbackApi.getHelpFeedbackData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
+        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
         return call;
     }
 }

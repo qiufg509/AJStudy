@@ -24,6 +24,7 @@ import com.qiufengguang.ajstudy.databinding.CardSeriesBinding;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 系列卡片
@@ -53,6 +54,10 @@ public class SeriesCard extends Card {
     }
 
     public void setData(List<SeriesCardBean> beans, String cardTitle) {
+        // 如果数据和标题都没变，不执行后续逻辑
+        if (Objects.equals(this.beans, beans) && Objects.equals(this.cardTitle, cardTitle)) {
+            return;
+        }
         this.cardTitle = cardTitle;
         this.beans = beans;
         this.show();
@@ -70,6 +75,10 @@ public class SeriesCard extends Card {
             return;
         }
         binding.tvTitle.setText(cardTitle);
+
+        // 重置 showIndex 确保每次 show 都是从头取数据（除非是点击“换一换”）
+        // 但为了保持原有的“换一换”逻辑，这里不重置 showIndex
+
         fillItem(binding.ivCover1, binding.tvTitle1, binding.tvTag1, binding.tvCount1, binding.tvDuration1);
         fillItem(binding.ivCover2, binding.tvTitle2, binding.tvTag2, binding.tvCount2, binding.tvDuration2);
         fillItem(binding.ivCover3, binding.tvTitle3, binding.tvTag3, binding.tvCount3, binding.tvDuration3);
@@ -103,14 +112,25 @@ public class SeriesCard extends Card {
                 .transform(new CenterCrop(), new RoundedCorners(radius));
         }
         SeriesCardBean bean = getIncrementData();
-        textView.setText(bean.getTitle());
-        if (!TextUtils.isEmpty(bean.getImageUrl())) {
-            Glide.with(imageView.getContext())
-                .load(bean.getImageUrl())
-                .apply(requestOptions)
-                .into(imageView);
-        } else {
-            imageView.setImageResource(R.drawable.placeholder_image_20_8);
+
+        // 1. 文本防重复设置
+        if (!Objects.equals(textView.getText(), bean.getTitle())) {
+            textView.setText(bean.getTitle());
+        }
+
+        // 2. 图片防重复加载：通过 Tag 记录当前加载的 URL
+        String url = bean.getImageUrl();
+        Object lastUrl = imageView.getTag(R.id.iv_cover_1); // 借用一个已有的 id 作为 tag 的 key
+        if (!Objects.equals(lastUrl, url)) {
+            imageView.setTag(R.id.iv_cover_1, url);
+            if (!TextUtils.isEmpty(url)) {
+                Glide.with(imageView.getContext())
+                    .load(url)
+                    .apply(requestOptions)
+                    .into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.placeholder_image_20_8);
+            }
         }
 
         View.OnClickListener onClickListener = v -> {
@@ -121,23 +141,25 @@ public class SeriesCard extends Card {
         };
         textView.setOnClickListener(onClickListener);
         imageView.setOnClickListener(onClickListener);
-        if (TextUtils.isEmpty(bean.getTag())) {
-            tvTag.setVisibility(View.GONE);
+
+        // 3. 显隐控制优化
+        updateTextVisibility(tvTag, bean.getTag());
+        updateTextVisibility(tvCount, bean.getViewCount());
+        updateTextVisibility(tvDuration, bean.getTotalDuration());
+    }
+
+    private void updateTextVisibility(TextView tv, String text) {
+        if (TextUtils.isEmpty(text)) {
+            if (tv.getVisibility() != View.GONE) {
+                tv.setVisibility(View.GONE);
+            }
         } else {
-            tvTag.setVisibility(View.VISIBLE);
-            tvTag.setText(bean.getTag());
-        }
-        if (TextUtils.isEmpty(bean.getViewCount())) {
-            tvCount.setVisibility(View.GONE);
-        } else {
-            tvCount.setVisibility(View.VISIBLE);
-            tvCount.setText(bean.getViewCount());
-        }
-        if (TextUtils.isEmpty(bean.getTotalDuration())) {
-            tvDuration.setVisibility(View.GONE);
-        } else {
-            tvDuration.setVisibility(View.VISIBLE);
-            tvDuration.setText(bean.getTotalDuration());
+            if (tv.getVisibility() != View.VISIBLE) {
+                tv.setVisibility(View.VISIBLE);
+            }
+            if (!Objects.equals(tv.getText(), text)) {
+                tv.setText(text);
+            }
         }
     }
 
@@ -149,6 +171,13 @@ public class SeriesCard extends Card {
         if (bindingRef != null) {
             CardSeriesBinding binding = bindingRef.get();
             if (binding != null) {
+                // 清理所有 Glide 请求，释放内存
+                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover1);
+                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover2);
+                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover3);
+                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover4);
+                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover5);
+
                 binding.tvTitle1.setOnClickListener(null);
                 binding.tvTitle2.setOnClickListener(null);
                 binding.tvTitle3.setOnClickListener(null);
@@ -217,4 +246,3 @@ public class SeriesCard extends Card {
         }
     }
 }
-

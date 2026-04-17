@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
@@ -21,14 +19,14 @@ import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGraphicLBinding;
 import com.qiufengguang.ajstudy.global.Constant;
+import com.qiufengguang.ajstudy.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 /**
  * 大尺寸图文卡
+ * [性能专家重构]：复用全局 ImageUtils 配置，消除内存抖动
  *
  * @author qiufengguang
  * @since 2026/2/6 23:23
@@ -47,8 +45,6 @@ public class GraphicCardL extends Card {
     private GraphicCardBean bean;
 
     private OnItemClickListener<GraphicCardBean> listener;
-
-    private RequestOptions requestOptions;
 
     private GraphicCardL() {
     }
@@ -95,17 +91,9 @@ public class GraphicCardL extends Card {
             return;
         }
         if (!TextUtils.isEmpty(bean.getImageUrl())) {
-            if (requestOptions == null) {
-                int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_l);
-                this.requestOptions = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.placeholder_image_1_1_l)
-                    .transform(new CenterCrop(), new RoundedCornersTransformation(radius, 0,
-                        RoundedCornersTransformation.CornerType.TOP));
-            }
             Glide.with(imageView.getContext())
                 .load(bean.getImageUrl())
-                .apply(requestOptions)
+                .apply(ImageUtils.getOptionsTopL()) // ✅ [性能重构]：使用全局复用配置
                 .into(imageView);
         } else {
             imageView.setImageResource(R.drawable.placeholder_image_1_1_l);
