@@ -16,7 +16,6 @@ import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.NormalCardBean;
 import com.qiufengguang.ajstudy.databinding.CardNormalBinding;
 import com.qiufengguang.ajstudy.global.Constant;
-import com.qiufengguang.ajstudy.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -63,7 +62,8 @@ public class NormalCard extends Card {
         if (!TextUtils.isEmpty(bean.getIcon())) {
             Glide.with(binding.ivIcon.getContext())
                 .load(bean.getIcon())
-                .apply(ImageUtils.getOptionsL()) // ✅ [性能重构]：使用全局复用配置
+                .centerCrop()
+                .placeholder(R.drawable.placeholder_icon_l)
                 .into(binding.ivIcon);
         } else {
             binding.ivIcon.setImageResource(R.drawable.placeholder_icon_l);

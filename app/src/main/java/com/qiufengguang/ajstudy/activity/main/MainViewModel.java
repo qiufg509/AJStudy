@@ -16,7 +16,6 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> liveData = new MutableLiveData<>();
 
     public MainViewModel() {
-        // [性能重构]：移除此处不稳定的初始化逻辑，已迁移至 GlobalApp 统一调度
     }
 
     public LiveData<Integer> getLiveData() {

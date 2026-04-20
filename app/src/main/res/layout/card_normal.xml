@@ -6,7 +6,7 @@
     android:background="?attr/selectableItemBackground">
 
     <!-- 图标 -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_icon"
         android:layout_width="@dimen/item_icon_size_l"
         android:layout_height="@dimen/item_icon_size_l"
@@ -16,7 +16,8 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedL" />
 
     <TextView
         android:id="@+id/tv_title"

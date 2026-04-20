@@ -397,7 +397,7 @@ public class BannerCard extends Card {
             return;
         }
         LinearLayout indicatorContainer = indicatorContainerRef.get();
-        if (indicatorContainer == null) {
+        if (indicatorContainer == null || adapter == null) {
             return;
         }
         int realPosition = adapter.getRealPosition(currentPosition);
@@ -412,7 +412,7 @@ public class BannerCard extends Card {
             if (index == realPosition) {
                 indicator.setImageResource(R.drawable.banner_indicator_active);
                 indicator.setAlpha(1.0f);
-            } else {
+            } else if (indicator.getAlpha() != 0.5f) {
                 indicator.setImageResource(R.drawable.banner_indicator_inactive);
                 indicator.setAlpha(0.5f);
             }

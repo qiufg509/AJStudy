@@ -11,9 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
@@ -47,8 +44,6 @@ public class SeriesCard extends Card {
     private OnItemClickListener<SeriesCardBean> listener;
 
     private int showIndex = -1;
-
-    private RequestOptions requestOptions;
 
     private SeriesCard() {
     }
@@ -104,13 +99,6 @@ public class SeriesCard extends Card {
     }
 
     private void fillItem(ImageView imageView, TextView textView, TextView tvTag, TextView tvCount, TextView tvDuration) {
-        if (this.requestOptions == null) {
-            int radius = imageView.getResources().getDimensionPixelSize(R.dimen.radius_m);
-            this.requestOptions = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.placeholder_image_20_8)
-                .transform(new CenterCrop(), new RoundedCorners(radius));
-        }
         SeriesCardBean bean = getIncrementData();
 
         // 1. 文本防重复设置
@@ -126,7 +114,8 @@ public class SeriesCard extends Card {
             if (!TextUtils.isEmpty(url)) {
                 Glide.with(imageView.getContext())
                     .load(url)
-                    .apply(requestOptions)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder_image_20_8)
                     .into(imageView);
             } else {
                 imageView.setImageResource(R.drawable.placeholder_image_20_8);
@@ -193,7 +182,6 @@ public class SeriesCard extends Card {
             bindingRef = null;
         }
         beans = null;
-        requestOptions = null;
         listener = null;
         showIndex = -1;
     }

@@ -58,7 +58,7 @@ public class AiWelcomeCard extends Card {
         }
 
         binding.animationView.cancelAnimation();
-        binding.animationView.setAnimation(R.raw.ai_logo);
+        binding.animationView.setAnimation(R.raw.triz_animation);
         binding.animationView.setRepeatCount(LottieDrawable.INFINITE);
         binding.animationView.playAnimation();
 

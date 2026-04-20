@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.Card;
@@ -41,8 +38,6 @@ public class RecommendCard extends Card {
 
     private OnItemClickListener<RecommendCardBean> listener;
 
-    private RequestOptions requestOptions;
-
     private RecommendCard() {
     }
 
@@ -69,17 +64,11 @@ public class RecommendCard extends Card {
         binding.tvRating.setText(bean.getScore());
         binding.rbRating.setRating(bean.getStars());
 
-        if (this.requestOptions == null) {
-            int radius = binding.getRoot().getResources().getDimensionPixelSize(R.dimen.radius_m);
-            this.requestOptions = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.placeholder_icon_m)
-                .transform(new CenterCrop(), new RoundedCorners(radius));
-        }
         if (!TextUtils.isEmpty(bean.getIcon())) {
             Glide.with(binding.ivAppIcon.getContext())
                 .load(bean.getIcon())
-                .apply(requestOptions)
+                .centerCrop()
+                .placeholder(R.drawable.placeholder_icon_m)
                 .into(binding.ivAppIcon);
         } else {
             binding.ivAppIcon.setImageResource(R.drawable.placeholder_icon_m);
@@ -112,7 +101,6 @@ public class RecommendCard extends Card {
             bindingRef = null;
         }
         bean = null;
-        requestOptions = null;
         listener = null;
     }
 

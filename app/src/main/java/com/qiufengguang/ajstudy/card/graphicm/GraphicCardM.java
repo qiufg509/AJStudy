@@ -19,7 +19,6 @@ import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.model.GraphicCardBean;
 import com.qiufengguang.ajstudy.databinding.CardGraphicMBinding;
 import com.qiufengguang.ajstudy.global.Constant;
-import com.qiufengguang.ajstudy.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -93,10 +92,10 @@ public class GraphicCardM extends Card {
         if (!TextUtils.isEmpty(bean.getImageUrl())) {
             Glide.with(imageView.getContext())
                 .load(bean.getImageUrl())
-                .apply(ImageUtils.getOptionsTopM()) // ✅ [性能重构]：使用全局复用配置
+                .placeholder(R.drawable.placeholder_image_1_1)
                 .into(imageView);
         } else {
-            imageView.setImageResource(R.drawable.placeholder_image_1_1_m);
+            imageView.setImageResource(R.drawable.placeholder_image_1_1);
         }
     }
 

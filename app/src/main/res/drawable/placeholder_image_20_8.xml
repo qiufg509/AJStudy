@@ -5,13 +5,12 @@
         android:height="80dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/ajstudy_placeholder_bg_color" />
-            <corners android:radius="@dimen/radius_m" />
         </shape>
     </item>
 
     <item
-        android:width="64dp"
-        android:height="64dp"
+        android:width="56dp"
+        android:height="56dp"
         android:drawable="@drawable/ic_placeholder"
         android:gravity="center" />
 

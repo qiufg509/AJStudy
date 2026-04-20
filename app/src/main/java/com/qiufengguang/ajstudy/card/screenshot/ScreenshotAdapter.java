@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ItemScreenshotBinding;
 
@@ -74,22 +71,16 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Sc
 
     public static class ScreenshotViewHolder extends RecyclerView.ViewHolder {
 
-        private final RequestOptions requestOptions;
-
         ScreenshotViewHolder(ItemScreenshotBinding binding) {
             super(binding.getRoot());
-            int radius = itemView.getResources().getDimensionPixelSize(R.dimen.radius_l);
-            requestOptions = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.placeholder_image_9_16)
-                .transform(new CenterCrop(), new RoundedCorners(radius));
         }
 
         private void bind(String url) {
             // 使用Glide加载图片，添加圆角和过渡动画
             Glide.with(itemView.getContext())
                 .load(url)
-                .apply(requestOptions)
+                .centerCrop()
+                .placeholder(R.drawable.placeholder_image_9_16)
                 .into((ImageView) itemView);
 
             // 点击事件

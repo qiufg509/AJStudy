@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -30,9 +30,10 @@
         app:layout_constraintDimensionRatio="H,20:8"
         app:layout_constraintEnd_toStartOf="@+id/iv_cover_2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -44,9 +45,10 @@
         app:layout_constraintDimensionRatio="H,20:8"
         app:layout_constraintEnd_toStartOf="@+id/iv_cover_3"
         app:layout_constraintStart_toEndOf="@id/iv_cover_1"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_3"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -58,9 +60,10 @@
         app:layout_constraintDimensionRatio="H,20:8"
         app:layout_constraintEnd_toStartOf="@+id/iv_cover_4"
         app:layout_constraintStart_toEndOf="@id/iv_cover_2"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_4"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -72,9 +75,10 @@
         app:layout_constraintDimensionRatio="H,20:8"
         app:layout_constraintEnd_toStartOf="@+id/iv_cover_5"
         app:layout_constraintStart_toEndOf="@id/iv_cover_3"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -85,7 +89,8 @@
         app:layout_constraintDimensionRatio="H,20:8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_cover_4"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
     <TextView
         android:id="@+id/tv_title_1"

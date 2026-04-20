@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 第一行：两个并排图 -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_middle"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
     <TextView
         android:id="@+id/tv_title_1"
@@ -46,7 +47,7 @@
         app:layout_constraintStart_toStartOf="@id/iv_cover_1"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_1" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -59,7 +60,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="@id/guideline_middle"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
     <TextView
         android:id="@+id/tv_title_2"
@@ -82,7 +84,7 @@
         app:constraint_referenced_ids="tv_title_1,tv_title_2" />
 
     <!-- 第二行：三个并排图 -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_3"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -95,7 +97,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_one_third"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier_first_row_bottom" />
+        app:layout_constraintTop_toBottomOf="@id/barrier_first_row_bottom"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
     <TextView
         android:id="@+id/tv_title_3"
@@ -109,7 +112,7 @@
         app:layout_constraintStart_toStartOf="@id/iv_cover_3"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_3" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_4"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -123,7 +126,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_two_thirds"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="@id/guideline_one_third"
-        app:layout_constraintTop_toBottomOf="@id/barrier_first_row_bottom" />
+        app:layout_constraintTop_toBottomOf="@id/barrier_first_row_bottom"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
     <TextView
         android:id="@+id/tv_title_4"
@@ -137,7 +141,7 @@
         app:layout_constraintStart_toStartOf="@id/iv_cover_4"
         app:layout_constraintTop_toBottomOf="@id/iv_cover_4" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_cover_5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -150,7 +154,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="@id/guideline_two_thirds"
-        app:layout_constraintTop_toBottomOf="@id/barrier_first_row_bottom" />
+        app:layout_constraintTop_toBottomOf="@id/barrier_first_row_bottom"
+        app:shapeAppearanceOverlay="@style/ShapeRoundedM" />
 
     <TextView
         android:id="@+id/tv_title_5"

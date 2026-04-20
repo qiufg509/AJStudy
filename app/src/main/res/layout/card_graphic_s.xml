@@ -18,6 +18,7 @@
             android:layout_height="0dp"
             android:layout_margin="@dimen/activity_horizontal_margin_m"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/image_description"
             android:scaleType="fitEnd"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

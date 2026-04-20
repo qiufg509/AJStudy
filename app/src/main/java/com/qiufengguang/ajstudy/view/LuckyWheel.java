@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
@@ -128,6 +129,9 @@ public class LuckyWheel extends View {
 
     private int lastPlayedSectorIndex = -1;
 
+    // [性能重构]：追踪 Glide 任务
+    private final List<Target<?>> glideTargets = new ArrayList<>();
+
     public LuckyWheel(Context context) {
         this(context, null);
     }
@@ -182,6 +186,7 @@ public class LuckyWheel extends View {
 
         // 释放旧资源
         releaseOldBitmaps();
+        clearGlideTasks();
 
         // 创建可修改的副本
         this.beans = new ArrayList<>(beans);
@@ -190,10 +195,7 @@ public class LuckyWheel extends View {
         verPanRadius = 360 / size;
         diffRadius = verPanRadius / 2;
 
-        loadBitmapsAsync(() -> {
-            requestLayout();
-            invalidate();
-        });
+        loadBitmapsAsync(this::invalidate);
 
         // 重新绘制并请求重新布局
         requestLayout();
@@ -274,56 +276,29 @@ public class LuckyWheel extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        // 当视图大小改变时更新绘制区域
-        updateDrawRect();
-
-        // 计算圆心坐标
-        updateCenterCoordinates();
-
-        // 更新中心按钮的绘制区域
-        updateCenterButtonRect();
-    }
-
-    private void updateDrawRect() {
+        // [性能优化]：将计算逻辑从 onDraw 迁移至 onSizeChanged，避免 60FPS 下的重复浮点运算
         final int paddingLeft = getPaddingLeft();
         final int paddingRight = getPaddingRight();
         final int paddingTop = getPaddingTop();
         final int paddingBottom = getPaddingBottom();
 
-        int width = getWidth() - paddingLeft - paddingRight;
-        int height = getHeight() - paddingTop - paddingBottom;
+        int availableWidth = w - paddingLeft - paddingRight;
+        int availableHeight = h - paddingTop - paddingBottom;
 
-        int minValue = Math.min(width, height);
+        int minValue = Math.min(availableWidth, availableHeight);
         radius = minValue / 2;
 
-        // 计算绘制矩形的正确位置，使其在可用空间内居中
-        float left = paddingLeft + (width - minValue) / 2.0f;
-        float top = paddingTop + (height - minValue) / 2.0f;
+        float left = paddingLeft + (availableWidth - minValue) / 2.0f;
+        float top = paddingTop + (availableHeight - minValue) / 2.0f;
         float right = left + minValue;
         float bottom = top + minValue;
 
-        // 更新绘制区域，重用RectF对象
         drawRect.set(left, top, right, bottom);
-
-        // 计算边框矩形（在转盘外部）
         borderRect.set(left, top, right, bottom);
+        centerX = left + minValue / 2.0f;
+        centerY = top + minValue / 2.0f;
 
-    }
-
-    private void updateCenterCoordinates() {
-        final int paddingLeft = getPaddingLeft();
-        final int paddingRight = getPaddingRight();
-        final int paddingTop = getPaddingTop();
-        final int paddingBottom = getPaddingBottom();
-
-        int width = getWidth() - paddingLeft - paddingRight;
-        int height = getHeight() - paddingTop - paddingBottom;
-
-        int minValue = Math.min(width, height);
-
-        // 圆心应该位于绘制矩形的中心，而不是整个View的中心
-        centerX = paddingLeft + (width - minValue) / 2.0f + minValue / 2.0f;
-        centerY = paddingTop + (height - minValue) / 2.0f + minValue / 2.0f;
+        updateCenterButtonRect();
     }
 
     private void updateCenterButtonRect() {
@@ -354,29 +329,7 @@ public class LuckyWheel extends View {
             return;
         }
 
-        final int paddingLeft = getPaddingLeft();
-        final int paddingRight = getPaddingRight();
-        final int paddingTop = getPaddingTop();
-        final int paddingBottom = getPaddingBottom();
-
-        int width = getWidth() - paddingLeft - paddingRight;
-        int height = getHeight() - paddingTop - paddingBottom;
-
-        int minValue = Math.min(width, height);
-        radius = minValue / 2;
-
-        // 计算绘制矩形的正确位置，使其在可用空间内居中
-        float left = paddingLeft + (width - minValue) / 2.0f;
-        float top = paddingTop + (height - minValue) / 2.0f;
-        float right = left + minValue;
-        float bottom = top + minValue;
-
-        // 更新圆心坐标
-        centerX = left + minValue / 2.0f;
-        centerY = top + minValue / 2.0f;
-
-        // 重用RectF对象，避免在onDraw中创建新对象
-        drawRect.set(left, top, right, bottom);
+        // [性能重构]：移除 onDraw 中的几何计算逻辑，已下沉至 onSizeChanged
 
         int sectorCount = beans.size();
         int angle = initAngle;
@@ -386,13 +339,8 @@ public class LuckyWheel extends View {
             LuckyWheelCardBean bean = beans.get(i);
             if (bean != null) {
                 int color = bean.getColor();
-                if (i % 2 == 0) {
-                    paint.setColor(color != 0 ? color : DEFAULT_COLOR_DARK);
-                    canvas.drawArc(drawRect, angle, verPanRadius, true, paint);
-                } else {
-                    paint.setColor(color != 0 ? color : DEFAULT_COLOR_LIGHT);
-                    canvas.drawArc(drawRect, angle, verPanRadius, true, paint);
-                }
+                paint.setColor(i % 2 == 0 ? (color != 0 ? color : DEFAULT_COLOR_DARK) : (color != 0 ? color : DEFAULT_COLOR_LIGHT));
+                canvas.drawArc(drawRect, angle, verPanRadius, true, paint);
             }
             angle += verPanRadius;
         }
@@ -412,37 +360,12 @@ public class LuckyWheel extends View {
 
     private void drawCenterButton(@NonNull Canvas canvas) {
         if (centerBitmap != null && !centerBitmap.isRecycled()) {
-            // 更新中心按钮的绘制区域
-            updateCenterButtonRect();
             // 绘制中心按钮
             canvas.drawBitmap(centerBitmap, null, centerBtnRect, null);
         }
     }
 
     private void drawEmptyWheel(Canvas canvas) {
-        final int paddingLeft = getPaddingLeft();
-        final int paddingRight = getPaddingRight();
-        final int paddingTop = getPaddingTop();
-        final int paddingBottom = getPaddingBottom();
-
-        int width = getWidth() - paddingLeft - paddingRight;
-        int height = getHeight() - paddingTop - paddingBottom;
-
-        int minValue = Math.min(width, height);
-        radius = minValue / 2;
-
-        // 计算绘制矩形的正确位置，使其在可用空间内居中
-        float left = paddingLeft + (width - minValue) / 2.0f;
-        float top = paddingTop + (height - minValue) / 2.0f;
-        float right = left + minValue;
-        float bottom = top + minValue;
-
-        // 更新圆心坐标
-        centerX = left + minValue / 2.0f;
-        centerY = top + minValue / 2.0f;
-
-        drawRect.set(left, top, right, bottom);
-
         // 绘制一个默认的圆形
         Paint defaultPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         defaultPaint.setColor(Color.LTGRAY);
@@ -700,6 +623,7 @@ public class LuckyWheel extends View {
     protected void onDetachedFromWindow() {
         // 停止所有旋转
         stopAllRotations();
+        clearGlideTasks(); // ✅ 显式清理异步任务
 
         clearAnimation();
         // 释放资源
@@ -925,6 +849,13 @@ public class LuckyWheel extends View {
         }
     }
 
+    private void clearGlideTasks() {
+        for (Target<?> target : glideTargets) {
+            Glide.with(getContext()).clear(target);
+        }
+        glideTargets.clear();
+    }
+
     /**
      * 控件onDetachedFromWindow时是否释放自身资源，默认不释放
      * 在列表中使用时，item的ViewHolder有自身的声明周期管理，在{@link LuckyWheelCard#release()}中释放，避免滚动列表后显示异常
@@ -961,28 +892,30 @@ public class LuckyWheel extends View {
                 continue;
             }
 
+            CustomTarget<Bitmap> target = new CustomTarget<>(iconSize, iconSize) {
+                @Override
+                public void onResourceReady(
+                    @NonNull Bitmap resource,
+                    @Nullable Transition<? super Bitmap> transition
+                ) {
+                    bean.setBitmap(resource);
+                    if (counter.decrementAndGet() == 0) {
+                        callback.onAllLoaded();
+                    }
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder) {
+                    bean.setBitmap(null);
+                }
+            };
+            glideTargets.add(target);
             Glide.with(getContext())
                 .asBitmap()
                 .load(bean.getImageUrl())
                 .override(iconSize, iconSize)
                 .centerCrop()
-                .into(new CustomTarget<Bitmap>(iconSize, iconSize) {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        bean.setBitmap(resource);
-                        if (counter.decrementAndGet() == 0) {
-                            callback.onAllLoaded();
-                        }
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-                        bean.setBitmap(null);
-                        if (counter.decrementAndGet() == 0) {
-                            callback.onAllLoaded();
-                        }
-                    }
-                });
+                .into(target);
         }
     }
 

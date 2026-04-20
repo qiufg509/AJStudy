@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--圆角样式-->
-    <style name="ShapeRoundedL">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/radius_l</item>
-    </style>
-    <style name="ShapeRoundedXS">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/radius_xs</item>
-    </style>
     <!-- 底部导航栏样式 -->
     <style name="BottomNavStyles" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="android:background">@color/ajstudy_window_background</item>
@@ -62,5 +53,33 @@
     <style name="DialogAnimSlideBottom" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/dialog_slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/dialog_slide_out_bottom</item>
+    </style>
+    <!--圆角样式 - 全圆角-->
+    <style name="ShapeRoundedL">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_l</item>
+    </style>
+    <style name="ShapeRoundedM">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_m</item>
+    </style>
+    <style name="ShapeRoundedXS">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_xs</item>
+    </style>
+    <!--圆角样式 - 仅顶部-->
+    <style name="ShapeRoundedL_Top">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_l</item>
+        <item name="cornerSizeTopRight">@dimen/radius_l</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+    <style name="ShapeRoundedM_Top">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_m</item>
+        <item name="cornerSizeTopRight">@dimen/radius_m</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 </resources>
