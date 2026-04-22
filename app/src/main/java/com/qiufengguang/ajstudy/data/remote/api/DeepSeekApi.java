@@ -4,6 +4,7 @@ import com.qiufengguang.ajstudy.data.remote.dto.ChatCompletionRequest;
 import com.qiufengguang.ajstudy.data.remote.dto.DsRespData;
 import com.qiufengguang.ajstudy.router.Router;
 
+import io.reactivex.rxjava3.core.Single;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,7 +27,7 @@ public interface DeepSeekApi {
      */
     @POST(Router.URI.DEEPSEEK_CHAT)
     @Headers("Content-Type: application/json")
-    Call<DsRespData> chatCompletion(@Body ChatCompletionRequest request);
+    Single<DsRespData> chatCompletion(@Body ChatCompletionRequest request);
 
     /**
      * 流式

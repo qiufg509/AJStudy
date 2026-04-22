@@ -11,6 +11,7 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.base.CardCreator;
 import com.qiufengguang.ajstudy.data.model.ChatMessage;
 import com.qiufengguang.ajstudy.databinding.CardAiMessageBinding;
+import com.qiufengguang.ajstudy.utils.MarkwonHelper;
 
 import java.lang.ref.WeakReference;
 
@@ -49,7 +50,8 @@ public class AiMessageCard extends Card {
         if (binding == null) {
             return;
         }
-        binding.tvContent.setText(bean.getContent());
+        MarkwonHelper.getInstanceSync(binding.getRoot().getContext())
+            .setMarkdown(binding.tvContent, bean.getContent());
     }
 
     /**

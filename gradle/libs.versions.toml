@@ -17,6 +17,8 @@ markwon = "4.6.2"
 retrofit = "3.0.0"
 lottie = "6.7.1"
 leakcanary = "2.14"
+room = "2.6.1"
+rxandroid = "3.0.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -41,8 +43,13 @@ markwon-html = { group = "io.noties.markwon", name = "html", version.ref = "mark
 markwon-linkify = { group = "io.noties.markwon", name = "linkify", version.ref = "markwon" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-rxjava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "room" }
+rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

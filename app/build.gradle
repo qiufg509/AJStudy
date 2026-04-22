@@ -115,8 +115,17 @@ dependencies {
     implementation libs.retrofit
     // Retrofit Gson 转换器（利用项目已有的 Gson）
     implementation libs.converter.gson
+    // Retrofit 的适配器
+    implementation libs.adapter.rxjava3
     // Lottie 动画
     implementation libs.lottie
+
+    // Room 2.6.1 (3.0及以上版本仅支持Kotlin，使用Java项目最后稳定版)
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+    // RxJava3支持（内部已经通过Maven传递依赖了io.reactivex.rxjava3:rxjava，与现有Retrofit架构一致）
+    implementation libs.room.rxjava3
+    implementation libs.rxandroid
 
     // 仅在 debug 构建类型中启用 LeakCanary
     debugImplementation libs.leakcanary

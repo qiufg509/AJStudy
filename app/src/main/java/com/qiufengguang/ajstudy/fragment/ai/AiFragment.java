@@ -11,17 +11,15 @@ import com.qiufengguang.ajstudy.activity.ai.AiActivity;
 import com.qiufengguang.ajstudy.activity.ai.AiViewModel;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
-import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.model.ChatMessage;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.fragment.base.BaseListFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
 
-import java.util.Collections;
-
 /**
  * Ai对话列表页面
+ * [高级开发重构]：利用 DiffUtil 实现响应式全量/增量刷新，自动滚动到底部
  *
  * @author qiufengguang
  * @since 2026/3/28 18:20
@@ -61,6 +59,7 @@ public class AiFragment extends BaseListFragment {
 
     @Override
     public void showPageState(State state) {
+        // AI 页面通常不显示全屏状态页，保持空白或欢迎页
     }
 
     @Override
@@ -70,19 +69,21 @@ public class AiFragment extends BaseListFragment {
                 return;
             }
             ChatMessage message = (ChatMessage) data;
-            viewModel.sendMessage(message);
+            viewModel.sendMessage(message.getContent());
         };
     }
 
     @Override
     public void onData() {
         viewModel = new ViewModelProvider(requireActivity()).get(AiViewModel.class);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), layoutData -> {
-            if (layoutData.size() <= 1) {
-                baseListAdapter.setData(layoutData);
-            } else {
-                LayoutData<?> lastItem = layoutData.get(layoutData.size() - 1);
-                baseListAdapter.addData(Collections.singletonList(lastItem));
+        viewModel.getChatMessageLive().observe(getViewLifecycleOwner(), dataList -> {
+            if (dataList == null) return;
+            // 利用 BaseListAdapter 内部的 DiffUtil 进行高效更新
+            baseListAdapter.setData(dataList);
+            // 自动滚动到最新消息
+            if (dataList.size() > 1) {
+                baseBinding.recyclerContainer.postDelayed(() ->
+                    baseBinding.recyclerContainer.smoothScrollToPosition(dataList.size() - 1), 100);
             }
         });
     }

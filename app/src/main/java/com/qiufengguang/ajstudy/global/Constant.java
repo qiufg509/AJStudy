@@ -18,6 +18,11 @@ public interface Constant {
     String LUCK_WHEEL_TICK_FILE = "sounds/tick.wav";
 
     /**
+     * 数据库名称
+     */
+    String DATABASE_NAME = "ajstudy_database";
+
+    /**
      * 栅格定义
      */
     interface Grid {
