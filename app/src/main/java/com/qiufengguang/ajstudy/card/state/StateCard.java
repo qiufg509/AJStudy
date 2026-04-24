@@ -162,6 +162,11 @@ public class StateCard extends Card {
         public boolean isFullSpanInStaggeredPage() {
             return true;
         }
+
+        @Override
+        public boolean isMinHeightEnable() {
+            return true;
+        }
     }
 
     public static class Builder {

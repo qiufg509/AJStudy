@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.card.series;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
@@ -160,12 +162,8 @@ public class SeriesCard extends Card {
         if (bindingRef != null) {
             CardSeriesBinding binding = bindingRef.get();
             if (binding != null) {
-                // 清理所有 Glide 请求，释放内存
-                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover1);
-                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover2);
-                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover3);
-                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover4);
-                Glide.with(binding.getRoot().getContext()).clear(binding.ivCover5);
+                Context context = binding.getRoot().getContext();
+                releaseImage(context, binding);
 
                 binding.tvTitle1.setOnClickListener(null);
                 binding.tvTitle2.setOnClickListener(null);
@@ -184,6 +182,21 @@ public class SeriesCard extends Card {
         beans = null;
         listener = null;
         showIndex = -1;
+    }
+
+    private static void releaseImage(Context context, CardSeriesBinding binding) {
+        if (!(context instanceof AppCompatActivity)) {
+            return;
+        }
+        AppCompatActivity activity = (AppCompatActivity) context;
+        if (activity.isFinishing() || activity.isDestroyed()) {
+            return;
+        }
+        Glide.with(context).clear(binding.ivCover1);
+        Glide.with(context).clear(binding.ivCover2);
+        Glide.with(context).clear(binding.ivCover3);
+        Glide.with(context).clear(binding.ivCover4);
+        Glide.with(context).clear(binding.ivCover5);
     }
 
     public static class Creator implements CardCreator {

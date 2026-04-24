@@ -38,6 +38,9 @@ public class ViewHolderFactory {
         if (creator.isFullSpanInStaggeredPage() && holder != null) {
             setFullSpanInStaggeredPage(holder);
         }
+        if (creator.isMinHeightEnable() && holder != null) {
+            setMinHeight(holder, parent.getMeasuredHeight());
+        }
         return holder;
     }
 
@@ -49,8 +52,25 @@ public class ViewHolderFactory {
     private static void setFullSpanInStaggeredPage(@NonNull BaseViewHolder<?> holder) {
         ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
         if (params instanceof StaggeredGridLayoutManager.LayoutParams) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) params;
+            StaggeredGridLayoutManager.LayoutParams layoutParams =
+                (StaggeredGridLayoutManager.LayoutParams) params;
             layoutParams.setFullSpan(true);
         }
+    }
+
+    /**
+     * 设置卡片最小高度
+     *
+     * @param holder             BaseViewHolder
+     * @param recyclerViewHeight RecyclerView测量高度
+     */
+    private static void setMinHeight(@NonNull BaseViewHolder<?> holder, int recyclerViewHeight) {
+        int minimumHeight = holder.itemView.getMinimumHeight();
+        if (minimumHeight == 0 || minimumHeight < recyclerViewHeight) {
+            return;
+        }
+        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
+        params.height = minimumHeight;
+        holder.itemView.setLayoutParams(params);
     }
 }

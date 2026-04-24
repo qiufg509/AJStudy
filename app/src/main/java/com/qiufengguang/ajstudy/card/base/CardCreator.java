@@ -61,4 +61,14 @@ public interface CardCreator {
     default boolean isFitToMargin() {
         return false;
     }
+
+
+    /**
+     * 卡片最小高度是否生效
+     *
+     * @return false做不处理（默认） true卡片最小高度生效，不会因为RecyclerView高度不足而压缩高度
+     */
+    default boolean isMinHeightEnable() {
+        return false;
+    }
 }
