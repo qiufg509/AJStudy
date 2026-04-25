@@ -12,8 +12,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.qiufengguang.ajstudy.data.dao.ChatMessageDao;
 import com.qiufengguang.ajstudy.data.dao.ConversationDao;
+import com.qiufengguang.ajstudy.data.dao.HomeCacheDao;
 import com.qiufengguang.ajstudy.data.model.ChatMessage;
 import com.qiufengguang.ajstudy.data.model.Conversation;
+import com.qiufengguang.ajstudy.data.model.HomeCache;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.global.GlobalApp;
 
@@ -24,7 +26,7 @@ import com.qiufengguang.ajstudy.global.GlobalApp;
  * @since 2026/4/22 23:48
  */
 @Database(
-    entities = {ChatMessage.class, Conversation.class,},
+    entities = {ChatMessage.class, Conversation.class, HomeCache.class},
     version = 1,
     exportSchema = false  // 生产环境建议设为true用于版本迁移
 )
@@ -35,6 +37,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ChatMessageDao chatMessageDao();
 
     public abstract ConversationDao conversationDao();
+
+    public abstract HomeCacheDao homeCacheDao();
 
     public static AppDatabase getInstance() {
         if (instance == null) {
