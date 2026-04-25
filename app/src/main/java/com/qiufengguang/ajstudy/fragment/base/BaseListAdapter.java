@@ -1,6 +1,8 @@
 package com.qiufengguang.ajstudy.fragment.base;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.viewbinding.ViewBinding;
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.card.base.OnItemClickListener;
 import com.qiufengguang.ajstudy.card.base.ViewHolderFactory;
+import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.data.base.BaseCardBean;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
@@ -28,11 +31,14 @@ import java.util.Set;
 
 /**
  * 页面适配器（使用 ListAdapter 实现高效增量更新）
+ * [稳定性优化]：引入错误隔离机制，利用 EmptyCard 实现静默降级
  *
  * @author qiufengguang
  * @since 2026/1/19 15:26
  */
 public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?>> {
+    private static final String TAG = "BaseListAdapter";
+
     /**
      * 页面数据差异化更新回调
      */
@@ -117,30 +123,59 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
     @NonNull
     @Override
     public BaseViewHolder<?> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        BaseViewHolder<? extends ViewBinding> viewHolder = ViewHolderFactory.createViewHolder(parent, viewType, this.lifecycleOwner);
-        if (viewHolder.isObserveResumePause) {
-            lifecycleHolderRefs.add(new WeakReference<>(viewHolder));
+        try {
+            BaseViewHolder<? extends ViewBinding> viewHolder = ViewHolderFactory.createViewHolder(parent, viewType, this.lifecycleOwner);
+            if (viewHolder.isObserveResumePause) {
+                lifecycleHolderRefs.add(new WeakReference<>(viewHolder));
+            }
+            viewHolderRefs.add(new WeakReference<>(viewHolder));
+            return viewHolder;
+        } catch (Throwable e) {
+            Log.e(TAG, "Error creating view holder for type: " + viewType, e);
+            return ViewHolderFactory.createViewHolder(parent, EmptyCard.LAYOUT_ID, this.lifecycleOwner);
         }
-        viewHolderRefs.add(new WeakReference<>(viewHolder));
-        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position) {
-        LayoutData<?> layoutData = getItem(position);
-        if (layoutData != null) {
-            holder.bind(layoutData, lifecycleOwner, listener);
+        try {
+            LayoutData<?> layoutData = getItem(position);
+            if (layoutData != null) {
+                holder.bind(layoutData, lifecycleOwner, listener);
+            }
+        } catch (Throwable e) {
+            Log.e(TAG, "Error binding view holder at position: " + position, e);
+            handleBindError(holder);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<?> holder, int position, @NonNull List<Object> payloads) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, position, payloads);
-        } else {
-            // 通常只有一个 payload
-            Bundle diff = (Bundle) payloads.get(0);
-            holder.update(diff);
+        try {
+            if (payloads.isEmpty()) {
+                super.onBindViewHolder(holder, position, payloads);
+            } else {
+                // 通常只有一个 payload
+                Bundle diff = (Bundle) payloads.get(0);
+                holder.update(diff);
+            }
+        } catch (Throwable e) {
+            Log.e(TAG, "Error binding view holder (payloads) at position: " + position, e);
+            handleBindError(holder);
+        }
+    }
+
+    /**
+     * 处理绑定异常：物理隐藏 Item
+     */
+    private void handleBindError(BaseViewHolder<?> holder) {
+        View itemView = holder.itemView;
+        itemView.setVisibility(View.GONE);
+        ViewGroup.LayoutParams params = itemView.getLayoutParams();
+        if (params != null) {
+            params.height = 0;
+            params.width = 0;
+            itemView.setLayoutParams(params);
         }
     }
 

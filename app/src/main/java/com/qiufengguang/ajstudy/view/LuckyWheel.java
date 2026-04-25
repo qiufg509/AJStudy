@@ -26,6 +26,7 @@ import android.widget.OverScroller;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -184,8 +185,6 @@ public class LuckyWheel extends View {
             return;
         }
 
-        // 释放旧资源
-        releaseOldBitmaps();
         clearGlideTasks();
 
         // 创建可修改的副本
@@ -628,7 +627,6 @@ public class LuckyWheel extends View {
         clearAnimation();
         // 释放资源
         if (this.releaseOnSelfDetached) {
-            releaseOldBitmaps();
             if (centerBitmap != null && !centerBitmap.isRecycled()) {
                 centerBitmap.recycle();
                 centerBitmap = null;
@@ -834,24 +832,19 @@ public class LuckyWheel extends View {
         isFlingFinishedCallbackFired = true;
     }
 
-    private void releaseOldBitmaps() {
-        if (this.beans != null && !this.beans.isEmpty()) {
-            for (LuckyWheelCardBean bean : this.beans) {
-                if (bean == null) {
-                    continue;
-                }
-                Bitmap bitmap = bean.getBitmap();
-                if (bitmap != null && !bitmap.isRecycled()) {
-                    bitmap.recycle();
-                    bean.setBitmap(null);
-                }
-            }
-        }
-    }
-
     private void clearGlideTasks() {
+        Context context = getContext();
+        if (!(context instanceof AppCompatActivity)) {
+            glideTargets.clear();
+            return;
+        }
+        AppCompatActivity activity = (AppCompatActivity) context;
+        if (activity.isFinishing() || activity.isDestroyed()) {
+            glideTargets.clear();
+            return;
+        }
         for (Target<?> target : glideTargets) {
-            Glide.with(getContext()).clear(target);
+            Glide.with(context).clear(target);
         }
         glideTargets.clear();
     }
