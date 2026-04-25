@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.data.base.LayoutData;
+import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.fragment.base.BaseStaggeredFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 
@@ -27,13 +28,23 @@ public class KnowHowFragment extends BaseStaggeredFragment {
     @Override
     public void onData() {
         setPageBackground(0);
-        viewModel = new ViewModelProvider(this).get(KnowHowViewModel.class);
 
         // 绑定数据
         viewModel.getLiveData().observe(getViewLifecycleOwner(), list ->
             baseListAdapter.setData(list));
 
         setTitle("瀑布流列表");
+    }
+
+    @Override
+    public void showPageState(State state) {
+        if (viewModel == null) {
+            viewModel = new ViewModelProvider(this).get(KnowHowViewModel.class);
+        }
+        if (viewModel.getLiveData().getValue() == null
+            || viewModel.getLiveData().getValue().isEmpty()) {
+            super.showPageState(state);
+        }
     }
 
     @Override

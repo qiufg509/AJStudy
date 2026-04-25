@@ -365,7 +365,13 @@ public final class AppNavigator {
      * @param destId        目标 Fragment 的 ID
      */
     public void navigateTo(@NonNull NavController navController, @IdRes int destId) {
-        navController.navigate(destId);
+        // 官方推荐的导航选项，支持保存和恢复状态
+        NavOptions options = new NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setRestoreState(true)
+            .setPopUpTo(navController.getGraph().getStartDestinationId(), false, true)
+            .build();
+        navController.navigate(destId, null, options);
     }
 
     /**

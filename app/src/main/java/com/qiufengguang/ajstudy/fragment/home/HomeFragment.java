@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qiufengguang.ajstudy.R;
+import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.fragment.base.BaseGridFragment;
 import com.qiufengguang.ajstudy.fragment.base.PageConfig;
 import com.qiufengguang.ajstudy.view.DynamicToolbar;
@@ -27,12 +28,22 @@ public class HomeFragment extends BaseGridFragment {
 
     @Override
     public void onData() {
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         setPageBackground(R.drawable.home_page_bg);
 
         viewModel.getLiveData().observe(getViewLifecycleOwner(),
             beans -> baseListAdapter.setData(beans));
         setTitle(getString(R.string.bottom_nav_title_home));
+    }
+
+    @Override
+    public void showPageState(State state) {
+        if (viewModel == null) {
+            viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        }
+        if (viewModel.getLiveData().getValue() == null
+            || viewModel.getLiveData().getValue().isEmpty()) {
+            super.showPageState(state);
+        }
     }
 
     @Override
