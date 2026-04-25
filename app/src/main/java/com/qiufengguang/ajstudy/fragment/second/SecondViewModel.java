@@ -10,9 +10,7 @@ import com.qiufengguang.ajstudy.card.selecttheme.SelectThemeCard;
 import com.qiufengguang.ajstudy.card.serverip.ServerIpCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
-import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.SelectThemeCardBean;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.repository.SecondaryRepository;
@@ -43,9 +41,6 @@ public class SecondViewModel extends BaseViewModel {
     }
 
     public void loadData(String uri, String directory) {
-        if (currentCall != null && !currentCall.isCanceled()) {
-            currentCall.cancel();
-        }
         if (TextUtils.isEmpty(uri)) {
             List<LayoutData<?>> dataList = fetchStateData(State.EMPTY);
             liveData.setValue(dataList);
@@ -60,26 +55,20 @@ public class SecondViewModel extends BaseViewModel {
             liveData.setValue(dataList);
             return;
         }
-        currentCall = repository.fetchData(uri, directory, new OnDataLoadedCallback<>() {
-            @Override
-            public void onSuccess(PageData data) {
-                liveData.postValue(data.getLayoutData());
-                // 可扩展更多标题样式配置
-                if (TextUtils.equals(data.getTitleType(), "back_title_gradient")) {
-                    titleData.postValue(true);
-                }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
-                liveData.postValue(dataList);
-            }
-        });
-        if (currentCall == null) {
-            List<LayoutData<?>> dataList = fetchStateData(State.EMPTY);
-            liveData.setValue(dataList);
-        }
+        addDisposable(repository.fetchData(uri, directory)
+            .subscribe(pageData -> {
+                    liveData.postValue(pageData.getLayoutData());
+                    // 可扩展更多标题样式配置
+                    if (TextUtils.equals(pageData.getTitleType(), "back_title_gradient")) {
+                        titleData.postValue(true);
+                    }
+                },
+                throwable -> {
+                    List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
+                    liveData.postValue(dataList);
+                }
+            ));
     }
 
     public LiveData<List<LayoutData<?>>> getLiveData() {

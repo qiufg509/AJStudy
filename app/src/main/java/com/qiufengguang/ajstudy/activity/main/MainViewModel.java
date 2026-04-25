@@ -2,7 +2,8 @@ package com.qiufengguang.ajstudy.activity.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
+import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 
 /**
  * 主页面ViewModel
@@ -10,7 +11,7 @@ import androidx.lifecycle.ViewModel;
  * @author qiufengguang
  * @since 2025/11/27 17:42
  */
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends BaseViewModel {
     private static final String TAG = "MainViewModel";
 
     private final MutableLiveData<Integer> liveData = new MutableLiveData<>();
@@ -24,10 +25,5 @@ public class MainViewModel extends ViewModel {
 
     public void setLiveData(int itemId) {
         liveData.setValue(itemId);
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
     }
 }

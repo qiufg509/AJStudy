@@ -1,15 +1,12 @@
 package com.qiufengguang.ajstudy.activity.login;
 
-// LoginViewModel.java
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.data.model.LoginResult;
 import com.qiufengguang.ajstudy.data.model.User;
-import com.qiufengguang.ajstudy.data.callback.LoginCallback;
 import com.qiufengguang.ajstudy.data.repository.LoginRepository;
+import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 
 /**
  * 登录页面ViewModel
@@ -17,7 +14,7 @@ import com.qiufengguang.ajstudy.data.repository.LoginRepository;
  * @author qiufengguang
  * @since 2025/11/30 2:15
  */
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends BaseViewModel {
     private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private final LoginRepository loginRepository;
 
@@ -45,19 +42,14 @@ public class LoginViewModel extends ViewModel {
         }
 
         // 执行登录
-        loginRepository.login(phone, password, new LoginCallback() {
-            @Override
-            public void onSuccess(User user) {
-                user.setRememberPwd(rememberPwd);
-                loginRepository.saveUserInfo(user);
-                loginResult.postValue(new LoginResult(LoginResult.Status.SUCCESS, "登录成功", user));
-            }
-
-            @Override
-            public void onError(String error) {
-                loginResult.postValue(new LoginResult(LoginResult.Status.ERROR, error, null));
-            }
-        });
+        addDisposable(loginRepository.login(phone, password)
+            .subscribe(user -> {
+                    user.setRememberPwd(rememberPwd);
+                    loginRepository.saveUserInfo(user);
+                    loginResult.postValue(new LoginResult(LoginResult.Status.SUCCESS, "登录成功", user));
+                },
+                throwable -> loginResult.postValue(new LoginResult(LoginResult.Status.ERROR, throwable.getMessage(), null))
+            ));
     }
 
     private boolean isValidPhone(String phone) {

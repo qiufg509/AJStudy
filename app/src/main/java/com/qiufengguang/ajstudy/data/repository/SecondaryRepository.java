@@ -3,8 +3,7 @@ package com.qiufengguang.ajstudy.data.repository;
 import androidx.annotation.NonNull;
 
 import com.qiufengguang.ajstudy.data.base.PageData;
-import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.converter.LayoutDataConverter;
 import com.qiufengguang.ajstudy.data.remote.api.AppListApi;
 import com.qiufengguang.ajstudy.data.remote.api.ArticleListApi;
 import com.qiufengguang.ajstudy.data.remote.api.FavoritesApi;
@@ -17,7 +16,9 @@ import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
 import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.JsonUtils;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * 二级页仓库层
@@ -60,69 +61,68 @@ public class SecondaryRepository {
         return instance;
     }
 
-    public Call<RawRespData> fetchData(
-        @NonNull String uri,
-        String directory,
-        final OnDataLoadedCallback<PageData> callback
-    ) {
+    public Observable<PageData> fetchData(@NonNull String uri, String directory) {
+        Observable<RawRespData> observable;
         switch (uri) {
             case Router.URI.PAGE_APP_LIST:
-                return fetchAppListData(directory, callback);
+                observable = fetchAppListData(directory);
+                break;
             case Router.URI.PAGE_ARTICLE_LIST:
-                return fetchArticleListData(directory, callback);
+                observable = fetchArticleListData(directory);
+                break;
             case Router.URI.PAGE_FAVORITES:
-                return fetchFavoritesData(callback);
+                observable = fetchFavoritesData();
+                break;
             case Router.URI.PAGE_STUDY_RECORD:
-                return fetchStudyRecordData(callback);
+                observable = fetchStudyRecordData();
+                break;
             case Router.URI.PAGE_USER:
-                return fetchUserData(callback);
+                observable = fetchUserData();
+                break;
             case Router.URI.PAGE_HELP_FEEDBACK:
-                return fetchHelpFeedbackData(callback);
+                observable = fetchHelpFeedbackData();
+                break;
             default:
-                return null;
+                return Observable.error(new IllegalArgumentException("Unsupported URI: " + uri));
         }
+        return observable.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(rawRespData -> {
+                if (rawRespData.isSuccess()) {
+                    return LayoutDataConverter.convert(JsonUtils.getGson(), rawRespData);
+                } else {
+                    throw new Exception("Server error: " + rawRespData.getRtnCode());
+                }
+            });
     }
 
-    public Call<RawRespData> fetchAppListData(String directory, final OnDataLoadedCallback<PageData> callback) {
+    private Observable<RawRespData> fetchAppListData(String directory) {
         Request request = new Request(directory);
-        Call<RawRespData> call = appListApi.getAppListData(request);
-        // [性能重构]：使用 JsonUtils 获取全局单例 Gson
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return appListApi.getAppListData(request);
     }
 
-    public Call<RawRespData> fetchArticleListData(String directory, final OnDataLoadedCallback<PageData> callback) {
+    private Observable<RawRespData> fetchArticleListData(String directory) {
         Request request = new Request(directory);
-        Call<RawRespData> call = articleListApi.getArticleListData(request);
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return articleListApi.getArticleListData(request);
     }
 
-    public Call<RawRespData> fetchFavoritesData(final OnDataLoadedCallback<PageData> callback) {
+    private Observable<RawRespData> fetchFavoritesData() {
         Request request = new Request();
-        Call<RawRespData> call = favoritesApi.getFavoritesData(request);
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return favoritesApi.getFavoritesData(request);
     }
 
-    public Call<RawRespData> fetchStudyRecordData(final OnDataLoadedCallback<PageData> callback) {
+    private Observable<RawRespData> fetchStudyRecordData() {
         Request request = new Request();
-        Call<RawRespData> call = studyRecordApi.getStudyRecordData(request);
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return studyRecordApi.getStudyRecordData(request);
     }
 
-    public Call<RawRespData> fetchUserData(final OnDataLoadedCallback<PageData> callback) {
+    private Observable<RawRespData> fetchUserData() {
         Request request = new Request();
-        Call<RawRespData> call = userApi.getUserData(request);
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return userApi.getUserData(request);
     }
 
-    public Call<RawRespData> fetchHelpFeedbackData(final OnDataLoadedCallback<PageData> callback) {
+    private Observable<RawRespData> fetchHelpFeedbackData() {
         Request request = new Request();
-        Call<RawRespData> call = helpFeedbackApi.getHelpFeedbackData(request);
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return helpFeedbackApi.getHelpFeedbackData(request);
     }
 }

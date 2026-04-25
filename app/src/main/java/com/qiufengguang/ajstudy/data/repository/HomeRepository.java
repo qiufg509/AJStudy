@@ -1,15 +1,15 @@
 package com.qiufengguang.ajstudy.data.repository;
 
 import com.qiufengguang.ajstudy.data.base.PageData;
-import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.converter.LayoutDataConverter;
 import com.qiufengguang.ajstudy.data.remote.api.HomeApi;
-import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
 import com.qiufengguang.ajstudy.utils.JsonUtils;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * 首页仓库层
@@ -38,11 +38,17 @@ public class HomeRepository {
         return instance;
     }
 
-    public Call<RawRespData> fetchHomeData(final OnDataLoadedCallback<PageData> callback) {
+    public Observable<PageData> fetchHomeData() {
         Request request = new Request();
-        Call<RawRespData> call = homeApi.getHomeData(request);
-        // [性能重构]：使用 JsonUtils 获取全局单例 Gson
-        call.enqueue(new LayoutRespCallback(JsonUtils.getGson(), callback));
-        return call;
+        return homeApi.getHomeData(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(rawRespData -> {
+                if (rawRespData.isSuccess()) {
+                    return LayoutDataConverter.convert(JsonUtils.getGson(), rawRespData);
+                } else {
+                    throw new Exception("Server error: " + rawRespData.getRtnCode());
+                }
+            });
     }
 }

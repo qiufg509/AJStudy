@@ -6,7 +6,6 @@ import com.qiufengguang.ajstudy.router.Router;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -37,5 +36,5 @@ public interface DeepSeekApi {
      */
     @Streaming
     @POST(Router.URI.DEEPSEEK_CHAT)
-    Call<ResponseBody> streamChatCompletion(@Body ChatCompletionRequest request);
+    Single<ResponseBody> streamChatCompletion(@Body ChatCompletionRequest request);
 }

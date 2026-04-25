@@ -33,20 +33,6 @@
 -keep class retrofit2.Response
 # 保留所有自定义API接口及其方法
 -keep interface com.qiufengguang.ajstudy.data.remote.api.** { *; }
-# 保留回调类中的关键方法
--keep class com.qiufengguang.ajstudy.data.callback.BodyRespCallback {
-    public <init>(...);
-    public void onResponse(retrofit2.Call, retrofit2.Response);
-    public void onFailure(retrofit2.Call, java.lang.Throwable);
-}
--keep class com.qiufengguang.ajstudy.data.callback.LayoutRespCallback {
-    public <init>(...);
-    public void onResponse(retrofit2.Call, retrofit2.Response);
-    public void onFailure(retrofit2.Call, java.lang.Throwable);
-}
-# 保留普通回调接口
--keep interface com.qiufengguang.ajstudy.data.callback.LoginCallback { *; }
--keep interface com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback { *; }
 # 保留转换器静态方法
 -keep class com.qiufengguang.ajstudy.data.converter.LayoutDataConverter {
     public static com.qiufengguang.ajstudy.data.base.PageData convert(com.google.gson.Gson, com.qiufengguang.ajstudy.data.remote.dto.RawRespData);

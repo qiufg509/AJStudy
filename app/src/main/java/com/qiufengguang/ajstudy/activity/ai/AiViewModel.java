@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -37,8 +36,6 @@ public class AiViewModel extends BaseViewModel {
     private final LiveData<List<LayoutData<?>>> chatMessageLive;
 
     private final AiRepository repository;
-
-    private final CompositeDisposable disposables = new CompositeDisposable();
 
     public AiViewModel() {
         repository = AiRepository.getInstance();
@@ -90,7 +87,7 @@ public class AiViewModel extends BaseViewModel {
         Long convId = currentConversationId.getValue();
         if (convId == null || convId <= 0) {
             // 首次发送：异步创建会话（标题取首条消息内容）
-            disposables.add(repository.createNewConversation(content)
+            addDisposable(repository.createNewConversation(content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newId -> {
@@ -105,8 +102,7 @@ public class AiViewModel extends BaseViewModel {
     private void saveAndRequestReply(long convId, String content) {
         ChatMessage userMsg = new ChatMessage(convId, ChatMessage.ROLE_USER, content);
         // ✅ 步骤 1：保存用户消息入库。存入后，chatMessageLiveData 会自动推送更新，UI 立即显示用户气泡。
-        disposables.add(repository.saveMessage(userMsg)
-            .subscribeOn(Schedulers.io())
+        addDisposable(repository.saveMessage(userMsg)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(() -> fetchAiResponse(convId, content), Throwable::printStackTrace));
     }
@@ -114,23 +110,21 @@ public class AiViewModel extends BaseViewModel {
     private void fetchAiResponse(long convId, String content) {
         // ✅ 步骤 2：请求 AI 回复，并将其保存到数据库。
         // 保存后，Room 自动触发 chatMessageLiveData 下发最新列表，UI 自动显示 AI 气泡。
-        disposables.add(repository.requestAiReply(convId, content)
+        addDisposable(repository.requestAiReply(convId, content)
             .flatMapCompletable(repository::saveMessage)
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(() -> {
                 // 成功保存后可以处理如播放音效等逻辑
             }, throwable -> {
                 // 错误处理：存入一条模拟 AI 的错误提示，UI 也会自动显示
                 ChatMessage errorMsg = new ChatMessage(convId, ChatMessage.ROLE_ASSISTANT, "抱歉，网络开小差了...");
-                disposables.add(repository.saveMessage(errorMsg).subscribeOn(Schedulers.io()).subscribe());
+                addDisposable(repository.saveMessage(errorMsg).subscribe());
             }));
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        disposables.clear();
         repository.clear();
     }
 }

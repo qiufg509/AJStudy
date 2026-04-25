@@ -4,7 +4,7 @@ import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.router.Router;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -16,5 +16,5 @@ import retrofit2.http.POST;
  */
 public interface MeApi {
     @POST(Router.URI.PAGE_ME)
-    Call<RawRespData> getMeData(@Body Request request);
+    Observable<RawRespData> getMeData(@Body Request request);
 }

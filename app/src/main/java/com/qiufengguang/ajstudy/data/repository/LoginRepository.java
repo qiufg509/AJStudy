@@ -2,41 +2,39 @@ package com.qiufengguang.ajstudy.data.repository;
 
 import android.text.TextUtils;
 
-import com.qiufengguang.ajstudy.data.callback.LoginCallback;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.global.Constant;
-import com.qiufengguang.ajstudy.utils.AppExecutors;
 import com.qiufengguang.ajstudy.utils.SpUtils;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * 登录操作
- * [性能专家重构]：移除私有线程池，改用全局 AppExecutors，修复 SpUtils 兼容性问题。
+ * [性能专家重构]：移除私有线程池，改用 RxJava 链式调度。
  *
  * @author qiufengguang
  * @since 2025/11/30 2:15
  */
 public class LoginRepository {
 
-    public void login(String phone, String password, LoginCallback callback) {
-        // [性能重构]：利用全局动态线程池执行模拟耗时任务，避免私造 HandlerThread
-        AppExecutors.getInstance().execute(() -> {
-            try {
-                Thread.sleep(1500); // 模拟网络延迟
-
+    public Single<User> login(String phone, String password) {
+        // [性能重构]：利用 RxJava 替代手动线程管理，模拟耗时任务
+        return Single.fromCallable(() -> {
                 // 模拟登录逻辑
                 if ("123456".equals(password)) {
-                    User user = new User(phone, password);
-                    // 模拟返回成功
-                    AppExecutors.getInstance().mainThread().execute(() -> callback.onSuccess(user));
+                    return new User(phone, password);
                 } else {
-                    AppExecutors.getInstance().mainThread().execute(() -> callback.onError("密码错误"));
+                    throw new Exception("密码错误");
                 }
-            } catch (InterruptedException e) {
-                AppExecutors.getInstance().mainThread().execute(() -> callback.onError("网络连接失败"));
-            }
-        }, null);
+            })
+            .delay(1500, TimeUnit.MILLISECONDS) // 模拟网络延迟
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
     }
 
     public void saveUserInfo(User user) {

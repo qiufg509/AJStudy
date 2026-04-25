@@ -1,17 +1,17 @@
 package com.qiufengguang.ajstudy.data.repository;
 
-import com.google.gson.Gson;
 import com.qiufengguang.ajstudy.data.base.PageData;
-import com.qiufengguang.ajstudy.data.callback.LayoutRespCallback;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
+import com.qiufengguang.ajstudy.data.converter.LayoutDataConverter;
 import com.qiufengguang.ajstudy.data.remote.api.AppDetailApi;
 import com.qiufengguang.ajstudy.data.remote.api.CommentApi;
 import com.qiufengguang.ajstudy.data.remote.api.RecommendApi;
-import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
+import com.qiufengguang.ajstudy.utils.JsonUtils;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * 应用详情页仓库层
@@ -28,13 +28,10 @@ public class AppDetailRepository {
 
     private final RecommendApi recommendApi;
 
-    private final Gson gson;
-
     private AppDetailRepository() {
         appDetailApi = RetrofitClient.getAppDetailApi();
         commentApi = RetrofitClient.getCommentApi();
         recommendApi = RetrofitClient.getRecommendApi();
-        gson = new Gson();
     }
 
     public static AppDetailRepository getInstance() {
@@ -48,27 +45,45 @@ public class AppDetailRepository {
         return instance;
     }
 
-    public Call<RawRespData> fetchAppDetailData(
-        String directory, final OnDataLoadedCallback<PageData> callback) {
+    public Observable<PageData> fetchAppDetailData(String directory) {
         Request request = new Request(directory);
-        Call<RawRespData> call = appDetailApi.getAppDetailData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
-        return call;
+        return appDetailApi.getAppDetailData(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(rawRespData -> {
+                if (rawRespData.isSuccess()) {
+                    return LayoutDataConverter.convert(JsonUtils.getGson(), rawRespData);
+                } else {
+                    throw new Exception("Server error: " + rawRespData.getRtnCode());
+                }
+            });
     }
 
-    public Call<RawRespData> fetchCommentData(
-        String directory, final OnDataLoadedCallback<PageData> callback) {
+    public Observable<PageData> fetchCommentData(String directory) {
         Request request = new Request(directory);
-        Call<RawRespData> call = commentApi.getCommentData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
-        return call;
+        return commentApi.getCommentData(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(rawRespData -> {
+                if (rawRespData.isSuccess()) {
+                    return LayoutDataConverter.convert(JsonUtils.getGson(), rawRespData);
+                } else {
+                    throw new Exception("Server error: " + rawRespData.getRtnCode());
+                }
+            });
     }
 
-    public Call<RawRespData> fetchRecommendData(
-        String directory, final OnDataLoadedCallback<PageData> callback) {
+    public Observable<PageData> fetchRecommendData(String directory) {
         Request request = new Request(directory);
-        Call<RawRespData> call = recommendApi.getRecommendData(request);
-        call.enqueue(new LayoutRespCallback(gson, callback));
-        return call;
+        return recommendApi.getRecommendData(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(rawRespData -> {
+                if (rawRespData.isSuccess()) {
+                    return LayoutDataConverter.convert(JsonUtils.getGson(), rawRespData);
+                } else {
+                    throw new Exception("Server error: " + rawRespData.getRtnCode());
+                }
+            });
     }
 }

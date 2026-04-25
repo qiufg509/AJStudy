@@ -8,12 +8,12 @@ import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.model.StateCardBean;
-import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * 基类Fragment对应的ViewModel
@@ -22,14 +22,16 @@ import retrofit2.Call;
  * @since 2025/11/26 22:19
  */
 public abstract class BaseViewModel extends ViewModel {
-    protected Call<RawRespData> currentCall;
+    protected final CompositeDisposable disposables = new CompositeDisposable();
+
+    protected void addDisposable(Disposable disposable) {
+        disposables.add(disposable);
+    }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        if (currentCall != null && !currentCall.isCanceled()) {
-            currentCall.cancel();
-        }
+        disposables.clear();
     }
 
     /**

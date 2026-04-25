@@ -1,13 +1,13 @@
 package com.qiufengguang.ajstudy.data.repository;
 
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
-import com.qiufengguang.ajstudy.data.callback.BodyRespCallback;
 import com.qiufengguang.ajstudy.data.remote.api.ArticleDetailApi;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 
 /**
  * 文章详情页仓库层
@@ -36,13 +36,11 @@ public class ArticleDetailRepository {
         return instance;
     }
 
-    public Call<ResponseBody> fetchArticleDetailApi(
-        String directory,
-        final OnDataLoadedCallback<String> callback
-    ) {
+    public Observable<String> fetchArticleDetailApi(String directory) {
         Request request = new Request(directory);
-        Call<ResponseBody> call = appListApi.getArticleDetailData(request);
-        call.enqueue(new BodyRespCallback(callback));
-        return call;
+        return appListApi.getArticleDetailData(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(ResponseBody::string);
     }
 }

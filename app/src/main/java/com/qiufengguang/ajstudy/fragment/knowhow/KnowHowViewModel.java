@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.qiufengguang.ajstudy.data.base.LayoutData;
-import com.qiufengguang.ajstudy.data.base.PageData;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.repository.KnowHowRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
@@ -36,23 +34,13 @@ public class KnowHowViewModel extends BaseViewModel {
     }
 
     public void loadData() {
-        // 取消之前的请求
-        if (currentCall != null && !currentCall.isCanceled()) {
-            currentCall.cancel();
-        }
-
-        currentCall = repository.fetchKnowHowData(new OnDataLoadedCallback<>() {
-            @Override
-            public void onSuccess(PageData data) {
-                liveData.postValue(data.getLayoutData());
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
-                liveData.postValue(dataList);
-            }
-        });
+        addDisposable(repository.fetchKnowHowData()
+            .subscribe(data -> liveData.postValue(data.getLayoutData()),
+                throwable -> {
+                    List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
+                    liveData.postValue(dataList);
+                }
+            ));
     }
 
     public List<LayoutData<?>> getPageData(int page) {

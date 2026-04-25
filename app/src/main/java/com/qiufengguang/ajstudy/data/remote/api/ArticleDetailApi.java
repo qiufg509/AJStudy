@@ -3,8 +3,8 @@ package com.qiufengguang.ajstudy.data.remote.api;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.router.Router;
 
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -16,5 +16,5 @@ import retrofit2.http.POST;
  */
 public interface ArticleDetailApi {
     @POST(Router.URI.PAGE_ARTICLE_DETAIL)
-    Call<ResponseBody> getArticleDetailData(@Body Request request);
+    Observable<ResponseBody> getArticleDetailData(@Body Request request);
 }

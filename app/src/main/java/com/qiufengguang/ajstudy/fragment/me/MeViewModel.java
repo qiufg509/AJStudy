@@ -14,9 +14,7 @@ import com.qiufengguang.ajstudy.card.user.SimpleUserCard;
 import com.qiufengguang.ajstudy.data.base.CollectionLayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
-import com.qiufengguang.ajstudy.data.base.PageData;
 import com.qiufengguang.ajstudy.data.base.SingleLayoutData;
-import com.qiufengguang.ajstudy.data.callback.OnDataLoadedCallback;
 import com.qiufengguang.ajstudy.data.model.SettingCardBean;
 import com.qiufengguang.ajstudy.data.model.State;
 import com.qiufengguang.ajstudy.data.model.User;
@@ -80,23 +78,16 @@ public class MeViewModel extends BaseViewModel {
     }
 
     private void loadServerData() {
-        // 取消之前的请求
-        if (currentCall != null && !currentCall.isCanceled()) {
-            currentCall.cancel();
-        }
-        currentCall = repository.fetchMeData(new OnDataLoadedCallback<>() {
-            @Override
-            public void onSuccess(PageData data) {
-                List<LayoutData<?>> dataList = data.getLayoutData();
-                serverData.postValue(dataList);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.w(TAG, "loadServerData: ", t);
-                serverData.postValue(Collections.emptyList());
-            }
-        });
+        addDisposable(repository.fetchMeData()
+            .subscribe(data -> {
+                    List<LayoutData<?>> dataList = data.getLayoutData();
+                    serverData.postValue(dataList);
+                },
+                throwable -> {
+                    Log.w(TAG, "loadServerData: ", throwable);
+                    serverData.postValue(Collections.emptyList());
+                }
+            ));
     }
 
     private void loadLocalData() {

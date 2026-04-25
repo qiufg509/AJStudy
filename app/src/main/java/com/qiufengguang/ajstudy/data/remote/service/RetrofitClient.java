@@ -31,6 +31,7 @@ import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -67,6 +68,7 @@ public class RetrofitClient {
             .baseUrl(baseUrl)
             .client(getOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create(JsonUtils.getGson())) // [性能重构]：复用全局单例 Gson
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build();
     }
 
