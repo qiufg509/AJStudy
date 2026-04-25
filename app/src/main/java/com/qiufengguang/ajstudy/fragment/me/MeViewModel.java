@@ -148,14 +148,16 @@ public class MeViewModel extends BaseViewModel {
             return;
         }
         List<LayoutData<?>> combined = new ArrayList<>();
+        User user = null;
         if (userLiveData != null) {
-            User user = userLiveData.getValue();
-            if (user != null) {
-                SingleLayoutData<User> userCard = LayoutDataFactory.createSingle(
-                    SimpleUserCard.LAYOUT_ID, user);
-                combined.add(userCard);
-            }
+            user = userLiveData.getValue();
         }
+        if (user == null) {
+            user = new User();
+        }
+        SingleLayoutData<User> userCard = LayoutDataFactory.createSingle(
+            SimpleUserCard.LAYOUT_ID, user);
+        combined.add(userCard);
         if (!serverList.isEmpty()) {
             combined.addAll(serverList);
         }

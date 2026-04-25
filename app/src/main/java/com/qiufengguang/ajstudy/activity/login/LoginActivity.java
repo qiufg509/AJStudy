@@ -1,7 +1,6 @@
 package com.qiufengguang.ajstudy.activity.login;
 
 import android.app.Application;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.qiufengguang.ajstudy.data.model.LoginAction;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.databinding.ActivityLoginBinding;
 import com.qiufengguang.ajstudy.global.GlobalApp;
@@ -147,12 +145,6 @@ public class LoginActivity extends AppCompatActivity {
         if (application instanceof GlobalApp) {
             GlobalViewModel globalViewModel = ((GlobalApp) application).getGlobalViewModel();
             globalViewModel.setCurrentUser(user);
-            Intent intent = getIntent();
-            LoginAction loginAction = new LoginAction(true);
-            loginAction.setOriginalPage(intent.getStringExtra(LoginAction.ORIGINAL_PAGE));
-            loginAction.setDestinationAction(intent.getStringExtra(LoginAction.DESTINATION_ACTION));
-            loginAction.setDestinationId(intent.getIntExtra(LoginAction.DESTINATION_ID, -1));
-            globalViewModel.setLoginAction(loginAction);
         }
         finish();
     }

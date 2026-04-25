@@ -1,9 +1,7 @@
 package com.qiufengguang.ajstudy.activity.main;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.activity.login.LoginActivity;
-import com.qiufengguang.ajstudy.data.model.LoginAction;
 import com.qiufengguang.ajstudy.databinding.ActivityMainBinding;
-import com.qiufengguang.ajstudy.global.GlobalApp;
-import com.qiufengguang.ajstudy.global.GlobalViewModel;
 import com.qiufengguang.ajstudy.router.AppNavigator;
 import com.qiufengguang.ajstudy.router.Router;
 import com.qiufengguang.ajstudy.utils.StatusBarUtil;
@@ -37,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private MainViewModel viewModel;
-
-    private GlobalViewModel globalVm;
 
     private NavController navController;
 
@@ -61,21 +53,6 @@ public class MainActivity extends AppCompatActivity {
         StatusBarUtil.makeStatusBarTransparent(this);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-        Application application = getApplication();
-        if (application instanceof GlobalApp) {
-            globalVm = ((GlobalApp) application).getGlobalViewModel();
-            globalVm.getLoginLiveData().observe(this, loginAction -> {
-                if (!loginAction.isLoggedIn()) {
-                    return;
-                }
-                if (!TextUtils.equals(loginAction.getOriginalPage(), MainActivity.class.getName())) {
-                    return;
-                }
-                int destinationId = loginAction.getDestinationId();
-                binding.navView.setSelectedItemId(destinationId);
-            });
-        }
 
         setupNavigation();
         setupCustomBackNavigation();
@@ -104,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            return onNavItemSelected(itemId);
+            onNavItemSelected(itemId);
+            // 返回true已经处理导航操作，BottomNavigationView会保持原item的选中状态
+            // 返回false已经选中的item先取消选中，然后重新选中上一次选中的item，可能闪烁，拦截并跳转页面时使用
+            return true;
         });
         navController.addOnDestinationChangedListener(
             (navController, navDestination, bundle) -> {
@@ -117,24 +97,12 @@ public class MainActivity extends AppCompatActivity {
      * 已经选中导航栏后的处理（点中的item以及是选中状态）
      *
      * @param itemId menu中定义的item id
-     * @return true已经处理导航操作，BottomNavigationView会保持原item的选中状态
-     * false已经选中的item先取消选中，然后重新选中上一次选中的item，可能闪烁，拦截并跳转页面时使用
      */
-    private boolean onNavItemSelected(int itemId) {
+    private void onNavItemSelected(int itemId) {
         NavDestination destination = navController.getCurrentDestination();
         if (destination != null && destination.getId() == itemId) {
             // BottomNavigationView会保持原item的选中状态，如果返回false它会先取消选中，然后重新选中，可能闪烁
-            return true;
-        }
-        if (itemId == R.id.navigation_me) {
-            if (globalVm == null || !globalVm.isLoggedIn()) {
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.putExtra(LoginAction.ORIGINAL_PAGE, MainActivity.class.getName());
-                intent.putExtra(LoginAction.DESTINATION_ID, itemId);
-                startActivity(intent);
-                // "监听器没有处理这次点击",BottomNavigationView 会尝试恢复之前的选中状态
-                return false;
-            }
+            return;
         }
         if (itemId == R.id.navigation_know_how) {
             // 使用根布局设置颜色的页面设置透明渐变背景
@@ -145,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 ContextCompat.getColor(this, R.color.ajstudy_window_background));
         }
         AppNavigator.getInstance().navigateTo(navController, itemId);
-        return true;
     }
 
     /**
@@ -159,10 +126,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (globalVm != null) {
-            globalVm.getLoginLiveData().removeObservers(this);
-            globalVm.resetLoginAction();
-        }
         binding = null;
     }
 }

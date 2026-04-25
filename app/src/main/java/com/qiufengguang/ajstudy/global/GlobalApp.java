@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.qiufengguang.ajstudy.data.model.LoginAction;
 import com.qiufengguang.ajstudy.data.model.User;
 import com.qiufengguang.ajstudy.data.repository.LoginRepository;
 import com.qiufengguang.ajstudy.router.AppNavigator;
@@ -98,11 +97,6 @@ public class GlobalApp extends Application implements ViewModelStoreOwner {
 
                 // [性能重构点]：直接在 diskIO 线程调用，内部自动切换 postValue，消除 mainThread 嵌套
                 GlobalViewModel globalViewModel = getGlobalViewModel();
-                LoginAction action = new LoginAction(true);
-                if (isInvalid) {
-                    action.setLoggedIn(false);
-                }
-                globalViewModel.setLoginAction(action);
                 globalViewModel.setCurrentUser(savedUser);
             }
         });
