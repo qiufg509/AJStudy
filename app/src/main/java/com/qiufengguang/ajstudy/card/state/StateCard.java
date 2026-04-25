@@ -148,6 +148,7 @@ public class StateCard extends Card {
             bindingRef = null;
         }
         bean = null;
+        listener = null;
     }
 
     public static class Creator implements CardCreator {
@@ -209,4 +210,3 @@ public class StateCard extends Card {
         }
     }
 }
-

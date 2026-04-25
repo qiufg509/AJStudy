@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
 
+    private NavController.OnDestinationChangedListener destinationChangedListener;
+
     @Override
     protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
@@ -82,42 +84,36 @@ public class MainActivity extends AppCompatActivity {
         binding.navView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             onNavItemSelected(itemId);
-            // 返回true已经处理导航操作，BottomNavigationView会保持原item的选中状态
-            // 返回false已经选中的item先取消选中，然后重新选中上一次选中的item，可能闪烁，拦截并跳转页面时使用
             return true;
         });
-        navController.addOnDestinationChangedListener(
-            (navController, navDestination, bundle) -> {
-                int destinationId = navDestination.getId();
+
+        // 将监听器保存为成员变量，以便在 onDestroy 中移除
+        destinationChangedListener = (controller, navDestination, bundle) -> {
+            int destinationId = navDestination.getId();
+            if (viewModel != null) {
                 viewModel.setLiveData(destinationId);
-            });
+            }
+        };
+        navController.addOnDestinationChangedListener(destinationChangedListener);
     }
 
     /**
-     * 已经选中导航栏后的处理（点中的item以及是选中状态）
-     *
-     * @param itemId menu中定义的item id
+     * 已经选中导航栏后的处理
      */
     private void onNavItemSelected(int itemId) {
         NavDestination destination = navController.getCurrentDestination();
         if (destination != null && destination.getId() == itemId) {
-            // BottomNavigationView会保持原item的选中状态，如果返回false它会先取消选中，然后重新选中，可能闪烁
             return;
         }
         if (itemId == R.id.navigation_know_how) {
-            // 使用根布局设置颜色的页面设置透明渐变背景
             binding.navView.setBackgroundResource(R.drawable.bottom_nav_background_blur);
         } else {
-            // 子页面使用backgroundImage的页面设置不透明背景（以及让出导航栏空间，避免闪烁）
             binding.navView.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.ajstudy_window_background));
         }
         AppNavigator.getInstance().navigateTo(navController, itemId);
     }
 
-    /**
-     * 返回处理
-     */
     private void setupCustomBackNavigation() {
         getOnBackPressedDispatcher().addCallback(this,
             new MainPageBackPressedCallback(true, this));
@@ -125,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if (navController != null && destinationChangedListener != null) {
+            navController.removeOnDestinationChangedListener(destinationChangedListener);
+        }
         super.onDestroy();
         binding = null;
     }
