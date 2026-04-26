@@ -1,10 +1,9 @@
 package com.qiufengguang.ajstudy.data.repository;
 
-import com.qiufengguang.ajstudy.data.base.PageData;
-import com.qiufengguang.ajstudy.data.converter.LayoutDataConverter;
 import com.qiufengguang.ajstudy.data.database.AppDatabase;
 import com.qiufengguang.ajstudy.data.model.HomeCache;
 import com.qiufengguang.ajstudy.data.remote.api.HomeApi;
+import com.qiufengguang.ajstudy.data.remote.dto.RawRespData;
 import com.qiufengguang.ajstudy.data.remote.dto.Request;
 import com.qiufengguang.ajstudy.data.remote.service.RetrofitClient;
 import com.qiufengguang.ajstudy.utils.JsonUtils;
@@ -40,35 +39,25 @@ public class HomeRepository {
         return instance;
     }
 
-    public Observable<PageData> fetchHomeData() {
+    public Observable<RawRespData> fetchHomeRawData() {
         Request request = new Request();
         return homeApi.getHomeData(request)
-            .subscribeOn(Schedulers.io())
-            .map(rawRespData -> {
-                if (rawRespData.isSuccess()) {
-                    return LayoutDataConverter.convert(JsonUtils.getGson(), rawRespData);
-                } else {
-                    throw new Exception("Server error: " + rawRespData.getRtnCode());
-                }
-            });
+            .subscribeOn(Schedulers.io());
     }
 
-    /**
-     * 获取本地缓存数据
-     */
-    public Maybe<PageData> getLocalHomeData() {
+    public Maybe<RawRespData> getLocalRawData() {
         return AppDatabase.getInstance().homeCacheDao().getHomeCache()
-            .map(cache -> JsonUtils.getGson().fromJson(cache.content, PageData.class))
+            .map(cache -> JsonUtils.getGson().fromJson(cache.content, RawRespData.class))
             .subscribeOn(Schedulers.io());
     }
 
     /**
      * 保存数据到缓存
      *
-     * @param pageData 页面数据
+     * @param rawData 页面数据
      */
-    public void saveHomeDataToCache(PageData pageData) {
-        String json = JsonUtils.getGson().toJson(pageData);
+    public void saveRawDataToCache(RawRespData rawData) {
+        String json = JsonUtils.getGson().toJson(rawData);
         AppDatabase.getInstance().homeCacheDao().saveHomeCache(new HomeCache(json))
             .subscribeOn(Schedulers.io())
             .subscribe();
