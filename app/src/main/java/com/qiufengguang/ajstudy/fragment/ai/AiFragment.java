@@ -65,10 +65,9 @@ public class AiFragment extends BaseListFragment {
     @Override
     public OnItemClickListener<BaseCardBean> getListener() {
         return (context, data) -> {
-            if (!(data instanceof ChatMessage)) {
+            if (!(data instanceof ChatMessage message)) {
                 return;
             }
-            ChatMessage message = (ChatMessage) data;
             viewModel.sendMessage(message.getContent());
         };
     }

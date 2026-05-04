@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".activity.login.LoginActivity">
 
     <com.qiufengguang.ajstudy.view.DynamicToolbar
         android:id="@+id/title_bar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/ajstudy_title_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,8 +17,12 @@
         app:mode="back_only" />
 
     <com.qiufengguang.ajstudy.view.BounceScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bar">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -32,7 +36,7 @@
                     android:id="@+id/iv_logo"
                     android:layout_width="@dimen/item_icon_size_xl"
                     android:layout_height="@dimen/item_icon_size_xl"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="48dp"
                     android:contentDescription="@string/image_description"
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintBottom_toTopOf="@+id/til_phone"
@@ -173,4 +177,4 @@
         </ScrollView>
     </com.qiufengguang.ajstudy.view.BounceScrollView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
