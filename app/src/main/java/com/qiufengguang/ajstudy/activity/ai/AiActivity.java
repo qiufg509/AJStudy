@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.qiufengguang.ajstudy.R;
 import com.qiufengguang.ajstudy.databinding.ActivityAiBinding;
@@ -19,7 +20,7 @@ import com.qiufengguang.ajstudy.view.OnToolBarListener;
 
 /**
  * Ai对话页面
- * [高级开发重构]：完善发送交互与新会话功能
+ * [样式重构]：实现侧边栏历史会话与新对话样式，对接数据库实时刷新
  *
  * @author qiufengguang
  * @since 2026/3/28 18:20
@@ -27,6 +28,7 @@ import com.qiufengguang.ajstudy.view.OnToolBarListener;
 public class AiActivity extends AppCompatActivity {
     private ActivityAiBinding binding;
     private AiViewModel viewModel;
+    private ConversationAdapter historyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +37,30 @@ public class AiActivity extends AppCompatActivity {
         binding = ActivityAiBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        viewModel = new ViewModelProvider(this).get(AiViewModel.class);
+
         if (savedInstanceState == null) {
             Bundle args = getIntent().getBundleExtra(Router.EXTRA_DATA);
             BaseListFragment f = AiFragment.newInstance(args);
             getSupportFragmentManager().beginTransaction().add(R.id.container, f).commitNow();
         }
 
-        viewModel = new ViewModelProvider(this).get(AiViewModel.class);
-        binding.titleBar.setTitle("新对话");
+        initHistoryList();
         addListener();
+        observeViewModel();
+    }
+
+    private void initHistoryList() {
+        historyAdapter = new ConversationAdapter();
+        binding.rvHistory.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvHistory.setAdapter(historyAdapter);
+    }
+
+    private void observeViewModel() {
+        // 观察历史记录，由 Room 驱动自动更新
+        viewModel.getHistoryLive().observe(this, conversations -> {
+            historyAdapter.setData(conversations);
+        });
     }
 
     private void addListener() {
@@ -51,10 +68,7 @@ public class AiActivity extends AppCompatActivity {
             @Override
             public void onMenuClick() {
                 hideKeyboard();
-                binding.drawerLayout.postDelayed(() -> {
-                    if (binding.drawerLayout.isOpen()) binding.drawerLayout.close();
-                    else binding.drawerLayout.open();
-                }, 150);
+                binding.drawerLayout.open();
             }
 
             @Override
@@ -63,17 +77,17 @@ public class AiActivity extends AppCompatActivity {
             }
         });
 
-        // 5. 点击 new_conversation 创建新会话
-        View newConvBtn = findViewById(R.id.new_conversation);
-        if (newConvBtn != null) {
-            newConvBtn.setOnClickListener(v -> {
-                viewModel.startNewConversation();
-                binding.titleBar.setTitle("新对话");
-                binding.drawerLayout.close();
-            });
-        }
+        // 侧边栏：关闭按钮
+        binding.btnCloseDrawer.setOnClickListener(v -> binding.drawerLayout.close());
 
-        // 2. 点击发送按钮触发逻辑
+        // 侧边栏：开启新对话
+        binding.newConversation.setOnClickListener(v -> {
+            viewModel.startNewConversation();
+            binding.titleBar.setTitle("新对话");
+            binding.drawerLayout.close();
+        });
+
+        // 主界面：发送按钮
         binding.layoutInputSend.btnSend.setOnClickListener(v -> {
             String input = binding.layoutInputSend.etMessage.getText().toString().trim();
             if (!TextUtils.isEmpty(input)) {
@@ -81,6 +95,11 @@ public class AiActivity extends AppCompatActivity {
                 binding.layoutInputSend.etMessage.setText("");
                 hideKeyboard();
             }
+        });
+        historyAdapter.setListener(conversation -> {
+            viewModel.loadConversationData(conversation.getId());
+            binding.titleBar.setTitle(conversation.getTitle());
+            binding.drawerLayout.close();
         });
     }
 

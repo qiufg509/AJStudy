@@ -12,6 +12,7 @@ import com.qiufengguang.ajstudy.card.welcome.AiWelcomeCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.base.LayoutDataFactory;
 import com.qiufengguang.ajstudy.data.model.ChatMessage;
+import com.qiufengguang.ajstudy.data.model.Conversation;
 import com.qiufengguang.ajstudy.data.repository.AiRepository;
 import com.qiufengguang.ajstudy.fragment.base.BaseViewModel;
 
@@ -34,11 +35,14 @@ public class AiViewModel extends BaseViewModel {
 
     // 暴露给 Fragment 观察的响应式 LiveData
     private final LiveData<List<LayoutData<?>>> chatMessageLive;
+    // 暴露给 Activity 观察的历史会话 LiveData
+    private final LiveData<List<Conversation>> historyLive;
 
     private final AiRepository repository;
 
     public AiViewModel() {
         repository = AiRepository.getInstance();
+        historyLive = repository.getAllConversations();
 
         // ✅ [架构精华]：建立响应式管道。只要 currentConversationId 变化或数据库消息更新，UI 都会自动刷新。
         chatMessageLive = Transformations.switchMap(currentConversationId, id -> {
@@ -62,6 +66,10 @@ public class AiViewModel extends BaseViewModel {
 
     public LiveData<List<LayoutData<?>>> getChatMessageLive() {
         return chatMessageLive;
+    }
+
+    public LiveData<List<Conversation>> getHistoryLive() {
+        return historyLive;
     }
 
     /**

@@ -31,6 +31,9 @@ public interface ConversationDao {
     @Query("SELECT * FROM conversation WHERE id = :convId")
     Single<Conversation> getConversationById(long convId);
 
+    @Query("UPDATE conversation SET updatedAt = :timestamp WHERE id = :convId")
+    Completable updateConversationTimestamp(long convId, long timestamp);
+
     @Query("UPDATE conversation SET updatedAt = :timestamp, title = :title WHERE id = :convId")
     Completable updateConversation(long convId, long timestamp, String title);
 

@@ -34,4 +34,8 @@
     <string name="ai_welcome_message_first">鸿蒙相关的生命周期都有哪些?</string>
     <string name="ai_welcome_secondary">协程底层如何实现线程切换？</string>
     <string name="ai_welcome_tertiary">资源文件夹中 sw 和 w 有什么区别（如layout-sw600dp和layout-w600dp）？</string>
+    <string name="ai_new_chat">开启新对话</string>
+    <string name="ai_drawer_title">AJStudy Ai</string>
+    <string name="ai_history_conversation">历史会话</string>
+    <string name="ai_user">用户</string>
 </resources>

@@ -71,7 +71,7 @@ public class AiRepository {
      */
     public Completable saveMessage(ChatMessage message) {
         return messageDao.insert(message)
-            .andThen(conversationDao.updateConversation(message.getConversationId(), System.currentTimeMillis(), null))
+            .andThen(conversationDao.updateConversationTimestamp(message.getConversationId(), System.currentTimeMillis()))
             .subscribeOn(Schedulers.io());
     }
 

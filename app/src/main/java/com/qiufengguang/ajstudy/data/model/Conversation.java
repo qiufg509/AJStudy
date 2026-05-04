@@ -1,6 +1,7 @@
 package com.qiufengguang.ajstudy.data.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -17,6 +18,10 @@ public class Conversation {
     private long createdAt;
     private long updatedAt;
 
+    public Conversation() {
+    }
+
+    @Ignore
     public Conversation(String title) {
         this.title = title;
         this.createdAt = System.currentTimeMillis();
