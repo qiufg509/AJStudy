@@ -34,8 +34,7 @@ public class DisplayMetricsHelper {
      * @return 状态栏高度（像素）
      */
     public static int getStatusBarHeight(@NonNull Context context) {
-        if (context instanceof Activity) {
-            Activity activity = (Activity) context;
+        if (context instanceof Activity activity) {
             View decorView = activity.getWindow().getDecorView();
 
             // 使用 AndroidX 兼容库 WindowInsetsCompat，增强兼容性
@@ -79,13 +78,13 @@ public class DisplayMetricsHelper {
      */
     public static int getActionBarHeight(@NonNull Context context) {
         // 方案1: 如果ActionBar已实例化，直接获取其高度（最准确）
-        if (context instanceof AppCompatActivity) {
-            androidx.appcompat.app.ActionBar actionBar = ((AppCompatActivity) context).getSupportActionBar();
+        if (context instanceof AppCompatActivity activity) {
+            androidx.appcompat.app.ActionBar actionBar = activity.getSupportActionBar();
             if (actionBar != null && actionBar.getHeight() > 0) {
                 return actionBar.getHeight();
             }
-        } else if (context instanceof Activity) {
-            android.app.ActionBar actionBar = ((Activity) context).getActionBar();
+        } else if (context instanceof Activity activity) {
+            android.app.ActionBar actionBar = activity.getActionBar();
             if (actionBar != null && actionBar.getHeight() > 0) {
                 return actionBar.getHeight();
             }

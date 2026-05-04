@@ -86,20 +86,20 @@ public class LoginActivity extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-            switch (result.getStatus()) {
+            switch (result.status()) {
                 case LOADING:
                     showLoading(true);
                     break;
                 case SUCCESS:
                     showLoading(false);
-                    handleLoginSuccess(result.getUser());
+                    handleLoginSuccess(result.user());
                     break;
                 case ERROR:
                     showLoading(false);
-                    handleLoginError(result.getMessage());
+                    handleLoginError(result.message());
                     break;
                 case INVALID:
-                    handleLoginInvalid(result.getUser());
+                    handleLoginInvalid(result.user());
                     break;
             }
         });
@@ -142,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleLoginSuccess(User user) {
         Application application = getApplication();
-        if (application instanceof GlobalApp) {
-            GlobalViewModel globalViewModel = ((GlobalApp) application).getGlobalViewModel();
+        if (application instanceof GlobalApp app) {
+            GlobalViewModel globalViewModel = app.getGlobalViewModel();
             globalViewModel.setCurrentUser(user);
         }
         finish();

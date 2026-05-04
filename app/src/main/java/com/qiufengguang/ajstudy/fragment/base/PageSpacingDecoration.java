@@ -54,9 +54,8 @@ public class PageSpacingDecoration extends RecyclerView.ItemDecoration {
         }
 
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
+        if (layoutManager instanceof GridLayoutManager manager) {
             // 格网页面 {@link com.qiufengguang.ajstudy.fragment.base.BaseGridFragment}
-            GridLayoutManager manager = (GridLayoutManager) layoutManager;
             int spanCount = manager.getSpanCount();
             GridLayoutManager.SpanSizeLookup spanSizeLookup = manager.getSpanSizeLookup();
 

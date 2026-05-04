@@ -26,8 +26,8 @@ public abstract class BaseGridFragment extends BaseListFragment {
     @Override
     public void onDestroyView() {
         RecyclerView.LayoutManager layoutManager = baseBinding.recyclerContainer.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            ((GridLayoutManager) layoutManager).setSpanSizeLookup(null);
+        if (layoutManager instanceof GridLayoutManager gridLayoutManager) {
+            gridLayoutManager.setSpanSizeLookup(null);
         }
         super.onDestroyView();
     }

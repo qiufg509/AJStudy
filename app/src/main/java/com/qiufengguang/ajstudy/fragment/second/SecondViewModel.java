@@ -64,10 +64,7 @@ public class SecondViewModel extends BaseViewModel {
                         titleData.postValue(true);
                     }
                 },
-                throwable -> {
-                    List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
-                    liveData.postValue(dataList);
-                }
+                throwable -> handleError(liveData)
             ));
     }
 

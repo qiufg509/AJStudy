@@ -95,7 +95,7 @@ public class StateCard extends Card {
             binding.tvMessage.setVisibility(View.VISIBLE);
         }
 
-        if (bean.getState() == State.NO_NETWORK) {
+        if (bean.getState() == State.NO_NETWORK || bean.getState() == State.ERROR) {
             binding.getRoot().setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onItemClick(v.getContext(), bean);
@@ -107,30 +107,21 @@ public class StateCard extends Card {
     }
 
     private int getAnimationRes(State type) {
-        switch (type) {
-            case LOADING:
-                return R.raw.wave_loading;
-            case NO_NETWORK:
-                return R.raw.no_internet_connection;
-            case ERROR:
-                return R.raw.girl_relaxing_while_error_404;
-            default:
-                return R.raw.empty_box;
-        }
+        return switch (type) {
+            case LOADING -> R.raw.wave_loading;
+            case NO_NETWORK -> R.raw.no_internet_connection;
+            case ERROR -> R.raw.girl_relaxing_while_error_404;
+            default -> R.raw.empty_box;
+        };
     }
 
     private String getDefaultMessage(State type) {
-        switch (type) {
-            case NO_NETWORK:
-                return "网络未连接，请轻触重试";
-            case EMPTY:
-                return "暂无数据";
-            case ERROR:
-                return "出错了，请轻触重试";
-            case LOADING:
-            default:
-                return "";
-        }
+        return switch (type) {
+            case NO_NETWORK -> "网络未连接，请轻触重试";
+            case EMPTY -> "暂无数据";
+            case ERROR -> "出错了，请轻触重试";
+            default -> "";
+        };
     }
 
     /**

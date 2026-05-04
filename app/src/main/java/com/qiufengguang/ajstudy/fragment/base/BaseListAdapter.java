@@ -212,13 +212,11 @@ public class BaseListAdapter extends ListAdapter<LayoutData<?>, BaseViewHolder<?
         }
 
         int firstVisible, lastVisible;
-        if (manager instanceof LinearLayoutManager) {
+        if (manager instanceof LinearLayoutManager llm) {
             // GridLayoutManager 也是 LinearLayoutManager 的子类
-            LinearLayoutManager llm = (LinearLayoutManager) manager;
             firstVisible = llm.findFirstVisibleItemPosition();
             lastVisible = llm.findLastVisibleItemPosition();
-        } else if (manager instanceof StaggeredGridLayoutManager) {
-            StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) manager;
+        } else if (manager instanceof StaggeredGridLayoutManager sglm) {
             int[] first = sglm.findFirstVisibleItemPositions(null);
             int[] last = sglm.findLastVisibleItemPositions(null);
             firstVisible = min(first);

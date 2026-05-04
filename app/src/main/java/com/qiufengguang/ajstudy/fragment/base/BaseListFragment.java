@@ -108,8 +108,7 @@ public abstract class BaseListFragment extends Fragment {
 
         // 设置内容在titleBar之下
         ViewGroup.LayoutParams containerLayoutParams = baseBinding.bounceContainer.getLayoutParams();
-        if (containerLayoutParams instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) containerLayoutParams;
+        if (containerLayoutParams instanceof ViewGroup.MarginLayoutParams layoutParams) {
             layoutParams.topMargin =
                 (config.titleBarMode == DynamicToolbar.Mode.GONE || config.overlayTitleBar)
                     ? 0 : totalHeight;
@@ -211,6 +210,14 @@ public abstract class BaseListFragment extends Fragment {
             }
         });
 
+        onLoadMoreListener();
+        baseListAdapter.setListener(getListener());
+    }
+
+    /**
+     * 加载更多监听
+     */
+    private void onLoadMoreListener() {
         RecyclerView.LayoutManager layoutManager = baseBinding.recyclerContainer.getLayoutManager();
         if (!(layoutManager instanceof LinearLayoutManager)) {
             return;
@@ -224,7 +231,6 @@ public abstract class BaseListFragment extends Fragment {
         };
 
         baseBinding.recyclerContainer.addOnScrollListener(scrollListener);
-        baseListAdapter.setListener(getListener());
     }
 
     /**

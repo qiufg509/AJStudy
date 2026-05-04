@@ -834,11 +834,10 @@ public class LuckyWheel extends View {
 
     private void clearGlideTasks() {
         Context context = getContext();
-        if (!(context instanceof AppCompatActivity)) {
+        if (!(context instanceof AppCompatActivity activity)) {
             glideTargets.clear();
             return;
         }
-        AppCompatActivity activity = (AppCompatActivity) context;
         if (activity.isFinishing() || activity.isDestroyed()) {
             glideTargets.clear();
             return;

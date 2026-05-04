@@ -51,9 +51,7 @@ public class ViewHolderFactory {
      */
     private static void setFullSpanInStaggeredPage(@NonNull BaseViewHolder<?> holder) {
         ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-        if (params instanceof StaggeredGridLayoutManager.LayoutParams) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams =
-                (StaggeredGridLayoutManager.LayoutParams) params;
+        if (params instanceof StaggeredGridLayoutManager.LayoutParams layoutParams) {
             layoutParams.setFullSpan(true);
         }
     }

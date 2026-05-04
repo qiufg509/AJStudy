@@ -63,8 +63,8 @@ public class AiWelcomeCard extends Card {
         binding.animationView.playAnimation();
 
         View.OnClickListener onClickListener = v -> {
-            if (listener != null && v instanceof TextView) {
-                ChatMessage message = new ChatMessage(0, ChatMessage.ROLE_USER, ((TextView) v).getText().toString());
+            if (listener != null && v instanceof TextView textView) {
+                ChatMessage message = new ChatMessage(0, ChatMessage.ROLE_USER, textView.getText().toString());
                 listener.onItemClick(v.getContext(), message);
             }
         };

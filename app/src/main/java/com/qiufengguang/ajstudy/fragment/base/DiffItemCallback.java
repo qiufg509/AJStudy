@@ -56,10 +56,9 @@ public class DiffItemCallback extends DiffUtil.ItemCallback<LayoutData<?>> {
                 return ((BaseCardBean) data).getDetailId();
             }
         } else if (item instanceof CollectionLayoutData) {
-            if (data instanceof List) {
-                List<?> list = (List<?>) data;
-                if (!list.isEmpty() && list.get(0) instanceof BaseCardBean) {
-                    return ((BaseCardBean) list.get(0)).getDetailId();
+            if (data instanceof List<?> list) {
+                if (!list.isEmpty() && list.get(0) instanceof BaseCardBean bean) {
+                    return bean.getDetailId();
                 }
             }
         }
@@ -105,9 +104,8 @@ public class DiffItemCallback extends DiffUtil.ItemCallback<LayoutData<?>> {
             diff.putString("title", newBean.getTitle());
         }
         // 子类特有字段（实际应用中可扩展）
-        if (oldBean instanceof BannerBean && newBean instanceof BannerBean) {
-            BannerBean oldBanner = (BannerBean) oldBean;
-            BannerBean newBanner = (BannerBean) newBean;
+        if (oldBean instanceof BannerBean oldBanner
+            && newBean instanceof BannerBean newBanner) {
             if (!Objects.equals(oldBanner.getImageUrl(), newBanner.getImageUrl())) {
                 diff.putString("imageUrl", newBanner.getImageUrl());
             }

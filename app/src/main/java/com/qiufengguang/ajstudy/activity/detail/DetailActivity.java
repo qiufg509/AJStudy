@@ -89,8 +89,7 @@ public class DetailActivity extends AppCompatActivity {
         // icon和titleBar的间距
         int appIconTitleBarSpacing = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin_m);
         ViewGroup.LayoutParams ivIconParams = binding.ivIcon.getLayoutParams();
-        if (ivIconParams instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams iconParams = (ViewGroup.MarginLayoutParams) ivIconParams;
+        if (ivIconParams instanceof ViewGroup.MarginLayoutParams iconParams) {
             iconParams.topMargin = totalHeight + appIconTitleBarSpacing;
             binding.ivIcon.setLayoutParams(iconParams);
         }

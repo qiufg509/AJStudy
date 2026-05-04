@@ -58,9 +58,8 @@ public class AiActivity extends AppCompatActivity {
 
     private void observeViewModel() {
         // 观察历史记录，由 Room 驱动自动更新
-        viewModel.getHistoryLive().observe(this, conversations -> {
-            historyAdapter.setData(conversations);
-        });
+        viewModel.getHistoryLive().observe(this, conversations ->
+            historyAdapter.setData(conversations));
     }
 
     private void addListener() {

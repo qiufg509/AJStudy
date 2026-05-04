@@ -50,8 +50,8 @@ public class AiFragment extends BaseListFragment {
         super.setupLayout(config);
         baseBinding.bounceContainer.setOnTouchEventListener(event -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                if (getActivity() instanceof AiActivity) {
-                    ((AiActivity) getActivity()).hideKeyboard();
+                if (getActivity() instanceof AiActivity activity) {
+                    activity.hideKeyboard();
                 }
             }
         });

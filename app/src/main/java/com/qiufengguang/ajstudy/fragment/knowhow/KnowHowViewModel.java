@@ -35,11 +35,9 @@ public class KnowHowViewModel extends BaseViewModel {
 
     public void loadData() {
         addDisposable(repository.fetchKnowHowData()
-            .subscribe(data -> liveData.postValue(data.getLayoutData()),
-                throwable -> {
-                    List<LayoutData<?>> dataList = fetchStateData(State.ERROR);
-                    liveData.postValue(dataList);
-                }
+            .subscribe(
+                data -> liveData.postValue(data.getLayoutData()),
+                throwable -> handleError(liveData)
             ));
     }
 

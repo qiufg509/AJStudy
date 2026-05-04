@@ -168,11 +168,11 @@ public class Dialog extends BaseDialog implements IDialog {
             if (context == null) {
                 throw new IllegalArgumentException("Context can't be null");
             }
-            if (!(context instanceof FragmentActivity)) {
+            if (!(context instanceof FragmentActivity activity)) {
                 throw new IllegalArgumentException("Context must be FragmentActivity");
             }
             params = new DialogController.Params();
-            params.fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+            params.fragmentManager = activity.getSupportFragmentManager();
             params.context = context;
         }
 
@@ -411,8 +411,7 @@ public class Dialog extends BaseDialog implements IDialog {
             if (params.context == null) {
                 return;
             }
-            if (params.context instanceof FragmentActivity) {
-                FragmentActivity activity = (FragmentActivity) params.context;
+            if (params.context instanceof FragmentActivity activity) {
                 //如果Activity正在关闭或者已经销毁 直接返回
                 if (activity.isFinishing() || activity.isDestroyed()) {
                     return;

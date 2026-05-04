@@ -46,8 +46,8 @@ public class BannerItemSnapHelper extends SnapHelper {
 
         // 确保 RecyclerView 是水平布局
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-        if (!(layoutManager instanceof LinearLayoutManager) ||
-            ((LinearLayoutManager) layoutManager).getOrientation() != LinearLayoutManager.HORIZONTAL) {
+        if (!(layoutManager instanceof LinearLayoutManager manager) ||
+            manager.getOrientation() != LinearLayoutManager.HORIZONTAL) {
             throw new IllegalArgumentException("只支持水平 LinearLayoutManager");
         }
         recyclerViewRef = new WeakReference<>(recyclerView);
@@ -74,11 +74,9 @@ public class BannerItemSnapHelper extends SnapHelper {
     @Override
     public int findTargetSnapPosition(
         RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
-        if (!(layoutManager instanceof LinearLayoutManager)) {
+        if (!(layoutManager instanceof LinearLayoutManager linearLayoutManager)) {
             return RecyclerView.NO_POSITION;
         }
-
-        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
 
         // 如果没有子View，返回无效位置
         if (layoutManager.getChildCount() == 0) {

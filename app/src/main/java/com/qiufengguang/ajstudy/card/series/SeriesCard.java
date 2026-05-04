@@ -185,10 +185,9 @@ public class SeriesCard extends Card {
     }
 
     private static void releaseImage(Context context, CardSeriesBinding binding) {
-        if (!(context instanceof AppCompatActivity)) {
+        if (!(context instanceof AppCompatActivity activity)) {
             return;
         }
-        AppCompatActivity activity = (AppCompatActivity) context;
         if (activity.isFinishing() || activity.isDestroyed()) {
             return;
         }

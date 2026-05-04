@@ -59,20 +59,20 @@ public class LoginRepository {
         }
         User user = new User();
         Object timestamp = all.get("timestamp");
-        if (timestamp instanceof Long) {
-            user.setTimestamp((Long) timestamp);
+        if (timestamp instanceof Long tt) {
+            user.setTimestamp(tt);
         }
         Object phone = all.get("phone");
-        if (phone instanceof String) {
-            user.setPhone((String) phone);
+        if (phone instanceof String p) {
+            user.setPhone(p);
         }
         Object password = all.get("password");
-        if (password instanceof String) {
-            user.setPassword((String) password);
+        if (password instanceof String p) {
+            user.setPassword(p);
         }
         Object rememberPwd = all.get("rememberPwd");
-        if (rememberPwd instanceof Boolean) {
-            user.setRememberPwd((boolean) rememberPwd);
+        if (rememberPwd instanceof Boolean r) {
+            user.setRememberPwd(r);
         }
         return user;
     }

@@ -157,18 +157,11 @@ public class BannerCard extends Card {
         if (recyclerBanner == null) {
             return;
         }
-        int perLineNumber;
-        switch (column) {
-            case Constant.Grid.COLUMN_8:
-                perLineNumber = Constant.Pln.DEF_8;
-                break;
-            case Constant.Grid.COLUMN_12:
-                perLineNumber = Constant.Pln.DEF_12;
-                break;
-            default:
-                perLineNumber = Constant.Pln.DEF_4;
-                break;
-        }
+        int perLineNumber = switch (column) {
+            case Constant.Grid.COLUMN_8 -> Constant.Pln.DEF_8;
+            case Constant.Grid.COLUMN_12 -> Constant.Pln.DEF_12;
+            default -> Constant.Pln.DEF_4;
+        };
         int horizontalMargin = recyclerBanner.getResources().getDimensionPixelSize(
             R.dimen.activity_horizontal_margin_l);
         int screenWidth = DisplayMetricsHelper.getScreenWidth(recyclerBanner.getContext());
@@ -249,13 +242,11 @@ public class BannerCard extends Card {
             return;
         }
         ViewParent parent = recyclerBanner.getParent();
-        if (!(parent instanceof View)) {
+        if (!(parent instanceof View view)) {
             return;
         }
-        View view = (View) parent;
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutParams;
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams params) {
             int margin = column == Constant.Grid.COLUMN_DEFAULT
                 ? horizontalMargin : (horizontalMargin - GAP / 2);
             params.leftMargin = margin;
@@ -593,10 +584,9 @@ public class BannerCard extends Card {
          * @return Builder
          */
         public BannerCard.Builder setBannerLayout(@NonNull View root) {
-            if (!(root instanceof ViewGroup)) {
+            if (!(root instanceof ViewGroup group)) {
                 throw new IllegalArgumentException("root must be of type RoundedFrameLayout.");
             }
-            ViewGroup group = (ViewGroup) root;
             for (int index = 0, sum = group.getChildCount(); index < sum; index++) {
                 View child = group.getChildAt(index);
                 if (child instanceof RecyclerView) {

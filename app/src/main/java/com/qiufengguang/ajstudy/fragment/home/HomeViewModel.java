@@ -3,6 +3,7 @@ package com.qiufengguang.ajstudy.fragment.home;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.qiufengguang.ajstudy.card.state.StateCard;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
 import com.qiufengguang.ajstudy.data.converter.LayoutDataConverter;
 import com.qiufengguang.ajstudy.data.model.State;
@@ -75,15 +76,11 @@ public class HomeViewModel extends BaseViewModel {
             })
             .filter(Objects::nonNull)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(liveData::setValue, t -> handleError()));
+            .subscribe(liveData::setValue, t -> handleError(liveData)));
     }
 
 
-    private void handleError() {
-        if (liveData.getValue() == null || liveData.getValue().isEmpty()) {
-            liveData.postValue(fetchStateData(State.ERROR));
-        }
-    }
+
 
     public void retry() {
         liveData.setValue(fetchStateData(State.LOADING));

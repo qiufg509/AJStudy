@@ -1,5 +1,6 @@
 package com.qiufengguang.ajstudy.fragment.base;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.qiufengguang.ajstudy.card.state.StateCard;
@@ -46,5 +47,23 @@ public abstract class BaseViewModel extends ViewModel {
         List<LayoutData<?>> dataList = new ArrayList<>(1);
         dataList.add(stateCardData);
         return dataList;
+    }
+
+    /**
+     * 设置错误数据
+     *
+     * @param liveData 页面数据MutableLiveData<List<LayoutData<?>>>
+     */
+    protected void handleError(MutableLiveData<List<LayoutData<?>>> liveData) {
+        if (liveData.getValue() == null || liveData.getValue().isEmpty()
+            || (liveData.getValue().size() == 1
+            && liveData.getValue().get(0).getLayoutId() == StateCard.LAYOUT_ID)) {
+            List<LayoutData<?>> value = fetchStateData(State.ERROR);
+            if (Thread.currentThread() == android.os.Looper.getMainLooper().getThread()) {
+                liveData.setValue(value);
+            } else {
+                liveData.postValue(value);
+            }
+        }
     }
 }
