@@ -45,6 +45,7 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         android:clickable="true"
+        android:fitsSystemWindows="true"
         android:focusable="true">
 
         <!-- Header -->
