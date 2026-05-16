@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
  * @since 2026/3/14 12:10
  */
 public enum State implements Parcelable {
+    DEFAULT,
     LOADING,
     NO_NETWORK,
     EMPTY,

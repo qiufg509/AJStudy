@@ -60,6 +60,18 @@ public class StateCard extends Card {
     }
 
     /**
+     * 获取当前状态
+     *
+     * @return State
+     */
+    public State getCurState() {
+        if (bean == null) {
+            return State.DEFAULT;
+        }
+        return bean.getState();
+    }
+
+    /**
      * 设置卡片item点击事件
      *
      * @param listener {@link OnItemClickListener}
