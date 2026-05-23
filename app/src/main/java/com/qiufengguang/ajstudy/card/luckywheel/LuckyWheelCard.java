@@ -1,6 +1,5 @@
 package com.qiufengguang.ajstudy.card.luckywheel;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -49,10 +48,7 @@ public class LuckyWheelCard extends Card {
     }
 
     public void show() {
-        if (this.beans == null) {
-            return;
-        }
-        if (bindingRef == null) {
+        if (this.beans == null || bindingRef == null) {
             return;
         }
         CardLuckyWheelBinding binding = bindingRef.get();
@@ -67,26 +63,23 @@ public class LuckyWheelCard extends Card {
 
     /**
      * 释放资源
-     * 页面onDestroyView时调用
+     * 页面onDestroyView或ViewHolder销毁时调用
      */
     public void release() {
         if (bindingRef != null) {
+            CardLuckyWheelBinding binding = bindingRef.get();
+            if (binding != null) {
+                // 仅显式停止动画和清理 Glide 任务，不要手动回收位图
+                binding.luckyWheel.release();
+            }
             bindingRef.clear();
             bindingRef = null;
         }
-        if (this.beans != null && !this.beans.isEmpty()) {
-            for (LuckyWheelCardBean bean : this.beans) {
-                if (bean == null) {
-                    continue;
-                }
-                Bitmap bitmap = bean.getBitmap();
-                if (bitmap != null && !bitmap.isRecycled()) {
-                    bitmap.recycle();
-                    bean.setBitmap(null);
-                }
-            }
-            beans = null;
-        }
+        
+        // 关键修复：移除对 beans 内部位图的手动 recycle() 调用。
+        // 这些位图由 Glide 负责管理其生命周期，手动 recycle() 会导致 Glide 在复用或清理时崩溃。
+        // 只需清空引用即可。
+        beans = null;
         listener = null;
     }
 
@@ -143,4 +136,3 @@ public class LuckyWheelCard extends Card {
         }
     }
 }
-

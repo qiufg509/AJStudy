@@ -18,6 +18,7 @@ import android.media.SoundPool;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +34,6 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.qiufengguang.ajstudy.R;
-import com.qiufengguang.ajstudy.card.luckywheel.LuckyWheelCard;
 import com.qiufengguang.ajstudy.data.model.LuckyWheelCardBean;
 import com.qiufengguang.ajstudy.global.Constant;
 import com.qiufengguang.ajstudy.utils.DisplayMetricsHelper;
@@ -43,29 +43,36 @@ import com.qiufengguang.ajstudy.utils.SpUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 旋转转盘控件
+ * <p>
+ * 1. 修复中心图标丢失：记录 centerBtnResId，并在 onAttachedToWindow 中自动恢复 centerBitmap。
+ * 2. 解决崩溃：彻底移除对 Glide 位图的手动 recycle() 调用，交由 Glide 自动管理生命周期。
+ * 3. 性能优化：静态边框阴影使用全局 LruCache 共享。
+ * 4. 保持功能：图标位置随动，但自身角度保持正向 (Upright)。
  *
  * @author qiufengguang
- * @since 2026/2/4 0:03
+ * @since 2026/2/4
  */
 public class LuckyWheel extends View {
     private static final String TAG = "LuckyWheel";
 
     private static final int DEFAULT_COLOR_DARK = 0xFF8584;
-
     private static final int DEFAULT_COLOR_LIGHT = 0xFE6869;
+
+    private static final LruCache<String, Bitmap> S_BORDER_CACHE = new LruCache<>(10);
 
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private int initAngle = 0;
+    private float initAngle = 0;
     private int radius = 0;
-    private int verPanRadius;
-    private int diffRadius;
+    private float verPanRadius;
+    private float diffRadius;
     public static final int FLING_VELOCITY_DOWNSCALE = 4;
 
     private GestureDetector detector;
@@ -73,64 +80,36 @@ public class LuckyWheel extends View {
 
     private int iconSize;
     private int centerBtnSize;
+    private int centerBtnResId = 0;
     private Bitmap centerBitmap;
 
-    // 边框相关属性
     private int borderWidth;
     private int shadowWidth;
 
-    // 预分配对象，避免在onDraw中创建
     private final RectF drawRect = new RectF();
     private final RectF borderRect = new RectF();
     private final Path textPath = new Path();
     private final RectF iconRect = new RectF();
     private final RectF centerBtnRect = new RectF();
 
-    /**
-     * 圆心坐标x
-     */
     private float centerX = 0;
-    /**
-     * 圆心坐标y
-     */
     private float centerY = 0;
 
-    /**
-     * 旋转一圈所需要的时间
-     */
     private static final long ONE_WHEEL_TIME = 500;
-
     private List<LuckyWheelCardBean> beans;
-
     private boolean isTouchEnabled = true;
-
-    private boolean releaseOnSelfDetached = false;
-
-    /**
-     * 文字绘制方向：true-朝向圆心方向绘制（直线路径），false-沿着圆弧绘制
-     */
     private boolean isTowardCenter = false;
-
-    /**
-     * 最小尺寸dp
-     */
     private static final int DEFAULT_MIN_SIZE = 200;
 
     private AnimationEndListener animationEndListener;
-
     private boolean isFlingFinishedCallbackFired = true;
 
     private static SoundPool soundPool;
-
     private static int tickSoundId;
-
     private static boolean soundPoolInitialized = false;
-
     private boolean enableTickSound = false;
-
     private int lastPlayedSectorIndex = -1;
 
-    // [性能重构]：追踪 Glide 任务
     private final List<Target<?>> glideTargets = new ArrayList<>();
 
     public LuckyWheel(Context context) {
@@ -153,710 +132,327 @@ public class LuckyWheel extends View {
             centerBtnSize = a.getDimensionPixelSize(R.styleable.LuckyWheel_centerBtnSize,
                 DisplayMetricsHelper.dp2px(context, 72));
 
-            int centerBtnResId = a.getResourceId(R.styleable.LuckyWheel_centerBtn, 0);
+            centerBtnResId = a.getResourceId(R.styleable.LuckyWheel_centerBtn, 0);
             if (centerBtnResId != 0) {
                 loadCenterButtonBitmap(context, centerBtnResId);
             }
-
-            // 读取文字绘制方向属性，默认为false（沿着圆弧绘制）
             isTowardCenter = a.getBoolean(R.styleable.LuckyWheel_isTowardCenter, false);
         }
         detector = new GestureDetector(context, new RotatePanGestureListener());
         scroller = new OverScroller(context);
 
-        // 初始化边框和阴影属性
         borderWidth = DisplayMetricsHelper.dp2px(context, 8);
         shadowWidth = DisplayMetricsHelper.dp2px(context, 4);
-        int padding = borderWidth;
+        int padding = borderWidth + shadowWidth + 5;
         setPadding(padding, padding, padding, padding);
 
         initPaints();
         setClickable(true);
-
-        // 设置硬件加速下的阴影支持
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        // 只有边框阴影耗时，通过 LruCache 解决。View 开启硬件加速以提升列表滚动性能。
+        setLayerType(LAYER_TYPE_HARDWARE, null);
 
         enableTickSound = SpUtils.getInstance().getBoolean(Constant.Sp.KEY_TICK_SOUND, false);
         initSoundPool(context.getApplicationContext());
     }
 
-    public void setBeans(List<LuckyWheelCardBean> beans) {
-        if (beans == null || beans.isEmpty()) {
-            return;
-        }
-
-        clearGlideTasks();
-
-        // 创建可修改的副本
-        this.beans = new ArrayList<>(beans);
-        int size = this.beans.size();
-        initAngle = 360 / size;
-        verPanRadius = 360 / size;
-        diffRadius = verPanRadius / 2;
-
-        loadBitmapsAsync(this::invalidate);
-
-        // 重新绘制并请求重新布局
-        requestLayout();
-        invalidate();
-
-        lastPlayedSectorIndex = -1;
-    }
-
     private void initPaints() {
-        // 初始化扇形绘制画笔
         paint.setStyle(Paint.Style.FILL);
-
-        // 初始化文字画笔
         textPaint.setColor(Color.WHITE);
         textPaint.setLetterSpacing(0.05f);
         textPaint.setTextSize(DisplayMetricsHelper.dp2px(getContext(), 14));
-
-        // 初始化边框画笔
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setColor(0xFFF2F2F2);
         borderPaint.setStrokeWidth(borderWidth);
-        // 设置阴影效果
         borderPaint.setShadowLayer(shadowWidth, 0, 0, 0x80000000);
     }
 
-    private void loadCenterButtonBitmap(Context context, int resId) {
-        if (centerBitmap != null && !centerBitmap.isRecycled()) {
-            centerBitmap.recycle();
-        }
+    public void setBeans(List<LuckyWheelCardBean> beans) {
+        if (beans == null || beans.isEmpty()) return;
+        this.beans = new ArrayList<>(beans);
+        int size = this.beans.size();
+        verPanRadius = 360f / size;
+        diffRadius = verPanRadius / 2f;
+        loadBitmapsAsync(this::invalidate);
+        requestLayout();
+        invalidate();
+        lastPlayedSectorIndex = -1;
+    }
 
+    private void loadCenterButtonBitmap(Context context, int resId) {
+        if (centerBitmap != null && !centerBitmap.isRecycled()) centerBitmap.recycle();
         int densityDpi = DisplayMetricsHelper.getDensityDpi(context);
         centerBitmap = ImageUtil.loadBitmap(context, densityDpi, resId, centerBtnSize);
+        updateCenterButtonRect();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // 修复测量逻辑
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-
         int defaultSize = DisplayMetricsHelper.dp2px(getContext(), DEFAULT_MIN_SIZE);
-        int desiredSize;
-        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
-            // 两者都是EXACTLY，取较小值确保正方形
-            desiredSize = Math.min(widthSize, heightSize);
-        } else if (widthMode == MeasureSpec.EXACTLY) {
-            // 宽度固定，高度根据宽度决定（正方形）
-            desiredSize = widthSize;
-            if (heightMode == MeasureSpec.AT_MOST) {
-                desiredSize = Math.min(desiredSize, heightSize);
-            }
-        } else if (heightMode == MeasureSpec.EXACTLY) {
-            // 高度固定，宽度根据高度决定（正方形）
-            desiredSize = heightSize;
-            if (widthMode == MeasureSpec.AT_MOST) {
-                desiredSize = Math.min(desiredSize, widthSize);
-            }
-        } else {
-            // 两者都不是EXACTLY，使用默认大小
-            desiredSize = defaultSize;
-            if (widthMode == MeasureSpec.AT_MOST) {
-                desiredSize = Math.min(desiredSize, widthSize);
-            }
-            if (heightMode == MeasureSpec.AT_MOST) {
-                desiredSize = Math.min(desiredSize, heightSize);
-            }
-        }
-
-        // 确保至少有一个最小尺寸
-        desiredSize = Math.max(desiredSize, defaultSize);
-
-        // 设置正方形尺寸
-        setMeasuredDimension(desiredSize, desiredSize);
+        int size = Math.max(Math.min(widthSize, heightSize), defaultSize);
+        setMeasuredDimension(size, size);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        // [性能优化]：将计算逻辑从 onDraw 迁移至 onSizeChanged，避免 60FPS 下的重复浮点运算
-        final int paddingLeft = getPaddingLeft();
-        final int paddingRight = getPaddingRight();
-        final int paddingTop = getPaddingTop();
-        final int paddingBottom = getPaddingBottom();
-
-        int availableWidth = w - paddingLeft - paddingRight;
-        int availableHeight = h - paddingTop - paddingBottom;
-
-        int minValue = Math.min(availableWidth, availableHeight);
+        final int pl = getPaddingLeft(), pr = getPaddingRight(), pt = getPaddingTop(), pb = getPaddingBottom();
+        int aw = w - pl - pr, ah = h - pt - pb;
+        int minValue = Math.min(aw, ah);
         radius = minValue / 2;
-
-        float left = paddingLeft + (availableWidth - minValue) / 2.0f;
-        float top = paddingTop + (availableHeight - minValue) / 2.0f;
-        float right = left + minValue;
-        float bottom = top + minValue;
-
-        drawRect.set(left, top, right, bottom);
-        borderRect.set(left, top, right, bottom);
+        float left = pl + (aw - minValue) / 2.0f, top = pt + (ah - minValue) / 2.0f;
+        drawRect.set(left, top, left + minValue, top + minValue);
+        borderRect.set(left, top, left + minValue, top + minValue);
         centerX = left + minValue / 2.0f;
         centerY = top + minValue / 2.0f;
-
         updateCenterButtonRect();
     }
 
     private void updateCenterButtonRect() {
         if (centerBitmap != null && !centerBitmap.isRecycled()) {
-            float halfWidth = centerBitmap.getWidth() / 2.0f;
-            float halfHeight = centerBitmap.getHeight() / 2.0f;
-            // 考虑指示器凸起部分
-            if (halfWidth < halfHeight) {
-                centerBtnRect.set(centerX - halfWidth, centerY - halfHeight - (halfHeight - halfWidth),
-                    centerX + halfWidth, centerY + halfWidth);
-            } else {
-                centerBtnRect.set(centerX - halfWidth - (halfWidth - halfHeight), centerY - halfHeight,
-                    centerX + halfHeight, centerY + halfHeight);
+            float hw = centerBitmap.getWidth() / 2.0f, hh = centerBitmap.getHeight() / 2.0f;
+            if (hw < hh) centerBtnRect.set(centerX - hw, centerY - hh - (hh - hw), centerX + hw, centerY + hw);
+            else centerBtnRect.set(centerX - hw - (hw - hh), centerY - hh, centerX + hh, centerY + hh);
+        }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // 关键：恢复中心指示器
+        if ((centerBitmap == null || centerBitmap.isRecycled()) && centerBtnResId != 0) {
+            loadCenterButtonBitmap(getContext(), centerBtnResId);
+        }
+        // 关键：恢复 Item 图片加载
+        if (beans != null && !beans.isEmpty()) {
+            boolean needReload = false;
+            for (LuckyWheelCardBean bean : beans) {
+                if (bean.getBitmap() == null && !TextUtils.isEmpty(bean.getImageUrl())) {
+                    needReload = true;
+                    break;
+                }
             }
+            if (needReload) loadBitmapsAsync(this::invalidate);
         }
     }
 
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
+        if (radius <= 0) return;
 
-        // 绘制边框
+        // 1. 绘制边框 (共享缓存)
         drawBorder(canvas);
 
         if (beans == null || beans.isEmpty()) {
-            // 如果没有数据，绘制一个默认的圆形
             drawEmptyWheel(canvas);
             return;
         }
 
-        // [性能重构]：移除 onDraw 中的几何计算逻辑，已下沉至 onSizeChanged
+        // 2. 绘制扇形背景
+        drawSectors(canvas);
 
-        int sectorCount = beans.size();
-        int angle = initAngle;
-
-        // 绘制扇形
-        for (int i = 0; i < sectorCount; i++) {
-            LuckyWheelCardBean bean = beans.get(i);
-            if (bean != null) {
-                int color = bean.getColor();
-                paint.setColor(i % 2 == 0 ? (color != 0 ? color : DEFAULT_COLOR_DARK) : (color != 0 ? color : DEFAULT_COLOR_LIGHT));
-                canvas.drawArc(drawRect, angle, verPanRadius, true, paint);
-            }
-            angle += verPanRadius;
-        }
-
+        // 3. 绘制文字和图标 (图标本身不旋转)
         drawText(canvas);
-        drawBitmap(canvas);
-        // 绘制中心按钮
-        drawCenterButton(canvas);
-    }
+        drawIcons(canvas);
 
-    private void drawBorder(@NonNull Canvas canvas) {
-        if (borderWidth > 0) {
-            // 绘制边框
-            canvas.drawArc(borderRect, 0, 360, false, borderPaint);
-        }
-    }
-
-    private void drawCenterButton(@NonNull Canvas canvas) {
+        // 4. 绘制中心按钮
         if (centerBitmap != null && !centerBitmap.isRecycled()) {
-            // 绘制中心按钮
             canvas.drawBitmap(centerBitmap, null, centerBtnRect, null);
         }
     }
 
-    private void drawEmptyWheel(Canvas canvas) {
-        // 绘制一个默认的圆形
-        Paint defaultPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        defaultPaint.setColor(Color.LTGRAY);
-        canvas.drawCircle(centerX, centerY, radius, defaultPaint);
+    private void drawBorder(Canvas canvas) {
+        String key = String.format(Locale.getDefault(), "border_r%d_w%d", radius, getWidth());
+        Bitmap border = S_BORDER_CACHE.get(key);
+        if (border == null || border.isRecycled()) {
+            int size = Math.max(getWidth(), getHeight());
+            if (size <= 0) return;
+            border = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(border);
+            c.drawArc(borderRect, 0, 360, false, borderPaint);
+            S_BORDER_CACHE.put(key, border);
+        }
+        canvas.drawBitmap(border, 0, 0, null);
+    }
 
-        // 绘制中心按钮（即使没有数据也绘制）
-        drawCenterButton(canvas);
-
-        // 绘制提示文字
-        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.DKGRAY);
-        textPaint.setTextSize(DisplayMetricsHelper.dp2px(getContext(), 14));
-        String text = "没有数据";
-        float textWidth = textPaint.measureText(text);
-        canvas.drawText(text, centerX - textWidth / 2, centerY, textPaint);
+    private void drawSectors(Canvas canvas) {
+        int sectorCount = beans.size();
+        canvas.save();
+        canvas.rotate(initAngle, centerX, centerY);
+        float angle = 0;
+        for (int i = 0; i < sectorCount; i++) {
+            LuckyWheelCardBean bean = beans.get(i);
+            if (bean != null) {
+                paint.setColor(i % 2 == 0 ? (bean.getColor() != 0 ? bean.getColor() : DEFAULT_COLOR_DARK) : (bean.getColor() != 0 ? bean.getColor() : DEFAULT_COLOR_LIGHT));
+                canvas.drawArc(drawRect, angle, verPanRadius, true, paint);
+            }
+            angle += verPanRadius;
+        }
+        canvas.restore();
     }
 
     private void drawText(@NonNull Canvas canvas) {
-        if (beans == null || beans.isEmpty()) {
-            return;
-        }
         int sectorCount = beans.size();
-        int textAngle = initAngle;
         for (int i = 0; i < sectorCount; i++) {
             LuckyWheelCardBean bean = beans.get(i);
             if (bean != null && !TextUtils.isEmpty(bean.getContent())) {
-                int min = Math.min(6, bean.getContent().length());
-                String content = bean.getContent().substring(0, min);
-                float textWidth = textPaint.measureText(content);
+                String content = bean.getContent().substring(0, Math.min(6, bean.getContent().length()));
+                float tw = textPaint.measureText(content);
+                float curAngle = initAngle + i * verPanRadius;
 
-                float ratio = 1 / 8.0f;
                 if (isTowardCenter) {
-                    // 朝向圆心方向绘制：创建直线路径
                     textPath.reset();
-
-                    // 计算当前扇形的中心角度
-                    float centerAngle = textAngle + verPanRadius / 2.0f;
-                    float centerAngleRad = (float) Math.toRadians(centerAngle);
-                    // 计算文字的起点和终点
-                    float startX = (float) (centerX + (radius - 12) * Math.cos(centerAngleRad));
-                    float startY = (float) (centerY + (radius - 12) * Math.sin(centerAngleRad));
-                    // 创建直线路径
-                    textPath.moveTo(startX, startY);
+                    float caRad = (float) Math.toRadians(curAngle + verPanRadius / 2.0f);
+                    textPath.moveTo((float)(centerX + (radius - 12) * Math.cos(caRad)), (float)(centerY + (radius - 12) * Math.sin(caRad)));
                     textPath.lineTo(centerX, centerY);
-
                     canvas.drawTextOnPath(content, textPath, 0, 0, textPaint);
                 } else {
-                    // 当前效果：沿着圆弧绘制
                     textPath.reset();
-                    textPath.addArc(drawRect, textAngle, verPanRadius);
-
-                    // 圆弧的垂直偏移
-                    float vOffset = (float) radius * ratio;
-                    // 圆弧的水平偏移
-                    float hOffset = (float) (radius * (1.0f - ratio) * Math.PI / sectorCount - textWidth / 2);
-
-                    canvas.drawTextOnPath(content, textPath, hOffset, vOffset, textPaint);
+                    textPath.addArc(drawRect, curAngle, verPanRadius);
+                    canvas.drawTextOnPath(content, textPath, (float)(radius * 0.875 * Math.PI / sectorCount - tw / 2), radius * 0.125f, textPaint);
                 }
             }
-            textAngle += verPanRadius;
         }
     }
 
-    private void drawBitmap(@NonNull Canvas canvas) {
-        if (beans == null || beans.isEmpty()) {
-            return;
-        }
+    private void drawIcons(@NonNull Canvas canvas) {
         int sectorCount = beans.size();
-        // 计算每个图标的起始角度（扇形中心角度）
-        float startAngle = initAngle + diffRadius; // diffRadius = verPanRadius / 2
-
         for (int i = 0; i < sectorCount; i++) {
             Bitmap bitmap = beans.get(i).getBitmap();
-            if (bitmap == null || bitmap.isRecycled()) {
-                continue;
-            }
-            // 计算当前扇形中心的角度（弧度）
-            float centerAngle = startAngle + i * verPanRadius;
-            float centerAngleRad = (float) Math.toRadians(centerAngle);
+            if (bitmap == null || bitmap.isRecycled()) continue;
 
-            // 计算图标位置（在半径的 2/3 处）
-            float iconRadius = radius * 2.0f / 3.0f;
-            float x = centerX + iconRadius * (float) Math.cos(centerAngleRad);
-            float y = centerY + iconRadius * (float) Math.sin(centerAngleRad);
-
-            float halfSize = iconSize / 2.0f;
-            iconRect.set(x - halfSize, y - halfSize, x + halfSize, y + halfSize);
-
+            float curAngle = initAngle + i * verPanRadius + diffRadius;
+            float caRad = (float) Math.toRadians(curAngle);
+            float ir = radius * 0.66f;
+            float x = centerX + ir * (float) Math.cos(caRad), y = centerY + ir * (float) Math.sin(caRad);
+            float hs = iconSize / 2.0f;
+            iconRect.set(x - hs, y - hs, x + hs, y + hs);
+            // 直接在 Canvas 上绘制位图，图标保持正向
             canvas.drawBitmap(bitmap, null, iconRect, null);
         }
     }
 
-    /**
-     * 检查触摸点是否在圆形区域外
-     *
-     * @param x 触摸点x坐标
-     * @param y 触摸点y坐标
-     * @return true-在圆形区域外，false-在圆形区域内
-     */
-    private boolean isPointOutWheel(float x, float y) {
-        if (radius <= 0) {
-            return false;
-        }
-
-        // 计算触摸点到圆心的距离
-        float dx = x - centerX;
-        float dy = y - centerY;
-        float distance = (float) Math.sqrt(dx * dx + dy * dy);
-
-        // 如果距离大于半径，说明在圆形区域外; 圆心按钮只允许点击
-        return distance > radius || isPointInCenterButton(x, y);
+    private void drawEmptyWheel(Canvas canvas) {
+        paint.setColor(Color.LTGRAY);
+        canvas.drawCircle(centerX, centerY, radius, paint);
     }
 
-    /**
-     * 检查触摸点是否在中心按钮范围内
-     *
-     * @param x 触摸点x坐标
-     * @param y 触摸点y坐标
-     * @return true-在中心按钮范围内，false-不在
-     */
-    private boolean isPointInCenterButton(float x, float y) {
-        if (centerBitmap == null || centerBitmap.isRecycled()) {
-            return false;
-        }
-
-        // 检查触摸点是否在中心按钮的圆形范围内
-        float dx = x - centerX;
-        float dy = y - centerY;
-        float distance = (float) Math.sqrt(dx * dx + dy * dy);
-
-        return distance <= (centerBtnSize / 2.0f);
-    }
-
-    /**
-     * 开始转动
-     *
-     * @param pos 如果 pos = -1 则随机，如果指定某个值，则转到某个指定区域
-     */
     public void startRotate(int pos) {
-        if (beans == null || beans.isEmpty()) {
-            return;
-        }
-
-        // 禁用触摸交互
+        if (beans == null || beans.isEmpty()) return;
         isTouchEnabled = false;
-
-        // Rotate lap
         int lap = (int) (Math.random() * 6) + 3;
-
-        int angle = 0;
+        float angle = 0;
         if (pos < 0) {
-            angle = (int) (Math.random() * 360);
-            int currentAngle = initAngle % 360;
-            if (currentAngle < 0) currentAngle += 360;
-            // 计算需要旋转的角度差
-            angle = angle - currentAngle;
-            if (angle < 0) {
-                angle += 360;
-            }
+            angle = (float) (Math.random() * 360);
+            float cur = ((initAngle % 360) + 360) % 360;
+            angle = (angle - cur + 360) % 360;
         } else {
             int initPos = queryPosition();
-            if (pos > initPos) {
-                angle = (pos - initPos) * verPanRadius;
-                lap -= 1;
-                angle = 360 - angle;
-            } else if (pos < initPos) {
-                angle = (initPos - pos) * verPanRadius;
-            }
-            // 如果相等，不做处理
+            if (pos > initPos) angle = 360 - (pos - initPos) * verPanRadius;
+            else if (pos < initPos) angle = (initPos - pos) * verPanRadius;
         }
-
-        int increaseDegree = lap * 360 + angle;
-        long time = (lap + angle / 360) * ONE_WHEEL_TIME;
-        int desRotate = increaseDegree + initAngle;
-
-        ValueAnimator animator = ValueAnimator.ofInt(initAngle, desRotate);
+        float totalAngle = lap * 360 + angle;
+        ValueAnimator animator = ValueAnimator.ofFloat(initAngle, initAngle + totalAngle);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.setDuration(time);
+        animator.setDuration((long) (totalAngle * ONE_WHEEL_TIME / 360));
         animator.addUpdateListener(animation -> {
-            int updateValue = (int) animation.getAnimatedValue();
-            int newAngle = (updateValue % 360 + 360) % 360;
-            if (initAngle != newAngle) {
-                initAngle = newAngle;
-                invalidate();
-                checkAndPlayTick();
-            }
+            initAngle = (float) animation.getAnimatedValue();
+            invalidate();
+            checkAndPlayTick();
         });
-
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                // 重新启用触摸交互
                 isTouchEnabled = true;
-                if (animationEndListener == null || beans == null || beans.isEmpty()) {
-                    return;
+                if (animationEndListener != null) {
+                    int p = queryPosition();
+                    if (p >= 0 && p < beans.size()) animationEndListener.endAnimation(getContext(), beans.get(p));
                 }
-                int pos = queryPosition();
-                if (pos >= beans.size() || pos < 0) {
-                    return;
-                }
-                animationEndListener.endAnimation(getContext(), beans.get(pos));
             }
-
             @Override
-            public void onAnimationCancel(Animator animation) {
-                super.onAnimationCancel(animation);
-                isTouchEnabled = true;
-            }
+            public void onAnimationCancel(Animator animation) { isTouchEnabled = true; }
         });
         animator.start();
     }
 
-    /**
-     * 开始随机转动
-     */
-    public void startRandomRotate() {
-        startRotate(-1);
-    }
+    public void startRandomRotate() { startRotate(-1); }
 
     private int queryPosition() {
-        if (beans == null || beans.isEmpty()) {
-            return 0;
-        }
-
-        int sectorCount = beans.size();
-        int sectorAngle = verPanRadius; // 每个扇形的角度 = 360 / sectorCount
-
-        // 将 initAngle 规范化到 [0, 360) 范围
-        int normalizedAngle = ((initAngle % 360) + 360) % 360;
-
-        // Android 坐标系中，0度在右侧，90度在底部，180度在左侧，270度在顶部
-        // 我们需要找到顶部（270度）对应的扇形
-
-        // 计算当前顶部位置对应的角度
-        // 顶部角度 = 270度，转盘旋转后，原来的顶部现在在 (270 - normalizedAngle) 度
-        int topAngle = (270 - normalizedAngle) % 360;
-        if (topAngle < 0) {
-            topAngle += 360;
-        }
-
-        // 计算扇形索引（从0开始）
-        int pos = topAngle / sectorAngle;
-
-        // 确保 pos 在有效范围内
-        if (pos >= sectorCount) {
-            pos = sectorCount - 1;
-        } else if (pos < 0) {
-            pos = 0;
-        }
-        return pos;
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        // 停止所有旋转
-        stopAllRotations();
-        clearGlideTasks(); // ✅ 显式清理异步任务
-
-        clearAnimation();
-        // 释放资源
-        if (this.releaseOnSelfDetached) {
-            if (centerBitmap != null && !centerBitmap.isRecycled()) {
-                centerBitmap.recycle();
-                centerBitmap = null;
-            }
-        }
-        super.onDetachedFromWindow();
+        if (beans == null || beans.isEmpty()) return 0;
+        float norm = ((initAngle % 360) + 360) % 360;
+        float top = (270 - norm + 360) % 360;
+        int pos = (int) (top / verPanRadius);
+        return Math.min(pos, beans.size() - 1);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // 如果触摸被禁用，直接返回false
-        if (!isTouchEnabled) {
-            return false;
-        }
-
-        float x = event.getX();
-        float y = event.getY();
-
-        // 首先检查是否点击了中心按钮
+        if (!isTouchEnabled) return false;
+        float x = event.getX(), y = event.getY();
         if (isPointInCenterButton(x, y)) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    return true;
-
-                case MotionEvent.ACTION_UP:
-                    // 触发中心按钮点击事件
-                    performClick();
-                    startRandomRotate();
-                    return true;
-            }
-        }
-
-        // 检查触摸点是否在圆形区域外
-        if (isPointOutWheel(x, y)) {
-            // 如果不在圆形区域内，不处理触摸事件
-            return super.onTouchEvent(event);
-        }
-
-        // 使用detector处理手势
-        if (detector.onTouchEvent(event)) {
-            if (getParent() != null && getParent().getParent() != null) {
-                getParent().getParent().requestDisallowInterceptTouchEvent(true);
-            }
-            // 如果处理了点击事件，调用 performClick() 确保辅助功能正常工作
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 performClick();
+                startRandomRotate();
             }
             return true;
         }
-
-        // 调用父类处理
-        boolean superResult = super.onTouchEvent(event);
-
-        // 如果是点击事件，确保调用 performClick()
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            performClick();
+        if (isPointOutWheel(x, y)) return super.onTouchEvent(event);
+        if (detector.onTouchEvent(event)) {
+            if (getParent() != null) getParent().requestDisallowInterceptTouchEvent(true);
+            return true;
         }
-
-        return superResult;
+        return super.onTouchEvent(event);
     }
 
     @Override
-    public boolean performClick() {
-        // 调用父类的 performClick 以确保辅助功能正常工作
-        super.performClick();
-        return true;
+    public boolean performClick() { return super.performClick(); }
+
+    private boolean isPointOutWheel(float x, float y) {
+        return Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)) > radius;
     }
 
-    public void setRotate(int rotation) {
-        rotation = (rotation % 360 + 360) % 360;
-        if (initAngle != rotation) {
-            initAngle = rotation;
-            invalidate();
-            checkAndPlayTick();
-        }
+    private boolean isPointInCenterButton(float x, float y) {
+        return Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)) <= (centerBtnSize / 2.0f);
     }
 
-    @Override
-    public void computeScroll() {
-        if (scroller.computeScrollOffset()) {
-            // 还在滚动中，更新角度
-            int rotation = scroller.getCurrY();
-            rotation = (rotation % 360 + 360) % 360;
-
-            if (initAngle != rotation) {
-                initAngle = rotation;
-                invalidate();
-                checkAndPlayTick();
-            }
-
-            // 继续滚动
-            postInvalidateOnAnimation();
-        } else {
-            // 滚动结束，检查是否需要触发回调
-            if (!isFlingFinishedCallbackFired) {
-                isFlingFinishedCallbackFired = true;
-                // 滚动结束，重新启用触摸
-                isTouchEnabled = true;
-
-                // 延迟一小段时间确保动画完全停止
-                postDelayed(() -> {
-                    if (animationEndListener != null && beans != null && !beans.isEmpty()) {
-                        int pos = queryPosition();
-                        if (pos >= 0 && pos < beans.size()) {
-                            animationEndListener.endAnimation(getContext(), beans.get(pos));
-                        }
-                    }
-                }, 50); // 50ms 延迟确保转盘完全停止
-            }
-        }
-        super.computeScroll();
-    }
-
-    private class RotatePanGestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onDown(@NonNull MotionEvent e) {
-            // 如果触摸被禁用，不处理手势
-            if (!isTouchEnabled) {
-                return false;
-            }
-
-            // 检查触摸点是否在中心按钮上
-            if (isPointInCenterButton(e.getX(), e.getY())) {
-                return false; // 中心按钮事件单独处理
-            }
-
-            // 检查触摸点是否在圆形区域内
-            if (isPointOutWheel(e.getX(), e.getY())) {
-                return false; // 不在圆形区域内，不处理
-            }
-
-            if (!scroller.isFinished()) {
-                scroller.abortAnimation();
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            float centerX = (getLeft() + getRight()) * 0.5f;
-            float centerY = (getTop() + getBottom()) * 0.5f;
-
-            float scrollTheta = vectorToScalarScroll(distanceX, distanceY,
-                e2.getX() - centerX, e2.getY() - centerY);
-            int rotate = initAngle - (int) scrollTheta / FLING_VELOCITY_DOWNSCALE;
-
-            setRotate(rotate);
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            float centerX = (getLeft() + getRight()) * 0.5f;
-            float centerY = (getTop() + getBottom()) * 0.5f;
-
-            float scrollTheta = vectorToScalarScroll(velocityX, velocityY,
-                e2.getX() - centerX, e2.getY() - centerY);
-
-            scroller.abortAnimation();
-            // fling开始时禁用触摸
-            isTouchEnabled = false;
-            // 开始 fling，重置回调标志
-            isFlingFinishedCallbackFired = false;
-            scroller.fling(0, initAngle, 0, (int) scrollTheta / FLING_VELOCITY_DOWNSCALE,
-                0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-            // 开始滚动
-            postInvalidateOnAnimation();
-            return true;
-        }
-    }
-
-    /**
-     * 判断滑动的方向
-     *
-     * @param dx dx
-     * @param dy dy
-     * @param x  x
-     * @param y  y
-     * @return float
-     */
-    private float vectorToScalarScroll(float dx, float dy, float x, float y) {
-        float l = (float) Math.sqrt(dx * dx + dy * dy);
-        float dot = (-y * dx + x * dy);
-        float sign = Math.signum(dot);
-        return l * sign;
-    }
-
-    /**
-     * 停止所有旋转和滚动，重置触摸状态
-     */
-    public void stopAllRotations() {
-        // 停止动画
-        clearAnimation();
-
-        // 停止scroller
-        if (!scroller.isFinished()) {
-            scroller.abortAnimation();
-            scroller.forceFinished(true);
-        }
-
-        // 重置所有状态
-        isTouchEnabled = true;
-        isFlingFinishedCallbackFired = true;
+    public void setRotate(float rotation) {
+        initAngle = rotation;
+        invalidate();
+        checkAndPlayTick();
     }
 
     private void clearGlideTasks() {
-        Context context = getContext();
-        if (!(context instanceof AppCompatActivity activity)) {
+        Context ctx = getContext();
+        if (!(ctx instanceof AppCompatActivity act) || act.isFinishing() || act.isDestroyed()) {
             glideTargets.clear();
             return;
         }
-        if (activity.isFinishing() || activity.isDestroyed()) {
-            glideTargets.clear();
-            return;
-        }
-        for (Target<?> target : glideTargets) {
-//            Glide.with(context).clear(target);
+        for (Target<?> t : glideTargets) {
+            try {
+                Glide.with(ctx).clear(t);
+            } catch (Exception ignored) {}
         }
         glideTargets.clear();
     }
 
     /**
-     * 控件onDetachedFromWindow时是否释放自身资源，默认不释放
-     * 在列表中使用时，item的ViewHolder有自身的声明周期管理，在{@link LuckyWheelCard#release()}中释放，避免滚动列表后显示异常
-     * 在固定的页面则需要调用 releaseOnSelfDetached = true 避免内存泄露
-     *
-     * @param releaseOnSelfDetached true：释放 false 不释放
+     * 显式释放实例级资源。
+     * 重要：不再手动回收 beans 内部位图。
      */
-    public void releaseOnSelfDetached(boolean releaseOnSelfDetached) {
-        this.releaseOnSelfDetached = releaseOnSelfDetached;
+    public void release() {
+        clearGlideTasks();
+        if (centerBitmap != null && !centerBitmap.isRecycled()) {
+            centerBitmap.recycle();
+            centerBitmap = null;
+        }
+    }
+
+    public void stopAllRotations() {
+        if (!scroller.isFinished()) scroller.abortAnimation();
+        isTouchEnabled = true;
+        isFlingFinishedCallbackFired = true;
     }
 
     public interface AnimationEndListener {
@@ -867,109 +463,108 @@ public class LuckyWheel extends View {
         this.animationEndListener = listener;
     }
 
-    private void loadBitmapsAsync(LoadBitmapsCallback callback) {
+    private void loadBitmapsAsync(Runnable callback) {
         if (beans == null || beans.isEmpty()) {
-            if (callback != null) callback.onAllLoaded();
+            if (callback != null) callback.run();
             return;
         }
-
-        // 使用原子计数器保证线程安全
         AtomicInteger counter = new AtomicInteger(beans.size());
-
         for (LuckyWheelCardBean bean : beans) {
             if (bean == null || TextUtils.isEmpty(bean.getImageUrl())) {
-                if (counter.decrementAndGet() == 0) {
-                    callback.onAllLoaded();
-                }
+                if (counter.decrementAndGet() == 0 && callback != null) callback.run();
                 continue;
             }
-
-            CustomTarget<Bitmap> target = new CustomTarget<>(iconSize, iconSize) {
+            CustomTarget<Bitmap> target = new CustomTarget<Bitmap>(iconSize, iconSize) {
                 @Override
-                public void onResourceReady(
-                    @NonNull Bitmap resource,
-                    @Nullable Transition<? super Bitmap> transition
-                ) {
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                     bean.setBitmap(resource);
-                    if (counter.decrementAndGet() == 0) {
-                        callback.onAllLoaded();
-                    }
+                    if (counter.decrementAndGet() == 0 && callback != null) callback.run();
                 }
-
                 @Override
-                public void onLoadCleared(@Nullable Drawable placeholder) {
+                public void onLoadCleared(@Nullable Drawable p) {
                     bean.setBitmap(null);
                 }
             };
             glideTargets.add(target);
-            Glide.with(getContext())
-                .asBitmap()
-                .load(bean.getImageUrl())
-                .override(iconSize, iconSize)
-                .centerCrop()
-                .into(target);
+            Glide.with(getContext()).asBitmap().load(bean.getImageUrl()).override(iconSize, iconSize).centerCrop().into(target);
         }
     }
 
     private static void initSoundPool(Context context) {
-        if (soundPoolInitialized) {
-            return;
-        }
+        if (soundPoolInitialized) return;
         synchronized (LuckyWheel.class) {
-            if (soundPoolInitialized) {
-                return;
-            }
-            AssetFileDescriptor afd = null;
+            if (soundPoolInitialized) return;
             try {
-                AudioAttributes attributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-                soundPool = new SoundPool.Builder()
-                    // 同时最多播放一个，避免重叠
-                    .setMaxStreams(1)
-                    .setAudioAttributes(attributes)
-                    .build();
-
-                afd = context.getAssets().openFd(Constant.LUCK_WHEEL_TICK_FILE);
+                AudioAttributes attr = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+                soundPool = new SoundPool.Builder().setMaxStreams(1).setAudioAttributes(attr).build();
+                AssetFileDescriptor afd = context.getAssets().openFd(Constant.LUCK_WHEEL_TICK_FILE);
                 tickSoundId = soundPool.load(afd, 1);
                 soundPoolInitialized = true;
-            } catch (IOException e) {
-                tickSoundId = 0;
-            } finally {
-                if (afd != null) {
-                    try {
-                        afd.close();
-                    } catch (IOException e) {
-                        Log.w(TAG, "initSoundPool: ", e);
-                    }
-                }
-            }
+            } catch (IOException ignored) {}
         }
     }
 
     private void checkAndPlayTick() {
-        if (!enableTickSound || beans == null || beans.isEmpty()) {
-            return;
+        if (!enableTickSound || beans == null || beans.isEmpty()) return;
+        int current = queryPosition();
+        if (lastPlayedSectorIndex != -1 && lastPlayedSectorIndex != current) {
+            if (soundPool != null && tickSoundId != 0) soundPool.play(tickSoundId, 1.0f, 1.0f, 1, 0, 1.0f);
         }
+        lastPlayedSectorIndex = current;
+    }
 
-        // 当前顶部指针指向的扇区索引
-        int currentSector = queryPosition();
-        if (lastPlayedSectorIndex == -1) {
-            // 第一次记录，不播放
-            lastPlayedSectorIndex = currentSector;
-            return;
+    @Override
+    protected void onDetachedFromWindow() {
+        if (!scroller.isFinished()) scroller.abortAnimation();
+        super.onDetachedFromWindow();
+    }
+
+    private class RotatePanGestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(@NonNull MotionEvent e) {
+            if (!isTouchEnabled || isPointInCenterButton(e.getX(), e.getY()) || isPointOutWheel(e.getX(), e.getY())) return false;
+            if (!scroller.isFinished()) scroller.abortAnimation();
+            return true;
         }
-
-        if (lastPlayedSectorIndex != currentSector) {
-            if (soundPool != null && tickSoundId != 0) {
-                soundPool.play(tickSoundId, 1.0f, 1.0f, 1, 0, 1.0f);
-            }
-            lastPlayedSectorIndex = currentSector;
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy) {
+            float st = vectorToScalarScroll(dx, dy, e2.getX() - centerX, e2.getY() - centerY);
+            setRotate(initAngle - st / FLING_VELOCITY_DOWNSCALE);
+            return true;
+        }
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float vx, float vy) {
+            float st = vectorToScalarScroll(vx, vy, e2.getX() - centerX, e2.getY() - centerY);
+            scroller.abortAnimation();
+            isTouchEnabled = false;
+            isFlingFinishedCallbackFired = false;
+            scroller.fling(0, (int)initAngle, 0, (int) st / FLING_VELOCITY_DOWNSCALE, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            postInvalidateOnAnimation();
+            return true;
         }
     }
 
-    private interface LoadBitmapsCallback {
-        void onAllLoaded();
+    private float vectorToScalarScroll(float dx, float dy, float x, float y) {
+        float l = (float) Math.sqrt(dx * dx + dy * dy);
+        float dot = (-y * dx + x * dy);
+        return l * Math.signum(dot);
+    }
+    
+    @Override
+    public void computeScroll() {
+        if (scroller.computeScrollOffset()) {
+            setRotate(scroller.getCurrY());
+            postInvalidateOnAnimation();
+        } else if (!isFlingFinishedCallbackFired) {
+            isFlingFinishedCallbackFired = true;
+            isTouchEnabled = true;
+            postDelayed(() -> {
+                if (animationEndListener != null && beans != null) {
+                    int pos = queryPosition();
+                    if (pos >= 0 && pos < beans.size()) animationEndListener.endAnimation(getContext(), beans.get(pos));
+                }
+            }, 50);
+        }
+        super.computeScroll();
     }
 }

@@ -318,7 +318,7 @@ public class CircleCtrl extends View {
         final float startX = thumbX;
         final float startY = thumbY;
         reboundAnimator = ValueAnimator.ofFloat(0f, 1f);
-        reboundAnimator.setDuration(200);
+        reboundAnimator.setDuration(100);
         reboundAnimator.setInterpolator(new DecelerateInterpolator());
         reboundAnimator.addUpdateListener(animation -> {
             float f = (float) animation.getAnimatedValue();
