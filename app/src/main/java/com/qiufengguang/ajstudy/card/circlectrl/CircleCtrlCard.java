@@ -52,15 +52,22 @@ public class CircleCtrlCard extends Card {
         }
         binding.tvTitle.setText(cardTitle);
         binding.circleCtrl.setListener(listener);
+        // 确保 UI 刷新
+        binding.circleCtrl.invalidate();
     }
 
 
     /**
      * 释放资源
-     * 页面onDestroyView时调用
+     * 页面onDestroyView或ViewHolder回收时调用
      */
     public void release() {
         if (bindingRef != null) {
+            CardCircleCtrlBinding binding = bindingRef.get();
+            if (binding != null) {
+                // 显式释放 View 内部持有的缓存位图
+                binding.circleCtrl.release();
+            }
             bindingRef.clear();
             bindingRef = null;
         }
@@ -120,4 +127,3 @@ public class CircleCtrlCard extends Card {
         }
     }
 }
-
