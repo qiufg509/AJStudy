@@ -66,7 +66,10 @@ public abstract class BaseViewHolder<B extends ViewBinding> extends RecyclerView
         LifecycleOwner lifecycleOwner,
         OnItemClickListener<BaseCardBean> listener
     ) {
-        if (bind(data, lifecycleOwner) || bind(data, listener)) {
+        if (bind(data, lifecycleOwner)) {
+            return;
+        }
+        if (bind(data, listener)) {
             return;
         }
         Object object = data.getData();

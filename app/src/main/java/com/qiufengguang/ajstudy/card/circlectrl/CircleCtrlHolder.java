@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.qiufengguang.ajstudy.card.base.BaseViewHolder;
 import com.qiufengguang.ajstudy.data.base.LayoutData;
@@ -36,14 +37,15 @@ public class CircleCtrlHolder extends BaseViewHolder<CardCircleCtrlBinding> {
     }
 
     @Override
-    public void bind(LayoutData<?> data) {
-        if (data == null || data.getData() == null || !data.isCollection()
-            || data.getLayoutId() != CircleCtrlCard.LAYOUT_ID) {
-            return;
+    public boolean bind(LayoutData<?> data, LifecycleOwner lifecycleOwner) {
+        if (data == null || data.isCollection() || data.getLayoutId() != CircleCtrlCard.LAYOUT_ID) {
+            return false;
         }
         if (card == null) {
             initCard();
         }
+        card.setData(data.getName());
+        return true;
     }
 
     private void handleResult(Context context, float angleDegrees) {

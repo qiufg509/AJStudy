@@ -39,7 +39,12 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:sectorColorEnd="#99ff0000"
+            app:sectorColorStart="#55ff0000"
+            app:sectorSweepAngle="90"
+            app:thumbColorEnd="?attr/colorPrimary"
+            app:thumbColorStart="@color/ajstudy_color_divider" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -28,4 +28,18 @@
         <attr name="centerBtnSize" format="dimension" />
         <attr name="isTowardCenter" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="CircleCtrl">
+        <!-- 圆盘颜色 -->
+        <attr name="diskColor" format="color" />
+        <!-- 中心小圆渐变起始颜色 -->
+        <attr name="thumbColorStart" format="color" />
+        <!-- 中心小圆渐变结束颜色 -->
+        <attr name="thumbColorEnd" format="color" />
+        <!-- 扇形渐变起始颜色 -->
+        <attr name="sectorColorStart" format="color" />
+        <!-- 扇形渐变结束颜色 -->
+        <attr name="sectorColorEnd" format="color" />
+        <!-- 扇形跨度角度 (0-90) -->
+        <attr name="sectorSweepAngle" format="float" />
+    </declare-styleable>
 </resources>
