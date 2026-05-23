@@ -9,6 +9,7 @@ import com.qiufengguang.ajstudy.card.about.AboutCard;
 import com.qiufengguang.ajstudy.card.article.ArticleCard;
 import com.qiufengguang.ajstudy.card.banner.BannerCard;
 import com.qiufengguang.ajstudy.card.brief.BriefCard;
+import com.qiufengguang.ajstudy.card.circlectrl.CircleCtrlCard;
 import com.qiufengguang.ajstudy.card.comment.CommentCard;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
@@ -84,9 +85,6 @@ public class LayoutDataConverter {
         pageData.setRtnCode(rawRespData.getRtnCode());
         List<LayoutData<?>> dataList = new ArrayList<>();
         for (LayoutDataDTO dto : rawRespData.getLayoutData()) {
-            if (dto.getDataList() == null) {
-                continue;
-            }
             int layoutId = dto.getLayoutId();
             String title = dto.getName();
             String detailId = dto.getDetailId();
@@ -262,6 +260,7 @@ public class LayoutDataConverter {
                     return LayoutDataFactory.createSingle(TopicHeaderCard.LAYOUT_ID, topicHeaderCardBean);
 
                 case TitleCard.LAYOUT_ID:
+                case CircleCtrlCard.LAYOUT_ID:
                     return LayoutDataFactory.createSingle(layoutId, null, title, detailId);
 
                 case EmptyCard.LAYOUT_ID:

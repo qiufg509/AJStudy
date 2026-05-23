@@ -843,7 +843,7 @@ public class LuckyWheel extends View {
             return;
         }
         for (Target<?> target : glideTargets) {
-            Glide.with(context).clear(target);
+//            Glide.with(context).clear(target);
         }
         glideTargets.clear();
     }

@@ -7,6 +7,7 @@ import com.qiufengguang.ajstudy.card.base.Card;
 import com.qiufengguang.ajstudy.card.brief.BriefCard;
 import com.qiufengguang.ajstudy.card.chat.AiMessageCard;
 import com.qiufengguang.ajstudy.card.chat.UserMessageCard;
+import com.qiufengguang.ajstudy.card.circlectrl.CircleCtrlCard;
 import com.qiufengguang.ajstudy.card.comment.CommentCard;
 import com.qiufengguang.ajstudy.card.empty.EmptyCard;
 import com.qiufengguang.ajstudy.card.graphicl.GraphicCardL;
@@ -125,6 +126,9 @@ public class CardRegistrar {
                 break;
             case AiMessageCard.LAYOUT_ID:
                 Card.register(layoutId, new AiMessageCard.Creator());
+                break;
+            case CircleCtrlCard.LAYOUT_ID:
+                Card.register(layoutId, new CircleCtrlCard.Creator());
                 break;
         }
     }
